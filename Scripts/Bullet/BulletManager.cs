@@ -4,8 +4,8 @@ using UnityEngine;
 
 public sealed class BulletManager : MonoBehaviour
 {
-    // 총알관리 스크립트 묶음
-    private List<Bullets> m_bullets;
+    // 총알묶음 리스트
+    private List<BulletBundle> m_bundle;
 
     // 스크립트 개수
     private int m_bulletsCount;
@@ -15,17 +15,18 @@ public sealed class BulletManager : MonoBehaviour
         InitBullets();
     }
 
+    // Bullets 초기화
     private void InitBullets()
     {
-        m_bullets = new List<Bullets>();
+        m_bundle = new List<BulletBundle>();
 
-        Bullets[] bullets = transform.GetComponentsInChildren<Bullets>();
+        BulletBundle[] bullets = transform.GetComponentsInChildren<BulletBundle>();
 
         // 개수 설정
         m_bulletsCount = bullets.Length;
 
         // 리스트에 추가
-        m_bullets.AddRange(bullets);
+        m_bundle.AddRange(bullets);
     }
 
     private void Start()
@@ -38,7 +39,7 @@ public sealed class BulletManager : MonoBehaviour
     {
         for(int i = 0; i < m_bulletsCount; i++)
         {
-            m_bullets[i].ChangeBullets();
+            m_bundle[i].ChangeBullets();
         }
     }
 }

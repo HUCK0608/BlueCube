@@ -6,7 +6,7 @@ public sealed class PlayerWeapon : MonoBehaviour
 {
     // 파이어볼 매니저
     [SerializeField]
-    private Bullets m_fireBalls;
+    private BulletBundle m_fireballBundle;
 
     // 2D 플레이어 (바라보는 방향을 구하기 위해 필요)
     private Player2D m_player2D;
@@ -26,18 +26,6 @@ public sealed class PlayerWeapon : MonoBehaviour
 
         m_fireBallMuzzle2D = transform.Find("2D").Find("FireBallMuzzle");
         m_fireBallMuzzle3D = transform.Find("3D").Find("FireBallMuzzle");
-    }
-
-    private void Start()
-    {
-        InitBulletStat();
-    }
-
-    // 총알의 속도와 데미지를 설정
-    private void InitBulletStat()
-    {
-        m_fireBalls.Stat.Speed = m_manager.Stat.FireBallSpeed;
-        m_fireBalls.Stat.Damage = m_manager.Stat.FireBallDamage;
     }
 
     private void Update()
@@ -69,7 +57,7 @@ public sealed class PlayerWeapon : MonoBehaviour
     {
         Vector3 direction = Vector3.right * (1 * (int)m_player2D.LookDirection);
 
-        m_fireBalls.ShootBullet(m_fireBallMuzzle2D.position, direction.normalized);
+        m_fireballBundle.ShootBullet(m_fireBallMuzzle2D.position, direction.normalized);
     }
 
     // 3D에서 발사
@@ -79,10 +67,13 @@ public sealed class PlayerWeapon : MonoBehaviour
 
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit, Mathf.Infinity))
+        // 총알레이어를 무시하는 레이어
+        int layerMask = (-1) - (1 << 9);
+
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
             Vector3 direction = hit.point - m_fireBallMuzzle3D.position;
-            m_fireBalls.ShootBullet(m_fireBallMuzzle3D.position, direction.normalized);
+            m_fireballBundle.ShootBullet(m_fireBallMuzzle3D.position, direction.normalized);
         }
     }
 }

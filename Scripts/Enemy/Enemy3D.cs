@@ -9,7 +9,7 @@ public sealed class Enemy3D : MonoBehaviour
         // 플레이어가 닿았을 경우 맞았다고 알려줌
         if(other.transform.tag == "Player")
         {
-            GameManager.Instance.PlayerManager.Stat.Hit();
+            GameManager.Instance.PlayerManager.Stat.Hit(1);
         }
     }
 }

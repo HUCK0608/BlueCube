@@ -4,8 +4,9 @@ using UnityEngine;
 
 public sealed class Bullet : MonoBehaviour
 {
-    // 총알 매니저
-    private Bullets m_manager;
+    // 총알 묶음 스크립트
+    private BulletBundle m_bundle;
+    public BulletBundle Bundle { get { return m_bundle; } }
 
     // 총알이 사용중인지 여부
     private bool m_isUsed;
@@ -13,7 +14,7 @@ public sealed class Bullet : MonoBehaviour
 
     private void Awake()
     {
-        m_manager = transform.GetComponentInParent<Bullets>();
+        m_bundle = transform.GetComponentInParent<BulletBundle>();
     }
 
     // 총알 발사
@@ -31,11 +32,30 @@ public sealed class Bullet : MonoBehaviour
     // 총알 이동 코루틴
     private IEnumerator Move(Vector3 direction)
     {
+        // 누적시간
+        float accTime = 0;
+
         // 정면으로 계속 이동
         while(IsUsed)
         {
-            transform.Translate(direction * m_manager.Stat.Speed * Time.deltaTime);
-            yield return null;
+            transform.Translate(direction * m_bundle.Stat.Speed);
+
+            // 시간 누적
+            accTime += Time.fixedDeltaTime;
+
+            // 지속시간이 지났을 경우 발사 정지
+            if (accTime >= m_bundle.Stat.DurationTime)
+                EndShoot();
+
+            yield return new WaitForFixedUpdate();
         }
+
+        gameObject.SetActive(false);
+    }
+
+    // 총알발사를 멈춤
+    public void EndShoot()
+    {
+        m_isUsed = false;
     }
 }

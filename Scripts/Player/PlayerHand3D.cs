@@ -29,47 +29,47 @@ public sealed class PlayerHand3D : MonoBehaviour
 
     private void Update()
     {
-        PutItem();
-        PickUpItem();
+        InteractionItem();
+    }
+
+    // 아이템 상호작용
+    private void InteractionItem()
+    {
+        // 상호작용키를 눌렀을경우
+        if(Input.GetKeyDown(m_manager.InteractionKey))
+        {
+            // 현재 아이템이 없다면 아이템 줍기
+            if (m_haveItem == null)
+                PickUpItem();
+            // 현재 아이템이 있다면 아이템 놓기
+            else if (m_haveItem != null)
+                PutItem();
+        }
     }
 
     // 아이템 들기
     private void PickUpItem()
     {
-        // 상호작용 키를 눌렀을 경우
-        if (Input.GetKeyDown(m_manager.InteractionKey))
+        Ray ray = new Ray(m_checkItem3D.position, transform.forward.normalized);
+        RaycastHit hit;
+        // 아이템레이어만 충돌되게 설정
+        int layerMask = 1 << 8;
+        // 레이에 충돌된 아이템이 있을경우
+        if (Physics.Raycast(ray, out hit, 0.7f, layerMask))
         {
-            // 들고있는 아이템이 없을 경우
-            if (m_haveItem == null)
-            {
-                Ray ray = new Ray(m_checkItem3D.position, transform.forward.normalized);
-                RaycastHit hit;
-                // 아이템레이어만 충돌되게 설정
-                int layerMask = 1 << 8;
-                // 레이에 충돌된 아이템이 있을경우
-                if (Physics.Raycast(ray, out hit, 0.7f, layerMask))
-                {
-                    m_haveItem = hit.transform.parent.GetComponent<Item>();
-                    // 아이템 줍기
-                    m_haveItem.PickUp(m_playerHand2D, m_playerHand3D);
-                }
-            }
+            m_haveItem = hit.transform.parent.GetComponent<Item>();
+            // 아이템 줍기
+            m_haveItem.PickUp(m_playerHand2D, m_playerHand3D);
         }
     }
 
     // 아이템 놓기
     private void PutItem()
     {
-        if(Input.GetKeyDown(m_manager.InteractionKey))
-        {
-            // 들고있는 아이템이 있을 경우
-            if(m_haveItem != null)
-            {
-                // 아이템 놓기
-                m_haveItem.Put();
-                // 초기화
-                m_haveItem = null;
-            }
-        }
+        // 아이템 놓기
+        m_haveItem.Put();
+        // 초기화
+        m_haveItem = null;
     }
+
 }

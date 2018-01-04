@@ -9,7 +9,6 @@ public sealed class PlayerStat : MonoBehaviour
     // HP
     [SerializeField]
     private int m_Hp;
-    public int HP { get { return m_Hp; } set { m_Hp = value; } }
 
     // 무적
     private bool m_isInvincibility;
@@ -33,29 +32,19 @@ public sealed class PlayerStat : MonoBehaviour
     private float m_jumpPower;
     public float JumpPower { get { return m_jumpPower; } }
 
-    // 파이어볼 스피드
-    [SerializeField]
-    private float m_fireBallSpeed;
-    public float FireBallSpeed { get { return m_fireBallSpeed; } }
-
-    // 파이어볼 데미지
-    [SerializeField]
-    private float m_fireBallDamage;
-    public float FireBallDamage { get { return m_fireBallDamage; } }
-
     private void Awake()
     {
         m_manager = GetComponent<PlayerManager>();
     }
 
     // 피격시 호출
-    public void Hit()
+    public void Hit(int damage)
     {
         // 무적일 경우
         if (m_isInvincibility)
             return;
 
-        m_Hp -= 1;
+        m_Hp -= damage;
         Debug.Log("hp : " + m_Hp);
         // 무적시간 코루틴 실행
         StartCoroutine(InvincibilityTime());

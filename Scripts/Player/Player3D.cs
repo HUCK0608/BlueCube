@@ -92,16 +92,22 @@ public class Player3D : Player
             GameManager.Instance.CameraManager.ChangeScoped();
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        // 바닥에 닿았을 경우 매니저에 알려줌
-        Manager.IsGrounded = true;
+        if (other.tag != "Player" && other.tag != "Respawn")
+        {
+            // 바닥에 닿았을 경우 매니저에 알려줌
+            Manager.IsGrounded = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        // 점프상태가 아닌데 바닥에 아무것도 안닿는 경우 중력적용을 위해 설정 변경
-        if (Manager.IsGrounded)
-            Manager.IsGrounded = false;
+        if (other.tag != "Player" && other.tag != "Respawn")
+        {
+            // 점프상태가 아닌데 바닥에 아무것도 안닿는 경우 중력적용을 위해 설정 변경
+            if (Manager.IsGrounded)
+                Manager.IsGrounded = false;
+        }
     }
 }

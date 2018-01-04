@@ -119,4 +119,15 @@ public sealed class PlayerManager : MonoBehaviour
             m_player3D.SetActive(true);
         }
     }
+
+    public void HitAndRespawn(int damage, Vector3 respawnPoint)
+    {
+        m_stat.Hit(damage);
+
+        // 각 시점에 맞는 캐릭터를 스폰장소로 이동
+        if (GameManager.Instance.ViewType == E_ViewType.View2D)
+            m_player2D.transform.position = respawnPoint + new Vector3(0, 1, 0);
+        else if (GameManager.Instance.ViewType == E_ViewType.View3D)
+            m_player3D.transform.position = respawnPoint + new Vector3(0, 1, 0);
+    }
 }
