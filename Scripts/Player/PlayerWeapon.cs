@@ -68,7 +68,7 @@ public sealed class PlayerWeapon : MonoBehaviour
         RaycastHit hit;
 
         // 총알레이어를 무시하는 레이어
-        int layerMask = (-1) - (1 << 9);
+        int layerMask = (-1) - (1 << 8);
 
         if(Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {

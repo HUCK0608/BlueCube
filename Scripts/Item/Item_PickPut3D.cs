@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class Item3D : MonoBehaviour
+public sealed class Item_PickPut3D : MonoBehaviour
 {
     private Rigidbody m_rigidbody;
+
+    private int m_colAmount;
 
     private void Awake()
     {

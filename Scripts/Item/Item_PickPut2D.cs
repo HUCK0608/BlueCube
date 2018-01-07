@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class Item2D : MonoBehaviour
+public sealed class Item_PickPut2D : MonoBehaviour
 {
     private Rigidbody2D m_rigidbody2D;
 

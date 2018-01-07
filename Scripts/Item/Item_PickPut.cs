@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class Item : MonoBehaviour
+public sealed class Item_PickPut : MonoBehaviour
 {
     // 아이템 스크립트
-    private Item2D m_item2D;
-    private Item3D m_item3D;
+    private Item_PickPut2D m_item2D;
+    private Item_PickPut3D m_item3D;
 
     // 소유중인지 체크
     private bool m_isHave;
 
     private void Awake()
     {
-        m_item2D = transform.Find("2D").GetComponent<Item2D>();
-        m_item3D = transform.Find("3D").GetComponent<Item3D>();
+        m_item2D = transform.Find("2D").GetComponent<Item_PickPut2D>();
+        m_item3D = transform.Find("3D").GetComponent<Item_PickPut3D>();
     }
 
     // 줍기

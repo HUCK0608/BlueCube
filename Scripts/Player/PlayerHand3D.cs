@@ -15,7 +15,7 @@ public sealed class PlayerHand3D : MonoBehaviour
     private Transform m_checkItem3D;
 
     // 들고있는 아이템
-    private Item m_haveItem;
+    private Item_PickPut m_haveItem;
 
     private void Awake()
     {
@@ -53,11 +53,11 @@ public sealed class PlayerHand3D : MonoBehaviour
         Ray ray = new Ray(m_checkItem3D.position, transform.forward.normalized);
         RaycastHit hit;
         // 아이템레이어만 충돌되게 설정
-        int layerMask = 1 << 8;
+        int layerMask = 1 << 9;
         // 레이에 충돌된 아이템이 있을경우
         if (Physics.Raycast(ray, out hit, 0.7f, layerMask))
         {
-            m_haveItem = hit.transform.parent.GetComponent<Item>();
+            m_haveItem = hit.transform.parent.GetComponent<Item_PickPut>();
             // 아이템 줍기
             m_haveItem.PickUp(m_playerHand2D, m_playerHand3D);
         }

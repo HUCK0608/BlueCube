@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player3D : Player
+public sealed class Player3D : Player
 {
     // 리지드바디
     private Rigidbody m_rigidbody;

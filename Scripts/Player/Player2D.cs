@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum E_LookDirection2D { Right = 1, Left = -1 }
 
-public class Player2D : Player
+public sealed class Player2D : Player
 {
     // 리지드바디
     Rigidbody2D m_rigidbody2D;
