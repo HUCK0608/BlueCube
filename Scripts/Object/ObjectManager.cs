@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class StaticObjectManager : MonoBehaviour
+public sealed class ObjectManager : MonoBehaviour
 {
     // 오브젝트들
     private List<GameObject> m_objects2D;

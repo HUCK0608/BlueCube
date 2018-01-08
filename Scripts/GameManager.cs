@@ -20,8 +20,8 @@ public sealed class GameManager : MonoBehaviour
     public ItemManager ItemManager { get { return m_itemManager; } }
 
     // 오브젝트 매니저
-    private StaticObjectManager m_staticObjectManager;
-    public StaticObjectManager StaticObjectManager { get { return m_staticObjectManager; } }
+    private ObjectManager m_staticObjectManager;
+    public ObjectManager StaticObjectManager { get { return m_staticObjectManager; } }
 
     // 총알 매니저
     private BulletManager m_bulletManager;
@@ -51,7 +51,7 @@ public sealed class GameManager : MonoBehaviour
 
         m_cameraManager = GameObject.Find("CameraGroup").GetComponent<CameraManager>();
         m_itemManager = GameObject.Find("Items").GetComponent<ItemManager>();
-        m_staticObjectManager = GameObject.Find("StaticObjects").GetComponent<StaticObjectManager>();
+        m_staticObjectManager = GameObject.Find("Objects").GetComponent<ObjectManager>();
         m_bulletManager = GameObject.Find("Bullets").GetComponent<BulletManager>();
         m_playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
         m_enemyManager = GameObject.Find("Enemies").GetComponent<EnemyManager>();

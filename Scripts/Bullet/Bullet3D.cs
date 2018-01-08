@@ -24,7 +24,7 @@ public sealed class Bullet3D : MonoBehaviour
             m_bullet.EndShoot();
         }
         // 플레이어가 아니고 적이 아닐경우
-        else if(other.tag != "Player")
+        else if(other.tag != "Player" && other.tag != "PlayerAttack")
         {
             m_bullet.EndShoot();
         }
