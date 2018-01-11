@@ -31,10 +31,18 @@ public sealed class Item_PickPut : MonoBehaviour
     // 놓기
     public void Put()
     {
+        // 고정 풀기
+        m_isHave = false;
+
+        // 위치 규격화
+        float roundX = Mathf.Round(m_item3D.transform.position.x);
+        float roundZ = Mathf.Round(m_item3D.transform.position.z);
+
+        m_item3D.transform.position = new Vector3(roundX, m_item3D.transform.position.y, roundZ);
+
         // 중력키기
         m_item2D.OnGravity();
         m_item3D.OnGravity();
-        m_isHave = false;
     }
 
     // 플레이어에게 아이템 고정시키기
