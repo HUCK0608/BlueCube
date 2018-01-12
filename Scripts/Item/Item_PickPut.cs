@@ -34,12 +34,46 @@ public sealed class Item_PickPut : MonoBehaviour
         // 고정 풀기
         m_isHave = false;
 
-        // 위치 규격화
-        float roundX = Mathf.Round(m_item3D.transform.position.x);
-        float roundZ = Mathf.Round(m_item3D.transform.position.z);
+        Debug.Log("Now Pos : " + m_item3D.transform.position);
 
-        m_item3D.transform.position = new Vector3(roundX, m_item3D.transform.position.y, roundZ);
+        Vector3 newPos = Vector3.zero;
 
+        // 위치값
+        float posX = m_item3D.transform.position.x;
+        float posZ = m_item3D.transform.position.z;
+
+        // 위치값 내림
+        float floorX = Mathf.Floor(posX);
+
+        Debug.Log("ceilX : " + floorX);
+
+        float floorZ = Mathf.Floor(posZ);
+
+        Debug.Log("ceilZ : " + floorZ);
+
+        // x 좌표 계산
+        float newPosX = 0f;
+
+        // 내림한 값을 2로 나눈 나머지가 1인 경우
+        if (floorX % 2 == 1)
+            // 내림한 값에 1을 더함
+            newPosX = floorX + 1;
+        // 내림한 값을 2로 나눈 나머지가 0인 경우
+        else
+            // 내림한 값이 새로운 위치
+            newPosX = floorX;
+
+        // z 좌표 계산, 위와 동일한 계산
+        float newPosZ = 0f;
+
+        if (floorZ % 2 == 1)
+            newPosZ = floorZ + 1;
+        else
+            newPosZ = floorZ;
+
+        m_item3D.transform.position = new Vector3(newPosX, m_item3D.transform.position.y, newPosZ);
+
+        Debug.Log("new Pos : " + m_item3D.transform.position);
         // 중력키기
         m_item2D.OnGravity();
         m_item3D.OnGravity();

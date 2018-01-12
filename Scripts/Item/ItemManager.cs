@@ -6,6 +6,7 @@ public sealed class ItemManager : MonoBehaviour
 {
     private List<GameObject> m_items2D;
     private List<GameObject> m_items3D;
+    private List<ColliderCheck2D> m_colChecks2D;
 
     private void Awake()
     {
@@ -22,12 +23,15 @@ public sealed class ItemManager : MonoBehaviour
     {
         m_items2D = new List<GameObject>();
         m_items3D = new List<GameObject>();
+        m_colChecks2D = new List<ColliderCheck2D>();
 
         for(int i = 0; i < transform.childCount; i++)
         {
             m_items2D.Add(transform.GetChild(i).Find("2D").gameObject);
             m_items3D.Add(transform.GetChild(i).Find("3D").gameObject);
         }
+
+        m_colChecks2D.AddRange(GetComponentsInChildren<ColliderCheck2D>());
     }
 
     // 아이템 변경
@@ -35,6 +39,11 @@ public sealed class ItemManager : MonoBehaviour
     {
         if(GameManager.Instance.ViewType == E_ViewType.View2D)
         {
+            for(int i = 0; i < m_colChecks2D.Count; i++)
+            {
+                m_colChecks2D[i].ColliderCheck();
+            }
+
             for(int i = 0; i < m_items2D.Count; i++)
             {
                 m_items2D[i].transform.parent = m_items3D[i].transform.parent;
