@@ -20,20 +20,6 @@ public sealed class Player2D : Player
         m_lookDirection = E_LookDirection2D.Right;
     }
 
-    // 점프중 시점전환 할 때 점프속도를 넘기기위한 함수
-    public override float VelocityY
-    {
-        get
-        {
-            return m_rigidbody2D.velocity.y;
-        }
-
-        set
-        {
-            m_rigidbody2D.velocity = new Vector2(0, value);
-        }
-    }
-
     private void Update()
     {
         Move();
@@ -69,11 +55,20 @@ public sealed class Player2D : Player
         // 이동벡터 구하기
         Vector3 movement = Vector3.right * move;
 
-        // 땅이 아니고 중력을 사용한다면 중력적용
-        if(!Manager.IsGrounded && Manager.UseGravity)
+        // 중력을 사용한다면 중력적용
+        if (Manager.UseGravity)
         {
-            float nextVelocity = m_rigidbody2D.velocity.y + Manager.Stat.Gravity * Time.deltaTime;
-            movement.y = nextVelocity;
+            // 점프 상태이거나 땅이 아니면 중력 적용
+            if (Manager.IsJumping || !Manager.IsGrounded)
+            {
+                float nextVelocity = m_rigidbody2D.velocity.y + Manager.Stat.Gravity * Time.deltaTime;
+                movement.y = nextVelocity;
+            }
+            // 땅이라면 적절수준의 중력만 계속 적용
+            else
+            {
+                movement.y = -0.5f;
+            }
         }
 
         // 이동
@@ -83,7 +78,8 @@ public sealed class Player2D : Player
     // 점프
     private void Jump()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && Manager.IsGrounded)
+        // 스페이스바를 누르고 땅이고 점프상태가 아닐 때 점프
+        if(Input.GetKeyDown(KeyCode.Space) && Manager.IsGrounded && !Manager.IsJumping)
         {
             // 중력사용을 하지 않을 때 점프를 할 경우 중력사용
             if (!Manager.UseGravity)
@@ -91,25 +87,7 @@ public sealed class Player2D : Player
 
             m_rigidbody2D.AddForce(Vector2.up * Manager.Stat.JumpPower);
             Manager.IsGrounded = false;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag != "Player" && other.tag != "Respawn")
-        {
-            // 바닥에 닿았을 경우 매니저에 알려줌
-            Manager.IsGrounded = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag != "Player" && other.tag != "Respawn")
-        {
-            // 점프상태가 아닌데 바닥에 아무것도 안닿는 경우 중력적용을 위해 설정 변경
-            if (Manager.IsGrounded)
-                Manager.IsGrounded = false;
+            Manager.IsJumping = true;
         }
     }
 }

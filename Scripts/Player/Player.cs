@@ -12,7 +12,4 @@ public class Player : MonoBehaviour
     {
         m_manager = transform.parent.GetComponent<PlayerManager>();
     }
-
-    // 점프중 시점전환 할 때 점프속도를 넘기기위한 함수
-    public virtual float VelocityY { get; set; }
 }

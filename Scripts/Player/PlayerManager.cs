@@ -38,6 +38,14 @@ public sealed class PlayerManager : MonoBehaviour
     private bool m_useGravity;
     public bool UseGravity { get { return m_useGravity; } set { m_useGravity = true; } }
 
+    // 애니메이터 사용
+    private bool m_isRunning;
+    public bool IsRunning { get { return m_isRunning; } set { m_isRunning = value; } }
+
+    private bool m_isJumping;
+    public bool IsJumping { get { return m_isJumping; } set { m_isJumping = value; } }
+    //
+
     private void Awake()
     {
         m_stat = GetComponent<PlayerStat>();
