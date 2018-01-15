@@ -4,6 +4,9 @@ using UnityEngine;
 
 public sealed class Player3D : Player
 {
+    // 애니메이터
+    private Animator m_animator;
+
     // 리지드바디
     private Rigidbody m_rigidbody;
 
@@ -11,20 +14,7 @@ public sealed class Player3D : Player
     {
         base.Awake();
         m_rigidbody = GetComponent<Rigidbody>();
-    }
-
-    // 점프중 시점전환 할 때 점프속도를 넘기기위한 함수
-    public override float VelocityY
-    {
-        get
-        {
-            return m_rigidbody.velocity.y;
-        }
-
-        set
-        {
-            m_rigidbody.velocity = new Vector3(0, value, 0);
-        }
+        m_animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -32,6 +22,7 @@ public sealed class Player3D : Player
         Scoped();
         Move();
         Jump();
+        SetAni();
     }
 
     // 3D 이동
@@ -47,6 +38,12 @@ public sealed class Player3D : Player
         float moveX = Input.GetAxis("Horizontal") * Manager.Stat.MoveSpeed;
         float moveZ = Input.GetAxis("Vertical") * Manager.Stat.MoveSpeed;
 
+        // 애니메이션 설정변수
+        if (moveX == 0 && moveZ == 0)
+            Manager.IsRunning = false;
+        else
+            Manager.IsRunning = true;
+
         // 중력을 사용중이지 않을 때
         if(!Manager.UseGravity)
         {
@@ -58,11 +55,20 @@ public sealed class Player3D : Player
         // 벡터 형태로 변경
         Vector3 movement = transform.forward * moveZ + transform.right * moveX;
 
-        // 땅이 아니고 중력을 사용한다면 중력적용
-        if(!Manager.IsGrounded && Manager.UseGravity)
+        // 중력을 사용한다면 중력적용
+        if (Manager.UseGravity)
         {
-            float nextVelocity = m_rigidbody.velocity.y + Manager.Stat.Gravity * Time.deltaTime;
-            movement.y = nextVelocity;
+            // 점프 상태이거나 땅이 아니면 중력 적용
+            if (Manager.IsJumping || !Manager.IsGrounded)
+            {
+                float nextVelocity = m_rigidbody.velocity.y + Manager.Stat.Gravity * Time.deltaTime;
+                movement.y = nextVelocity;
+            }
+            // 땅이라면 적절수준의 중력만 계속 적용
+            else
+            {
+                movement.y = -0.5f;
+            }
         }
 
         // 이동
@@ -72,8 +78,8 @@ public sealed class Player3D : Player
     // 점프
     private void Jump()
     {
-        // 스페이스바를 누르고 땅일경우 점프
-        if(Input.GetKeyDown(KeyCode.Space) && Manager.IsGrounded)
+        // 스페이스바를 누르고 땅이고 점프상태가 아닐 때 점프
+        if(Input.GetKeyDown(KeyCode.Space) && Manager.IsGrounded && !Manager.IsJumping)
         {
             // 중력사용을 하지 않을 때 점프를 할 경우 중력사용
             if (!Manager.UseGravity)
@@ -81,7 +87,15 @@ public sealed class Player3D : Player
 
             m_rigidbody.AddForce(Vector3.up * Manager.Stat.JumpPower);
             Manager.IsGrounded = false;
+            Manager.IsJumping = true;
         }
+    }
+
+    // 애니메이션 설정
+    private void SetAni()
+    {
+        m_animator.SetBool("IsRunning", Manager.IsRunning);
+        m_animator.SetBool("IsJumping", Manager.IsJumping);
     }
 
     // 카메라 줌 인 아웃
@@ -90,24 +104,5 @@ public sealed class Player3D : Player
         // 줌 키를 눌렀을 경우 줌(줌키는 플레이어 매니저에 있음)
         if (Input.GetKeyDown(Manager.ScopedKey))
             GameManager.Instance.CameraManager.ChangeScoped();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag != "Player" && other.tag != "Respawn")
-        {
-            // 바닥에 닿았을 경우 매니저에 알려줌
-            Manager.IsGrounded = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag != "Player" && other.tag != "Respawn")
-        {
-            // 점프상태가 아닌데 바닥에 아무것도 안닿는 경우 중력적용을 위해 설정 변경
-            if (Manager.IsGrounded)
-                Manager.IsGrounded = false;
-        }
     }
 }

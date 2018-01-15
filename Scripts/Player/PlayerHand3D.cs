@@ -55,7 +55,7 @@ public sealed class PlayerHand3D : MonoBehaviour
         // 아이템레이어만 충돌되게 설정
         int layerMask = 1 << 9;
         // 레이에 충돌된 아이템이 있을경우
-        if (Physics.Raycast(ray, out hit, 0.7f, layerMask))
+        if (Physics.Raycast(ray, out hit, 2f, layerMask))
         {
             m_haveItem = hit.transform.parent.GetComponent<Item_PickPut>();
             // 아이템 줍기
