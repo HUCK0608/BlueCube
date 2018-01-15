@@ -31,6 +31,9 @@ public sealed class GameManager : MonoBehaviour
     private PlayerManager m_playerManager;
     public PlayerManager PlayerManager { get { return m_playerManager; } }
 
+    // 블루큐브 매니저
+    private BlueCubeManager m_blueCubeManager;
+
     // 적 매니저
     private EnemyManager m_enemyManager;
     public EnemyManager EnemyManager { get { return m_enemyManager; } }
@@ -54,6 +57,7 @@ public sealed class GameManager : MonoBehaviour
         m_staticObjectManager = GameObject.Find("Objects").GetComponent<ObjectManager>();
         m_bulletManager = GameObject.Find("Bullets").GetComponent<BulletManager>();
         m_playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
+        m_blueCubeManager = GameObject.Find("BlueCube").GetComponent<BlueCubeManager>();
         m_enemyManager = GameObject.Find("Enemies").GetComponent<EnemyManager>();
         m_uiManager = GameObject.Find("UI").GetComponent<UIManager>();
     }
@@ -81,6 +85,8 @@ public sealed class GameManager : MonoBehaviour
         m_bulletManager.ChangeBullets();
         // 플레이어 변경
         m_playerManager.ChangePlayer();
+        // 블루큐브 변경
+        m_blueCubeManager.ChangeCube();
         // 적 변경
         m_enemyManager.ChangeEnemies();
         // 아이템 변경
