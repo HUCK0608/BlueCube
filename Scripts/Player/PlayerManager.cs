@@ -42,9 +42,9 @@ public sealed class PlayerManager : MonoBehaviour
     private bool m_isRunning;
     public bool IsRunning { get { return m_isRunning; } set { m_isRunning = value; } }
 
+    // 점프중인지
     private bool m_isJumping;
     public bool IsJumping { get { return m_isJumping; } set { m_isJumping = value; } }
-    //
 
     private void Awake()
     {
