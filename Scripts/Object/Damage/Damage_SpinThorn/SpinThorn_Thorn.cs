@@ -4,21 +4,23 @@ using UnityEngine;
 
 public sealed class SpinThorn_Thorn : MonoBehaviour
 {
-    [SerializeField]
-    private float m_rotationSpeed;
+    // 부모 스크립트
+    private SpinThorn m_spinThorn;
 
-    [SerializeField]
-    private Rotation_Dir m_rotationDir;
-
-    private int m_sign;
+    // 회전방향
+    private int m_spinDir;
 
     private void Awake()
     {
-        m_sign = (int)m_rotationDir;
+        m_spinThorn = GetComponentInParent<SpinThorn>();
+
+        // 회전방향 설정
+        m_spinDir = (int)m_spinThorn.ThornSpinDir;
     }
 
     private void Update()
     {
-        transform.localEulerAngles = new Vector3(0, 0, transform.localEulerAngles.z + m_rotationSpeed * m_sign * Time.deltaTime);
+        // 회전
+        transform.localEulerAngles = new Vector3(0, 0, transform.localEulerAngles.z + m_spinThorn.ThornSpinSpeed * m_spinDir * Time.deltaTime);
     }
 }

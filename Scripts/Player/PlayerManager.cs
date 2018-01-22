@@ -128,6 +128,11 @@ public sealed class PlayerManager : MonoBehaviour
         }
     }
 
+    public void Hit(int damage)
+    {
+        m_stat.Hit(damage);
+    }
+
     public void HitAndRespawn(int damage, Vector3 respawnPoint)
     {
         m_stat.Hit(damage);

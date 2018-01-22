@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Rotation_Dir { UnColoc = -1, Clock = 1 }
 public sealed class SpinThorn_Pivot : MonoBehaviour
 {
-    [SerializeField]
-    private float m_rotationSpeed;
+    // 부모 스크립트
+    private SpinThorn m_spinThorn;
 
-    [SerializeField]
-    private Rotation_Dir m_rotationDir;
-
-    private float m_sign;
+    // 회전방향
+    private int m_spinDir;
 
     private void Awake()
     {
-        m_sign = (int)m_rotationDir;
+        m_spinThorn = GetComponentInParent<SpinThorn>();
+
+        // 회전방향 설정
+        m_spinDir = (int)m_spinThorn.PivotSpinDir;
     }
 
     private void Update()
     {
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + m_rotationSpeed * m_sign * Time.deltaTime, 0);
+        // 회전
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + m_spinThorn.PivotSpinSpeed * m_spinDir * Time.deltaTime, 0);
     }
 }
