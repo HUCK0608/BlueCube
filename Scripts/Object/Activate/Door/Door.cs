@@ -2,44 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Door_Pivot { Right = -1, Left = 1 }
+public enum Door_OpenDir { Left, Right }
 
 public sealed class Door : MonoBehaviour
 {
+    // 액티브 스크립트
     private Activate m_activate;
 
-    private Transform m_door2D;
-    private Transform m_door3D;
+    // 열리는 위치
+    [SerializeField]
+    private Door_OpenDir m_openDir;
 
     [SerializeField]
-    private Door_Pivot m_pivot;
+    private float m_moveSpeed;
 
     [SerializeField]
-    private float m_rotationSpeed;
+    private float m_delayTime;
+
+    // 이동할 위치
+    private Vector3 m_openPos;
+
+    // 모델의 x 크기
+    private float m_width;
+
+    // 열리고나서 부셔져야 하는 콜라이더
+    private Collider2D m_collider2D;
 
     private void Awake()
     {
         m_activate = GetComponent<Activate>();
 
-        m_door2D = transform.Find("2D");
-        m_door3D = transform.Find("3D");
+        m_collider2D = transform.Find("2D").GetComponent<Collider2D>();
 
-        SetPivot();
+        InitDoor();
 
         StartCoroutine(CheckActivate());
     }
 
-    // 피벗 설정
-    private void SetPivot()
+    // 문 초기화
+    private void InitDoor()
     {
-        float halfWidth = m_door3D.GetComponent<MeshFilter>().mesh.bounds.extents.x * m_door3D.localScale.x;
+        m_width = GetComponentInChildren<BoxCollider>().bounds.extents.x * 2f;
 
-        transform.position += new Vector3(halfWidth * (int)m_pivot * -1, 0, 0);
-
-        m_door2D.localPosition = new Vector3(halfWidth * (int)m_pivot, 0, 0);
-        m_door3D.localPosition = new Vector3(halfWidth * (int)m_pivot, 0, 0);
+        if (m_openDir == Door_OpenDir.Left)
+            m_openPos = new Vector3(transform.position.x - m_width, transform.position.y, transform.position.z);
+        else if (m_openDir == Door_OpenDir.Right)
+            m_openPos = new Vector3(transform.position.x + m_width, transform.position.y, transform.position.z);
     }
 
+    // 활성화 체크
     private IEnumerator CheckActivate()
     {
         while(true)
@@ -55,24 +66,18 @@ public sealed class Door : MonoBehaviour
 
     private IEnumerator Open()
     {
-        Quaternion rotation = new Quaternion();
+        yield return new WaitForSeconds(m_delayTime);
 
-        if (m_pivot == Door_Pivot.Right)
-            rotation = Quaternion.Euler(0, 90, 0);
-        else if (m_pivot == Door_Pivot.Left)
-            rotation = Quaternion.Euler(0, -90, 0);
-
-        while (true)
+        while(true)
         {
+            transform.position = Vector3.MoveTowards(transform.position, m_openPos, m_moveSpeed * Time.deltaTime);
 
-            transform.rotation =  Quaternion.RotateTowards(transform.rotation, rotation, m_rotationSpeed);
-
-            if (rotation == transform.rotation)
+            if (transform.position == m_openPos)
                 break;
 
-            yield return new WaitForFixedUpdate();
+            yield return null;
         }
 
-        m_door2D.GetComponent<Collider2D>().isTrigger = true;
+        m_collider2D.enabled = false;
     }
 }

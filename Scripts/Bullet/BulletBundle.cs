@@ -69,6 +69,7 @@ public sealed class BulletBundle : MonoBehaviour
             if(GameManager.Instance.ViewType == E_ViewType.View2D)
             {
                 m_bullet3D[i].SetActive(false);
+                m_bullet2D[i].transform.eulerAngles = Vector3.zero;
                 m_bullet2D[i].SetActive(true);
             }
             else if(GameManager.Instance.ViewType == E_ViewType.View3D)

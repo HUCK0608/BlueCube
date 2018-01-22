@@ -42,6 +42,10 @@ public sealed class GameManager : MonoBehaviour
     private EnemyManager m_enemyManager;
     public EnemyManager EnemyManager { get { return m_enemyManager; } }
 
+    // 이펙트 매니저
+    private EffectManager m_effectManager;
+    public EffectManager EffectManager { get { return m_effectManager; } }
+
     // UI 매니저
     private UIManager m_uiManager;
     public UIManager UIManager { get { return m_uiManager; } }
@@ -64,6 +68,7 @@ public sealed class GameManager : MonoBehaviour
         m_playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
         m_blueCubeManager = GameObject.Find("BlueCube").GetComponent<BlueCubeManager>();
         m_enemyManager = GameObject.Find("Enemies").GetComponent<EnemyManager>();
+        m_effectManager = GameObject.Find("Effects").GetComponent<EffectManager>();
         m_uiManager = GameObject.Find("UI").GetComponent<UIManager>();
     }
 

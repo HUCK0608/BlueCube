@@ -9,12 +9,10 @@ public sealed class Player2D : Player
     // 리지드바디
     Rigidbody2D m_rigidbody2D;
 
-    Collider2D m_collider2D;
-
-
+    // 캐릭터가 끼이는 현상때문에 살짝 띄우기 위한 변수
     RaycastHit2D m_hit2D;
     int m_layerMask;
-    Vector2 m_upPos;
+    Vector3 m_upPos;
 
     // 캐릭터가 바라보는 방향
     private E_LookDirection2D m_lookDirection;
@@ -24,11 +22,10 @@ public sealed class Player2D : Player
     {
         base.Awake();
         m_rigidbody2D = GetComponent<Rigidbody2D>();
-        m_collider2D = GetComponent<Collider2D>();
         m_lookDirection = E_LookDirection2D.Right;
 
         m_layerMask = (-1) - ((1 << 8) | (1 << 11));
-        m_upPos = new Vector2(0, 0.05f + m_collider2D.bounds.extents.y);
+        m_upPos = new Vector3(0, 0.05f, 0);
     }
 
     private void Update()
@@ -77,10 +74,15 @@ public sealed class Player2D : Player
             }
         }
 
-        if(!Manager.IsJumping && Manager.IsGrounded)
+        // 캐릭터가 끼이는 현상때문에 살짝 띄우기 위한 방법
+        if (!Manager.IsJumping && Manager.IsGrounded)
         {
-            m_hit2D = Physics2D.Raycast(transform.position, Vector2.down, 2f, m_layerMask);
-            transform.position = m_hit2D.point + m_upPos;
+            m_hit2D = Physics2D.Raycast(transform.position, Vector2.down, m_upPos.y, m_layerMask);
+
+            if (m_hit2D.collider != null)
+            {
+                transform.position = new Vector3(transform.position.x, m_hit2D.point.y, transform.position.z) + m_upPos;
+            }
         }
 
         // 이동

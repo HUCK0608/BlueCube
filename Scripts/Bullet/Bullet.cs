@@ -12,6 +12,10 @@ public sealed class Bullet : MonoBehaviour
     private bool m_isUsed;
     public bool IsUsed { get { return m_isUsed; } }
 
+    // 이펙트 타입
+    [SerializeField]
+    Effect_Type m_effectType;
+
     private void Awake()
     {
         m_bundle = transform.GetComponentInParent<BulletBundle>();
@@ -25,12 +29,14 @@ public sealed class Bullet : MonoBehaviour
         // 시작위치로 이동
         transform.position = start;
 
+        transform.rotation = Quaternion.LookRotation(direction);
+
         // 이동 코루틴 시작
-        StartCoroutine(Move(direction));
+        StartCoroutine(Move());
     }
 
     // 총알 이동 코루틴
-    private IEnumerator Move(Vector3 direction)
+    private IEnumerator Move()
     {
         // 누적시간
         float accTime = 0;
@@ -38,7 +44,7 @@ public sealed class Bullet : MonoBehaviour
         // 정면으로 계속 이동
         while(IsUsed)
         {
-            transform.Translate(direction * m_bundle.Stat.Speed);
+            transform.Translate(Vector3.forward * m_bundle.Stat.Speed);
 
             // 시간 누적
             accTime += Time.fixedDeltaTime;
@@ -50,6 +56,7 @@ public sealed class Bullet : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        GameManager.Instance.EffectManager.CreateEffect(m_effectType, transform.position);
         gameObject.SetActive(false);
     }
 
