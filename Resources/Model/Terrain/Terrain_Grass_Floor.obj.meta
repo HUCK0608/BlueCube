@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: f85bbbf9b9a2eda45a9808a69f2fecbd
-timeCreated: 1516103827
+guid: 8edcf0a5d0974cd409018eabcff42b9e
+timeCreated: 1516280281
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -15,7 +15,7 @@ ModelImporter:
     4300000: object_export_0116-14
   externalObjects: {}
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -48,10 +48,10 @@ ModelImporter:
     addColliders: 0
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -68,7 +68,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

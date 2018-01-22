@@ -64,11 +64,6 @@ public sealed class Player3D : Player
                 float nextVelocity = m_rigidbody.velocity.y + Manager.Stat.Gravity * Time.deltaTime;
                 movement.y = nextVelocity;
             }
-            // 땅이라면 적절수준의 중력만 계속 적용
-            else
-            {
-                movement.y = -0.5f;
-            }
         }
 
         // 이동

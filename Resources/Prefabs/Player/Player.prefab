@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 50351503273011668}
   - component: {fileID: 212496823767361542}
   - component: {fileID: 114833230914202634}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 2D
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -610,7 +610,7 @@ GameObject:
   - component: {fileID: 50143323466159344}
   - component: {fileID: 61525379373860066}
   - component: {fileID: 114359862636155676}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Foot
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1409,7 +1409,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.1}
+  m_Size: {x: 1, y: 0.3}
   m_EdgeRadius: 0
 --- !u!65 &65139029544375358
 BoxCollider:
