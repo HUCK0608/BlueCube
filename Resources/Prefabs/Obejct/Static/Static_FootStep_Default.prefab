@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4258194370844390}
   m_Layer: 0
-  m_Name: Static_FootSteb_Default
+  m_Name: Static_FootStep_Default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

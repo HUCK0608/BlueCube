@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4358044700562798}
   m_Layer: 0
-  m_Name: Static_Deco_Rock
+  m_Name: Static_deco_rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
