@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4660575842553186}
   m_Layer: 0
-  m_Name: Static_deco_pillar
+  m_Name: Static_Deco_Pillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

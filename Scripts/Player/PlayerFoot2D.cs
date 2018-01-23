@@ -41,7 +41,7 @@ public sealed class PlayerFoot2D : MonoBehaviour
         {
             m_colAmount--;
 
-            if(m_colAmount == 0)
+            if (m_colAmount == 0)
                 m_manager.IsGrounded = false;
         }
     }

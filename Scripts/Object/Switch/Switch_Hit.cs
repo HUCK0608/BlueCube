@@ -29,9 +29,6 @@ public sealed class Switch_Hit : MonoBehaviour
         if (m_hp <= 0)
         {
             m_isBroken = true;
-
-            // 여기에 부셔지는 애니메이션
-            gameObject.SetActive(false);
         }
     }
 }

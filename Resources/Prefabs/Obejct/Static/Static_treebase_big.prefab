@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4718630856624990}
   m_Layer: 0
-  m_Name: Static_treebase_big
+  m_Name: Static_TreeBase_Big
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

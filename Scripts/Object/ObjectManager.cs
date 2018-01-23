@@ -5,11 +5,8 @@ using UnityEngine;
 public sealed class ObjectManager : MonoBehaviour
 {
     // 오브젝트들
-    private List<GameObject> m_objects2D;
-    private List<GameObject> m_objects3D;
-
-    // 오브젝트 개수
-    private int m_objectsAmount;
+    private List<SpriteRenderer> m_objects2D;
+    private List<MeshRenderer> m_objects3D;
 
     private void Awake()
     {
@@ -19,16 +16,11 @@ public sealed class ObjectManager : MonoBehaviour
     // 오브젝트 초기화
     private void InitObjects()
     {
-        m_objectsAmount = transform.childCount;
+        m_objects2D = new List<SpriteRenderer>();
+        m_objects3D = new List<MeshRenderer>();
 
-        m_objects2D = new List<GameObject>();
-        m_objects3D = new List<GameObject>();
-        
-        for(int i = 0; i < m_objectsAmount; i++)
-        {
-            m_objects2D.Add(transform.GetChild(i).Find("2D").gameObject);
-            m_objects3D.Add(transform.GetChild(i).Find("3D").gameObject);
-        }
+        m_objects2D.AddRange(GetComponentsInChildren<SpriteRenderer>());
+        m_objects3D.AddRange(GetComponentsInChildren<MeshRenderer>());
     }
 
     private void Start()
@@ -41,19 +33,19 @@ public sealed class ObjectManager : MonoBehaviour
     {
         if(GameManager.Instance.ViewType == E_ViewType.View2D)
         {
-            for (int i = 0; i < m_objectsAmount; i++)
-            {
-                m_objects3D[i].SetActive(false);
-                m_objects2D[i].SetActive(true);
-            }
+            for (int i = 0; i < m_objects3D.Count; i++)
+                m_objects3D[i].enabled = false;
+
+            for (int i = 0; i < m_objects2D.Count; i++)
+                m_objects2D[i].enabled = true;
         }
         else if(GameManager.Instance.ViewType == E_ViewType.View3D)
         {
-            for (int i = 0; i < m_objectsAmount; i++)
-            {
-                m_objects2D[i].SetActive(false);
-                m_objects3D[i].SetActive(true);
-            }
+            for (int i = 0; i < m_objects2D.Count; i++)
+                m_objects2D[i].enabled = false;
+
+            for (int i = 0; i < m_objects3D.Count; i++)
+                m_objects3D[i].enabled = true;
         }
     }
 }

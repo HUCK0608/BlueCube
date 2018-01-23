@@ -14,7 +14,6 @@ public sealed class Switch_Hit3D : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.tag);
         if(other.tag == m_parent.HitType.ToString("G"))
         {
             m_parent.Hit();

@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4529561218653816}
   m_Layer: 0
-  m_Name: Static_bridgejoint
+  m_Name: Static_BridgeJoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

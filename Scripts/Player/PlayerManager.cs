@@ -123,6 +123,8 @@ public sealed class PlayerManager : MonoBehaviour
             m_player3D.transform.parent = transform;
             // 2D 플레이어의 부모를 3D 플레이어로 변경
             m_player2D.transform.parent = m_player3D.transform;
+            // 스케일 재설정
+            m_player3D.transform.localScale = Vector3.one;
             // 3D 플레이어 활성화
             m_player3D.SetActive(true);
         }

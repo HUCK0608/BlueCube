@@ -29,14 +29,17 @@ public sealed class Bullet : MonoBehaviour
         // 시작위치로 이동
         transform.position = start;
 
-        transform.rotation = Quaternion.LookRotation(direction);
+        if (GameManager.Instance.ViewType == E_ViewType.View2D)
+            transform.eulerAngles = Vector3.zero;
+        else if (GameManager.Instance.ViewType == E_ViewType.View3D)
+            transform.rotation = Quaternion.LookRotation(direction);
 
         // 이동 코루틴 시작
-        StartCoroutine(Move());
+        StartCoroutine(Move(direction));
     }
 
     // 총알 이동 코루틴
-    private IEnumerator Move()
+    private IEnumerator Move(Vector3 direction)
     {
         // 누적시간
         float accTime = 0;
@@ -44,7 +47,7 @@ public sealed class Bullet : MonoBehaviour
         // 정면으로 계속 이동
         while(IsUsed)
         {
-            transform.Translate(Vector3.forward * m_bundle.Stat.Speed);
+            transform.Translate(direction * m_bundle.Stat.Speed, Space.World);
 
             // 시간 누적
             accTime += Time.fixedDeltaTime;
