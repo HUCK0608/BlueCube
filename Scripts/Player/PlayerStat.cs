@@ -27,6 +27,10 @@ public sealed class PlayerStat : MonoBehaviour
     private float m_moveSpeed;
     public float MoveSpeed { get { return m_moveSpeed; } }
 
+    [SerializeField]
+    private float m_rotationSpeed;
+    public float RotationSpeed { get { return m_rotationSpeed; } }
+
     // 점프파워
     [SerializeField]
     private float m_jumpPower;

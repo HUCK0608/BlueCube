@@ -28,12 +28,6 @@ public sealed class Player3D : Player
     // 3D 이동
     private void Move()
     {
-        // 카메라그룹의 y축 각도를 가져옴
-        float cameraYAngle = GameManager.Instance.CameraManager.GetYAngle3D();
-
-        // 캐릭터 회전
-        transform.eulerAngles = new Vector3(0, cameraYAngle, 0);
-
         // 키입력
         float moveX = Input.GetAxis("Horizontal") * Manager.Stat.MoveSpeed;
         float moveZ = Input.GetAxis("Vertical") * Manager.Stat.MoveSpeed;
@@ -53,7 +47,47 @@ public sealed class Player3D : Player
         }
 
         // 벡터 형태로 변경
-        Vector3 movement = transform.forward * moveZ + transform.right * moveX;
+        Vector3 movement = Vector3.zero;
+
+        // 두개의 키가 눌렸을 경우
+        if (moveX != 0 && moveZ != 0)
+        {
+            // 상, 우
+            if (moveX > 0 && moveZ > 0)
+                movement = Vector3.right;
+            // 하, 우
+            else if (moveX > 0 && moveZ < 0)
+                movement = Vector3.back;
+            // 하, 좌
+            else if (moveX < 0 && moveZ < 0)
+                movement = Vector3.left;
+            // 상, 좌
+            else if (moveX < 0 && moveZ > 0)
+                movement = Vector3.forward;
+        }
+        // 한개의 키가 눌렸을 경우
+        else if (moveX != 0 || moveZ != 0)
+        {
+            // 상
+            if (moveZ > 0)
+                movement = Vector3.forward + Vector3.right;
+            // 하
+            else if (moveX > 0)
+                movement = Vector3.back + Vector3.right;
+            // 좌
+            else if (moveZ < 0)
+                movement = Vector3.back + Vector3.left;
+            // 우
+            else if (moveX < 0)
+                movement = Vector3.forward + Vector3.left;
+        }
+
+        // 이동을 하는 경우에만 캐릭터 회전
+        if (movement != Vector3.zero)
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), Manager.Stat.RotationSpeed * Time.deltaTime);
+
+        // 스피드 적용
+        movement *= Manager.Stat.MoveSpeed;
 
         // 중력을 사용한다면 중력적용
         if (Manager.UseGravity)

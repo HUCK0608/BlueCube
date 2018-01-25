@@ -60,7 +60,7 @@ public sealed class GameManager : MonoBehaviour
 
         m_instance = GetComponent<GameManager>();
 
-        m_cameraManager = GameObject.Find("CameraGroup").GetComponent<CameraManager>();
+        m_cameraManager = GameObject.Find("Camera").GetComponent<CameraManager>();
         m_itemManager = GameObject.Find("Items").GetComponent<ItemManager>();
         m_staticObjectManager = GameObject.Find("Objects").GetComponent<ObjectManager>();
         m_terrainManager = GameObject.Find("Terrains").GetComponent<TerrainManager>();

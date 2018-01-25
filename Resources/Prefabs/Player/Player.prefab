@@ -1450,7 +1450,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.1, z: 0.8}
+  m_Size: {x: 0.8, y: 0.3, z: 0.8}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65827985453490062
 BoxCollider:
@@ -1567,6 +1567,7 @@ MonoBehaviour:
   m_invincibilityTime: 2
   m_gravity: -20
   m_moveSpeed: 7
+  m_rotationSpeed: 50
   m_jumpPower: 550
 --- !u!114 &114833230914202634
 MonoBehaviour:

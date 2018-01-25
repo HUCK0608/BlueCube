@@ -4,20 +4,6 @@ using UnityEngine;
 
 public sealed class CameraManager : MonoBehaviour
 {
-    // 마우스 민감도
-    [SerializeField]
-    private float m_sensitivity;
-
-    // 최소, 최대각
-    [SerializeField]
-    private float m_minAngle, m_maxAngle;
-
-    // 3D 카메라 중심
-    private Transform m_centerPoint3D;
-
-    // 카메라 회전값
-    private float m_mouseX, m_mouseY;
-
     // 2D 카메라, 3D 카메라
     private Camera m_camera2D, m_camera3D;
 
@@ -29,10 +15,8 @@ public sealed class CameraManager : MonoBehaviour
 
     private void Awake()
     {
-        m_centerPoint3D = transform.Find("CenterPoint3D");
-
-        m_camera2D = GameObject.Find("Camera2D").GetComponent<Camera>();
-        m_camera3D = GameObject.Find("Camera3D").GetComponent<Camera>();
+        m_camera2D = transform.Find("2D").GetComponent<Camera>();
+        m_camera3D = transform.Find("3D").GetComponent<Camera>();
 
         m_animator = GetComponent<Animator>();
 
@@ -48,7 +32,6 @@ public sealed class CameraManager : MonoBehaviour
     private void Update()
     {
         Move();
-        Rotation3D();
     }
 
     // 카메라 이동
@@ -62,23 +45,6 @@ public sealed class CameraManager : MonoBehaviour
         {
             transform.position = m_player3D.transform.position;
         }
-    }
-
-    // 카메라 회전
-    public void Rotation3D()
-    {
-        if (GameManager.Instance.ViewType != E_ViewType.View3D)
-            return;
-
-        m_mouseX += Input.GetAxis("Mouse X") * m_sensitivity;
-        m_mouseY -= Input.GetAxis("Mouse Y") * m_sensitivity;
-
-        // y축 회전값 제한
-        m_mouseY = Mathf.Clamp(m_mouseY, m_minAngle, m_maxAngle);
-
-        Vector3 rotation = new Vector3(m_mouseY, m_mouseX, 0);
-
-        m_centerPoint3D.eulerAngles = rotation;
     }
 
     // 카메라 스위칭
@@ -112,7 +78,4 @@ public sealed class CameraManager : MonoBehaviour
         // 에임설정
         GameManager.Instance.UIManager.SetAimEnabled(!isScoped);
     }
-
-    // y축 각도 리턴
-    public float GetYAngle3D() { return m_centerPoint3D.eulerAngles.y; }
 }

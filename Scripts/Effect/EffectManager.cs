@@ -6,7 +6,6 @@ public enum Effect_Type { FBExplosion }
 
 public sealed class EffectManager : MonoBehaviour
 {
-    private static string m_effectTypeName = "Effect_Type";
     private static string m_effectName = "Effect_";
 
     Dictionary<Effect_Type, GameObject> m_effects;
