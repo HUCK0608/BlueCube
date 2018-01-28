@@ -7,15 +7,13 @@ public sealed class PlayerManager : MonoBehaviour
     // 시점변환 키
     [SerializeField]
     private KeyCode m_changeViewKey;
+    public KeyCode ChangeViewKey { get { return m_changeViewKey; } }
+
     // 상호작용 키
     [SerializeField]
     private KeyCode m_interactionKey;
     public KeyCode InteractionKey { get { return m_interactionKey; } }
 
-    // 조준 키 (3D 에서만 사용)
-    [SerializeField]
-    private KeyCode m_scopedKey;
-    public KeyCode ScopedKey { get { return m_scopedKey; } }
     // 파이어볼 발사 키
     [SerializeField]
     private KeyCode m_shootFireKey;

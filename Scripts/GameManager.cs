@@ -37,6 +37,7 @@ public sealed class GameManager : MonoBehaviour
 
     // 블루큐브 매니저
     private BlueCubeManager m_blueCubeManager;
+    public BlueCubeManager BlueCubeManager { get { return m_blueCubeManager; } }
 
     // 적 매니저
     private EnemyManager m_enemyManager;
@@ -87,21 +88,24 @@ public sealed class GameManager : MonoBehaviour
         // 다음 시점을 저장
         m_currentViewType = (E_ViewType)newViewType;
 
-        // 카메라 스위칭
-        m_cameraManager.ChangeCamera();
-        // 정적 오브젝트 변경
-        m_staticObjectManager.ChangeObjects();
-        // 지형 변경
-        m_terrainManager.ChangeTerrain();
-        // 총알 변경
-        m_bulletManager.ChangeBullets();
-        // 플레이어 변경
-        m_playerManager.ChangePlayer();
-        // 블루큐브 변경
-        m_blueCubeManager.ChangeCube();
-        // 적 변경
-        m_enemyManager.ChangeEnemies();
-        // 아이템 변경
-        m_itemManager.ChangeItems();
+        if (m_currentViewType == E_ViewType.View3D)
+        {
+            // 카메라 스위칭
+            m_cameraManager.ChangeCamera();
+            // 정적 오브젝트 변경
+            m_staticObjectManager.ChangeObjects();
+            // 지형 변경
+            m_terrainManager.ChangeTerrain();
+            // 총알 변경
+            m_bulletManager.ChangeBullets();
+            // 플레이어 변경
+            m_playerManager.ChangePlayer();
+            // 블루큐브 변경
+            m_blueCubeManager.ChangeCube();
+            // 적 변경
+            m_enemyManager.ChangeEnemies();
+            // 아이템 변경
+            m_itemManager.ChangeItems();
+        }
     }
 }

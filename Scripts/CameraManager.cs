@@ -7,21 +7,29 @@ public sealed class CameraManager : MonoBehaviour
     // 2D 카메라, 3D 카메라
     private Camera m_camera2D, m_camera3D;
 
-    // 애니메이터
-    private Animator m_animator;
-
     // 2D 플레이어, 3D 플레이어
     private GameObject m_player2D, m_player3D;
+
+    private Transform m_centerPoint;
+
+    private GameObject m_changeViewEffect2D;
+    private GameObject m_changeViewEffect3D;
+
+    [SerializeField]
+    private float m_rotateSpeed;
 
     private void Awake()
     {
         m_camera2D = transform.Find("2D").GetComponent<Camera>();
-        m_camera3D = transform.Find("3D").GetComponent<Camera>();
-
-        m_animator = GetComponent<Animator>();
+        m_camera3D = transform.Find("CenterPoint").Find("3D").GetComponent<Camera>();
 
         m_player2D = GameObject.Find("Player").transform.Find("2D").gameObject;
         m_player3D = GameObject.Find("Player").transform.Find("3D").gameObject;
+
+        m_centerPoint = transform.Find("CenterPoint");
+
+        m_changeViewEffect2D = m_camera2D.transform.Find("ChangeViewEffect").gameObject;
+        m_changeViewEffect3D = m_camera3D.transform.Find("ChangeViewEffect").gameObject;
     }
 
     private void Start()
@@ -53,10 +61,6 @@ public sealed class CameraManager : MonoBehaviour
         // 3D카메라를 끈 후 2D카메라를 켬
         if(GameManager.Instance.ViewType == E_ViewType.View2D)
         {
-            // 조준상태일 경우 조준 끄기
-            if (m_animator.GetBool("isScoped"))
-                ChangeScoped();
-
             m_camera3D.enabled = false;
             m_camera2D.enabled = true;
         }
@@ -68,14 +72,23 @@ public sealed class CameraManager : MonoBehaviour
         }
     }
 
-    // 스코프 관련 (3D에서만 사용됨)
-    public void ChangeScoped()
+    // 3D 무빙워크
+    public IEnumerator MovingWork3D()
     {
-        bool isScoped = m_animator.GetBool("isScoped");
+        while (true)
+        {
+            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(Vector3.zero), m_rotateSpeed * Time.deltaTime);
 
-        // 애니메이션 설정
-        m_animator.SetBool("isScoped", !isScoped);
-        // 에임설정
-        GameManager.Instance.UIManager.SetAimEnabled(!isScoped);
+            if (m_centerPoint.localRotation == Quaternion.Euler(Vector3.zero))
+                break;
+
+            yield return null;
+        }
+    }
+
+    public void ChangeViewEffect(bool value)
+    {
+        m_changeViewEffect3D.SetActive(value);
+        m_changeViewEffect2D.SetActive(value);
     }
 }

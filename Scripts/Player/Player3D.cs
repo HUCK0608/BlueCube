@@ -19,7 +19,6 @@ public sealed class Player3D : Player
 
     private void Update()
     {
-        Scoped();
         Move();
         Jump();
         SetAni();
@@ -125,13 +124,5 @@ public sealed class Player3D : Player
     {
         m_animator.SetBool("IsRunning", Manager.IsRunning);
         m_animator.SetBool("IsJumping", Manager.IsJumping);
-    }
-
-    // 카메라 줌 인 아웃
-    private void Scoped()
-    {
-        // 줌 키를 눌렀을 경우 줌(줌키는 플레이어 매니저에 있음)
-        if (Input.GetKeyDown(Manager.ScopedKey))
-            GameManager.Instance.CameraManager.ChangeScoped();
     }
 }
