@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 시점타입
-public enum E_ViewType { View2D = 0, View3D }
-
 public sealed class GameManager : MonoBehaviour
 {
     // 인스턴스
@@ -20,8 +17,8 @@ public sealed class GameManager : MonoBehaviour
     public ItemManager ItemManager { get { return m_itemManager; } }
 
     // 오브젝트 매니저
-    private ObjectManager m_staticObjectManager;
-    public ObjectManager StaticObjectManager { get { return m_staticObjectManager; } }
+    private ObjectManager m_objectManager;
+    public ObjectManager ObjectManager { get { return m_objectManager; } }
 
     // 지형 매니저
     private TerrainManager m_terrainManager;
@@ -61,9 +58,9 @@ public sealed class GameManager : MonoBehaviour
 
         m_instance = GetComponent<GameManager>();
 
-        m_cameraManager = GameObject.Find("Camera").GetComponent<CameraManager>();
+        m_cameraManager = GameObject.Find("CameraGroup").GetComponent<CameraManager>();
         m_itemManager = GameObject.Find("Items").GetComponent<ItemManager>();
-        m_staticObjectManager = GameObject.Find("Objects").GetComponent<ObjectManager>();
+        m_objectManager = GameObject.Find("Objects").GetComponent<ObjectManager>();
         m_terrainManager = GameObject.Find("Terrains").GetComponent<TerrainManager>();
         m_bulletManager = GameObject.Find("Bullets").GetComponent<BulletManager>();
         m_playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
@@ -88,20 +85,22 @@ public sealed class GameManager : MonoBehaviour
         // 다음 시점을 저장
         m_currentViewType = (E_ViewType)newViewType;
 
+        // 플레이어 변경
+        m_playerManager.ChangePlayer();
+
+        // 블루큐브 변경
+        m_blueCubeManager.ChangeCube();
+
         if (m_currentViewType == E_ViewType.View3D)
         {
-            // 카메라 스위칭
-            m_cameraManager.ChangeCamera();
-            // 정적 오브젝트 변경
-            m_staticObjectManager.ChangeObjects();
+            // 오브젝트 변경
+            m_objectManager.ChangeObjects();
             // 지형 변경
             m_terrainManager.ChangeTerrain();
             // 총알 변경
             m_bulletManager.ChangeBullets();
-            // 플레이어 변경
-            m_playerManager.ChangePlayer();
-            // 블루큐브 변경
-            m_blueCubeManager.ChangeCube();
+            
+            
             // 적 변경
             m_enemyManager.ChangeEnemies();
             // 아이템 변경

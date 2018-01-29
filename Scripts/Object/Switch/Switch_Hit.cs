@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Hit_Type { PlayerAttack }
+public enum E_HitType { PlayerAttack }
 
 public sealed class Switch_Hit : MonoBehaviour
 {
     // 피격 타입
     [SerializeField]
-    private Hit_Type m_hitType;
-    public Hit_Type HitType { get { return m_hitType; } }
+    private E_HitType m_hitType;
+    public E_HitType HitType { get { return m_hitType; } }
 
     // 체력
     [SerializeField]

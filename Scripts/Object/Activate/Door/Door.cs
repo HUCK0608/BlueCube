@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Door_OpenDir { Left, Right }
+public enum E_OpenDir { Left, Right }
 
 public sealed class Door : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public sealed class Door : MonoBehaviour
 
     // 열리는 위치
     [SerializeField]
-    private Door_OpenDir m_openDir;
+    private E_OpenDir m_openDir;
 
     [SerializeField]
     private float m_moveSpeed;
@@ -44,9 +44,9 @@ public sealed class Door : MonoBehaviour
     {
         m_width = GetComponentInChildren<BoxCollider>().bounds.extents.x * 2f;
 
-        if (m_openDir == Door_OpenDir.Left)
+        if (m_openDir == E_OpenDir.Left)
             m_openPos = new Vector3(transform.position.x - m_width, transform.position.y, transform.position.z);
-        else if (m_openDir == Door_OpenDir.Right)
+        else if (m_openDir == E_OpenDir.Right)
             m_openPos = new Vector3(transform.position.x + m_width, transform.position.y, transform.position.z);
     }
 

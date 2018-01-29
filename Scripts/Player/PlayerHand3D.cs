@@ -17,6 +17,10 @@ public sealed class PlayerHand3D : MonoBehaviour
     // 들고있는 아이템
     private Item_PickPut m_haveItem;
 
+    private Ray m_ray;
+    private RaycastHit m_hit;
+    private int m_layerMask;
+
     private void Awake()
     {
         m_manager = transform.parent.parent.GetComponent<PlayerManager>();
@@ -25,6 +29,10 @@ public sealed class PlayerHand3D : MonoBehaviour
         m_playerHand3D = transform;
 
         m_checkItem3D = transform.GetChild(0);
+
+        m_ray = new Ray();
+        // Item_PickPut 레이어만 충돌되게 설정
+        m_layerMask = 1 << 9;
     }
 
     private void Update()
@@ -50,14 +58,15 @@ public sealed class PlayerHand3D : MonoBehaviour
     // 아이템 들기
     private void PickUpItem()
     {
-        Ray ray = new Ray(m_checkItem3D.position, transform.forward.normalized);
-        RaycastHit hit;
-        // 아이템레이어만 충돌되게 설정
-        int layerMask = 1 << 9;
+        m_ray.origin = m_checkItem3D.position;
+        m_ray.direction = transform.forward.normalized;
+
         // 레이에 충돌된 아이템이 있을경우
-        if (Physics.Raycast(ray, out hit, 2f, layerMask))
+        if (Physics.Raycast(m_ray, out m_hit, 2f, m_layerMask))
         {
-            m_haveItem = hit.transform.parent.GetComponent<Item_PickPut>();
+            // ItemPickPut 스크립트 가져오기
+            m_haveItem = m_hit.transform.parent.GetComponent<Item_PickPut>();
+
             // 아이템 줍기
             m_haveItem.PickUp(m_playerHand2D, m_playerHand3D);
         }

@@ -53,32 +53,32 @@ public sealed class Player3D : Player
         {
             // 상, 우
             if (moveX > 0 && moveZ > 0)
-                movement = Vector3.right;
+                movement = Vector3.forward;
             // 하, 우
             else if (moveX > 0 && moveZ < 0)
-                movement = Vector3.back;
+                movement = Vector3.right;
             // 하, 좌
             else if (moveX < 0 && moveZ < 0)
-                movement = Vector3.left;
+                movement = Vector3.back;
             // 상, 좌
             else if (moveX < 0 && moveZ > 0)
-                movement = Vector3.forward;
+                movement = Vector3.left;
         }
         // 한개의 키가 눌렸을 경우
         else if (moveX != 0 || moveZ != 0)
         {
             // 상
             if (moveZ > 0)
-                movement = Vector3.forward + Vector3.right;
+                movement = Vector3.forward + Vector3.left;
             // 하
-            else if (moveX > 0)
+            else if (moveZ < 0)
                 movement = Vector3.back + Vector3.right;
             // 좌
-            else if (moveZ < 0)
+            else if (moveX < 0)
                 movement = Vector3.back + Vector3.left;
             // 우
-            else if (moveX < 0)
-                movement = Vector3.forward + Vector3.left;
+            else if (moveX > 0)
+                movement = Vector3.forward + Vector3.right;
         }
 
         // 이동을 하는 경우에만 캐릭터 회전

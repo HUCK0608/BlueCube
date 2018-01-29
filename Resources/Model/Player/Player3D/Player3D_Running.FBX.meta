@@ -180,9 +180,9 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: f95560f3a53d2754889b0bebdded4b86,
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 421ed55dfc304434ebe28615dd4f2a78,
     type: 3}
   animationType: 2
   humanoidOversampling: 1
