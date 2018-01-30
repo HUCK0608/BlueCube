@@ -13,10 +13,6 @@ public sealed class BulletBundle : MonoBehaviour
     // 총알 모음
     private List<Bullet> m_bullets;
 
-    // 총알 오브젝트 모음
-    private List<GameObject> m_bullet2D;
-    private List<GameObject> m_bullet3D;
-
     // 총알 개수
     private int m_bulletAmount;
 
@@ -32,16 +28,11 @@ public sealed class BulletBundle : MonoBehaviour
     {
         m_bullets = new List<Bullet>();
 
-        m_bullet2D = new List<GameObject>();
-        m_bullet3D = new List<GameObject>();
-
         m_bulletAmount = transform.childCount;
 
         for(int i = 0; i < m_bulletAmount; i++)
         {
             m_bullets.Add(transform.GetChild(i).GetComponent<Bullet>());
-            m_bullet2D.Add(m_bullets[i].transform.Find("2D").gameObject);
-            m_bullet3D.Add(m_bullets[i].transform.Find("3D").gameObject);
             m_bullets[i].gameObject.SetActive(false);
         }
     }
@@ -57,25 +48,6 @@ public sealed class BulletBundle : MonoBehaviour
                 m_bullets[i].gameObject.SetActive(true);
                 m_bullets[i].Shoot(start, direction);
                 return;
-            }
-        }
-    }
-
-    // 총알 변경
-    public void ChangeBullets()
-    {
-        for(int i = 0; i < m_bulletAmount; i++)
-        {
-            if(GameManager.Instance.ViewType == E_ViewType.View2D)
-            {
-                m_bullet3D[i].SetActive(false);
-                m_bullet2D[i].transform.eulerAngles = Vector3.zero;
-                m_bullet2D[i].SetActive(true);
-            }
-            else if(GameManager.Instance.ViewType == E_ViewType.View3D)
-            {
-                m_bullet2D[i].SetActive(false);
-                m_bullet3D[i].SetActive(true);
             }
         }
     }

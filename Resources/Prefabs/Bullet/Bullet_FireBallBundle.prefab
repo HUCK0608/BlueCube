@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114180191076224242}
   - component: {fileID: 114545346679228038}
   m_Layer: 0
-  m_Name: FireBallBundle
+  m_Name: Bullet_FireBallBundle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9353ceee2d9d89e46846f62d191b7331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 0.2
+  m_speed: 0.4
   m_damage: 1
   m_durationTime: 3
 --- !u!114 &114545346679228038

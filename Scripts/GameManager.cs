@@ -24,10 +24,6 @@ public sealed class GameManager : MonoBehaviour
     private TerrainManager m_terrainManager;
     public TerrainManager TerrainManager { get { return m_terrainManager; } }
 
-    // 총알 매니저
-    private BulletManager m_bulletManager;
-    public BulletManager BulletManager { get { return m_bulletManager; } }
-
     // 플레이어 매니저
     private PlayerManager m_playerManager;
     public PlayerManager PlayerManager { get { return m_playerManager; } }
@@ -62,7 +58,6 @@ public sealed class GameManager : MonoBehaviour
         m_itemManager = GameObject.Find("Items").GetComponent<ItemManager>();
         m_objectManager = GameObject.Find("Objects").GetComponent<ObjectManager>();
         m_terrainManager = GameObject.Find("Terrains").GetComponent<TerrainManager>();
-        m_bulletManager = GameObject.Find("Bullets").GetComponent<BulletManager>();
         m_playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
         m_blueCubeManager = GameObject.Find("BlueCube").GetComponent<BlueCubeManager>();
         m_enemyManager = GameObject.Find("Enemies").GetComponent<EnemyManager>();
@@ -97,8 +92,6 @@ public sealed class GameManager : MonoBehaviour
             m_objectManager.ChangeObjects();
             // 지형 변경
             m_terrainManager.ChangeTerrain();
-            // 총알 변경
-            m_bulletManager.ChangeBullets();
             
             
             // 적 변경

@@ -24,6 +24,5 @@ public sealed class Enemy : MonoBehaviour
     {
         m_isDie = true;
         gameObject.SetActive(false);
-        Debug.Log(transform.name + " 죽음");
     }
 }

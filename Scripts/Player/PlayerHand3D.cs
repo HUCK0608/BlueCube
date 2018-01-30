@@ -65,7 +65,7 @@ public sealed class PlayerHand3D : MonoBehaviour
         if (Physics.Raycast(m_ray, out m_hit, 2f, m_layerMask))
         {
             // ItemPickPut 스크립트 가져오기
-            m_haveItem = m_hit.transform.parent.GetComponent<Item_PickPut>();
+            m_haveItem = m_hit.transform.GetComponentInParent<Item_PickPut>();
 
             // 아이템 줍기
             m_haveItem.PickUp(m_playerHand2D, m_playerHand3D);

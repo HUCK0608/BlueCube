@@ -12,8 +12,8 @@ public sealed class Item_Push3D : MonoBehaviour
     [SerializeField]
     private float m_moveSpeed;
 
-    // 충돌 태그명
-    private string m_colTag;
+    // 플레이어 태그명
+    private string m_playerTag;
 
     // 현재 충돌 체크중인지
     private bool m_isColCheck;
@@ -21,20 +21,24 @@ public sealed class Item_Push3D : MonoBehaviour
     // 현재 움직이는 중인지
     private bool m_isMove;
 
-    // 메쉬 너비
-    private float m_meshWidth;
+    // 메쉬 절반 너비
+    private float m_meshHalfWidth;
+
+    // 레이 거리
+    private float m_rayDistance;
 
     private void Awake()
     {
-        m_colTag = "Player";
+        m_playerTag = "Player";
 
-        m_meshWidth = GetComponent<MeshFilter>().mesh.bounds.extents.x;
+        m_meshHalfWidth = 1f;
+        m_rayDistance = 2.9f;
     }
 
     private void OnCollisionStay(Collision other)
     {
         // 충돌체가 플레이어고 충돌 체크를 하지 않고 움직이지 않는 경우
-        if(other.transform.tag == m_colTag && !m_isColCheck && !m_isMove)
+        if(other.transform.tag == m_playerTag && !m_isColCheck && !m_isMove)
         {
             // 충돌 체크 활성화
             m_isColCheck = true;
@@ -49,7 +53,7 @@ public sealed class Item_Push3D : MonoBehaviour
 
     private void OnCollisionExit(Collision other)
     {
-        if(other.transform.tag == m_colTag)
+        if(other.transform.tag == m_playerTag)
         {
             m_isColCheck = false;
         }
@@ -133,7 +137,7 @@ public sealed class Item_Push3D : MonoBehaviour
             Ray ray = new Ray(transform.position, rayDirection);
 
             // 나아갈 방향으로 레이를 쏴서 무언가 충돌되면 못가게 막음
-            if (Physics.Raycast(ray, m_meshWidth * 2.9f * transform.parent.localScale.x))
+            if (Physics.Raycast(ray, m_meshHalfWidth * m_rayDistance))
                 m_isMove = false;
             // 나아갈 방향에 아무것도 없으면 반대 방향으로 레이를 쏨
             else
@@ -143,10 +147,10 @@ public sealed class Item_Push3D : MonoBehaviour
                 RaycastHit hit;
 
                 // 나아갈 방향 반대편으로 쏴서 플레이어가 있는지 체크
-                if (Physics.Raycast(ray, out hit, m_meshWidth * 2f * transform.parent.localScale.x))
+                if (Physics.Raycast(ray, out hit, m_meshHalfWidth * m_rayDistance))
                 {
                     // 플레이어가 없을 경우 이동하지 않음
-                    if (hit.transform.tag != m_colTag)
+                    if (hit.transform.tag != m_playerTag)
                     {
                         m_isMove = false;
                     }

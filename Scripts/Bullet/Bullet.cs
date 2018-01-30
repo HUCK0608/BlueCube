@@ -12,9 +12,9 @@ public sealed class Bullet : MonoBehaviour
     private bool m_isUsed;
     public bool IsUsed { get { return m_isUsed; } }
 
-    // 이펙트 타입
+    // 충돌 이펙트 타입
     [SerializeField]
-    Effect_Type m_effectType;
+    Effect_Type m_colEffectType;
 
     private void Awake()
     {
@@ -59,7 +59,7 @@ public sealed class Bullet : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        GameManager.Instance.EffectManager.CreateEffect(m_effectType, transform.position);
+        GameManager.Instance.EffectManager.CreateEffect(m_colEffectType, transform.position);
         gameObject.SetActive(false);
     }
 

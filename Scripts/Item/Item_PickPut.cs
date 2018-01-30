@@ -4,9 +4,6 @@ using UnityEngine;
 
 public sealed class Item_PickPut : MonoBehaviour
 {
-    // 아이템
-    private Transform m_item;
-
     // 3D 리지드바디
     private Rigidbody m_rigidbody3D;
 
@@ -15,9 +12,7 @@ public sealed class Item_PickPut : MonoBehaviour
 
     private void Awake()
     {
-        m_item = transform.Find("Collider3D");
-
-        m_rigidbody3D = m_item.GetComponent<Rigidbody>();
+        m_rigidbody3D = GetComponent<Rigidbody>();
     }
 
     // 중력 사용 여부
@@ -26,12 +21,14 @@ public sealed class Item_PickPut : MonoBehaviour
         m_rigidbody3D.useGravity = value;
     }
 
+    // 들기
     public void PickUp(Transform playerHand2D, Transform playerHand3D)
     {
-        
+        StartCoroutine(FixedItem(playerHand2D, playerHand3D));
     }
 
-    private IEnumerator FixedItem()
+    // 플레이어 손에 고정
+    private IEnumerator FixedItem(Transform playerHand2D, Transform playerHand3D)
     {
         m_isHave = true;
 
@@ -40,6 +37,11 @@ public sealed class Item_PickPut : MonoBehaviour
 
         while(m_isHave)
         {
+            if (GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(E_ViewType.View2D))
+                transform.position = playerHand2D.position;
+            else if (GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(E_ViewType.View3D))
+                transform.position = playerHand3D.position;
+
             yield return null;
         }
     }
@@ -51,8 +53,8 @@ public sealed class Item_PickPut : MonoBehaviour
         m_isHave = false;
 
         // 위치값
-        float posX = m_item.position.x;
-        float posZ = m_item.position.z;
+        float posX = transform.position.x;
+        float posZ = transform.position.z;
 
         // 위치값 내림
         float floorX = Mathf.Floor(posX);
@@ -85,11 +87,11 @@ public sealed class Item_PickPut : MonoBehaviour
             newPosZ = floorZ;
 
         newPos.x = newPosX;
-        newPos.y = m_item.transform.position.y;
+        newPos.y = transform.transform.position.y;
         newPos.z = newPosZ;
 
         // 정규화 위치 이동
-        m_item.position = newPos;
+        transform.position = newPos;
 
         // 중력사용
         UseGravity(true);

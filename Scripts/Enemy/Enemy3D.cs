@@ -4,10 +4,13 @@ using UnityEngine;
 
 public sealed class Enemy3D : MonoBehaviour
 {
+    // 태그검사용 string
+    private static string m_playerS = "Player";
+
     private void OnCollisionStay(Collision other)
     {
         // 플레이어가 닿았을 경우 맞았다고 알려줌
-        if(other.transform.tag == "PlayerAttack")
+        if(other.transform.tag == m_playerS)
         {
             GameManager.Instance.PlayerManager.Stat.Hit(1);
         }
