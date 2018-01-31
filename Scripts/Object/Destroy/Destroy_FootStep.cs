@@ -26,8 +26,8 @@ public sealed class Destroy_FootStep : MonoBehaviour
 
     private void Awake()
     {
-        m_footStep2D = transform.Find("2D").gameObject;
-        m_footStep3D = transform.Find("3D").gameObject;
+        m_footStep2D = transform.Find("Collider2D").gameObject;
+        m_footStep3D = transform.Find("ModelAndCollider3D").gameObject;
     }
 
     public void TimerOn()

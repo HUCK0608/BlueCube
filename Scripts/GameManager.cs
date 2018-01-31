@@ -20,10 +20,6 @@ public sealed class GameManager : MonoBehaviour
     private ObjectManager m_objectManager;
     public ObjectManager ObjectManager { get { return m_objectManager; } }
 
-    // 지형 매니저
-    private TerrainManager m_terrainManager;
-    public TerrainManager TerrainManager { get { return m_terrainManager; } }
-
     // 플레이어 매니저
     private PlayerManager m_playerManager;
     public PlayerManager PlayerManager { get { return m_playerManager; } }
@@ -57,7 +53,6 @@ public sealed class GameManager : MonoBehaviour
         m_cameraManager = GameObject.Find("CameraGroup").GetComponent<CameraManager>();
         m_itemManager = GameObject.Find("Items").GetComponent<ItemManager>();
         m_objectManager = GameObject.Find("Objects").GetComponent<ObjectManager>();
-        m_terrainManager = GameObject.Find("Terrains").GetComponent<TerrainManager>();
         m_playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
         m_blueCubeManager = GameObject.Find("BlueCube").GetComponent<BlueCubeManager>();
         m_enemyManager = GameObject.Find("Enemies").GetComponent<EnemyManager>();
@@ -90,9 +85,6 @@ public sealed class GameManager : MonoBehaviour
         {
             // 오브젝트 변경
             m_objectManager.ChangeObjects();
-            // 지형 변경
-            m_terrainManager.ChangeTerrain();
-            
             
             // 적 변경
             m_enemyManager.ChangeEnemies();

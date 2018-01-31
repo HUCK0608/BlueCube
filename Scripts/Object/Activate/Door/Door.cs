@@ -32,7 +32,7 @@ public sealed class Door : MonoBehaviour
     {
         m_activate = GetComponent<Activate>();
 
-        m_collider2D = transform.Find("2D").GetComponent<Collider2D>();
+        m_collider2D = GetComponentInChildren<Collider2D>();
 
         InitDoor();
 
