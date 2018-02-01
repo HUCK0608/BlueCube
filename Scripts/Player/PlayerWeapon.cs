@@ -35,12 +35,12 @@ public sealed class PlayerWeapon : MonoBehaviour
         if(Input.GetKeyDown(m_playerManager.ShootFireKey))
         {
             // 2D에서 발사
-            if(GameManager.Instance.ViewType == E_ViewType.View2D)
+            if(GameManager.Instance.PlayerManager.Skill_CV.ViewType == E_ViewType.View2D)
             {
                 ShootFireBall2D();
             }
             // 3D에서 발사
-            else if(GameManager.Instance.ViewType == E_ViewType.View3D)
+            else if(GameManager.Instance.PlayerManager.Skill_CV.ViewType == E_ViewType.View3D)
             {
                 ShootFireBall3D();
             }

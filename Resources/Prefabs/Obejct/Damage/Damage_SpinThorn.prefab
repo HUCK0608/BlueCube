@@ -228,6 +228,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4254812966925270}
+  - component: {fileID: 114971299583403066}
   - component: {fileID: 114584036303645232}
   m_Layer: 0
   m_Name: Damage_SpinThorn
@@ -1393,6 +1394,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b77bca843a903d469c1965cbf6e3725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114971299583403066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1510966080209916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4883757b03d5161479b115faf174134e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114995943025624108

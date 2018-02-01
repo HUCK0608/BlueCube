@@ -10,8 +10,10 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     // 매니저
     private PlayerManager m_manager;
 
-    // 2D로 변하는 공간
-    private GameObject m_changeViewRect;
+    // 2D로 변하는 공간 오브젝트
+    private GameObject m_changeViewRect_GO;
+    // 2D로 변하는 공간 스크립트
+    private ChangeViewRect m_changeViewRect_S;
 
     // 2D 벽
     private GameObject m_leftWall2D;
@@ -47,6 +49,9 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     private E_ViewType m_viewType;
     public E_ViewType ViewType { get { return m_viewType; } }
 
+    private static E_ViewType m_view2D = E_ViewType.View2D;
+    private static E_ViewType m_view3D = E_ViewType.View3D;
+
     private void Awake()
     {
         m_manager = GetComponent<PlayerManager>();
@@ -79,7 +84,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     // 2D 공간 관련 초기화
     private void InitChangeViewRect()
     {
-        m_changeViewRect = transform.Find("Skill_ChangeView").Find("ChangeViewRect").gameObject;
+        m_changeViewRect_GO = transform.Find("Skill_ChangeView").Find("ChangeViewRect").gameObject;
+        m_changeViewRect_S = m_changeViewRect_GO.GetComponent<ChangeViewRect>();
 
         // 상자 증가수치 구하기
         m_increaseValueX = (m_maxSizeX - m_blueCubeSize.x) * m_increaseSizePer * 0.01f;
@@ -96,8 +102,11 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         if (!m_isChnaging && Input.GetKeyDown(m_manager.ChangeViewKey))
         {
             // 현재 시점이 3D이면 2D로 변경
-            if (m_viewType == E_ViewType.View3D)
+            if (m_viewType.Equals(m_view3D))
                 StartCoroutine(ChangeView2D());
+            // 현재 시점이 2D이면 3D로 변경
+            else if (m_view2D.Equals(m_view2D))
+                StartCoroutine(ChangeView3D());
         }
     }
 
@@ -105,23 +114,37 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     private IEnumerator ChangeView2D()
     {
         m_isChnaging = true;
-        m_viewType = E_ViewType.View2D;
+        m_viewType = m_view2D;
 
         // 2D 변경 상자의 시작 위치를 블루큐브 위치로 잡고 활성화
-        m_changeViewRect.transform.localScale = m_blueCubeSize;
-        m_changeViewRect.transform.position = GameManager.Instance.BlueCubeManager.transform.position;
-        m_changeViewRect.SetActive(true);
+        m_changeViewRect_GO.transform.localScale = m_blueCubeSize;
+        m_changeViewRect_GO.transform.position = GameManager.Instance.BlueCubeManager.transform.position;
+        m_changeViewRect_GO.SetActive(true);
+        // 충돌체크 켜기
+        m_changeViewRect_S.CheckIncludeWO(true);
 
         // 2D 변경 상자 크기 커지게 하기
         while (true)
         {
-            m_changeViewRect.transform.localScale += m_increaseValue;
+            m_changeViewRect_GO.transform.localScale += m_increaseValue;
 
-            if (m_changeViewRect.transform.localScale.x >= m_maxSizeX)
+            if (m_changeViewRect_GO.transform.localScale.x >= m_maxSizeX)
                 break;
 
             yield return new WaitForFixedUpdate();
         }
+
+        // 월드 모든 오브젝트의 renderer 끄기
+        GameManager.Instance.WorldManager.RendererEnable(false);
+
+        // changeBox 안에 오브젝트만 renderer 및 collider2D 켜기
+        m_changeViewRect_S.IncludeWOEnable(true);
+
+        // 플레이어 변경
+        m_manager.ChangePlayer();
+
+        // 블루큐브 변경
+        GameManager.Instance.BlueCubeManager.ChangeCube();
 
         // 카메라 무빙워크 (쿼터뷰에서 사이드뷰로 이동)
         yield return StartCoroutine(GameManager.Instance.CameraManager.MovingWork3D());
@@ -130,7 +153,51 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         Wall2D_SetActive(true);
 
         // 모든 설정이 끝나면 2D 변경 상자를 비활성화
-        m_changeViewRect.SetActive(false);
+        m_changeViewRect_GO.SetActive(false);
+
+        m_isChnaging = false;
+    }
+
+    private IEnumerator ChangeView3D()
+    {
+        m_isChnaging = true;
+        m_viewType = m_view3D;
+
+        // 2D 벽 삭제
+        Wall2D_SetActive(false);
+
+        // 충돌 체크 끄기
+        m_changeViewRect_S.CheckIncludeWO(false);
+        // 2D 변경 상자 켜기
+        m_changeViewRect_GO.SetActive(true);
+
+        // changeBox 안에 오브젝트만 renderer 및 collider2D 끄기
+        m_changeViewRect_S.IncludeWOEnable(false);
+
+        // 월드의 모든 오브젝트의 renderer 켜기
+        GameManager.Instance.WorldManager.RendererEnable(true);
+
+        // 플레이어 변경
+        m_manager.ChangePlayer();
+
+        // 블루큐브 변경
+        GameManager.Instance.BlueCubeManager.ChangeCube();
+
+        // 카메라 무빙워크 (사이드뷰에서 쿼터뷰로 이동)
+        yield return StartCoroutine(GameManager.Instance.CameraManager.MovingWork2D());
+
+        while(true)
+        {
+            m_changeViewRect_GO.transform.localScale -= m_increaseValue;
+
+            if (m_changeViewRect_GO.transform.localScale.x <= m_blueCubeSize.x)
+                break;
+
+            yield return null;
+        }
+
+        // 2D 변경 상자 끄기
+        m_changeViewRect_GO.SetActive(false);
 
         m_isChnaging = false;
     }
@@ -146,7 +213,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         if(value)
         {
             // 왼쪽 벽 위치 구하기
-            m_wallPos = m_changeViewRect.transform.position;
+            m_wallPos = m_changeViewRect_GO.transform.position;
             m_wallPos.x -= m_maxSizeX / 2 + 1;
             m_leftWall2D.transform.position = m_wallPos;
 
@@ -155,7 +222,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             m_rightWall2D.transform.position = m_wallPos;
 
             // 위쪽 벽 위치 구하기
-            m_wallPos = m_changeViewRect.transform.position;
+            m_wallPos = m_changeViewRect_GO.transform.position;
             m_wallPos.y += m_maxSizeY / 2 + 1;
             m_upWall2D.transform.position = m_wallPos;
         }

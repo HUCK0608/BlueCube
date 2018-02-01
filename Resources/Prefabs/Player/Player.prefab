@@ -1881,7 +1881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 324cf9e48a121324683a579a293a940d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxSizeX: 20
+  m_maxSizeX: 38
   m_maxSizeY: 20
   m_maxSizeZ: 20
   m_increaseSizePer: 3

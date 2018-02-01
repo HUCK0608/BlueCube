@@ -10,7 +10,11 @@ public sealed class CameraManager : MonoBehaviour
     // 3D 플레이어
     private GameObject m_player3D;
 
+    // 카메라 센터포인트
     private Transform m_centerPoint;
+
+    private Vector3 m_rotation2D;
+    private Vector3 m_rotation3D;
 
     [SerializeField]
     private float m_rotateSpeed;
@@ -22,6 +26,9 @@ public sealed class CameraManager : MonoBehaviour
         m_player3D = GameObject.Find("Player").transform.Find("3D").gameObject;
 
         m_centerPoint = transform.Find("CenterPoint");
+
+        m_rotation2D = Vector3.zero;
+        m_rotation3D = m_centerPoint.localEulerAngles;
     }
 
     private void Update()
@@ -32,7 +39,7 @@ public sealed class CameraManager : MonoBehaviour
     // 3D 에서의 카메라 이동
     public void Move3D()
     {
-        if (GameManager.Instance.ViewType != E_ViewType.View3D)
+        if (GameManager.Instance.PlayerManager.Skill_CV.ViewType != E_ViewType.View3D)
             return;
 
         transform.position = m_player3D.transform.position;
@@ -43,9 +50,23 @@ public sealed class CameraManager : MonoBehaviour
     {
         while (true)
         {
-            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(Vector3.zero), m_rotateSpeed * Time.deltaTime);
+            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation2D), m_rotateSpeed * Time.deltaTime);
 
-            if (m_centerPoint.localRotation == Quaternion.Euler(Vector3.zero))
+            if (m_centerPoint.localRotation.Equals(Quaternion.Euler(m_rotation2D)))
+                break;
+
+            yield return null;
+        }
+    }
+
+    // 카메라 무빙워크 (사이드뷰에서 쿼터뷰로 이동)
+    public IEnumerator MovingWork2D()
+    {
+        while(true)
+        {
+            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation3D), m_rotateSpeed * Time.deltaTime);
+
+            if (m_centerPoint.localRotation.Equals(Quaternion.Euler(m_rotation3D)))
                 break;
 
             yield return null;

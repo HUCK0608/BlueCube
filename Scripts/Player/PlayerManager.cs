@@ -82,22 +82,22 @@ public sealed class PlayerManager : MonoBehaviour
         m_useGravity = true;
     }
 
-    private void Update()
-    {
-        // 시점변환 키를 눌렀을 경우
-        if(Input.GetKeyDown(m_changeViewKey))
-        {
-            // 코루틴 종료
-            if (m_gravityOffWhileCor != null)
-                StopCoroutine(m_gravityOffWhileCor);
+    //private void Update()
+    //{
+    //    // 시점변환 키를 눌렀을 경우
+    //    if(Input.GetKeyDown(m_changeViewKey))
+    //    {
+    //        // 코루틴 종료
+    //        if (m_gravityOffWhileCor != null)
+    //            StopCoroutine(m_gravityOffWhileCor);
 
-            // 시점변환
-            GameManager.Instance.ChangeViewType();
+    //        // 시점변환
+    //        GameManager.Instance.ChangeViewType();
 
-            // 잠시 중력 끄기
-            m_gravityOffWhileCor = StartCoroutine(GravityOffWhile());
-        }
-    }
+    //        // 잠시 중력 끄기
+    //        m_gravityOffWhileCor = StartCoroutine(GravityOffWhile());
+    //    }
+    //}
 
     // 시점변환 때 잠시동안 중력을 끄는 코루틴
     private IEnumerator GravityOffWhile()
@@ -110,7 +110,7 @@ public sealed class PlayerManager : MonoBehaviour
     // 플레이어 변경
     public void ChangePlayer()
     {
-        if(GameManager.Instance.ViewType == E_ViewType.View2D)
+        if(m_skill_CV.ViewType.Equals(E_ViewType.View2D))
         {
             // 3D 플레이어 끄기
             m_player3D_GO.SetActive(false);
@@ -123,7 +123,7 @@ public sealed class PlayerManager : MonoBehaviour
             // 2D 플레이어 활성화
             m_player2D_GO.SetActive(true);
         }
-        else if(GameManager.Instance.ViewType == E_ViewType.View3D)
+        else if(m_skill_CV.ViewType.Equals(E_ViewType.View3D))
         {
             // 2D 플레이어 끄기
             m_player2D_GO.SetActive(false);
@@ -148,9 +148,9 @@ public sealed class PlayerManager : MonoBehaviour
         m_stat.Hit(damage);
 
         // 각 시점에 맞는 캐릭터를 스폰장소로 이동
-        if (GameManager.Instance.ViewType == E_ViewType.View2D)
+        if (m_skill_CV.ViewType == E_ViewType.View2D)
             m_player2D_GO.transform.position = respawnPoint + new Vector3(0, 1, 0);
-        else if (GameManager.Instance.ViewType == E_ViewType.View3D)
+        else if (m_skill_CV.ViewType == E_ViewType.View3D)
             m_player3D_GO.transform.position = respawnPoint + new Vector3(0, 1, 0);
     }
 }

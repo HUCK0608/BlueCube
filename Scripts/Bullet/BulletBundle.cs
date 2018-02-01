@@ -19,7 +19,10 @@ public sealed class BulletBundle : MonoBehaviour
     private void Awake()
     {
         m_stat = GetComponent<BulletStat>();
+    }
 
+    private void Start()
+    {
         InitBullets();
     }
 
