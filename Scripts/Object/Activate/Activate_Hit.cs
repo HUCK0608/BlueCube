@@ -36,9 +36,12 @@ public sealed class Activate_Hit : Activate
                     // 부셔진 스위치 개수 증가
                     brokeSwitchAmount++;
 
-                    // 부셔진 스위치 개수가 연결된 스위치 개수랑 같다면 오브젝트 활성화
+                    // 부셔진 스위치 개수가 연결된 스위치 개수랑 같다면 오브젝트 활성화 및 코루틴 종료
                     if (brokeSwitchAmount == m_switchAmount)
+                    {
                         m_isActivate = true;
+                        break;
+                    }
                 }
             }
 

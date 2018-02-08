@@ -28,11 +28,15 @@ public sealed class Door : MonoBehaviour
     // 열리고나서 부셔져야 하는 콜라이더
     private Collider2D m_collider2D;
 
+    private WorldObject m_worldObject;
+
     private void Awake()
     {
         m_activate = GetComponent<Activate>();
 
         m_collider2D = GetComponentInChildren<Collider2D>();
+
+        m_worldObject = GetComponent<WorldObject>();
 
         InitDoor();
 
@@ -64,17 +68,21 @@ public sealed class Door : MonoBehaviour
         StartCoroutine(Open());
     }
 
+    // 문 열기
     private IEnumerator Open()
     {
         yield return new WaitForSeconds(m_delayTime);
 
         while(true)
         {
-            transform.position = Vector3.MoveTowards(transform.position, m_openPos, m_moveSpeed * Time.deltaTime);
+            // 시점변환중이 아니고 활성화 상태일경우에만 이동
+            if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging && m_worldObject.Enabled)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, m_openPos, m_moveSpeed * Time.deltaTime);
 
-            if (transform.position == m_openPos)
-                break;
-
+                if (transform.position == m_openPos)
+                    break;
+            }
             yield return null;
         }
 

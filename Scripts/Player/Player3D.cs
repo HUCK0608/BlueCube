@@ -103,6 +103,13 @@ public sealed class Player3D : Player
     // 3D 이동
     private void Move()
     {
+        // 현재 시점변환 중이라면 캐릭터 정지
+        if (Manager.Skill_CV.IsChanging)
+        {
+            m_rigidbody.velocity = Vector3.zero;
+            return;
+        }
+
         // 키입력
         float moveX = Input.GetAxis("Horizontal") * Manager.Stat.MoveSpeed;
         float moveZ = Input.GetAxis("Vertical") * Manager.Stat.MoveSpeed;

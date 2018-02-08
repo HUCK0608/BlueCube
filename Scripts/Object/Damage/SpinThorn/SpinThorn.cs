@@ -20,4 +20,12 @@ public sealed  class SpinThorn : MonoBehaviour
     [SerializeField]
     private float m_thornSpinSpeed;
     public float ThornSpinSpeed { get { return m_thornSpinSpeed; } }
+
+    private WorldObject m_worldObejct;
+    public WorldObject WorldObejct { get { return m_worldObejct; } }
+
+    private void Awake()
+    {
+        m_worldObejct = GetComponent<WorldObject>();
+    }
 }

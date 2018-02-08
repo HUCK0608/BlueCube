@@ -10,6 +10,8 @@ public sealed class WorldObject_Single : WorldObject
     
     private void Awake()
     {
+        m_enabled = true;
+
         m_renderer = GetComponentInChildren<MeshRenderer>();
 
         m_collider2D = GetComponentInChildren<Collider2D>();
@@ -17,6 +19,7 @@ public sealed class WorldObject_Single : WorldObject
 
     public override void RendererEnable(bool value)
     {
+        m_enabled = value;
         m_renderer.enabled = value;
     }
 

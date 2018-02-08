@@ -44,6 +44,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
     // 현재 시점 변경중인지
     private bool m_isChnaging;
+    public bool IsChanging { get { return m_isChnaging; } }
     
     // 현재 시점
     private E_ViewType m_viewType;
@@ -155,9 +156,13 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 모든 설정이 끝나면 2D 변경 상자를 비활성화
         m_changeViewRect_GO.SetActive(false);
 
+        // 그림자 끄기
+        GameManager.Instance.LightManager.ShadowEnable(false);
+
         m_isChnaging = false;
     }
 
+    // 3D로 변경
     private IEnumerator ChangeView3D()
     {
         m_isChnaging = true;
@@ -182,6 +187,9 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
         // 블루큐브 변경
         GameManager.Instance.BlueCubeManager.ChangeCube();
+
+        // 그림자 켜기
+        GameManager.Instance.LightManager.ShadowEnable(true);
 
         // 카메라 무빙워크 (사이드뷰에서 쿼터뷰로 이동)
         yield return StartCoroutine(GameManager.Instance.CameraManager.MovingWork2D());

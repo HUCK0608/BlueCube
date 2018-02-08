@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WorldObject : MonoBehaviour
 {
+    protected bool m_enabled;
+    public bool Enabled { get { return m_enabled; } }
+
     public virtual void RendererEnable(bool value)
     {
 

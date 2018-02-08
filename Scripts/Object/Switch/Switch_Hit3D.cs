@@ -4,19 +4,19 @@ using UnityEngine;
 
 public sealed class Switch_Hit3D : MonoBehaviour
 {
-    // 부모 스크립트
-    private Switch_Hit m_parent;
+    // 스위치
+    private Switch_Hit m_switch;
 
     private void Awake()
     {
-        m_parent = GetComponentInParent<Switch_Hit>();
+        m_switch = GetComponentInParent<Switch_Hit>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == m_parent.HitType.ToString("G"))
+        if(other.tag == m_switch.HitType.ToString("G"))
         {
-            m_parent.Hit();
+            m_switch.Hit();
         }
     }
 }
