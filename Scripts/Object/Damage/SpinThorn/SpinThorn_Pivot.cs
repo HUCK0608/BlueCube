@@ -34,6 +34,6 @@ public sealed class SpinThorn_Pivot : MonoBehaviour
         if (GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(E_ViewType.View2D))
             return;
 
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + m_spinThorn.PivotSpinSpeed * m_spinDir * Time.deltaTime, 0);
+        transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y + m_spinThorn.PivotSpinSpeed * m_spinDir * Time.deltaTime, 0);
     }
 }
