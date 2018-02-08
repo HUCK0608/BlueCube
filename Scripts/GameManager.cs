@@ -8,6 +8,7 @@ public sealed class GameManager : MonoBehaviour
     private static GameManager m_instance;
     public static GameManager Instance { get { return m_instance; } }
 
+    // 월드 매니저
     private WorldManager m_worldManager;
     public WorldManager WorldManager { get { return m_worldManager; } }
 
@@ -27,6 +28,9 @@ public sealed class GameManager : MonoBehaviour
     private EffectManager m_effectManager;
     public EffectManager EffectManager { get { return m_effectManager; } }
 
+    private LightManager m_lightManager;
+    public LightManager LightManager { get { return m_lightManager; } }
+
     private void Awake()
     {
         DisableCursor();
@@ -38,6 +42,7 @@ public sealed class GameManager : MonoBehaviour
         m_playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
         m_blueCubeManager = GameObject.Find("BlueCube").GetComponent<BlueCubeManager>();
         m_effectManager = GameObject.Find("Effects").GetComponent<EffectManager>();
+        m_lightManager = GameObject.Find("Light").GetComponent<LightManager>();
     }
 
     // 커서표시 잠금

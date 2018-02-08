@@ -16,9 +16,13 @@ public sealed class Bullet : MonoBehaviour
     [SerializeField]
     Effect_Type m_colEffectType;
 
+    private WorldObject m_worldObject;
+
     private void Awake()
     {
         m_bundle = transform.GetComponentInParent<BulletBundle>();
+
+        m_worldObject = GetComponent<WorldObject>();
     }
 
     // 총알 발사
@@ -47,15 +51,18 @@ public sealed class Bullet : MonoBehaviour
         // 정면으로 계속 이동
         while(IsUsed)
         {
-            transform.Translate(direction * m_bundle.Stat.Speed, Space.World);
+            // 시점변환중이 아니고 활성화 상태일경우만 이동
+            if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging && m_worldObject.Enabled)
+            {
+                transform.Translate(direction * m_bundle.Stat.Speed, Space.World);
 
-            // 시간 누적
-            accTime += Time.fixedDeltaTime;
+                // 시간 누적
+                accTime += Time.fixedDeltaTime;
 
-            // 지속시간이 지났을 경우 발사 정지
-            if (accTime >= m_bundle.Stat.DurationTime)
-                EndShoot();
-
+                // 지속시간이 지났을 경우 발사 정지
+                if (accTime >= m_bundle.Stat.DurationTime)
+                    EndShoot();
+            }
             yield return new WaitForFixedUpdate();
         }
 

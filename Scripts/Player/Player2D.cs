@@ -6,8 +6,11 @@ public enum E_LookDirection2D { Right = 1, Left = -1 }
 
 public sealed class Player2D : Player
 {
+    // 애니메이터
+    private Animator m_animator;
+
     // 리지드바디
-    Rigidbody2D m_rigidbody2D;
+    private Rigidbody2D m_rigidbody2D;
 
     // 캐릭터가 바라보는 방향
     private E_LookDirection2D m_lookDirection;
@@ -27,6 +30,7 @@ public sealed class Player2D : Player
     protected override void Awake()
     {
         base.Awake();
+        m_animator = GetComponent<Animator>();
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         m_lookDirection = E_LookDirection2D.Right;
 
@@ -58,6 +62,7 @@ public sealed class Player2D : Player
         CheckGround();
         Move();
         Jump();
+        SetAni();
     }
 
     private void CheckGround()
@@ -93,8 +98,21 @@ public sealed class Player2D : Player
     // 2D 이동
     private void Move()
     {
+        // 현재 시점변환 중이라면 캐릭터 정지
+        if(Manager.Skill_CV.IsChanging)
+        {
+            m_rigidbody2D.velocity = Vector2.zero;
+            return;
+        }
+
         // 키보드 입력
         float move = Input.GetAxis("Horizontal") * Manager.Stat.MoveSpeed;
+
+        // 애니메이션 설정변수
+        if (move == 0)
+            Manager.IsRunning = false;
+        else
+            Manager.IsRunning = true;
 
         // 중력을 사용중이지 않을 때
         if (!Manager.UseGravity)
@@ -159,5 +177,12 @@ public sealed class Player2D : Player
             m_rigidbody2D.AddForce(Vector2.up * Manager.Stat.JumpPower);
             Manager.IsJumping = true;
         }
+    }
+
+    // 애니메이션 설정
+    private void SetAni()
+    {
+        m_animator.SetBool("IsRunning", Manager.IsRunning);
+        m_animator.SetBool("IsJumping", Manager.IsJumping);
     }
 }

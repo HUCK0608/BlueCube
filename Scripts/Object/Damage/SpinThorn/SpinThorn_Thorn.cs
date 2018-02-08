@@ -20,7 +20,20 @@ public sealed class SpinThorn_Thorn : MonoBehaviour
 
     private void Update()
     {
-        // 회전
+        Rotation();
+    }
+
+    // 회전
+    private void Rotation()
+    {
+        // 시점 변환중이거나 활성화 되지 않았을 경우 리턴
+        if (GameManager.Instance.PlayerManager.Skill_CV.IsChanging || !m_spinThorn.WorldObejct.Enabled)
+            return;
+
+        // 2D일경우 멈춤
+        if (GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(E_ViewType.View2D))
+            return;
+
         transform.localEulerAngles = new Vector3(0, 0, transform.localEulerAngles.z + m_spinThorn.ThornSpinSpeed * m_spinDir * Time.deltaTime);
     }
 }

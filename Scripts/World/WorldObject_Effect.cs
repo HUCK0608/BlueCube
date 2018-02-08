@@ -12,6 +12,8 @@ public class WorldObject_Effect : WorldObject
 
     private void Awake()
     {
+        m_enabled = true;
+
         m_particles = new List<ParticleSystem>();
 
         m_particles.AddRange(GetComponentsInChildren<ParticleSystem>());
@@ -23,6 +25,8 @@ public class WorldObject_Effect : WorldObject
 
     public override void RendererEnable(bool value)
     {
+        m_enabled = value;
+
         if (value)
         {
             for (int i = 0; i < m_particleCount; i++)
@@ -31,7 +35,10 @@ public class WorldObject_Effect : WorldObject
         else
         {
             for (int i = 0; i < m_particleCount; i++)
+            {
                 m_particles[i].Stop(m_includeChildren);
+                m_particles[i].Clear(m_includeChildren);
+            }
         }
     }
 

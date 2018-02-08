@@ -11,6 +11,7 @@ public sealed class PlayerBullet3D : MonoBehaviour
     private static string m_enemyS = "Enemy";
     private static string m_playerS = "Player";
     private static string m_playerAttackS = "PlayerAttack";
+    private static string m_playerSkillS = "PlayerSkill";
 
     private void Awake()
     {
@@ -29,7 +30,7 @@ public sealed class PlayerBullet3D : MonoBehaviour
             m_bullet.EndShoot();
         }
         // 플레이어가 아니고 적이 아닐경우
-        else if(other.tag != m_playerS && other.tag != m_playerAttackS)
+        else if(other.tag != m_playerS && other.tag != m_playerAttackS && other.tag != m_playerSkillS)
         {
             m_bullet.EndShoot();
         }

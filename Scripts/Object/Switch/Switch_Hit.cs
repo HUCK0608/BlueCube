@@ -15,7 +15,7 @@ public sealed class Switch_Hit : MonoBehaviour
     [SerializeField]
     private int m_hp;
 
-    // 현재 오브젝트가 부셔졌는지
+    // 스위치가 부셔졌는지
     private bool m_isBroken;
     public bool IsBroken { get { return m_isBroken; } }
 
