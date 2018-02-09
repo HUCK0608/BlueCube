@@ -71,61 +71,61 @@ public sealed class Player3D : Player
         m_ray.origin = transform.position + m_boundsZ + m_rayOriginY;
 
         if (Physics.Raycast(m_ray, m_rayDistance, m_ignoreLayerMask))
-            Manager.IsGrounded = true;
+            m_playerManager.IsGrounded = true;
         else
-            Manager.IsGrounded = false;
+            m_playerManager.IsGrounded = false;
 
         // 하
         m_ray.origin = transform.position - m_boundsZ + m_rayOriginY;
 
         if (Physics.Raycast(m_ray, m_rayDistance, m_ignoreLayerMask))
-            Manager.IsGrounded = true;
-        else if (!Manager.IsGrounded)
-            Manager.IsGrounded = false;
+            m_playerManager.IsGrounded = true;
+        else if (!m_playerManager.IsGrounded)
+            m_playerManager.IsGrounded = false;
 
         // 좌
         m_ray.origin = transform.position - m_boundsX + m_rayOriginY;
 
         if (Physics.Raycast(m_ray, m_rayDistance, m_ignoreLayerMask))
-            Manager.IsGrounded = true;
-        else if(!Manager.IsGrounded)
-            Manager.IsGrounded = false;
+            m_playerManager.IsGrounded = true;
+        else if(!m_playerManager.IsGrounded)
+            m_playerManager.IsGrounded = false;
 
         // 우
         m_ray.origin = transform.position + m_boundsX + m_rayOriginY;
 
         if (Physics.Raycast(m_ray, m_rayDistance, m_ignoreLayerMask))
-            Manager.IsGrounded = true;
-        else if(!Manager.IsGrounded)
-            Manager.IsGrounded = false;
+            m_playerManager.IsGrounded = true;
+        else if(!m_playerManager.IsGrounded)
+            m_playerManager.IsGrounded = false;
     }
 
     // 3D 이동
     private void Move()
     {
         // 현재 시점변환 중이라면 캐릭터 정지
-        if (Manager.Skill_CV.IsChanging)
+        if (m_playerManager.Skill_CV.IsChanging)
         {
             m_rigidbody.velocity = Vector3.zero;
             return;
         }
 
         // 키입력
-        float moveX = Input.GetAxis("Horizontal") * Manager.Stat.MoveSpeed;
-        float moveZ = Input.GetAxis("Vertical") * Manager.Stat.MoveSpeed;
+        float moveX = Input.GetAxis("Horizontal") * m_playerManager.Stat.MoveSpeed;
+        float moveZ = Input.GetAxis("Vertical") * m_playerManager.Stat.MoveSpeed;
 
         // 애니메이션 설정변수
         if (moveX == 0 && moveZ == 0)
-            Manager.IsRunning = false;
+            m_playerManager.IsRunning = false;
         else
-            Manager.IsRunning = true;
+            m_playerManager.IsRunning = true;
 
         // 중력을 사용중이지 않을 때
-        if(!Manager.UseGravity)
+        if(!m_playerManager.UseGravity)
         {
             // 이동키를 누를경우 중력 사용
             if (moveX != 0 || moveZ != 0)
-                Manager.UseGravity = true;
+                m_playerManager.UseGravity = true;
         }
 
         // 벡터 형태로 변경
@@ -166,17 +166,17 @@ public sealed class Player3D : Player
 
         // 이동을 하는 경우에만 캐릭터 회전
         if (movement != Vector3.zero)
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), Manager.Stat.RotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), m_playerManager.Stat.RotationSpeed * Time.deltaTime);
 
         // 스피드 적용
-        movement *= Manager.Stat.MoveSpeed;
+        movement *= m_playerManager.Stat.MoveSpeed;
 
         // 땅이라면 땅위치에서 살짝 띄어줌
-        if(Manager.IsGrounded)
+        if(m_playerManager.IsGrounded)
         {
             // 점프중일경우 점프중이 아니라고 알림
-            if(Manager.IsJumping)
-                Manager.IsJumping = false;
+            if(m_playerManager.IsJumping)
+                m_playerManager.IsJumping = false;
 
             m_ray.origin = transform.position + m_rayOriginY;
             if (Physics.Raycast(m_ray, out m_hit, m_rayDistance, m_ignoreLayerMask))
@@ -190,7 +190,7 @@ public sealed class Player3D : Player
         // 땅이 아니라면 중력 적용
         else
         {
-            float nextVelocity = m_rigidbody.velocity.y + Manager.Stat.Gravity * Time.deltaTime;
+            float nextVelocity = m_rigidbody.velocity.y + m_playerManager.Stat.Gravity * Time.deltaTime;
             movement.y = nextVelocity;
         }
 
@@ -202,17 +202,36 @@ public sealed class Player3D : Player
     private void Jump()
     {
         // 스페이스바를 누르고 땅일경우 점프
-        if(Input.GetKeyDown(KeyCode.Space) && Manager.IsGrounded)
+        if(Input.GetKeyDown(KeyCode.Space) && m_playerManager.IsGrounded)
         {
-            m_rigidbody.AddForce(Vector3.up * Manager.Stat.JumpPower);
-            Manager.IsJumping = true;
+            m_rigidbody.AddForce(Vector3.up * m_playerManager.Stat.JumpPower);
+            m_playerManager.IsJumping = true;
         }
+    }
+
+    private void Rotation()
+    {
+        // 시점변환 중일경우 리턴
+        if (m_playerManager.Skill_CV.IsChanging)
+            return;
+
+        m_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        Vector3 lookDirection = Vector3.zero;
+
+        if (Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, m_ignoreLayerMask))
+        {
+            lookDirection = m_hit.point - transform.position;
+            lookDirection.y = 0;
+        }
+
+        transform.rotation = Quaternion.LookRotation(lookDirection);
     }
 
     // 애니메이션 설정
     private void SetAni()
     {
-        m_animator.SetBool("IsRunning", Manager.IsRunning);
-        m_animator.SetBool("IsJumping", Manager.IsJumping);
+        m_animator.SetBool("IsRunning", m_playerManager.IsRunning);
+        m_animator.SetBool("IsJumping", m_playerManager.IsJumping);
     }
 }

@@ -15,12 +15,19 @@ public sealed class PlayerWeapon : MonoBehaviour
     private Transform m_fireBallMuzzle2D;
     private Transform m_fireBallMuzzle3D;
 
+    private Ray m_ray;
+    private RaycastHit m_hit;
+    private int m_layerMask;
+    private Vector3 m_shootDirection;
+
     private void Awake()
     {
         m_playerManager = GetComponent<PlayerManager>();
 
         m_fireBallMuzzle2D = transform.Find("2D").Find("FireBallMuzzle");
         m_fireBallMuzzle3D = transform.Find("3D").Find("FireBallMuzzle");
+
+        m_layerMask = (-1) - ((1 << 8) | (1 << 11));
     }
 
     private void Update()
@@ -52,16 +59,23 @@ public sealed class PlayerWeapon : MonoBehaviour
     {
         int playerLook = (int)m_playerManager.Player2D_S.LookDirection;
 
-        Vector3 shootDirection = Vector3.right * playerLook;
+        m_shootDirection = Vector3.right * playerLook;
 
-        m_fireballBundle.ShootBullet(m_fireBallMuzzle2D.position, shootDirection.normalized);
+        m_fireballBundle.ShootBullet(m_fireBallMuzzle2D.position, m_shootDirection.normalized);
     }
 
     // 3D에서 발사
     private void ShootFireBall3D()
     {
-        Vector3 shootDirection = m_playerManager.Player3D_GO.transform.forward;
+        m_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        m_fireballBundle.ShootBullet(m_fireBallMuzzle3D.position, shootDirection.normalized);
+        if (Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, m_layerMask))
+        {
+            m_shootDirection = m_hit.point - m_fireBallMuzzle3D.position;
+            m_shootDirection.y = 0;
+        }
+
+        m_fireballBundle.ShootBullet(m_fireBallMuzzle3D.position, m_shootDirection.normalized);
+        m_playerManager.Player3D_GO.transform.rotation = Quaternion.LookRotation(m_shootDirection);
     }
 }
