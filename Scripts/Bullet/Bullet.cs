@@ -33,10 +33,8 @@ public sealed class Bullet : MonoBehaviour
         // 시작위치로 이동
         transform.position = start;
 
-        if (GameManager.Instance.PlayerManager.Skill_CV.ViewType == E_ViewType.View2D)
-            transform.eulerAngles = Vector3.zero;
-        else if (GameManager.Instance.PlayerManager.Skill_CV.ViewType == E_ViewType.View3D)
-            transform.rotation = Quaternion.LookRotation(direction);
+        // 회전
+        transform.rotation = Quaternion.LookRotation(direction);
 
         // 이동 코루틴 시작
         StartCoroutine(Move(direction));
@@ -67,7 +65,10 @@ public sealed class Bullet : MonoBehaviour
         }
 
         GameManager.Instance.EffectManager.CreateEffect(m_colEffectType, transform.position);
-        gameObject.SetActive(false);
+
+        // 렌더링 및 2D 콜라이더 비활성화
+        m_worldObject.RendererEnable(false);
+        m_worldObject.Collider2DEnable(false);
     }
 
     // 총알발사를 멈춤
