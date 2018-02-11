@@ -7,8 +7,8 @@ public enum E_ViewType { View3D, View2D }
 
 public sealed class PlayerSkill_ChangeView : MonoBehaviour
 {
-    // 매니저
-    private PlayerManager m_manager;
+    // 플레이어 매니저
+    private PlayerManager m_playerManager;
 
     // 2D로 변하는 공간 오브젝트
     private GameObject m_changeViewRect_GO;
@@ -40,7 +40,11 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     private float m_increaseValueZ;
 
     // 증가수치 벡터
-    private Vector3 m_increaseValue;
+    private Vector3 m_increaseVectorXY;
+    private Vector3 m_increaseVectorZ;
+
+    // z 감소수치 벡터
+    private Vector3 m_decreaseVector;
 
     // 현재 시점 변경중인지
     private bool m_isChnaging;
@@ -55,7 +59,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
     private void Awake()
     {
-        m_manager = GetComponent<PlayerManager>();
+        m_playerManager = GetComponent<PlayerManager>();
 
         m_blueCubeSize = GameManager.Instance.BlueCubeManager.transform.localScale;
 
@@ -93,14 +97,18 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_increaseValueY = (m_maxSizeY - m_blueCubeSize.y) * m_increaseSizePer * 0.01f;
         m_increaseValueZ = (m_maxSizeZ - m_blueCubeSize.z) * m_increaseSizePer * 0.01f;
 
-        // 증가수치 벡터로 변경
-        m_increaseValue = new Vector3(m_increaseValueX, m_increaseValueY, m_increaseValueZ);
+        // x, y 증가수치 벡터
+        m_increaseVectorXY = new Vector3(m_increaseValueX, m_increaseValueY, 0f);
+        // z 증가수치 벡터
+        m_increaseVectorZ = new Vector3(0, 0, m_increaseValueZ);
+        // 감소수치 벡터
+        m_decreaseVector = -(m_increaseVectorXY + m_increaseVectorZ);
     }
 
     private void Update()
     {
         // 시점 변경중이 아니고 카메라 변경 키를 눌렀을 때
-        if (!m_isChnaging && Input.GetKeyDown(m_manager.ChangeViewKey))
+        if (!m_isChnaging && Input.GetKeyDown(m_playerManager.ChangeViewKey))
         {
             // 현재 시점이 3D이면 2D로 변경
             if (m_viewType.Equals(m_view3D))
@@ -124,13 +132,25 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 충돌체크 켜기
         m_changeViewRect_S.CheckIncludeWO(true);
 
-        // 2D 변경 상자 크기 커지게 하기
+        // 2D 변경 상자 x, y 커지게 하기
         while (true)
         {
-            m_changeViewRect_GO.transform.localScale += m_increaseValue;
+            // x, y 크기 키우기
+            m_changeViewRect_GO.transform.localScale += m_increaseVectorXY;
 
             if (m_changeViewRect_GO.transform.localScale.x >= m_maxSizeX)
                 break;
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        // 2D 변경 상자 z 커지게 하기 (시점변환 키를 누르고 있는동안에만 적용)
+        // 시점변환 키를 땔 경우 다음으로 넘어감
+        while(Input.GetKey(m_playerManager.ChangeViewKey))
+        {
+            // 최대제한 z크기보다 작을경우에만 크게 만들기
+            if(m_changeViewRect_GO.transform.localScale.z < m_maxSizeZ)
+                m_changeViewRect_GO.transform.localScale += m_increaseVectorZ;
 
             yield return new WaitForFixedUpdate();
         }
@@ -142,7 +162,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_changeViewRect_S.IncludeWOEnable(true);
 
         // 플레이어 변경
-        m_manager.ChangePlayer();
+        m_playerManager.ChangePlayer();
 
         // 블루큐브 변경
         GameManager.Instance.BlueCubeManager.ChangeCube();
@@ -168,6 +188,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_isChnaging = true;
         m_viewType = m_view3D;
 
+
         // 2D 벽 삭제
         Wall2D_SetActive(false);
 
@@ -183,7 +204,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         GameManager.Instance.WorldManager.RendererEnable(true);
 
         // 플레이어 변경
-        m_manager.ChangePlayer();
+        m_playerManager.ChangePlayer();
 
         // 블루큐브 변경
         GameManager.Instance.BlueCubeManager.ChangeCube();
@@ -194,10 +215,16 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 카메라 무빙워크 (사이드뷰에서 쿼터뷰로 이동)
         yield return StartCoroutine(GameManager.Instance.CameraManager.MovingWork2D());
 
-        while(true)
-        {
-            m_changeViewRect_GO.transform.localScale -= m_increaseValue;
+        // z 감소수치 새로 계산
+        m_decreaseVector.z = -((m_changeViewRect_GO.transform.localScale.z - m_blueCubeSize.z) * m_increaseSizePer * 0.01f);
 
+        // 2D 변경 상자 크기 줄이기
+        while (true)
+        {
+            // 크기 줄이기
+            m_changeViewRect_GO.transform.localScale += m_decreaseVector;
+
+            // 블루큐브 사이즈만큼 작아지면 다음으로 넘어감
             if (m_changeViewRect_GO.transform.localScale.x <= m_blueCubeSize.x)
                 break;
 
