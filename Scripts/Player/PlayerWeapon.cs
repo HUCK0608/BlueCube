@@ -76,6 +76,5 @@ public sealed class PlayerWeapon : MonoBehaviour
         }
 
         m_fireballBundle.ShootBullet(m_fireBallMuzzle3D.position, m_shootDirection.normalized);
-        m_playerManager.Player3D_GO.transform.rotation = Quaternion.LookRotation(m_shootDirection);
     }
 }
