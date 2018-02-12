@@ -38,6 +38,10 @@ public sealed class PlayerWeapon : MonoBehaviour
     // 파이어볼 발사
     public void ShootFireBall()
     {
+        // 시점변환중일경우 발사 금지
+        if (m_playerManager.Skill_CV.IsChanging)
+            return;
+
         // 불 발사 키를 눌렀을 경우
         if(Input.GetKeyDown(m_playerManager.ShootFireKey))
         {

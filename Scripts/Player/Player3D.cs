@@ -71,6 +71,15 @@ public sealed class Player3D : Player
     // 땅인지 체크하는 함수
     private void CheckGround()
     {
+        // 점프중일경우 최고높이까지 갈 때 까지 땅 체크를 하지 않음
+        if (m_playerManager.IsJumping && m_rigidbody.velocity.y >= 0f)
+        {
+            if (m_playerManager.IsGrounded)
+                m_playerManager.IsGrounded = false;
+
+            return;
+        }
+
         // 무시해야할 총알, 플레이어 레이어마스크
         int ignoreLM = GameLibrary.IgonoreLM_Bullet_Player;
 
@@ -120,7 +129,6 @@ public sealed class Player3D : Player
         // 땅이라면 땅위치에서 살짝 띄어줌
         if (m_playerManager.IsGrounded)
         {
-            Debug.Log("call");
             // 점프중일경우 점프중이 아니라고 알림
             if (m_playerManager.IsJumping)
                 m_playerManager.IsJumping = false;
@@ -158,14 +166,6 @@ public sealed class Player3D : Player
             m_playerManager.IsRunning = false;
         else
             m_playerManager.IsRunning = true;
-
-        // 중력을 사용중이지 않을 때
-        if(!m_playerManager.UseGravity)
-        {
-            // 이동키를 누를경우 중력 사용
-            if (moveX != 0 || moveZ != 0)
-                m_playerManager.UseGravity = true;
-        }
 
         // 벡터 형태로 변경
         Vector3 movement = Vector3.zero;
@@ -211,7 +211,7 @@ public sealed class Player3D : Player
         movement *= m_playerManager.Stat.MoveSpeed;
 
         // 땅이 아닐경우 중력적용
-        if(!m_playerManager.IsGrounded)
+        if(!m_playerManager.IsGrounded || m_playerManager.IsJumping)
         {
             float nextVelocity = m_rigidbody.velocity.y + m_playerManager.Stat.Gravity * Time.deltaTime;
             movement.y = nextVelocity;

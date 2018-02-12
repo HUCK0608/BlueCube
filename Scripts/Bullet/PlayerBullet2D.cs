@@ -29,7 +29,7 @@ public sealed class PlayerBullet2D : MonoBehaviour
 
             m_bullet.EndShoot();
         }
-        // 플레이어가 아니고 적이 아닐경우
+        // 적이 아니고 플레이어 관련 콜라이더가 아닐경우
         else if(other.tag != m_playerS && other.tag != m_playerAttackS && other.tag != m_playerSkillS)
         {
             m_bullet.EndShoot();

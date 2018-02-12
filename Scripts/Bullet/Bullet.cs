@@ -12,6 +12,8 @@ public sealed class Bullet : MonoBehaviour
     private bool m_isUsed;
     public bool IsUsed { get { return m_isUsed; } }
 
+    private bool m_isShoot;
+
     // 충돌 이펙트 타입
     [SerializeField]
     Effect_Type m_colEffectType;
@@ -46,8 +48,10 @@ public sealed class Bullet : MonoBehaviour
         // 누적시간
         float accTime = 0;
 
+        m_isShoot = true;
+
         // 정면으로 계속 이동
-        while(IsUsed)
+        while(m_isShoot)
         {
             // 시점변환중이 아니고 활성화 상태일경우만 이동
             if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging && m_worldObject.Enabled)
@@ -59,21 +63,26 @@ public sealed class Bullet : MonoBehaviour
 
                 // 지속시간이 지났을 경우 발사 정지
                 if (accTime >= m_bundle.Stat.DurationTime)
+                {
                     EndShoot();
+                }
             }
             yield return new WaitForFixedUpdate();
         }
 
+        // 이펙트 생성
         GameManager.Instance.EffectManager.CreateEffect(m_colEffectType, transform.position);
 
         // 렌더링 및 2D 콜라이더 비활성화
         m_worldObject.RendererEnable(false);
         m_worldObject.Collider2DEnable(false);
+
+        m_isUsed = false;
     }
 
     // 총알발사를 멈춤
     public void EndShoot()
     {
-        m_isUsed = false;
+        m_isShoot = false;
     }
 }
