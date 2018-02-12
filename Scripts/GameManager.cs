@@ -34,7 +34,6 @@ public sealed class GameManager : MonoBehaviour
     private void Awake()
     {
         //DisableCursor();
-
         m_instance = GetComponent<GameManager>();
 
         m_worldManager = GameObject.Find("World").GetComponent<WorldManager>();

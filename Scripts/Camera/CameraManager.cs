@@ -7,23 +7,28 @@ public sealed class CameraManager : MonoBehaviour
     // 카메라
     private Camera m_camera;
 
-    // 3D 플레이어
-    private GameObject m_player3D;
-
     // 카메라 센터포인트
     private Transform m_centerPoint;
 
+    // 회전값 벡터
     private Vector3 m_rotation2D;
     private Vector3 m_rotation3D;
 
+    // 이동속도
+    [SerializeField]
+    private float m_moveSpeed;
+
+    // 회전속도
     [SerializeField]
     private float m_rotateSpeed;
+
+    // 이동 최대 제한 거리 (플레이어와 이동지점 거리)
+    [SerializeField]
+    private float m_moveMaxDis;
 
     private void Awake()
     {
         m_camera = transform.Find("CenterPoint").Find("Camera").GetComponent<Camera>();
-
-        m_player3D = GameObject.Find("Player").transform.Find("3D").gameObject;
 
         m_centerPoint = transform.Find("CenterPoint");
 
@@ -33,16 +38,22 @@ public sealed class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        Move3D();
+        FollowPlayer3D();
     }
 
-    // 3D 에서의 카메라 이동
-    public void Move3D()
+    // 3D 플레이어를 따라가는 카메라
+    private void FollowPlayer3D()
     {
-        if (GameManager.Instance.PlayerManager.Skill_CV.ViewType != E_ViewType.View3D)
-            return;
+        transform.position = GameManager.Instance.PlayerManager.Player3D_GO.transform.position;
+    }
 
-        transform.position = m_player3D.transform.position;
+    // 해당 지점으로 카메라 좌표 이동
+    public void MoveToDirection(Vector3 direction)
+    {
+        // 센터포인트에서 해당뱡향 최대값까지 가게 만듬
+        Vector3 movePoint = direction * m_moveMaxDis;
+
+        m_centerPoint.localPosition = Vector3.Lerp(m_centerPoint.localPosition, movePoint, m_moveSpeed * Time.deltaTime);
     }
 
     // 카메라 무빙워크 (쿼터뷰에서 사이드뷰로 이동)

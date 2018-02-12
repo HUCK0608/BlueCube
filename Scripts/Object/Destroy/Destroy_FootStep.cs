@@ -23,7 +23,6 @@ public sealed class Destroy_FootStep : MonoBehaviour
     private GameObject m_footStep2D;
     private GameObject m_footStep3D;
 
-
     private void Awake()
     {
         m_footStep2D = transform.Find("Collider2D").gameObject;
@@ -46,16 +45,19 @@ public sealed class Destroy_FootStep : MonoBehaviour
 
         while(true)
         {
-            m_addTime += Time.deltaTime;
-
-            if(m_addTime >= m_keepTime)
+            // 시점변환을 하지 않을경우에만 실행
+            if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging)
             {
-                m_footStep2D.SetActive(false);
-                m_footStep3D.SetActive(false);
-                StartCoroutine(RegenTimer());
-                break;
-            }
+                m_addTime += Time.deltaTime;
 
+                if (m_addTime >= m_keepTime)
+                {
+                    m_footStep2D.SetActive(false);
+                    m_footStep3D.SetActive(false);
+                    StartCoroutine(RegenTimer());
+                    break;
+                }
+            }
             yield return null;
         }
     }
@@ -66,15 +68,18 @@ public sealed class Destroy_FootStep : MonoBehaviour
 
         while(true)
         {
-            m_addTime += Time.deltaTime;
-
-            if(m_addTime >= m_regenTime)
+            // 시점변환을 하지 않을경우에만 실행
+            if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging)
             {
-                m_footStep2D.SetActive(true);
-                m_footStep3D.SetActive(true);
-                break;
-            }
+                m_addTime += Time.deltaTime;
 
+                if (m_addTime >= m_regenTime)
+                {
+                    m_footStep2D.SetActive(true);
+                    m_footStep3D.SetActive(true);
+                    break;
+                }
+            }
             yield return null;
         }
 
