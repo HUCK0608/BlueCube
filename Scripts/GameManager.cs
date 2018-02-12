@@ -33,7 +33,7 @@ public sealed class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        DisableCursor();
+        //DisableCursor();
 
         m_instance = GetComponent<GameManager>();
 

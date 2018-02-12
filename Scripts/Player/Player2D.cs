@@ -78,9 +78,9 @@ public sealed class Player2D : Player
         m_hit = Physics2D.Raycast(m_rayOrigin, m_rayDirection, m_rayDistance, m_ignoreLayerMask);
 
         if (m_hit.collider != null)
-            Manager.IsGrounded = true;
+            m_playerManager.IsGrounded = true;
         else
-            Manager.IsGrounded = false;
+            m_playerManager.IsGrounded = false;
 
         // 우
         m_rayOrigin = transform.position;
@@ -90,36 +90,36 @@ public sealed class Player2D : Player
         m_hit = Physics2D.Raycast(m_rayOrigin, m_rayDirection, m_rayDistance, m_ignoreLayerMask);
 
         if (m_hit.collider != null)
-            Manager.IsGrounded = true;
-        else if (!Manager.IsGrounded)
-            Manager.IsGrounded = false;
+            m_playerManager.IsGrounded = true;
+        else if (!m_playerManager.IsGrounded)
+            m_playerManager.IsGrounded = false;
     }
 
     // 2D 이동
     private void Move()
     {
         // 현재 시점변환 중이라면 캐릭터 정지
-        if(Manager.Skill_CV.IsChanging)
+        if(m_playerManager.Skill_CV.IsChanging)
         {
             m_rigidbody2D.velocity = Vector2.zero;
             return;
         }
 
         // 키보드 입력
-        float move = Input.GetAxis("Horizontal") * Manager.Stat.MoveSpeed;
+        float move = Input.GetAxis("Horizontal") * m_playerManager.Stat.MoveSpeed;
 
         // 애니메이션 설정변수
         if (move == 0)
-            Manager.IsRunning = false;
+            m_playerManager.IsRunning = false;
         else
-            Manager.IsRunning = true;
+            m_playerManager.IsRunning = true;
 
         // 중력을 사용중이지 않을 때
-        if (!Manager.UseGravity)
+        if (!m_playerManager.UseGravity)
         {
             // 이동키를 누를경우 중력 사용
             if (move != 0)
-                Manager.UseGravity = true;
+                m_playerManager.UseGravity = true;
         }
 
         // 바라보는 방향 변경해주기
@@ -138,11 +138,11 @@ public sealed class Player2D : Player
         Vector3 movement = Vector3.right * move;
 
         //// 땅이라면 땅위치에서 살짝 띄어줌
-        if (Manager.IsGrounded)
+        if (m_playerManager.IsGrounded)
         {
             // 점프중일경우 점프중이 아니라고 알림
-            if (Manager.IsJumping)
-                Manager.IsJumping = false;
+            if (m_playerManager.IsJumping)
+                m_playerManager.IsJumping = false;
 
             m_rayOrigin = transform.position;
             m_rayOrigin.y += m_rayOriginY;
@@ -160,7 +160,7 @@ public sealed class Player2D : Player
         // 땅이 아니라면 중력 적용
         else
         {
-            float nextVelocity = m_rigidbody2D.velocity.y + Manager.Stat.Gravity * Time.deltaTime;
+            float nextVelocity = m_rigidbody2D.velocity.y + m_playerManager.Stat.Gravity * Time.deltaTime;
             movement.y = nextVelocity;
         }
 
@@ -172,17 +172,17 @@ public sealed class Player2D : Player
     private void Jump()
     {
         // 스페이스바를 누르고 땅일경우 점프
-        if(Input.GetKeyDown(KeyCode.Space) && Manager.IsGrounded && !Manager.IsJumping)
+        if(Input.GetKeyDown(KeyCode.Space) && m_playerManager.IsGrounded && !m_playerManager.IsJumping)
         {
-            m_rigidbody2D.AddForce(Vector2.up * Manager.Stat.JumpPower);
-            Manager.IsJumping = true;
+            m_rigidbody2D.AddForce(Vector2.up * m_playerManager.Stat.JumpPower);
+            m_playerManager.IsJumping = true;
         }
     }
 
     // 애니메이션 설정
     private void SetAni()
     {
-        m_animator.SetBool("IsRunning", Manager.IsRunning);
-        m_animator.SetBool("IsJumping", Manager.IsJumping);
+        m_animator.SetBool("IsRunning", m_playerManager.IsRunning);
+        m_animator.SetBool("IsJumping", m_playerManager.IsJumping);
     }
 }

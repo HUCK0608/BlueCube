@@ -5,11 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // 플레이어 매니저
-    private PlayerManager m_manager;
-    protected PlayerManager Manager { get { return m_manager; } }
+    protected PlayerManager m_playerManager;
 
     protected virtual void Awake()
     {
-        m_manager = transform.parent.GetComponent<PlayerManager>();
+        m_playerManager = transform.parent.GetComponent<PlayerManager>();
     }
 }

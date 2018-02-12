@@ -21,6 +21,10 @@ public sealed class MovePanel : MonoBehaviour
     [SerializeField]
     private float m_moveSpeed;
 
+    // 다음 경로에 도착하면 대기시간
+    [SerializeField]
+    private float m_waitTime;
+
     private WorldObject m_worldObejct;
 
     private void Awake()
@@ -53,6 +57,9 @@ public sealed class MovePanel : MonoBehaviour
     // 패널 이동
     private IEnumerator Move()
     {
+        // 처음에 대기시간 없게 하기 위한 변수
+        bool m_isFirst = true;
+
         while(true)
         {
             // 시점변환중이 아니고 활성화 되어있을 경우에만 이동
@@ -69,6 +76,11 @@ public sealed class MovePanel : MonoBehaviour
                     // 아닐 경우 다음 경로로 바꿈
                     else
                         m_currentPath++;
+
+                    if (!m_isFirst)
+                        yield return new WaitForSeconds(m_waitTime);
+                    else
+                        m_isFirst = false;
                 }
             }
             yield return null;
