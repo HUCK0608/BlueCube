@@ -81,7 +81,7 @@ public sealed class Player3D : Player
         }
 
         // 무시해야할 총알, 플레이어 레이어마스크
-        int ignoreLM = GameLibrary.IgonoreLM_Bullet_Player;
+        int ignoreLM = GameLibrary.IgonoreLM_PEE;
 
         // 각 콜라이더 꼭지점 레이 체크
         // 한 점이라도 충돌된 것이 있으면 땅이라고 적용
@@ -135,7 +135,7 @@ public sealed class Player3D : Player
 
             m_ray.origin = transform.position + m_rayOriginY;
 
-            if (Physics.Raycast(m_ray, out m_hit, m_checkGroundRayDis, GameLibrary.IgonoreLM_Bullet_Player))
+            if (Physics.Raycast(m_ray, out m_hit, m_checkGroundRayDis, GameLibrary.IgonoreLM_PEE))
             {
                 // 플레이어를 띄울 위치를 계산
                 m_onGroundPos = transform.position;
@@ -243,12 +243,21 @@ public sealed class Player3D : Player
 
         Vector3 lookDirection = Vector3.zero;
 
-        if (Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, GameLibrary.IgonoreLM_Bullet_Player))
+        if (Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, GameLibrary.IgonoreLM_PEE))
         {
             lookDirection = m_hit.point - transform.position;
             lookDirection.y = 0;
 
             transform.rotation = Quaternion.LookRotation(lookDirection);
+
+            // 카메라 이동을 위한 hit지점과 플레이어의 방향 계산
+            Vector3 hitPoint = m_hit.point;
+            hitPoint.y = transform.position.y;
+
+            Vector3 hitDirection = hitPoint - transform.position;
+
+            // 카메라 이동
+            GameManager.Instance.CameraManager.MoveToDirection(hitDirection.normalized);
         }
     }
 
@@ -272,7 +281,7 @@ public sealed class Player3D : Player
 
             // 레이발사
             // 레이에 충돌체가 있을경우
-            if(Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, GameLibrary.IgonoreLM_Bullet_Player))
+            if(Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, GameLibrary.IgonoreLM_PEE))
             {
                 // 착지지점이 활성화 되어있지 않을 경우
                 if (!m_landingPoint.activeSelf)
@@ -298,5 +307,11 @@ public sealed class Player3D : Player
     {
         m_animator.SetBool("IsRunning", m_playerManager.IsRunning);
         m_animator.SetBool("IsJumping", m_playerManager.IsJumping);
+    }
+
+    // 캐릭터에 힘주기
+    public void AddForce(Vector3 force, ForceMode mode)
+    {
+        m_rigidbody.AddForce(force, mode);
     }
 }

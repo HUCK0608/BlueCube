@@ -82,30 +82,13 @@ public sealed class PlayerManager : MonoBehaviour
         m_useGravity = true;
     }
 
-    //private void Update()
-    //{
-    //    // 시점변환 키를 눌렀을 경우
-    //    if(Input.GetKeyDown(m_changeViewKey))
-    //    {
-    //        // 코루틴 종료
-    //        if (m_gravityOffWhileCor != null)
-    //            StopCoroutine(m_gravityOffWhileCor);
-
-    //        // 시점변환
-    //        GameManager.Instance.ChangeViewType();
-
-    //        // 잠시 중력 끄기
-    //        m_gravityOffWhileCor = StartCoroutine(GravityOffWhile());
-    //    }
-    //}
-
     // 시점변환 때 잠시동안 중력을 끄는 코루틴
-    private IEnumerator GravityOffWhile()
-    {
-        m_useGravity = false;
-        yield return new WaitForSeconds(2f);
-        m_useGravity = true;
-    }
+    //private IEnumerator GravityOffWhile()
+    //{
+    //    m_useGravity = false;
+    //    yield return new WaitForSeconds(2f);
+    //    m_useGravity = true;
+    //}
 
     // 플레이어 변경
     public void ChangePlayer()
@@ -138,9 +121,18 @@ public sealed class PlayerManager : MonoBehaviour
         }
     }
 
-    public void Hit(int damage)
+    public void AddForce(Vector3 force, ForceMode mode)
     {
-        m_stat.Hit(damage);
+        // 2D일 경우
+        if(m_skill_CV.ViewType.Equals(GameLibrary.Enum_View2D))
+        {
+
+        }
+        // 3D일 경우
+        else
+        {
+            m_player3D_S.AddForce(force, mode);
+        }
     }
 
     public void HitAndRespawn(int damage, Vector3 respawnPoint)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public sealed class PlayerStat : MonoBehaviour
 {
-    private PlayerManager m_manager;
+    private PlayerManager m_playerManager;
 
     // HP
     [SerializeField]
@@ -38,7 +38,7 @@ public sealed class PlayerStat : MonoBehaviour
 
     private void Awake()
     {
-        m_manager = GetComponent<PlayerManager>();
+        m_playerManager = GetComponent<PlayerManager>();
     }
 
     // 피격시 호출
@@ -48,8 +48,10 @@ public sealed class PlayerStat : MonoBehaviour
         if (m_isInvincibility)
             return;
 
+        // 체력감소
         m_Hp -= damage;
-        Debug.Log("hp : " + m_Hp);
+        Debug.Log("데미지! 플레이어 체력 : " + m_Hp);
+
         // 무적시간 코루틴 실행
         StartCoroutine(InvincibilityTime());
     }
