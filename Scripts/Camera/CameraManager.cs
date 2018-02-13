@@ -26,9 +26,6 @@ public sealed class CameraManager : MonoBehaviour
     [SerializeField]
     private float m_moveMaxDis;
 
-    // 화면 중앙점
-    private Vector2 m_screenCenterPoint;
-
     private void Awake()
     {
         m_camera = transform.Find("CenterPoint").Find("Camera").GetComponent<Camera>();
@@ -37,8 +34,6 @@ public sealed class CameraManager : MonoBehaviour
 
         m_rotation2D = Vector3.zero;
         m_rotation3D = m_centerPoint.localEulerAngles;
-
-        m_screenCenterPoint = new Vector2(Camera.main.pixelWidth * 0.5f, Camera.main.pixelHeight * 0.5f);
     }
 
     private void Update()
@@ -56,21 +51,27 @@ public sealed class CameraManager : MonoBehaviour
     // 해당 지점으로 카메라 좌표 이동
     public void MoveToPoint(Vector3 point)
     {
-        Vector2 mousePosition = Input.mousePosition;
-        Vector2 mouseDirection = mousePosition - m_screenCenterPoint;
-        Debug.Log("MouseDirection : " + mouseDirection.normalized);
-
+        GameObject.Find("GameObject").transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         GameObject player3D = GameManager.Instance.PlayerManager.Player3D_GO;
 
         Vector3 hitPoint = point;
         hitPoint.y = player3D.transform.position.y;
 
-        Vector3 direction = point - GameManager.Instance.PlayerManager.Player3D_GO.transform.position;
+        Vector3 direction = point - player3D.transform.position;
 
-        // 센터포인트에서 해당뱡향 최대값까지 가게 만듬
-        Vector3 movePoint = direction.normalized * m_moveMaxDis;
+        float distance = Vector3.Distance(hitPoint, player3D.transform.position);
 
-        Debug.Log(Vector3.Distance(m_centerPoint.position + movePoint, m_centerPoint.position));
+        Vector3 movePoint;
+
+        // 플레이어와 해당지점까지의 거리가 최대제한 거리보다 작다면
+        if (distance < m_moveMaxDis)
+            // 해당거리만큼 이동
+            movePoint = direction.normalized * distance;
+        else
+            // 센터포인트에서 해당뱡향 최대값까지 가게 만듬
+            movePoint = direction.normalized * m_moveMaxDis;
+
+        //Debug.Log(Vector3.Distance(m_centerPoint.position + movePoint, m_centerPoint.position));
 
         m_centerPoint.localPosition = Vector3.Lerp(m_centerPoint.localPosition, movePoint, m_moveSpeed * Time.deltaTime);
     }
