@@ -250,14 +250,8 @@ public sealed class Player3D : Player
 
             transform.rotation = Quaternion.LookRotation(lookDirection);
 
-            // 카메라 이동을 위한 hit지점과 플레이어의 방향 계산
-            Vector3 hitPoint = m_hit.point;
-            hitPoint.y = transform.position.y;
-
-            Vector3 hitDirection = hitPoint - transform.position;
-
             // 카메라 이동
-            GameManager.Instance.CameraManager.MoveToDirection(hitDirection.normalized);
+            GameManager.Instance.CameraManager.MoveToPoint(m_hit.point);
         }
     }
 
