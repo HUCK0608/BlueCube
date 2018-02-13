@@ -26,6 +26,9 @@ public sealed class CameraManager : MonoBehaviour
     [SerializeField]
     private float m_moveMaxDis;
 
+    // 화면 중앙점
+    private Vector2 m_screenCenterPoint;
+
     private void Awake()
     {
         m_camera = transform.Find("CenterPoint").Find("Camera").GetComponent<Camera>();
@@ -34,6 +37,8 @@ public sealed class CameraManager : MonoBehaviour
 
         m_rotation2D = Vector3.zero;
         m_rotation3D = m_centerPoint.localEulerAngles;
+
+        m_screenCenterPoint = new Vector2(Camera.main.pixelWidth * 0.5f, Camera.main.pixelHeight * 0.5f);
     }
 
     private void Update()
@@ -44,14 +49,28 @@ public sealed class CameraManager : MonoBehaviour
     // 3D 플레이어를 따라가는 카메라
     private void FollowPlayer3D()
     {
-        transform.position = GameManager.Instance.PlayerManager.Player3D_GO.transform.position;
+        if(GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(GameLibrary.Enum_View3D))
+            transform.position = GameManager.Instance.PlayerManager.Player3D_GO.transform.position;
     }
 
     // 해당 지점으로 카메라 좌표 이동
-    public void MoveToDirection(Vector3 direction)
+    public void MoveToPoint(Vector3 point)
     {
+        Vector2 mousePosition = Input.mousePosition;
+        Vector2 mouseDirection = mousePosition - m_screenCenterPoint;
+        Debug.Log("MouseDirection : " + mouseDirection.normalized);
+
+        GameObject player3D = GameManager.Instance.PlayerManager.Player3D_GO;
+
+        Vector3 hitPoint = point;
+        hitPoint.y = player3D.transform.position.y;
+
+        Vector3 direction = point - GameManager.Instance.PlayerManager.Player3D_GO.transform.position;
+
         // 센터포인트에서 해당뱡향 최대값까지 가게 만듬
-        Vector3 movePoint = direction * m_moveMaxDis;
+        Vector3 movePoint = direction.normalized * m_moveMaxDis;
+
+        Debug.Log(Vector3.Distance(m_centerPoint.position + movePoint, m_centerPoint.position));
 
         m_centerPoint.localPosition = Vector3.Lerp(m_centerPoint.localPosition, movePoint, m_moveSpeed * Time.deltaTime);
     }
