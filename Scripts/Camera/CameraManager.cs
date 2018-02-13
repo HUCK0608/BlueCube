@@ -26,6 +26,9 @@ public sealed class CameraManager : MonoBehaviour
     [SerializeField]
     private float m_moveMaxDis;
 
+    private float m_SXDivideSY;
+    private float m_SYDivideSX;
+
     private void Awake()
     {
         m_camera = transform.Find("CenterPoint").Find("Camera").GetComponent<Camera>();
@@ -34,11 +37,20 @@ public sealed class CameraManager : MonoBehaviour
 
         m_rotation2D = Vector3.zero;
         m_rotation3D = m_centerPoint.localEulerAngles;
+
+        Camera mainCamera = Camera.main;
+
+        float screenWidth = mainCamera.pixelWidth;
+        float screenHeight = mainCamera.pixelHeight;
+
+        m_SXDivideSY = screenWidth / screenHeight;
+        m_SYDivideSX = screenHeight / screenWidth;
     }
 
     private void Update()
     {
         FollowPlayer3D();
+        MoveToMouseDirection();
     }
 
     // 3D 플레이어를 따라가는 카메라
@@ -48,31 +60,34 @@ public sealed class CameraManager : MonoBehaviour
             transform.position = GameManager.Instance.PlayerManager.Player3D_GO.transform.position;
     }
 
-    // 해당 지점으로 카메라 좌표 이동
-    public void MoveToPoint(Vector3 point)
+    // 마우스 포인터 위치의 방향을 구해서 카메라 이동
+    public void MoveToMouseDirection()
     {
-        GameObject.Find("GameObject").transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // 3D이거나 시점 변환중이면 리턴
+        if (!GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(GameLibrary.Enum_View3D) || GameManager.Instance.PlayerManager.Skill_CV.IsChanging)
+            return;
+
+        // 플레이어3D
         GameObject player3D = GameManager.Instance.PlayerManager.Player3D_GO;
 
-        Vector3 hitPoint = point;
-        hitPoint.y = player3D.transform.position.y;
+        // 마우스 포인터 위치에서 플레이어의 스크린 좌표값을 빼줌
+        Vector2 mousePosition = Input.mousePosition;
+        // 플레이어를 스크린 좌표로 가져오기
+        Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(player3D.transform.position);
+        Vector2 mousePosInCenter = mousePosition - playerScreenPosition;
 
-        Vector3 direction = point - player3D.transform.position;
+        // 마우스 x에 대한 위치 계산, 마우스 y가 증가할 때 x방향이 증가 z방향이 감소 (z방향은 마우스 y계산에 맞게하기위해 스크린 y / x 의 값을 곱해줌)
+        Vector3 calcMouseX = (Vector3.right * mousePosInCenter.x) + (Vector3.back * m_SYDivideSX * mousePosInCenter.x);
+        // 마우스 y에 대한 위치 계산, 마우스 y가 증가할 때 x방향이 증가 z방향이 증가 (x방향은 마우스 x계산에 맞게하기위해 스크린 x / y 의 값을 곱해줌)
+        Vector3 calcMouseY = (Vector3.right * m_SXDivideSY * mousePosInCenter.y) + (Vector3.forward * mousePosInCenter.y);
 
-        float distance = Vector3.Distance(hitPoint, player3D.transform.position);
+        // 마우스 방향의 월드 방향 구하기
+        Vector3 mouseDirection = calcMouseX + calcMouseY;
 
-        Vector3 movePoint;
+        // 이동방향 * 거리
+        Vector3 movePoint = mouseDirection.normalized * m_moveMaxDis;
 
-        // 플레이어와 해당지점까지의 거리가 최대제한 거리보다 작다면
-        if (distance < m_moveMaxDis)
-            // 해당거리만큼 이동
-            movePoint = direction.normalized * distance;
-        else
-            // 센터포인트에서 해당뱡향 최대값까지 가게 만듬
-            movePoint = direction.normalized * m_moveMaxDis;
-
-        //Debug.Log(Vector3.Distance(m_centerPoint.position + movePoint, m_centerPoint.position));
-
+        // 이동
         m_centerPoint.localPosition = Vector3.Lerp(m_centerPoint.localPosition, movePoint, m_moveSpeed * Time.deltaTime);
     }
 

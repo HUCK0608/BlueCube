@@ -249,9 +249,6 @@ public sealed class Player3D : Player
             lookDirection.y = 0;
 
             transform.rotation = Quaternion.LookRotation(lookDirection);
-
-            // 카메라 이동
-            GameManager.Instance.CameraManager.MoveToPoint(m_hit.point);
         }
     }
 
