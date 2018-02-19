@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4025175656239524}
   - component: {fileID: 61467952673588262}
   m_Layer: 0
-  m_Name: 2D
+  m_Name: Collider2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

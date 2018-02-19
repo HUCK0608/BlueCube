@@ -239,7 +239,7 @@ public sealed class Player3D : Player
         if (m_playerManager.Skill_CV.IsChanging)
             return;
 
-        m_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        /*m_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         Vector3 lookDirection = Vector3.zero;
 
@@ -249,7 +249,12 @@ public sealed class Player3D : Player
             lookDirection.y = 0;
 
             transform.rotation = Quaternion.LookRotation(lookDirection);
-        }
+        }*/
+
+        // 마우스 방향 구하기
+        Vector3 mouseDirection = GameManager.Instance.CameraManager.GetMouseDirectionToWorld();
+
+        transform.rotation = Quaternion.LookRotation(mouseDirection);
     }
 
     // 착지지점을 표시
