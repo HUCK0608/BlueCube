@@ -83,23 +83,30 @@ public sealed class CameraManager : MonoBehaviour
         // 플레이어3D
         GameObject player3D = GameManager.Instance.PlayerManager.Player3D_GO;
 
-        // 마우스 스크린 위치
-        Vector2 mousePosition = Input.mousePosition;
+        // y축을 보고있고 플레이어위치에 평면을 생성
+        Plane plane = new Plane(Vector3.up, player3D.transform.position);
 
-        // 플레이어를 스크린 좌표로 가져오기
-        Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(player3D.transform.position);
-        // 플레이어가 센터가되기위해 마우스위치에서 플레이어 위치를 빼줌
-        Vector2 mousePosInCenter = mousePosition - playerScreenPosition;
+        // 마우스 위치의 광선 생성
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        // 마우스 x에 대한 위치 계산, 마우스 y가 증가할 때 x방향이 증가 z방향이 감소 (z방향은 마우스 y계산에 맞게하기위해 스크린 y / x 의 값을 곱해줌)
-        Vector3 calcMouseX = (Vector3.right * mousePosInCenter.x) + (Vector3.back * m_SYDivideSX * mousePosInCenter.x);
-        // 마우스 y에 대한 위치 계산, 마우스 y가 증가할 때 x방향이 증가 z방향이 증가 (x방향은 마우스 x계산에 맞게하기위해 스크린 x / y 의 값을 곱해줌)
-        Vector3 calcMouseY = (Vector3.right * m_SXDivideSY * mousePosInCenter.y) + (Vector3.forward * mousePosInCenter.y);
+        // 충돌된 거리를 담을 변수
+        float rayDistance;
 
-        // 마우스 방향의 월드 방향 구하기
-        Vector3 mouseDirection = calcMouseX + calcMouseY;
+        // 충돌 위치를 담을 변수
+        Vector3 hitPoint = Vector3.zero;
 
-        return mouseDirection;
+        // 평면에서 광선 발사
+        if(plane.Raycast(ray, out rayDistance))
+        {
+            // 충돌 위치 구하기
+            hitPoint = ray.GetPoint(rayDistance);
+        }
+
+        // 방향 계산
+        Vector3 direction = hitPoint - player3D.transform.position;
+
+        // 방향 반환
+        return direction.normalized;
     }
 
     // 카메라 무빙워크 (쿼터뷰에서 사이드뷰로 이동)

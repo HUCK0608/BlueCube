@@ -11,6 +11,9 @@ public sealed class Player3D : Player
     // 착지위치 오브젝트
     private GameObject m_landingPoint;
 
+    // 애니메이션 전용 방향
+    private int m_aniDirection;
+
     // 땅 체크를 위한 변수들
     private List<Transform> m_checkGroundPoints;    // 각 체크 위치 오브젝트를 담은 변수
     private Vector3 m_rayOriginY;                   // 플레이어위치에서 y축으로 살짝 띄워 발사하기 위한 변수
@@ -61,9 +64,9 @@ public sealed class Player3D : Player
     private void Update()
     {
         CheckGround();
+        RotationToMousePoint();
         Jump();
         Move();
-        RotationToMousePoint();
         DrawLandingPoint();
         SetAni();
     }
@@ -161,12 +164,6 @@ public sealed class Player3D : Player
         float moveX = Input.GetAxis("Horizontal") * m_playerManager.Stat.MoveSpeed;
         float moveZ = Input.GetAxis("Vertical") * m_playerManager.Stat.MoveSpeed;
 
-        // 애니메이션 설정변수
-        if (moveX == 0 && moveZ == 0)
-            m_playerManager.IsRunning = false;
-        else
-            m_playerManager.IsRunning = true;
-
         // 벡터 형태로 변경
         Vector3 movement = Vector3.zero;
 
@@ -202,11 +199,7 @@ public sealed class Player3D : Player
             else if (moveX > 0)
                 movement = Vector3.back + Vector3.right;
         }
-
-        //// 이동을 하는 경우에만 캐릭터 회전
-        //if (movement != Vector3.zero)
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), m_playerManager.Stat.RotationSpeed * Time.deltaTime);
-
+        
         // 스피드 적용
         movement *= m_playerManager.Stat.MoveSpeed;
 
@@ -238,18 +231,6 @@ public sealed class Player3D : Player
         // 시점변환 중일경우 리턴
         if (m_playerManager.Skill_CV.IsChanging)
             return;
-
-        /*m_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        Vector3 lookDirection = Vector3.zero;
-
-        if (Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, GameLibrary.IgonoreLM_PEE))
-        {
-            lookDirection = m_hit.point - transform.position;
-            lookDirection.y = 0;
-
-            transform.rotation = Quaternion.LookRotation(lookDirection);
-        }*/
 
         // 마우스 방향 구하기
         Vector3 mouseDirection = GameManager.Instance.CameraManager.GetMouseDirectionToWorld();
@@ -301,8 +282,17 @@ public sealed class Player3D : Player
     // 애니메이션 설정
     private void SetAni()
     {
+        // 애니메이션 설정변수
+        if (m_rigidbody.velocity.x == 0 && m_rigidbody.velocity.z == 0)
+            m_playerManager.IsRunning = false;
+        else
+            m_playerManager.IsRunning = true;
+
+        
+
         m_animator.SetBool("IsRunning", m_playerManager.IsRunning);
         m_animator.SetBool("IsJumping", m_playerManager.IsJumping);
+        m_animator.SetInteger("Direction", m_aniDirection);
     }
 
     // 캐릭터에 힘주기

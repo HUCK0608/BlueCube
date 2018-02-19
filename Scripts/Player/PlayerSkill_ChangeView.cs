@@ -27,9 +27,12 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     [SerializeField]
     private int m_maxSizeX, m_maxSizeY, m_maxSizeZ;
 
-    // 증가 수치 퍼센트
+    // x,y 증가 수치 퍼센트
     [SerializeField]
-    private float m_increaseSizePer;
+    private float m_increaseSizePerXY;
+    // z 증가 수치 퍼센트
+    [SerializeField]
+    private float m_increaseSizePerZ;
 
     // 블루큐브 사이즈
     private Vector3 m_blueCubeSize;
@@ -93,9 +96,9 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_changeViewRect_S = m_changeViewRect_GO.GetComponent<ChangeViewRect>();
 
         // 상자 증가수치 구하기
-        m_increaseValueX = (m_maxSizeX - m_blueCubeSize.x) * m_increaseSizePer * 0.01f;
-        m_increaseValueY = (m_maxSizeY - m_blueCubeSize.y) * m_increaseSizePer * 0.01f;
-        m_increaseValueZ = (m_maxSizeZ - m_blueCubeSize.z) * m_increaseSizePer * 0.01f;
+        m_increaseValueX = (m_maxSizeX - m_blueCubeSize.x) * m_increaseSizePerXY * 0.01f;
+        m_increaseValueY = (m_maxSizeY - m_blueCubeSize.y) * m_increaseSizePerXY * 0.01f;
+        m_increaseValueZ = (m_maxSizeZ - m_blueCubeSize.z) * m_increaseSizePerZ * 0.01f;
 
         // x, y 증가수치 벡터
         m_increaseVectorXY = new Vector3(m_increaseValueX, m_increaseValueY, 0f);
@@ -216,7 +219,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         yield return StartCoroutine(GameManager.Instance.CameraManager.MovingWork2D());
 
         // z 감소수치 새로 계산
-        m_decreaseVector.z = -((m_changeViewRect_GO.transform.localScale.z - m_blueCubeSize.z) * m_increaseSizePer * 0.01f);
+        // z 감소수치는 x,y랑 똑같이 줄게하기위해 x,y 증가수치로 계산
+        m_decreaseVector.z = -((m_changeViewRect_GO.transform.localScale.z - m_blueCubeSize.z) * m_increaseSizePerXY * 0.01f);
 
         // 2D 변경 상자 크기 줄이기
         while (true)
