@@ -8,7 +8,7 @@ public class Damage3D : MonoBehaviour
     {
         if(other.transform.tag == "Player")
         {
-            GameManager.Instance.PlayerManager.Hit(1);
+            GameManager.Instance.PlayerManager.Stat.Hit(1);
         }
     }
 }
