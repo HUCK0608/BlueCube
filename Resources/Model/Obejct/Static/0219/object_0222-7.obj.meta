@@ -1,21 +1,21 @@
 fileFormatVersion: 2
-guid: 51a2a529b99c2b846aec65431eaee67a
-timeCreated: 1516103825
+guid: a7f1028a6b6789a408c5a27998f432c1
+timeCreated: 1519308390
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: object_export_0116-7
+    100000: object_0222-7
     100002: //RootNode
-    400000: object_export_0116-7
+    400000: object_0222-7
     400002: //RootNode
-    2100000: object_export_0116-7Mat
-    2300000: object_export_0116-7
-    3300000: object_export_0116-7
-    4300000: object_export_0116-7
+    2100000: object_0222-7Mat
+    2300000: object_0222-7
+    3300000: object_0222-7
+    4300000: object_0222-7
   externalObjects: {}
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -48,10 +48,10 @@ ModelImporter:
     addColliders: 0
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -68,7 +68,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

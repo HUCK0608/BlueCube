@@ -1,18 +1,18 @@
 fileFormatVersion: 2
-guid: 6e1a45e5103d6614b8c60b5e70e98c8d
-timeCreated: 1519047224
+guid: 995c5f7693f062e4f9e85957ad126ebb
+timeCreated: 1519308390
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: object_0219-5
+    100000: object_0222-5
     100002: //RootNode
-    400000: object_0219-5
+    400000: object_0222-5
     400002: //RootNode
-    2100000: object_0219-5Mat
-    2300000: object_0219-5
-    3300000: object_0219-5
-    4300000: object_0219-5
+    2100000: object_0222-5Mat
+    2300000: object_0222-5
+    3300000: object_0222-5
+    4300000: object_0222-5
   externalObjects: {}
   materials:
     importMaterials: 0
@@ -51,7 +51,7 @@ ModelImporter:
     importCameras: 0
     importLights: 0
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
