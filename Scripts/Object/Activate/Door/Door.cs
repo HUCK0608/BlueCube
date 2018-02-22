@@ -25,16 +25,11 @@ public sealed class Door : MonoBehaviour
     // 모델의 x 크기
     private float m_width;
 
-    // 열리고나서 부셔져야 하는 콜라이더
-    private Collider2D m_collider2D;
-
     private WorldObject m_worldObject;
 
     private void Awake()
     {
         m_activate = GetComponent<Activate>();
-
-        m_collider2D = GetComponentInChildren<Collider2D>();
 
         m_worldObject = GetComponent<WorldObject>();
 
@@ -85,7 +80,5 @@ public sealed class Door : MonoBehaviour
             }
             yield return null;
         }
-
-        m_collider2D.enabled = false;
     }
 }

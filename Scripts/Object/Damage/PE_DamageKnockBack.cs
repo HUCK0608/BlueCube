@@ -19,18 +19,17 @@ public sealed class PE_DamageKnockBack : MonoBehaviour
     /// <summary>데미지</summary>
     public float Damage { get { return m_damage; } }
 
-    // 콜라이더 모음
-    private Collider m_collider;
-    private Collider2D m_collider2D;
+    // 히트 허용 시간
+    [SerializeField]
+    private float m_hitActiveTime;
+    // 히트 허용 변수
+    private bool m_hitActive;
 
     // 한번의 충돌체크를 하기 위한 히트 리스트
     private List<GameObject> m_hitList;
 
     private void Awake()
     {
-        m_collider = GetComponentInChildren<Collider>();
-        m_collider2D = GetComponentInChildren<Collider2D>();
-
         m_hitList = new List<GameObject>();
     }
 
@@ -40,11 +39,12 @@ public sealed class PE_DamageKnockBack : MonoBehaviour
         StartCoroutine(DamageCheckTimer());
     }
 
-    /// <summary>언제까지 데미지를 입힐지 체크하는 타이머</summary>
+    // 언제까지 데미지를 입힐지 체크하는 타이머
     private IEnumerator DamageCheckTimer()
     {
         float addTime = 0f;
-        float checkTime = 0.5f;
+        // 히트 활성화
+        m_hitActive = true;
 
         while(true)
         {
@@ -53,24 +53,23 @@ public sealed class PE_DamageKnockBack : MonoBehaviour
             {
                 addTime += Time.deltaTime;
 
-                if (addTime >= checkTime)
+                if (addTime >= m_hitActiveTime)
                     break;
             }
             yield return null;
         }
-        CollidersEnable(false);
-    }
 
-    /// <summary>모든 콜라이더 활성화 설정</summary>
-    private void CollidersEnable(bool value)
-    {
-        m_collider.enabled = value;
-        m_collider2D.enabled = value;
+        // 히트 비활성화
+        m_hitActive = false;
     }
 
     /// <summary>데미지를 입힌 물체인지 체크하는 함수 (hitObject가 hitList에 있으면 true 아니면 flase를 반환)</summary>
-    public bool CheckHit(GameObject hitObject)
+    public bool IsHit(GameObject hitObject)
     {
+        // 히트 활성화가 아니면 리턴
+        if (!m_hitActive)
+            return true;
+
         int hitObjectIndex = m_hitList.IndexOf(hitObject);
         int nullIndex = -1;
 

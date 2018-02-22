@@ -36,13 +36,26 @@ public sealed class ChangeViewRect : MonoBehaviour
             m_includeWO.Clear();
     }
 
+    public void SetDefaultMaterial()
+    {
+        int m_includeWOCount = m_includeWO.Count;
+
+        for(int i = 0; i < m_includeWOCount; i++)
+        {
+            m_includeWO[i].ChangeMaterial(GameLibrary.Enum_Material_Default);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag != m_playerTag)
         {
-            if (other.GetComponentInParent<WorldObject>() != null)
+            WorldObject worldObject = other.GetComponentInParent<WorldObject>();
+
+            if (worldObject != null)
             {
-                m_includeWO.Add(other.GetComponentInParent<WorldObject>());
+                worldObject.ChangeMaterial(GameLibrary.Enum_Material_Change);
+                m_includeWO.Add(worldObject);
             }
         }
     }

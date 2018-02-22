@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum E_MaterialType { Default, Change }
+
 public static class GameLibrary
 {
+    // Material 부분
+
+    private static Material m_material_red = Resources.Load("Materials/Dumy2") as Material;
+    public static Material Material_Red { get { return m_material_red; } }
+
     // layerMask 부분
 
     private static int m_ignoreLM_PEE = (-1) - ((1 << 8) | (1 << 11) | (1 << 12));
@@ -40,4 +47,10 @@ public static class GameLibrary
 
     private static E_LookDirection2D m_enum_LD2D_Right = E_LookDirection2D.Right;
     public static E_LookDirection2D Enum_LD2D_Right { get { return m_enum_LD2D_Right; } }
+
+    private static E_MaterialType m_enum_Material_Default = E_MaterialType.Default;
+    public static E_MaterialType Enum_Material_Default { get { return m_enum_Material_Default; } }
+
+    private static E_MaterialType m_enum_Material_Change = E_MaterialType.Change;
+    public static E_MaterialType Enum_Material_Change { get { return m_enum_Material_Change; } }
 }

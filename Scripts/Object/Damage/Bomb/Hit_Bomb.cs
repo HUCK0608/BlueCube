@@ -4,13 +4,13 @@ using UnityEngine;
 
 public sealed class Hit_Bomb : MonoBehaviour
 {
-    // 폭탄이 터질 시간
+    // 폭탄 타이머
     [SerializeField]
-    private float m_bombTime;
+    private float m_boomTimer;
 
-    // 타이머가 켜져있을경우 hit 당할경우 더할 시간
+    // 타이머가 켜져있을경우 hit 당할경우 뺄 시간
     [SerializeField]
-    private float m_ifHitAddTime;
+    private float m_ifHitDecreaseTimer;
 
     // 충돌 이펙트 타입
     [SerializeField]
@@ -34,7 +34,7 @@ public sealed class Hit_Bomb : MonoBehaviour
     public void Hit()
     {
         if (m_isOn)
-            m_currentTimer += m_ifHitAddTime;
+            m_currentTimer += m_ifHitDecreaseTimer;
         else
             StartCoroutine(OnTimer());
     }
@@ -54,7 +54,7 @@ public sealed class Hit_Bomb : MonoBehaviour
             {
                 m_currentTimer += Time.deltaTime;
 
-                if (m_currentTimer >= m_bombTime)
+                if (m_currentTimer >= m_boomTimer)
                     break;
             }
             yield return null;

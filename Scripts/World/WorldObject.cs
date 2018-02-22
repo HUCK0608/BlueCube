@@ -16,4 +16,9 @@ public class WorldObject : MonoBehaviour
     {
 
     }
+
+    public virtual void ChangeMaterial(E_MaterialType materialType)
+    {
+
+    }
 }

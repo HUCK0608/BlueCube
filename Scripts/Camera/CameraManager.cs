@@ -14,17 +14,24 @@ public sealed class CameraManager : MonoBehaviour
     private Vector3 m_rotation2D;
     private Vector3 m_rotation3D;
 
-    // 이동속도
+    // 카메라 위치
     [SerializeField]
-    private float m_moveSpeed;
+    private Vector3 m_cameraPos2D;
+
+    [SerializeField]
+    private float m_movingWordkMoveSpeed;
 
     // 회전속도
     [SerializeField]
-    private float m_rotateSpeed;
+    private float m_movingWorkdRotSpeed;
+
+    // 마우스 방향으로 이동하는 속도
+    [SerializeField]
+    private float m_moveDirecitonSpeed;
 
     // 이동 최대 제한 거리 (플레이어와 이동지점 거리)
     [SerializeField]
-    private float m_moveMaxDis;
+    private float m_moveDirectionMaxDis;
 
     private float m_SXDivideSY;
     private float m_SYDivideSX;
@@ -71,10 +78,10 @@ public sealed class CameraManager : MonoBehaviour
         Vector3 mouseDirection = GetMouseDirectionToWorld();
 
         // 이동방향 * 거리
-        Vector3 movePoint = mouseDirection.normalized * m_moveMaxDis;
+        Vector3 movePoint = mouseDirection.normalized * m_moveDirectionMaxDis;
 
         // 이동
-        m_centerPoint.localPosition = Vector3.Lerp(m_centerPoint.localPosition, movePoint, m_moveSpeed * Time.deltaTime);
+        m_centerPoint.localPosition = Vector3.Lerp(m_centerPoint.localPosition, movePoint, m_moveDirecitonSpeed * Time.deltaTime);
     }
 
     // 마우스의 월드방향을 구하는 함수
@@ -112,9 +119,19 @@ public sealed class CameraManager : MonoBehaviour
     // 카메라 무빙워크 (쿼터뷰에서 사이드뷰로 이동)
     public IEnumerator MovingWork3D()
     {
+        while(true)
+        {
+            m_centerPoint.localPosition = Vector3.MoveTowards(m_centerPoint.localPosition, m_cameraPos2D, 10f * Time.deltaTime);
+
+            if (m_centerPoint.localPosition.Equals(m_cameraPos2D))
+                break;
+
+            yield return null;
+        }
+
         while (true)
         {
-            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation2D), m_rotateSpeed * Time.deltaTime);
+            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation2D), m_movingWorkdRotSpeed * Time.deltaTime);
 
             if (m_centerPoint.localRotation.Equals(Quaternion.Euler(m_rotation2D)))
                 break;
@@ -128,7 +145,7 @@ public sealed class CameraManager : MonoBehaviour
     {
         while(true)
         {
-            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation3D), m_rotateSpeed * Time.deltaTime);
+            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation3D), m_movingWorkdRotSpeed * Time.deltaTime);
 
             if (m_centerPoint.localRotation.Equals(Quaternion.Euler(m_rotation3D)))
                 break;

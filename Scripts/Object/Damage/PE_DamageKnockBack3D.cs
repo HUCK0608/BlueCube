@@ -35,8 +35,8 @@ public sealed class PE_DamageKnockBack3D : MonoBehaviour
         PlayerManager playerManager = GameManager.Instance.PlayerManager;
 
         // 이미 충돌된 물체인지 체크
-        bool isHit = m_damageKnockBack.CheckHit(playerManager.gameObject);
-        Debug.Log(isHit);
+        bool isHit = m_damageKnockBack.IsHit(playerManager.gameObject);
+
         // 충돌된 물체일경우 리턴
         if (isHit)
             return;

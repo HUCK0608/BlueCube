@@ -163,6 +163,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
         // changeBox 안에 오브젝트만 renderer 및 collider2D 켜기
         m_changeViewRect_S.IncludeWOEnable(true);
+        // 메테리얼 원래상태로 만들기
+        m_changeViewRect_S.SetDefaultMaterial();
 
         // 플레이어 변경
         m_playerManager.ChangePlayer();
