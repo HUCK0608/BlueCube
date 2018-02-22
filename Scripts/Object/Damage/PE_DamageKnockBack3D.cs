@@ -4,11 +4,11 @@ using UnityEngine;
 
 public sealed class PE_DamageKnockBack3D : MonoBehaviour
 {
-    PE_DamageKnockBack m_DamageKnockBack;
+    PE_DamageKnockBack m_damageKnockBack;
 
     private void Awake()
     {
-        m_DamageKnockBack = GetComponentInParent<PE_DamageKnockBack>();
+        m_damageKnockBack = GetComponentInParent<PE_DamageKnockBack>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,6 +34,13 @@ public sealed class PE_DamageKnockBack3D : MonoBehaviour
         // 플레이어 매니저
         PlayerManager playerManager = GameManager.Instance.PlayerManager;
 
+        // 이미 충돌된 물체인지 체크
+        bool isHit = m_damageKnockBack.CheckHit(playerManager.gameObject);
+        Debug.Log(isHit);
+        // 충돌된 물체일경우 리턴
+        if (isHit)
+            return;
+
         // 데미지
         playerManager.Stat.Hit(1);
 
@@ -43,9 +50,9 @@ public sealed class PE_DamageKnockBack3D : MonoBehaviour
         direction = direction.normalized;
 
         // x, z 힘 구하기
-        Vector3 force = direction * m_DamageKnockBack.KnockBackPower_XZ;
+        Vector3 force = direction * m_damageKnockBack.KnockBackPower_XZ;
         // y 힘 구하기
-        force.y = 1f * m_DamageKnockBack.KnockBackPower_Y;
+        force.y = 1f * m_damageKnockBack.KnockBackPower_Y;
 
         playerManager.AddForce(force, ForceMode.Impulse);
     }

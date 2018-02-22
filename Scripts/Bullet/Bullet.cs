@@ -73,6 +73,9 @@ public sealed class Bullet : MonoBehaviour
         // 이펙트 생성
         GameManager.Instance.EffectManager.CreateEffect(m_colEffectType, transform.position);
 
+        // 먼 지점으로 날림
+        transform.localPosition = Vector3.zero;
+
         // 렌더링 및 2D 콜라이더 비활성화
         m_worldObject.RendererEnable(false);
         m_worldObject.Collider2DEnable(false);

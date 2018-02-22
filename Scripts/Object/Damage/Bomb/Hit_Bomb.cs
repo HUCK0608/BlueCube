@@ -49,8 +49,8 @@ public sealed class Hit_Bomb : MonoBehaviour
 
         while(true)
         {
-            // 시점변환중이 아닐경우에만 실행
-            if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging)
+            // 시점변환중이 아니고 2D가 아닐경우에만 실행
+            if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging && !GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(GameLibrary.Enum_View2D))
             {
                 m_currentTimer += Time.deltaTime;
 

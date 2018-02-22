@@ -23,10 +23,15 @@ public sealed class PE_DamageKnockBack : MonoBehaviour
     private Collider m_collider;
     private Collider2D m_collider2D;
 
+    // 한번의 충돌체크를 하기 위한 히트 리스트
+    private List<GameObject> m_hitList;
+
     private void Awake()
     {
         m_collider = GetComponentInChildren<Collider>();
         m_collider2D = GetComponentInChildren<Collider2D>();
+
+        m_hitList = new List<GameObject>();
     }
 
     private void Start()
@@ -43,10 +48,14 @@ public sealed class PE_DamageKnockBack : MonoBehaviour
 
         while(true)
         {
-            addTime += Time.deltaTime;
+            // 시점변환 중이 아니고 2D시점이 아닐경우에만 타이머 체크
+            if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging && !GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(GameLibrary.Enum_View2D))
+            {
+                addTime += Time.deltaTime;
 
-            if (addTime >= checkTime)
-                break;
+                if (addTime >= checkTime)
+                    break;
+            }
             yield return null;
         }
         CollidersEnable(false);
@@ -57,5 +66,23 @@ public sealed class PE_DamageKnockBack : MonoBehaviour
     {
         m_collider.enabled = value;
         m_collider2D.enabled = value;
+    }
+
+    /// <summary>데미지를 입힌 물체인지 체크하는 함수 (hitObject가 hitList에 있으면 true 아니면 flase를 반환)</summary>
+    public bool CheckHit(GameObject hitObject)
+    {
+        int hitObjectIndex = m_hitList.IndexOf(hitObject);
+        int nullIndex = -1;
+
+        // 리스트에 포함되어 있지 않은 오브젝트이면
+        if(hitObjectIndex.Equals(nullIndex))
+        {
+            // 리스트에 포함시키고 false를 반환
+            m_hitList.Add(hitObject);
+            return false;
+        }
+
+        // 리스트에 포함되어 있으면 true를 반환
+        return true;
     }
 }

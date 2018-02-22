@@ -68,7 +68,6 @@ public sealed class Player3D : Player
         Jump();
         Move();
         DrawLandingPoint();
-        SetAni();
     }
 
     // 땅인지 체크하는 함수
@@ -161,8 +160,8 @@ public sealed class Player3D : Player
         }
 
         // 키입력
-        float moveX = Input.GetAxis("Horizontal") * m_playerManager.Stat.MoveSpeed;
-        float moveZ = Input.GetAxis("Vertical") * m_playerManager.Stat.MoveSpeed;
+        float moveX = Input.GetAxis("Horizontal") * m_playerManager.Stat.ForwardMoveSpeed;
+        float moveZ = Input.GetAxis("Vertical") * m_playerManager.Stat.ForwardMoveSpeed;
 
         // 벡터 형태로 변경
         Vector3 movement = Vector3.zero;
@@ -199,9 +198,16 @@ public sealed class Player3D : Player
             else if (moveX > 0)
                 movement = Vector3.back + Vector3.right;
         }
-        
-        // 스피드 적용
-        movement *= m_playerManager.Stat.MoveSpeed;
+
+        // 애니메이션 변수 설정
+        SetAni(movement.normalized);
+
+        // 가는 방향이 정면일 경우 정면 스피드 적용
+        if (m_aniDirection.Equals(0))
+            movement *= m_playerManager.Stat.ForwardMoveSpeed;
+        // 정면이 아닐경우 조금 느린 스피드 적용
+        else
+            movement *= m_playerManager.Stat.SideBackMoveSpeed;
 
         // 땅이 아닐경우 중력적용
         if(!m_playerManager.IsGrounded || m_playerManager.IsJumping)
@@ -279,17 +285,40 @@ public sealed class Player3D : Player
         }
     }
 
+
     // 애니메이션 설정
-    private void SetAni()
+    private void SetAni(Vector3 moveDirection)
     {
+        if (moveDirection != Vector3.zero)
+        {
+            float angle = Vector3.Angle(transform.forward, moveDirection);
+            Vector3 cross = Vector3.Cross(transform.forward, moveDirection);
+
+            // 부호결정
+            if (cross.y < 0) angle = -angle;
+
+            // Forward
+            if (angle >= -50f && angle <= 50f)
+                m_aniDirection = 0;
+            // Left
+            else if (angle > -130f && angle < -50f)
+                m_aniDirection = 2;
+            // Right
+            else if (angle > 50f && angle < 130f)
+                m_aniDirection = 3;
+            // Back
+            else
+                m_aniDirection = 1;
+
+        }
+
         // 애니메이션 설정변수
-        if (m_rigidbody.velocity.x == 0 && m_rigidbody.velocity.z == 0)
+        if (m_rigidbody.velocity.x.Equals(0) && m_rigidbody.velocity.z.Equals(0))
             m_playerManager.IsRunning = false;
         else
             m_playerManager.IsRunning = true;
 
         
-
         m_animator.SetBool("IsRunning", m_playerManager.IsRunning);
         m_animator.SetBool("IsJumping", m_playerManager.IsJumping);
         m_animator.SetInteger("Direction", m_aniDirection);

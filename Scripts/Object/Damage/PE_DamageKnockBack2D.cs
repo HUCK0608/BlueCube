@@ -4,11 +4,11 @@ using UnityEngine;
 
 public sealed class PE_DamageKnockBack2D : MonoBehaviour
 {
-    PE_DamageKnockBack m_DamageKnockBack;
+    PE_DamageKnockBack m_damageKnockBack;
 
     private void Awake()
     {
-        m_DamageKnockBack = GetComponentInParent<PE_DamageKnockBack>();
+        m_damageKnockBack = GetComponentInParent<PE_DamageKnockBack>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

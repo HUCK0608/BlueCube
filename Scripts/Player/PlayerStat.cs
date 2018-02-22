@@ -24,8 +24,12 @@ public sealed class PlayerStat : MonoBehaviour
 
     // 이동속도
     [SerializeField]
-    private float m_moveSpeed;
-    public float MoveSpeed { get { return m_moveSpeed; } }
+    private float m_forwardMoveSpeed;
+    public float ForwardMoveSpeed { get { return m_forwardMoveSpeed; } }
+
+    [SerializeField]
+    private float m_sideBackMoveSpeed;
+    public float SideBackMoveSpeed { get { return m_sideBackMoveSpeed; } }
 
     [SerializeField]
     private float m_rotationSpeed;

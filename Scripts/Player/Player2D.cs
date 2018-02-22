@@ -106,7 +106,7 @@ public sealed class Player2D : Player
         }
 
         // 키보드 입력
-        float move = Input.GetAxis("Horizontal") * m_playerManager.Stat.MoveSpeed;
+        float move = Input.GetAxis("Horizontal") * m_playerManager.Stat.ForwardMoveSpeed;
 
         // 애니메이션 설정변수
         if (move == 0)
