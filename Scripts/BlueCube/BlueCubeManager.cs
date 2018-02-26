@@ -121,7 +121,7 @@ public sealed class BlueCubeManager : MonoBehaviour
 
         float rayDistance = 1f;
 
-        if (Physics.Raycast(m_ray, rayDistance, GameLibrary.IgonoreLM_PEE))
+        if (Physics.Raycast(m_ray, rayDistance, GameLibrary.LayerMask_Ignore_BPE))
             m_renderer2D.color = m_blueColor;
         else
             m_renderer2D.color = m_redColor;

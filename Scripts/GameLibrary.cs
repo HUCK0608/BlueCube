@@ -13,9 +13,9 @@ public static class GameLibrary
 
     // layerMask 부분
 
-    private static int m_ignoreLM_PEE = (-1) - ((1 << 8) | (1 << 11) | (1 << 12));
-    /// <summary> Ignore Layer Mask (Player, Enemy, Effect) </summary>
-    public static int IgonoreLM_PEE { get { return m_ignoreLM_PEE; } }
+    private static int m_layerMask_Igonore_BPE = (-1) - ((1 << 8) | (1 << 11) | (1 << 12));
+    /// <summary> Ignore Layer Mask (Bullet, Player, Effect) </summary>
+    public static int LayerMask_Ignore_BPE { get { return m_layerMask_Igonore_BPE; } }
 
     // string 부분
 

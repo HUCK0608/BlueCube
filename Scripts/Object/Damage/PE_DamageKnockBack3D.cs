@@ -21,10 +21,10 @@ public sealed class PE_DamageKnockBack3D : MonoBehaviour
         // 적이 충돌했을 경우
         else if (other.tag.Equals(GameLibrary.String_Enemy))
         {
-            Enemy enemy = other.GetComponentInParent<Enemy>();
+            EnemyStat enemyStat = other.GetComponentInParent<EnemyStat>();
 
             // 적에게 데미지
-            enemy.Stat.Hit(1);
+            enemyStat.Hit(1);
         }
     }
 

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public sealed class CameraManager : MonoBehaviour
 {
-    // 카메라
-    private Camera m_camera;
-
     // 카메라 센터포인트
     private Transform m_centerPoint;
 
@@ -33,13 +30,8 @@ public sealed class CameraManager : MonoBehaviour
     [SerializeField]
     private float m_moveDirectionMaxDis;
 
-    private float m_SXDivideSY;
-    private float m_SYDivideSX;
-
     private void Awake()
     {
-        m_camera = transform.Find("CenterPoint").Find("Camera").GetComponent<Camera>();
-
         m_centerPoint = transform.Find("CenterPoint");
 
         m_rotation2D = Vector3.zero;
@@ -49,9 +41,6 @@ public sealed class CameraManager : MonoBehaviour
 
         float screenWidth = mainCamera.pixelWidth;
         float screenHeight = mainCamera.pixelHeight;
-
-        m_SXDivideSY = screenWidth / screenHeight;
-        m_SYDivideSX = screenHeight / screenWidth;
     }
 
     private void Update()

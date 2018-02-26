@@ -23,9 +23,9 @@ public sealed class PlayerBullet2D : MonoBehaviour
         // 적일 경우에만 데미지를 입힘
         if(other.tag == m_enemyS)
         {
-            Enemy enemy = other.GetComponentInParent<Enemy>();
+            EnemyStat enemyStat = other.GetComponentInParent<EnemyStat>();
 
-            enemy.Stat.Hit(m_bullet.Bundle.Stat.Damage);
+            enemyStat.Hit(m_bullet.Bundle.Stat.Damage);
 
             m_bullet.EndShoot();
         }
