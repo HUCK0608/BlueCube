@@ -8,10 +8,23 @@ public class EnemyManager : MonoBehaviour
     private bool m_isDie;
     public bool IsDie { get { return m_isDie; } }
 
+    private void Update()
+    {
+        if (GameLibrary.IsTimeStop)
+            return;
+
+        CheckDie();
+    }
+
+    private void CheckDie()
+    {
+        if (m_isDie)
+            gameObject.SetActive(false);
+    }
+
     // 죽음처리
     public void Die()
     {
         m_isDie = true;
-        gameObject.SetActive(false);
     }
 }

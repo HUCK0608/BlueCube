@@ -53,4 +53,17 @@ public static class GameLibrary
 
     private static E_MaterialType m_enum_Material_Change = E_MaterialType.Change;
     public static E_MaterialType Enum_Material_Change { get { return m_enum_Material_Change; } }
+
+    // Function 부분
+
+    /// <summary>시점변환중이거나 2D시점일 경우 true를 반환</summary>
+    public static bool IsTimeStop
+    {
+        get
+        {
+            return GameManager.Instance.PlayerManager.Skill_CV.IsChanging || 
+                   GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(Enum_View2D) 
+                   ? true : false;
+        }
+    }
 }

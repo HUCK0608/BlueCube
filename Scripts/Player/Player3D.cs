@@ -199,8 +199,10 @@ public sealed class Player3D : Player
                 movement = Vector3.back + Vector3.right;
         }
 
+        movement = movement.normalized;
+
         // 애니메이션 변수 설정
-        SetAni(movement.normalized);
+        SetAni(movement);
 
         // 가는 방향이 정면일 경우 정면 스피드 적용
         if (m_aniDirection.Equals(0))
