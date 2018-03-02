@@ -39493,6 +39493,16 @@ Prefab:
       propertyPath: m_fireballBundle
       value: 
       objectReference: {fileID: 981211402}
+    - target: {fileID: 114058954201115258, guid: 7172db4d028040f41ab721917d44afac,
+        type: 2}
+      propertyPath: m_increaseSizePerXY
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114058954201115258, guid: 7172db4d028040f41ab721917d44afac,
+        type: 2}
+      propertyPath: m_increaseSizePerZ
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7172db4d028040f41ab721917d44afac, type: 2}
   m_IsPrefabParent: 0
