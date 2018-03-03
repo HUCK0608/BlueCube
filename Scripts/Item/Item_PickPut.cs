@@ -4,15 +4,28 @@ using UnityEngine;
 
 public sealed class Item_PickPut : MonoBehaviour
 {
+    // 들었을 때 떨어질 위치 표시를 위한 오브젝트
+    private static Transform m_fadeBox;
+
     // 3D 리지드바디
     private Rigidbody m_rigidbody3D;
 
     // 아이템을 플레이어가 소유중인지
     private bool m_isHave;
 
+    // 들었을 때 떨어질 위치표시를 위한 변수
+    private Ray m_ray;
+    private RaycastHit m_hit;
+
     private void Awake()
     {
+        if(m_fadeBox == null)
+            m_fadeBox = GameObject.Find("Item_Box_PickPut_Fade").transform;
+
         m_rigidbody3D = GetComponent<Rigidbody>();
+
+        m_ray = new Ray();
+        m_ray.direction = Vector3.down;
     }
 
     // 중력 사용 여부
@@ -35,6 +48,9 @@ public sealed class Item_PickPut : MonoBehaviour
         // 중력 끄기
         UseGravity(false);
 
+        // fadeBox 활성화
+        m_fadeBox.gameObject.SetActive(true);
+
         while(m_isHave)
         {
             if (GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(E_ViewType.View2D))
@@ -42,16 +58,53 @@ public sealed class Item_PickPut : MonoBehaviour
             else if (GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(E_ViewType.View3D))
                 transform.position = playerHand3D.position;
 
+            // fadeBox 그리기
+            DrawFadeBox();
+
             yield return null;
+        }
+
+        m_fadeBox.gameObject.SetActive(false);
+    }
+
+    /// <summary>FadeBox 그리기</summary>
+    private void DrawFadeBox()
+    {
+        Vector3 putPos = CalcPutPos();
+
+        m_ray.origin = putPos;
+
+        if(Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BPE))
+        {
+            putPos.y = m_hit.point.y + 1f;
+
+            m_fadeBox.position = putPos;
+        }
+        else
+        {
+            
         }
     }
 
-    // 놓기
+    /// <summary>아이템 놓기</summary>
     public void Put()
     {
         // 고정 풀기
         m_isHave = false;
 
+        // 떨어질 위치 받아오기
+        Vector3 putPos = CalcPutPos();
+
+        // 정규화 위치 이동
+        transform.position = putPos;
+
+        // 중력사용
+        UseGravity(true);
+    }
+
+    /// <summary>떨어질 위치 계산</summary>
+    private Vector3 CalcPutPos()
+    {
         // 위치값
         float posX = transform.position.x;
         float posZ = transform.position.z;
@@ -60,7 +113,7 @@ public sealed class Item_PickPut : MonoBehaviour
         float floorX = Mathf.Floor(posX);
         float floorZ = Mathf.Floor(posZ);
 
-        Vector3 newPos = Vector3.zero;
+        Vector3 putPos = Vector3.zero;
 
         // x 좌표 계산
         float newPosX = 0f;
@@ -86,14 +139,10 @@ public sealed class Item_PickPut : MonoBehaviour
         else
             newPosZ = floorZ;
 
-        newPos.x = newPosX;
-        newPos.y = transform.transform.position.y;
-        newPos.z = newPosZ;
+        putPos.x = newPosX;
+        putPos.y = transform.transform.position.y;
+        putPos.z = newPosZ;
 
-        // 정규화 위치 이동
-        transform.position = newPos;
-
-        // 중력사용
-        UseGravity(true);
+        return putPos;
     }
 }
