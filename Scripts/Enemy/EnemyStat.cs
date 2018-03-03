@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyStat : MonoBehaviour
 {
     // enemyManager
-    private EnemyManager m_enemyManager;
+    private EnemyManager m_manager;
 
     [SerializeField]
     protected int m_hp;
@@ -13,19 +13,23 @@ public class EnemyStat : MonoBehaviour
     [SerializeField]
     protected int m_damage;
     public int Damage { get { return m_damage; } }
+
+    [SerializeField]
+    protected float m_hitDelayTime;
+    public float HitDelayTime { get { return m_hitDelayTime; } }
     
-    private void Awake()
+    protected virtual void Awake()
     {
-        m_enemyManager = GetComponent<EnemyManager>();
+        m_manager = GetComponent<EnemyManager>();
     }
 
     // 피격
-    public void Hit(int damage)
+    public virtual void Hit(int damage)
     {
         m_hp -= damage;
         
         // 체력이 다 닳았을 경우 죽음 처리
         if (m_hp <= 0)
-            m_enemyManager.Die();
+            m_manager.Die();
     }
 }

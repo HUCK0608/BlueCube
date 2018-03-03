@@ -19,15 +19,19 @@ public sealed class EnemyState_Monster1_Idle : EnemyState_Monster1
 
     private void Update()
     {
-        CheckChaseRnage();
+        // 게임시간이 멈춘경우 리턴
+        if (GameLibrary.IsTimeStop)
+            return;
+
+        CheckDetectionRange();
     }
 
-    // 추적상태가 되기 위한 거리탐지
-    private void CheckChaseRnage()
+    // 플레이어가 탐지범위안에 들어오면 Chase State로 변경
+    private void CheckDetectionRange()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, m_player.position);
 
-        if (distanceToPlayer <= m_enemyManager.Stat.ChaseRange)
+        if (distanceToPlayer <= m_enemyManager.Stat.DetectionRange)
             m_enemyManager.ChangeState(E_EnemyState_Monster1.Chase);
     }
 
