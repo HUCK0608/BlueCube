@@ -128,9 +128,11 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_isChnaging = true;
         m_viewType = m_view2D;
 
+        Vector3 blueCubePosition = GameManager.Instance.BlueCubeManager.transform.position;
+
         // 2D 변경 상자의 시작 위치를 블루큐브 위치로 잡고 활성화
         m_changeViewRect_GO.transform.localScale = m_blueCubeSize;
-        m_changeViewRect_GO.transform.position = GameManager.Instance.BlueCubeManager.transform.position;
+        m_changeViewRect_GO.transform.position = blueCubePosition;
         m_changeViewRect_GO.SetActive(true);
         // 충돌체크 켜기
         m_changeViewRect_S.CheckIncludeWO(true);
@@ -149,11 +151,21 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
         // 2D 변경 상자 z 커지게 하기 (시점변환 키를 누르고 있는동안에만 적용)
         // 시점변환 키를 땔 경우 다음으로 넘어감
+        // 상자는 z양의 방향으로만 커짐
         while(Input.GetKey(m_playerManager.ChangeViewKey))
         {
             // 최대제한 z크기보다 작을경우에만 크게 만들기
-            if(m_changeViewRect_GO.transform.localScale.z < m_maxSizeZ)
+            if (m_changeViewRect_GO.transform.localScale.z < m_maxSizeZ)
+            {
+                // 크기변환
                 m_changeViewRect_GO.transform.localScale += m_increaseVectorZ;
+
+                // 이동
+                Vector3 newPosition = m_changeViewRect_GO.transform.position;
+                float newPositionZ = m_blueCubeSize.z * m_changeViewRect_GO.transform.localScale.z * 0.5f;
+                newPosition.z = newPositionZ + blueCubePosition.z;
+                m_changeViewRect_GO.transform.position = newPosition;
+            }
 
             yield return new WaitForFixedUpdate();
         }
