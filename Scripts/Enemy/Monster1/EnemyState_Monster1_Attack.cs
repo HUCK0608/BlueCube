@@ -22,7 +22,7 @@ public sealed class EnemyState_Monster1_Attack : EnemyState_Monster1
     private void Update()
     {
         // 게임시간이 멈춘경우 리턴
-        if (GameLibrary.IsTimeStop)
+        if (GameLibrary.Bool_IsCOV2D)
             return;
 
         CheckHitRange();

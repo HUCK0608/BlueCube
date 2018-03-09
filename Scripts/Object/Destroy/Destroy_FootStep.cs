@@ -45,8 +45,8 @@ public sealed class Destroy_FootStep : MonoBehaviour
 
         while(true)
         {
-            // 시점변환을 하지 않을경우에만 실행
-            if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging)
+            // 시점변환중이 아니고 탐지모드가 아니고 2D가 아닐경우 실행
+            if (!GameLibrary.Bool_IsCOV2D)
             {
                 m_addTime += Time.deltaTime;
 
@@ -68,8 +68,8 @@ public sealed class Destroy_FootStep : MonoBehaviour
 
         while(true)
         {
-            // 시점변환을 하지 않을경우에만 실행
-            if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging)
+            // 시점변환중이 아니고 탐지모드가 아니고 2D가 아닐경우 실행
+            if (!GameLibrary.Bool_IsCOV2D)
             {
                 m_addTime += Time.deltaTime;
 

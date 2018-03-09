@@ -152,8 +152,8 @@ public sealed class Player3D : Player
     // 3D 이동
     private void Move()
     {
-        // 현재 시점변환 중이라면 캐릭터 정지
-        if (m_playerManager.Skill_CV.IsChanging)
+        // 시점변환중이거나 관찰시점이면 리턴
+        if (GameLibrary.Bool_IsCO)
         {
             m_rigidbody.velocity = Vector3.zero;
             return;
@@ -236,8 +236,8 @@ public sealed class Player3D : Player
     // 마우스위치로 회전
     private void RotationToMousePoint()
     {
-        // 시점변환 중일경우 리턴
-        if (m_playerManager.Skill_CV.IsChanging)
+        // 시점변환중이거나 관찰시점이면 리턴
+        if (GameLibrary.Bool_IsCO)
             return;
 
         // 마우스 방향 구하기

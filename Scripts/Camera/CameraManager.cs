@@ -30,6 +30,30 @@ public sealed class CameraManager : MonoBehaviour
     [SerializeField]
     private float m_moveDirectionMaxDis;
 
+    // 관찰용시점 입력 키
+    [SerializeField]
+    private KeyCode m_observeViewKey;
+
+    // 관찰용시점 최소, 최대 허용 각
+    [SerializeField]
+    private float m_observeViewMinAngle, m_observeViewMaxAngle;
+
+    // 관찰용시점 민감도
+    [SerializeField]
+    private float m_observeViewSensitivity;
+
+    // 원래시점으로 돌아오는 회전 속도
+    [SerializeField]
+    private float m_returnDefaultViewRotationSpeed;
+
+    // 카메라의 기본 EulerAngles
+    private Vector3 m_cameraDefualtEulerAngles;
+
+    // 관찰중인지
+    private bool m_isObserve;
+    /// <summary>현재 관찰용 시점인지 체크(관찰중일 경우 true를 반환)</summary>
+    public bool IsObserve { get { return m_isObserve; } }
+
     private void Awake()
     {
         m_centerPoint = transform.Find("CenterPoint");
@@ -41,12 +65,15 @@ public sealed class CameraManager : MonoBehaviour
 
         float screenWidth = mainCamera.pixelWidth;
         float screenHeight = mainCamera.pixelHeight;
+
+        m_cameraDefualtEulerAngles = m_centerPoint.eulerAngles;
     }
 
     private void Update()
     {
         FollowPlayer3D();
         MoveToMouseDirection();
+        CheckObserveView();
     }
 
     // 3D 플레이어를 따라가는 카메라
@@ -59,8 +86,8 @@ public sealed class CameraManager : MonoBehaviour
     // 마우스 포인터 위치의 방향을 구해서 카메라 이동
     public void MoveToMouseDirection()
     {
-        // 3D이거나 시점 변환중이면 리턴
-        if (!GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(GameLibrary.Enum_View3D) || GameManager.Instance.PlayerManager.Skill_CV.IsChanging)
+        // 시점변환중이거나 2D시점이거나 관찰시점일 경우 리턴
+        if (GameLibrary.Bool_IsCOV2D)
             return;
 
         // 마우스 방향의 월드 방향 구하기
@@ -103,6 +130,61 @@ public sealed class CameraManager : MonoBehaviour
 
         // 방향 반환
         return direction.normalized;
+    }
+
+    // 관찰시점을 사용할것인지 체크
+    private void CheckObserveView()
+    {
+        if(!m_isObserve)
+        {
+            if(Input.GetKeyDown(m_observeViewKey))
+            {
+                StartCoroutine(ObserveView());
+            }
+        }
+    }
+
+    // 관찰시점
+    private IEnumerator ObserveView()
+    {
+        m_isObserve = true;
+
+        Vector3 newCameraAngle = m_centerPoint.eulerAngles;
+
+        // 관찰시점 키가 눌러있을 경우에만 루턴
+        while(Input.GetKey(m_observeViewKey))
+        {
+            float mouseX = Input.GetAxis("Mouse X") * m_observeViewSensitivity;
+
+            newCameraAngle.y -= mouseX;
+
+            newCameraAngle.y = Mathf.Clamp(newCameraAngle.y, m_observeViewMinAngle, m_observeViewMaxAngle);
+
+            m_centerPoint.eulerAngles = newCameraAngle;
+
+            yield return null;
+        }
+
+        // 원래시점으로 돌아가게 함
+        yield return StartCoroutine(ReturnDefaultView());
+
+        m_isObserve = false;
+    }
+
+    // 관찰시점에서 원래시점으로 돌아가기
+    private IEnumerator ReturnDefaultView()
+    {
+        Quaternion cameraDefaultQuaternion = Quaternion.Euler(m_cameraDefualtEulerAngles);
+
+        while(true)
+        {
+            m_centerPoint.rotation = Quaternion.RotateTowards(m_centerPoint.rotation, cameraDefaultQuaternion, m_returnDefaultViewRotationSpeed * Time.deltaTime);
+
+            if (m_centerPoint.rotation.Equals(cameraDefaultQuaternion))
+                break;
+
+            yield return null;
+        }
     }
 
     // 카메라 무빙워크 (쿼터뷰에서 사이드뷰로 이동)

@@ -17,23 +17,6 @@ public static class GameLibrary
     /// <summary> Ignore Layer Mask (Bullet, Player, Effect) </summary>
     public static int LayerMask_Ignore_BPE { get { return m_layerMask_Igonore_BPE; } }
 
-    // string 부분
-
-    private static string m_string_Player = "Player";
-    public static string String_Player { get { return m_string_Player; } }
-
-    private static string m_string_PlayerAttack = "PlayerAttack";
-    public static string String_PlayerAttack { get { return m_string_PlayerAttack; } }
-
-    private static string m_string_PlayerSkill = "PlayerSkill";
-    public static string String_PlayerSkill { get { return m_string_PlayerSkill; } }
-
-    private static string m_string_Enemy = "Enemy";
-    public static string String_Enemy { get { return m_string_Enemy; } }
-
-    private static string m_string_Effect = "Effect";
-    public static string String_Effect { get { return m_string_Effect; } }
-
     // Enum 부분
 
     private static E_ViewType m_enum_View2D = E_ViewType.View2D;
@@ -54,15 +37,44 @@ public static class GameLibrary
     private static E_MaterialType m_enum_Material_Change = E_MaterialType.Change;
     public static E_MaterialType Enum_Material_Change { get { return m_enum_Material_Change; } }
 
-    // Function 부분
+    // string 부분
 
-    /// <summary>시점변환중이거나 2D시점일 경우 true를 반환</summary>
-    public static bool IsTimeStop
+    private static string m_string_Player = "Player";
+    public static string String_Player { get { return m_string_Player; } }
+
+    private static string m_string_PlayerAttack = "PlayerAttack";
+    public static string String_PlayerAttack { get { return m_string_PlayerAttack; } }
+
+    private static string m_string_PlayerSkill = "PlayerSkill";
+    public static string String_PlayerSkill { get { return m_string_PlayerSkill; } }
+
+    private static string m_string_Enemy = "Enemy";
+    public static string String_Enemy { get { return m_string_Enemy; } }
+
+    private static string m_string_Effect = "Effect";
+    public static string String_Effect { get { return m_string_Effect; } }
+
+    // Bool 부분
+
+    /// <summary>시점변환중이거나 관찰시점이거나 2D일경우 true를 반환</summary>
+    public static bool Bool_IsCOV2D
     {
         get
         {
-            return GameManager.Instance.PlayerManager.Skill_CV.IsChanging || 
-                   GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(Enum_View2D) 
+            return GameManager.Instance.PlayerManager.Skill_CV.IsChanging ||
+                   GameManager.Instance.CameraManager.IsObserve ||
+                   GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(Enum_View2D)
+                   ? true : false;
+        }
+    }
+
+    /// <summary>시점변환중이거나 관찰시점이면 true를 반환</summary>
+    public static bool Bool_IsCO
+    {
+        get
+        {
+            return GameManager.Instance.PlayerManager.Skill_CV.IsChanging ||
+                   GameManager.Instance.CameraManager.IsObserve
                    ? true : false;
         }
     }

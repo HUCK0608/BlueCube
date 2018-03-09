@@ -160,6 +160,11 @@ MonoBehaviour:
   m_movingWorkdRotSpeed: 50
   m_moveDirecitonSpeed: 2
   m_moveDirectionMaxDis: 7
+  m_observeViewKey: 324
+  m_observeViewMinAngle: -45
+  m_observeViewMaxAngle: 135
+  m_observeViewSensitivity: 5
+  m_returnDefaultViewRotationSpeed: 200
 --- !u!124 &124915451261855278
 Behaviour:
   m_ObjectHideFlags: 1

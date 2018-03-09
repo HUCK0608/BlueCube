@@ -10,7 +10,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
-        if (GameLibrary.IsTimeStop)
+        if (GameLibrary.Bool_IsCOV2D)
             return;
 
         CheckDie();

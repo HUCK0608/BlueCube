@@ -110,8 +110,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
     private void Update()
     {
-        // 시점 변경중이 아니고 카메라 변경 키를 눌렀을 때
-        if (!m_isChnaging && Input.GetKeyDown(m_playerManager.ChangeViewKey))
+        // 시점 변경중이거나 탐지모드가 아니고 카메라 변경 키를 눌렀을 때
+        if (!GameLibrary.Bool_IsCO && Input.GetKeyDown(m_playerManager.ChangeViewKey))
         {
             // 현재 시점이 3D이면 2D로 변경
             if (m_viewType.Equals(m_view3D))

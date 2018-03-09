@@ -62,10 +62,8 @@ public sealed class MovePanel : MonoBehaviour
 
         while(true)
         {
-            // 시점변환중이 아니고 활성화 및 시점이 3D일 경우에만 이동
-            if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging && 
-                m_worldObejct.Enabled && 
-                GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(GameLibrary.Enum_View3D))
+            // 시점변환중이 아니고 탐지모드가 아니고 2D가 아닐경우 실행
+            if (!GameLibrary.Bool_IsCOV2D)
             {
                 m_moveGroup.position = Vector3.MoveTowards(m_moveGroup.position, m_path.PathPosition(m_currentPath), m_moveSpeed * Time.deltaTime);
 

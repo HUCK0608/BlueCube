@@ -26,8 +26,8 @@ public sealed class SpinThorn_Thorn : MonoBehaviour
     // 회전
     private void Rotation()
     {
-        // 시점 변환중이거나 활성화 되지 않았을 경우 리턴
-        if (GameManager.Instance.PlayerManager.Skill_CV.IsChanging || !m_spinThorn.WorldObejct.Enabled)
+        // 시점변환중이거나 탐지모드이거나 2D이면 리턴
+        if (GameLibrary.Bool_IsCOV2D)
             return;
 
         // 2D일경우 멈춤
