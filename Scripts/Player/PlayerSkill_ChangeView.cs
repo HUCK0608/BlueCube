@@ -60,6 +60,10 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     private static E_ViewType m_view2D = E_ViewType.View2D;
     private static E_ViewType m_view3D = E_ViewType.View3D;
 
+    // 시점변환 가능 제한시간
+    [SerializeField]
+    private float m_changeLimitTime;
+
     private void Awake()
     {
         m_playerManager = GetComponent<PlayerManager>();
@@ -125,76 +129,149 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     // 2D로 변경
     private IEnumerator ChangeView2D()
     {
+        bool doChange = false;
+
         m_isChnaging = true;
-        m_viewType = m_view2D;
+
+        // 플레이어가 어디에도 속하지 않게 변경
+        transform.parent = null;
 
         Vector3 blueCubePosition = GameManager.Instance.BlueCubeManager.transform.position;
 
         // 2D 변경 상자의 시작 위치를 블루큐브 위치로 잡고 활성화
+        m_changeViewRect_GO.transform.eulerAngles = Vector3.zero;
         m_changeViewRect_GO.transform.localScale = m_blueCubeSize;
-        m_changeViewRect_GO.transform.position = blueCubePosition;
+        Vector3 startPosition = blueCubePosition;
+        startPosition.z += m_blueCubeSize.z * 0.5f;
+        m_changeViewRect_GO.transform.position = startPosition;
         m_changeViewRect_GO.SetActive(true);
-        // 충돌체크 켜기
-        m_changeViewRect_S.CheckIncludeWO(true);
+        // 2D변경 상자의 충돌체크 켜기
+        m_changeViewRect_S.CollisionCheckEnable(true);
 
         // 2D 변경 상자 x, y 커지게 하기
         while (true)
         {
             // x, y 크기 키우기
-            m_changeViewRect_GO.transform.localScale += m_increaseVectorXY;
+            m_changeViewRect_GO.transform.localScale += m_increaseVectorXY * Time.deltaTime;
 
             if (m_changeViewRect_GO.transform.localScale.x >= m_maxSizeX)
                 break;
 
-            yield return new WaitForFixedUpdate();
+            yield return null;
         }
 
-        // 2D 변경 상자 z 커지게 하기 (시점변환 키를 누르고 있는동안에만 적용)
-        // 시점변환 키를 땔 경우 다음으로 넘어감
+        // 2D 변경 상자 z 커졌다 작아졌다 반복 (시점변환 키를 누르고 있는동안에만 적용)
+        // 시점변환 키를 다시 누를경우 다음으로 넘어감
         // 상자는 z양의 방향으로만 커짐
-        while(Input.GetKey(m_playerManager.ChangeViewKey))
-        {
-            // 최대제한 z크기보다 작을경우에만 크게 만들기
-            if (m_changeViewRect_GO.transform.localScale.z < m_maxSizeZ)
-            {
-                // 크기변환
-                m_changeViewRect_GO.transform.localScale += m_increaseVectorZ;
 
-                // 이동
-                Vector3 newPosition = m_changeViewRect_GO.transform.position;
-                float newPositionZ = m_blueCubeSize.z * m_changeViewRect_GO.transform.localScale.z * 0.5f;
-                newPosition.z = newPositionZ + blueCubePosition.z;
-                m_changeViewRect_GO.transform.position = newPosition;
+        bool isIncrease = true;
+        float addTime = 0f;
+
+        while(true)
+        {
+            // 시점변환 키를 누를경우 시점변경
+            if (Input.GetKeyDown(m_playerManager.ChangeViewKey))
+            {
+                doChange = true;
+                break;
             }
 
-            yield return new WaitForFixedUpdate();
+            // 제한시간 체크
+            // 제한시간이 다지나면 시점변경 취소
+            addTime += Time.deltaTime;
+            if (addTime >= m_changeLimitTime)
+            {
+                doChange = false;
+                break;
+            }
+
+            // 커지게하기
+            if (isIncrease)
+            {
+                // 크기변환
+                m_changeViewRect_GO.transform.localScale += m_increaseVectorZ * Time.deltaTime;
+            }
+            // 작아지게 하기
+            else
+            {
+                // 크기변환
+                m_changeViewRect_GO.transform.localScale -= m_increaseVectorZ * Time.deltaTime;
+            }
+
+            // 이동
+            Vector3 newPosition = m_changeViewRect_GO.transform.position;
+            float newPositionZ = m_blueCubeSize.z * m_changeViewRect_GO.transform.localScale.z * 0.5f;
+            newPosition.z = newPositionZ + blueCubePosition.z;
+            m_changeViewRect_GO.transform.position = newPosition;
+
+            // 최대제한 z크기보다 작을경우 작아지게 하기 위한 변수 설정
+            if (m_changeViewRect_GO.transform.localScale.z >= m_maxSizeZ)
+                isIncrease = false;
+            else if (m_changeViewRect_GO.transform.localScale.z <= m_blueCubeSize.z)
+                isIncrease = true;
+
+            yield return null;
         }
 
-        // 월드 모든 오브젝트의 renderer 끄기
-        GameManager.Instance.WorldManager.RendererEnable(false);
+        // 변경이 허용됬을 경우에 실행
+        if (doChange)
+        {
+            // 2D상태로 변경됬다고 설정
+            m_viewType = m_view2D;
 
-        // changeBox 안에 오브젝트만 renderer 및 collider2D 켜기
-        m_changeViewRect_S.IncludeWOEnable(true);
-        // 메테리얼 원래상태로 만들기
-        m_changeViewRect_S.SetDefaultMaterial();
+            // 월드 모든 오브젝트의 renderer 끄기
+            GameManager.Instance.WorldManager.RendererEnable(false);
 
-        // 플레이어 변경
-        m_playerManager.ChangePlayer();
+            // changeBox 안에 오브젝트만 renderer 및 collider2D 켜기
+            m_changeViewRect_S.IncludeWOEnable(true);
+            // 메테리얼 원래상태로 만들기
+            m_changeViewRect_S.SetDefaultMaterial();
 
-        // 블루큐브 변경
-        GameManager.Instance.BlueCubeManager.ChangeCube();
+            // 플레이어 변경
+            m_playerManager.ChangePlayer();
 
-        // 카메라 무빙워크 (쿼터뷰에서 사이드뷰로 이동)
-        yield return StartCoroutine(GameManager.Instance.CameraManager.MovingWork3D());
+            // 블루큐브 변경
+            GameManager.Instance.BlueCubeManager.ChangeCube();
 
-        // 2D 벽 생성
-        Wall2D_SetActive(true);
+            // 카메라 무빙워크 (쿼터뷰에서 사이드뷰로 이동)
+            yield return StartCoroutine(GameManager.Instance.CameraManager.MovingWork3D());
+
+            // 2D 벽 생성
+            Wall2D_SetActive(true);
+
+            // 그림자 끄기
+            GameManager.Instance.LightManager.ShadowEnable(false);
+        }
+        // 변경이 허용되지 않았을경우 원래상태로 돌아감
+        else
+        {
+            // 2D변경 상자 충돌체크 끄기
+            m_changeViewRect_S.CollisionCheckEnable(false);
+            // 메테리얼 원래상태로 변경
+            m_changeViewRect_S.SetDefaultMaterial();
+            // 리스트 클리어
+            m_changeViewRect_S.ClearList();
+
+            // z 감소수치 새로 계산
+            // z 감소수치는 x,y랑 똑같이 줄게하기위해 x,y 증가수치로 계산
+            m_decreaseVector.z = -((m_changeViewRect_GO.transform.localScale.z - m_blueCubeSize.z) * m_increaseSizePerXY * 0.01f);
+
+            // 2D 변경 상자 크기 줄이기
+            while (true)
+            {
+                // 크기 줄이기
+                m_changeViewRect_GO.transform.localScale += m_decreaseVector * Time.deltaTime;
+
+                // 블루큐브 사이즈만큼 작아지면 다음으로 넘어감
+                if (m_changeViewRect_GO.transform.localScale.x <= m_blueCubeSize.x)
+                    break;
+
+                yield return null;
+            }
+        }
 
         // 모든 설정이 끝나면 2D 변경 상자를 비활성화
         m_changeViewRect_GO.SetActive(false);
-
-        // 그림자 끄기
-        GameManager.Instance.LightManager.ShadowEnable(false);
 
         m_isChnaging = false;
     }
@@ -205,12 +282,11 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_isChnaging = true;
         m_viewType = m_view3D;
 
-
         // 2D 벽 삭제
         Wall2D_SetActive(false);
 
-        // 충돌 체크 끄기
-        m_changeViewRect_S.CheckIncludeWO(false);
+        // 2D변경 상자의 충돌 체크 끄기
+        m_changeViewRect_S.CollisionCheckEnable(false);
         // 2D 변경 상자 켜기
         m_changeViewRect_GO.SetActive(true);
 
@@ -240,7 +316,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         while (true)
         {
             // 크기 줄이기
-            m_changeViewRect_GO.transform.localScale += m_decreaseVector;
+            m_changeViewRect_GO.transform.localScale += m_decreaseVector * Time.deltaTime;
 
             // 블루큐브 사이즈만큼 작아지면 다음으로 넘어감
             if (m_changeViewRect_GO.transform.localScale.x <= m_blueCubeSize.x)

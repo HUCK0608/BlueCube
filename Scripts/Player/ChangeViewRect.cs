@@ -17,7 +17,8 @@ public sealed class ChangeViewRect : MonoBehaviour
         m_collider = GetComponent<Collider>();
     }
 
-    public void CheckIncludeWO(bool value)
+    /// <summary>2D변경상자의 충돌체크 설정</summary>
+    public void CollisionCheckEnable(bool value)
     {
         m_collider.enabled = value;
     }
@@ -33,7 +34,7 @@ public sealed class ChangeViewRect : MonoBehaviour
         }
 
         if (!value)
-            m_includeWO.Clear();
+            ClearList();
     }
 
     public void SetDefaultMaterial()
@@ -46,6 +47,12 @@ public sealed class ChangeViewRect : MonoBehaviour
         }
     }
 
+    public void ClearList()
+    {
+        m_includeWO.Clear();
+    }
+
+    // worldObject 리스트에 포함하기
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag != m_playerTag)
@@ -54,8 +61,27 @@ public sealed class ChangeViewRect : MonoBehaviour
 
             if (worldObject != null)
             {
+                // 메테리얼 변경
                 worldObject.ChangeMaterial(GameLibrary.Enum_Material_Change);
+                // 포함
                 m_includeWO.Add(worldObject);
+            }
+        }
+    }
+
+    // 포함된 worldObejct 리스트에서 제외하기
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.tag != m_playerTag)
+        {
+            WorldObject worldObject = other.GetComponentInParent<WorldObject>();
+
+            if(worldObject != null)
+            {
+                // 메테리얼 변경
+                worldObject.ChangeMaterial(GameLibrary.Enum_Material_Default);
+                // 제외
+                m_includeWO.Remove(worldObject);
             }
         }
     }

@@ -2106,8 +2106,9 @@ MonoBehaviour:
   m_maxSizeX: 38
   m_maxSizeY: 20
   m_maxSizeZ: 20
-  m_increaseSizePerXY: 3
-  m_increaseSizePerZ: 3
+  m_increaseSizePerXY: 200
+  m_increaseSizePerZ: 100
+  m_changeLimitTime: 5
 --- !u!114 &114294012444408866
 MonoBehaviour:
   m_ObjectHideFlags: 1

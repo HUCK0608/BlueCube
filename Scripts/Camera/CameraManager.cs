@@ -16,11 +16,11 @@ public sealed class CameraManager : MonoBehaviour
     private Vector3 m_cameraPos2D;
 
     [SerializeField]
-    private float m_movingWordkMoveSpeed;
+    private float m_movingWorkMoveSpeed;
 
     // 회전속도
     [SerializeField]
-    private float m_movingWorkdRotSpeed;
+    private float m_movingWorkRotSpeed;
 
     // 마우스 방향으로 이동하는 속도
     [SerializeField]
@@ -190,9 +190,10 @@ public sealed class CameraManager : MonoBehaviour
     // 카메라 무빙워크 (쿼터뷰에서 사이드뷰로 이동)
     public IEnumerator MovingWork3D()
     {
+        // 카메라 플레이어 위치로 이동
         while(true)
         {
-            m_centerPoint.localPosition = Vector3.MoveTowards(m_centerPoint.localPosition, m_cameraPos2D, 10f * Time.deltaTime);
+            m_centerPoint.localPosition = Vector3.MoveTowards(m_centerPoint.localPosition, m_cameraPos2D, m_movingWorkMoveSpeed * Time.deltaTime);
 
             if (m_centerPoint.localPosition.Equals(m_cameraPos2D))
                 break;
@@ -200,9 +201,13 @@ public sealed class CameraManager : MonoBehaviour
             yield return null;
         }
 
+        // 카메라 각도 변경
         while (true)
         {
-            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation2D), m_movingWorkdRotSpeed * Time.deltaTime);
+            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation2D), m_movingWorkRotSpeed * Time.deltaTime);
+
+            if (m_centerPoint.localRotation.x == 0.0f)
+                Debug.Log("call");
 
             if (m_centerPoint.localRotation.Equals(Quaternion.Euler(m_rotation2D)))
                 break;
@@ -216,7 +221,7 @@ public sealed class CameraManager : MonoBehaviour
     {
         while(true)
         {
-            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation3D), m_movingWorkdRotSpeed * Time.deltaTime);
+            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation3D), m_movingWorkRotSpeed * Time.deltaTime);
 
             if (m_centerPoint.localRotation.Equals(Quaternion.Euler(m_rotation3D)))
                 break;

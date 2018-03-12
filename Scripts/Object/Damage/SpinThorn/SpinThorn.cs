@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_RotationDir { UnColoc = -1, Clock = 1 }
+public enum E_RotationDir { UnColock = -1, Clock = 1 }
 public sealed  class SpinThorn : MonoBehaviour
 {
     [SerializeField]
