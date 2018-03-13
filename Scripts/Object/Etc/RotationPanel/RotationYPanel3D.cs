@@ -9,7 +9,6 @@ public sealed class RotationYPanel3D : MonoBehaviour
         if(other.tag.Equals(GameLibrary.String_Player))
         {
             GameManager.Instance.PlayerManager.transform.parent = transform;
-            Debug.Log("Enter Player");
         }
     }
 
@@ -18,7 +17,6 @@ public sealed class RotationYPanel3D : MonoBehaviour
         if(other.tag.Equals(GameLibrary.String_Player))
         {
             GameManager.Instance.PlayerManager.transform.parent = null;
-            Debug.Log("Enter Player");
         }
     }
 }

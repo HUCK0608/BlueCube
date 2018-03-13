@@ -15,11 +15,6 @@ public sealed class PlayerWeapon : MonoBehaviour
     private Transform m_fireBallMuzzle2D;
     private Transform m_fireBallMuzzle3D;
 
-    private Ray m_ray;
-    private RaycastHit m_hit;
-    private int m_layerMask;
-    private Vector3 m_shootDirection;
-
     private void Awake()
     {
         m_playerManager = GetComponent<PlayerManager>();
@@ -27,7 +22,6 @@ public sealed class PlayerWeapon : MonoBehaviour
 		m_fireBallMuzzle2D = m_playerManager.Player2D_GO.transform.Find("FireBallMuzzle");
 		m_fireBallMuzzle3D = m_playerManager.Player3D_GO.transform.Find("FireBallMuzzle");
 
-        m_layerMask = (-1) - ((1 << 8) | (1 << 11));
     }
 
     private void Update()
@@ -63,22 +57,38 @@ public sealed class PlayerWeapon : MonoBehaviour
     {
         int playerLook = (int)m_playerManager.Player2D_S.LookDirection;
 
-        m_shootDirection = Vector3.right * playerLook;
+        Vector3 shootDirection = Vector3.right * playerLook;
 
-        m_fireballBundle.ShootBullet(m_fireBallMuzzle2D.position, m_shootDirection.normalized);
+        m_fireballBundle.ShootBullet(m_fireBallMuzzle2D.position, shootDirection.normalized);
     }
 
     // 3D에서 발사
     private void ShootFireBall3D()
     {
-        m_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // 법선이 y양의 방향을 보고있고 플레이어위치에 평면을 생성
+        Plane plane = new Plane(Vector3.up, m_playerManager.Player3D_GO.transform.position);
 
-        if (Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, m_layerMask))
+        // 마우스 위치의 광선 생성
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        // 충돌된 거리를 담을 변수
+        float rayDistance;
+
+        // 충돌 위치를 담을 변수
+        Vector3 hitPoint = Vector3.zero;
+
+        // 평면에서 광선 발사
+        if (plane.Raycast(ray, out rayDistance))
         {
-            m_shootDirection = m_hit.point - m_fireBallMuzzle3D.position;
-            m_shootDirection.y = 0;
+            // 충돌 위치 구하기
+            hitPoint = ray.GetPoint(rayDistance);
         }
 
-        m_fireballBundle.ShootBullet(m_fireBallMuzzle3D.position, m_shootDirection.normalized);
+        // 발사방향 구하기
+        Vector3 shootDirection = hitPoint - m_fireBallMuzzle3D.position;
+        // y의 방향 없애기
+        shootDirection.y = 0f;
+
+        m_fireballBundle.ShootBullet(m_fireBallMuzzle3D.position, shootDirection.normalized);
     }
 }

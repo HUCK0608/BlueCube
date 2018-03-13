@@ -5,22 +5,33 @@ using UnityEngine;
 public class EnemyStat : MonoBehaviour
 {
     // enemyManager
-    private EnemyManager m_manager;
+    private EnemyManager m_enemyManager;
+
+    private Vector3 m_spawnPosition;
+    /// <summary>스폰위치</summary>
+    public Vector3 SpawnPosition { get { return m_spawnPosition; } }
 
     [SerializeField]
-    protected int m_hp;
+    private int m_hp;
 
     [SerializeField]
-    protected int m_damage;
-    public int Damage { get { return m_damage; } }
+    private float m_moveSpeed;
+    /// <summary>이동속도</summary>
+    public float MoveSpeed { get { return m_moveSpeed; } }
 
     [SerializeField]
-    protected float m_hitDelayTime;
-    public float HitDelayTime { get { return m_hitDelayTime; } }
+    private float m_rotationSpeed;
+    /// <summary>회전속도</summary>
+    public float RotationSpeed { get { return m_rotationSpeed; } }
+
+    [SerializeField]
+    private float m_detectRange;
+    /// <summary>탐지사거리</summary>
+    public float DetectRange { get { return m_detectRange; } }
     
-    protected virtual void Awake()
+    private void Awake()
     {
-        m_manager = GetComponent<EnemyManager>();
+        m_enemyManager = GetComponent<EnemyManager>();
     }
 
     // 피격
@@ -30,6 +41,6 @@ public class EnemyStat : MonoBehaviour
         
         // 체력이 다 닳았을 경우 죽음 처리
         if (m_hp <= 0)
-            m_manager.Die();
+            m_enemyManager.Die();
     }
 }

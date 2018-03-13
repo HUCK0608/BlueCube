@@ -94,6 +94,7 @@ public sealed class Player3D : Player
 
         // 상
         m_ray.origin = m_checkGroundPoints[0].position + m_rayOriginY;
+        
         Debug.DrawRay(m_ray.origin, m_ray.direction, Color.red);
 
         if (Physics.Raycast(m_ray, m_checkGroundRayDis, ignoreLM))

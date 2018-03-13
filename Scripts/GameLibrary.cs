@@ -54,6 +54,14 @@ public static class GameLibrary
     private static string m_string_Effect = "Effect";
     public static string String_Effect { get { return m_string_Effect; } }
 
+    private static string m_string_EnemyState_Melee = "EnemyState_Melee_";
+    /// <summary>EnemyState_Melee_</summary>
+    public static string String_EnemyState_Melee { get { return m_string_EnemyState_Melee; } }
+
+    private static string m_string_EnemyState_Long = "EnemyState_Long_";
+    /// <summary>EnemyState_Long_</summary>
+    public static string String_EnemyState_Long { get { return m_string_EnemyState_Long; } }
+
     // Bool 부분
 
     /// <summary>시점변환중이거나 관찰시점이거나 2D일경우 true를 반환</summary>

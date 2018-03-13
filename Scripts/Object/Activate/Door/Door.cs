@@ -25,13 +25,9 @@ public sealed class Door : MonoBehaviour
     // 모델의 x 크기
     private float m_width;
 
-    private WorldObject m_worldObject;
-
     private void Awake()
     {
         m_activate = GetComponent<Activate>();
-
-        m_worldObject = GetComponent<WorldObject>();
 
         InitDoor();
 

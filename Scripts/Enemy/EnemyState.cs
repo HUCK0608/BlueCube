@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class EnemyState : MonoBehaviour
 {
+    protected EnemyManager m_enemyManager;
+
+    protected virtual void Awake()
+    {
+        m_enemyManager = GetComponent<EnemyManager>();
+    }
+
     public virtual void InitState()
     {
 

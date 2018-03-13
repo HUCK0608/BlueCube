@@ -110,7 +110,7 @@ public sealed class CameraManager : MonoBehaviour
         // 플레이어3D
         GameObject player3D = GameManager.Instance.PlayerManager.Player3D_GO;
 
-        // y축을 보고있고 플레이어위치에 평면을 생성
+        // 법선이 y양의 방향을 보고있고 플레이어위치에 평면을 생성
         Plane plane = new Plane(Vector3.up, player3D.transform.position);
 
         // 마우스 위치의 광선 생성

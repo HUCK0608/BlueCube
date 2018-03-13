@@ -25,15 +25,11 @@ public sealed class MovePanel : MonoBehaviour
     [SerializeField]
     private float m_waitTime;
 
-    private WorldObject m_worldObejct;
-
     private void Awake()
     {
         m_activate = GetComponent<Activate>();
 
         m_moveGroup = transform.Find("MoveGroup");
-
-        m_worldObejct = GetComponent<WorldObject>();
 
         StartCoroutine(CheckActivate());
     }

@@ -136,6 +136,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 플레이어가 어디에도 속하지 않게 변경
         transform.parent = null;
 
+        // 블루큐브 위치
         Vector3 blueCubePosition = GameManager.Instance.BlueCubeManager.transform.position;
 
         // 2D 변경 상자의 시작 위치를 블루큐브 위치로 잡고 활성화
@@ -262,6 +263,12 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
                 // 크기 줄이기
                 m_changeViewRect_GO.transform.localScale += m_decreaseVector * Time.deltaTime;
 
+                // 이동
+                Vector3 newPosition = m_changeViewRect_GO.transform.position;
+                float newPositionZ = m_blueCubeSize.z * m_changeViewRect_GO.transform.localScale.z * 0.5f;
+                newPosition.z = newPositionZ + blueCubePosition.z;
+                m_changeViewRect_GO.transform.position = newPosition;
+
                 // 블루큐브 사이즈만큼 작아지면 다음으로 넘어감
                 if (m_changeViewRect_GO.transform.localScale.x <= m_blueCubeSize.x)
                     break;
@@ -312,11 +319,20 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // z 감소수치는 x,y랑 똑같이 줄게하기위해 x,y 증가수치로 계산
         m_decreaseVector.z = -((m_changeViewRect_GO.transform.localScale.z - m_blueCubeSize.z) * m_increaseSizePerXY * 0.01f);
 
+        // 블루큐브 위치
+        Vector3 blueCubePosition = GameManager.Instance.BlueCubeManager.transform.position;
+
         // 2D 변경 상자 크기 줄이기
         while (true)
         {
             // 크기 줄이기
             m_changeViewRect_GO.transform.localScale += m_decreaseVector * Time.deltaTime;
+
+            // 이동
+            Vector3 newPosition = m_changeViewRect_GO.transform.position;
+            float newPositionZ = m_blueCubeSize.z * m_changeViewRect_GO.transform.localScale.z * 0.5f;
+            newPosition.z = newPositionZ + blueCubePosition.z;
+            m_changeViewRect_GO.transform.position = newPosition;
 
             // 블루큐브 사이즈만큼 작아지면 다음으로 넘어감
             if (m_changeViewRect_GO.transform.localScale.x <= m_blueCubeSize.x)
