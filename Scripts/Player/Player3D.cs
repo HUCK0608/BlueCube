@@ -31,7 +31,7 @@ public sealed class Player3D : Player
 
         m_animator = GetComponent<Animator>();
         m_rigidbody = GetComponent<Rigidbody>();
-        m_landingPoint = transform.parent.Find("3D_LandingPoint").gameObject;
+        m_landingPoint = transform.parent.Find("LandingPoint3D").gameObject;
 
         m_ray = new Ray();
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public sealed class PlayerHand3D : MonoBehaviour
 {
     // 매니저
-    private PlayerManager m_manager;
+    private PlayerManager m_playerManager;
 
     // 각 손
     private Transform m_playerHand2D;
@@ -23,9 +23,9 @@ public sealed class PlayerHand3D : MonoBehaviour
 
     private void Awake()
     {
-        m_manager = transform.parent.parent.GetComponent<PlayerManager>();
+		m_playerManager = transform.GetComponentInParent<PlayerManager>();
 
-        m_playerHand2D = transform.parent.parent.Find("2D").Find("PlayerHand");
+		m_playerHand2D = m_playerManager.Player2D_GO.transform.Find("PlayerHand");
         m_playerHand3D = transform;
 
         m_checkItem3D = transform.GetChild(0);
@@ -44,7 +44,7 @@ public sealed class PlayerHand3D : MonoBehaviour
     private void InteractionItem()
     {
         // 상호작용키를 눌렀을경우
-        if(Input.GetKeyDown(m_manager.InteractionKey))
+        if(Input.GetKeyDown(m_playerManager.InteractionKey))
         {
             // 현재 아이템이 없다면 아이템 줍기
             if (m_haveItem == null)

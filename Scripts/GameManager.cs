@@ -38,7 +38,7 @@ public sealed class GameManager : MonoBehaviour
 
         m_worldManager = GameObject.Find("World").GetComponent<WorldManager>();
         m_cameraManager = GameObject.Find("CameraGroup").GetComponent<CameraManager>();
-        m_playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
+        m_playerManager = GameObject.Find("PlayerGroup").GetComponent<PlayerManager>();
         m_blueCubeManager = GameObject.Find("BlueCube").GetComponent<BlueCubeManager>();
         m_effectManager = GameObject.Find("Effects").GetComponent<EffectManager>();
         m_lightManager = GameObject.Find("Light").GetComponent<LightManager>();

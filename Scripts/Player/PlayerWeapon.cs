@@ -24,8 +24,8 @@ public sealed class PlayerWeapon : MonoBehaviour
     {
         m_playerManager = GetComponent<PlayerManager>();
 
-        m_fireBallMuzzle2D = transform.Find("2D").Find("FireBallMuzzle");
-        m_fireBallMuzzle3D = transform.Find("3D").Find("FireBallMuzzle");
+		m_fireBallMuzzle2D = m_playerManager.Player2D_GO.transform.Find("FireBallMuzzle");
+		m_fireBallMuzzle3D = m_playerManager.Player3D_GO.transform.Find("FireBallMuzzle");
 
         m_layerMask = (-1) - ((1 << 8) | (1 << 11));
     }

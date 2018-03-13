@@ -49,7 +49,7 @@ public sealed class PE_DamageKnockBack : MonoBehaviour
         while(true)
         {
             // 시점변환중이 아니고 탐지모드가 아니고 2D가 아닐경우 실행
-            if (!GameLibrary.Bool_IsCOV2D)
+            if (!GameLibrary.Bool_IsGameStop)
             {
                 addTime += Time.deltaTime;
 

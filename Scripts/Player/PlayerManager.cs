@@ -60,17 +60,17 @@ public sealed class PlayerManager : MonoBehaviour
     {
         m_stat = GetComponent<PlayerStat>();
         m_skill_CV = GetComponent<PlayerSkill_ChangeView>();
+		InitPlayer();
     }
 
     private void Start()
     {
-        InitPlayer();
     }
 
     private void InitPlayer()
     {
-        m_player2D_GO = transform.Find("2D").gameObject;
-        m_player3D_GO = transform.Find("3D").gameObject;
+        m_player2D_GO = transform.Find("Player2D").gameObject;
+        m_player3D_GO = transform.Find("Player3D").gameObject;
 
         m_player2D_S = m_player2D_GO.GetComponent<Player2D>();
         m_player3D_S = m_player3D_GO.GetComponent<Player3D>();

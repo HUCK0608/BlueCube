@@ -57,14 +57,25 @@ public static class GameLibrary
     // Bool 부분
 
     /// <summary>시점변환중이거나 관찰시점이거나 2D일경우 true를 반환</summary>
+    public static bool Bool_IsGameStop
+    {
+        get
+        {
+            return GameManager.Instance.PlayerManager.Skill_CV.IsChanging ||
+                     GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(Enum_View2D)
+                     ? true : false;
+        }
+    }
+
+    /// <summary>시점변환중이거나 관찰시점이거나 2D시점이면 true를 반환</summary>
     public static bool Bool_IsCOV2D
     {
         get
         {
             return GameManager.Instance.PlayerManager.Skill_CV.IsChanging ||
-                   GameManager.Instance.CameraManager.IsObserve ||
-                   GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(Enum_View2D)
-                   ? true : false;
+                     GameManager.Instance.CameraManager.IsObserve ||
+                     GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(Enum_View2D)
+                     ? true : false;
         }
     }
 
@@ -74,8 +85,9 @@ public static class GameLibrary
         get
         {
             return GameManager.Instance.PlayerManager.Skill_CV.IsChanging ||
-                   GameManager.Instance.CameraManager.IsObserve
-                   ? true : false;
+                     GameManager.Instance.CameraManager.IsObserve
+                     ? true : false;
         }
     }
+
 }

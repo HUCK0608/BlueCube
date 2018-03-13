@@ -19,7 +19,7 @@ public sealed class EnemyState_Monster1_Return : EnemyState_Monster1
 
     private void Update()
     {
-        if (GameLibrary.Bool_IsCOV2D)
+        if (GameLibrary.Bool_IsGameStop)
             return;
 
         MoveToSpawnPosition();

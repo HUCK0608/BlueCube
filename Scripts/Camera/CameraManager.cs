@@ -4,6 +4,8 @@ using UnityEngine;
 
 public sealed class CameraManager : MonoBehaviour
 {
+    private Camera m_camera;
+
     // 카메라 센터포인트
     private Transform m_centerPoint;
 
@@ -56,6 +58,8 @@ public sealed class CameraManager : MonoBehaviour
 
     private void Awake()
     {
+        m_camera = GetComponentInChildren<Camera>();
+
         m_centerPoint = transform.Find("CenterPoint");
 
         m_rotation2D = Vector3.zero;
@@ -87,7 +91,7 @@ public sealed class CameraManager : MonoBehaviour
     public void MoveToMouseDirection()
     {
         // 시점변환중이거나 2D시점이거나 관찰시점일 경우 리턴
-        if (GameLibrary.Bool_IsCOV2D)
+        if (GameLibrary.Bool_IsGameStop)
             return;
 
         // 마우스 방향의 월드 방향 구하기
@@ -135,7 +139,7 @@ public sealed class CameraManager : MonoBehaviour
     // 관찰시점을 사용할것인지 체크
     private void CheckObserveView()
     {
-        if(!m_isObserve)
+        if(!GameLibrary.Bool_IsCOV2D)
         {
             if(Input.GetKeyDown(m_observeViewKey))
             {
@@ -190,40 +194,56 @@ public sealed class CameraManager : MonoBehaviour
     // 카메라 무빙워크 (쿼터뷰에서 사이드뷰로 이동)
     public IEnumerator MovingWork3D()
     {
+        // 오쏘그래픽으로 변경
+        m_camera.orthographic = true;
+
+        // 이동 및 회전체크용 변수
+        bool moveComplete = false;
+        bool angleComplete = false;
+
+        float checkAngleDistance = 0.3f;
+
         // 카메라 플레이어 위치로 이동
-        while(true)
-        {
-            m_centerPoint.localPosition = Vector3.MoveTowards(m_centerPoint.localPosition, m_cameraPos2D, m_movingWorkMoveSpeed * Time.deltaTime);
-
-            if (m_centerPoint.localPosition.Equals(m_cameraPos2D))
-                break;
-
-            yield return null;
-        }
-
-        // 카메라 각도 변경
         while (true)
         {
-            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation2D), m_movingWorkRotSpeed * Time.deltaTime);
+            // 이동
+            if(!moveComplete)
+                m_centerPoint.localPosition = Vector3.MoveTowards(m_centerPoint.localPosition, m_cameraPos2D, m_movingWorkMoveSpeed * Time.deltaTime);
+            // 회전
+            if(!angleComplete)
+                m_centerPoint.localRotation = Quaternion.Slerp(m_centerPoint.localRotation, Quaternion.Euler(m_rotation2D), m_movingWorkRotSpeed * Time.deltaTime);
 
-            if (m_centerPoint.localRotation.x == 0.0f)
-                Debug.Log("call");
+            // 이동완료 체크
+            if (!moveComplete && m_centerPoint.localPosition.Equals(m_cameraPos2D))
+                moveComplete = true;
+            // 회전완료 체크
+            if (!angleComplete && Vector3.Distance(m_centerPoint.localEulerAngles, m_rotation2D) <= checkAngleDistance)
+            {
+                angleComplete = true;
+                m_centerPoint.localEulerAngles = Vector3.zero;
+            }
 
-            if (m_centerPoint.localRotation.Equals(Quaternion.Euler(m_rotation2D)))
+            // 이동과 회전이 완료되면 반복문 종료
+            if (moveComplete && angleComplete)
                 break;
 
             yield return null;
         }
+
     }
 
     // 카메라 무빙워크 (사이드뷰에서 쿼터뷰로 이동)
     public IEnumerator MovingWork2D()
     {
+        // 오쏘그래픽 해제
+        m_camera.orthographic = false;
+
+        float checkAngleDistance = 0.3f;
         while(true)
         {
-            m_centerPoint.localRotation = Quaternion.RotateTowards(m_centerPoint.localRotation, Quaternion.Euler(m_rotation3D), m_movingWorkRotSpeed * Time.deltaTime);
+            m_centerPoint.localRotation = Quaternion.Slerp(m_centerPoint.localRotation, Quaternion.Euler(m_rotation3D), m_movingWorkRotSpeed * Time.deltaTime);
 
-            if (m_centerPoint.localRotation.Equals(Quaternion.Euler(m_rotation3D)))
+            if (Vector3.Distance(m_centerPoint.localEulerAngles, m_rotation3D) <= checkAngleDistance)
                 break;
 
             yield return null;
