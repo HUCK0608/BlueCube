@@ -54,6 +54,9 @@ public static class GameLibrary
     private static string m_string_Effect = "Effect";
     public static string String_Effect { get { return m_string_Effect; } }
 
+    private static string m_string_EnemyAttack = "EnemyAttack";
+    public static string String_EnemyAttack { get { return m_string_EnemyAttack; } }
+
     private static string m_string_EnemyState_Melee = "EnemyState_Melee_";
     /// <summary>EnemyState_Melee_</summary>
     public static string String_EnemyState_Melee { get { return m_string_EnemyState_Melee; } }
@@ -64,7 +67,7 @@ public static class GameLibrary
 
     // Bool 부분
 
-    /// <summary>시점변환중이거나 관찰시점이거나 2D일경우 true를 반환</summary>
+    /// <summary>시점변환중이거나 2D일경우 true를 반환</summary>
     public static bool Bool_IsGameStop
     {
         get
@@ -98,4 +101,21 @@ public static class GameLibrary
         }
     }
 
+    // Function 부분
+    public static IEnumerator Timer(float limitTime)
+    {
+        float addTime = 0f;
+
+        while(true)
+        {
+            // 게임시간이 멈추지 않았을 경우 실행
+            if (!Bool_IsGameStop)
+            {
+                addTime += Time.deltaTime;
+                if (addTime >= limitTime)
+                    break;
+            }
+            yield return null;
+        }
+    }
 }

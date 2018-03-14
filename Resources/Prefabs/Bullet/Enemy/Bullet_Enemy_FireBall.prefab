@@ -106,10 +106,10 @@ GameObject:
   - component: {fileID: 4368836603926988}
   - component: {fileID: 50935559442520036}
   - component: {fileID: 58992515098862412}
-  - component: {fileID: 114059074928084502}
+  - component: {fileID: 114613459191281864}
   m_Layer: 8
   m_Name: Collider2D
-  m_TagString: PlayerAttack
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,10 +159,10 @@ GameObject:
   - component: {fileID: 4358623122408510}
   - component: {fileID: 54970911443789620}
   - component: {fileID: 135935877338710292}
-  - component: {fileID: 114115114178516142}
+  - component: {fileID: 114769203931943682}
   m_Layer: 8
   m_Name: Collider3D
-  m_TagString: PlayerAttack
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -454,28 +454,6 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114059074928084502
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1662587558150346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69abdafb2ed9a88468a9c1af97b1bfad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114115114178516142
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1876118834435494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85534a77901eff94aa0bad58049eaad5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114151411279363782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -502,6 +480,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0d1d7bad67ce684dbff789ed5fe9bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114613459191281864
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1662587558150346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8632b0c519008fe42a75d7ec25c858d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114634293656010612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -517,6 +506,17 @@ MonoBehaviour:
   Rows: 4
   FramesPerSecond: 20
   RunOnce: 0
+--- !u!114 &114769203931943682
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1876118834435494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ab72a1071e6984eacdf17ea07ea4ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114837248408007098
 MonoBehaviour:
   m_ObjectHideFlags: 1

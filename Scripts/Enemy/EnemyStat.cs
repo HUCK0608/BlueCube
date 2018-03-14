@@ -15,6 +15,11 @@ public class EnemyStat : MonoBehaviour
     private int m_hp;
 
     [SerializeField]
+    private EnemyDetectionArea m_detectionArea;
+    /// <summary>탐지구역</summary>
+    public EnemyDetectionArea DetectionArea { get { return m_detectionArea; } }
+
+    [SerializeField]
     private float m_moveSpeed;
     /// <summary>이동속도</summary>
     public float MoveSpeed { get { return m_moveSpeed; } }
@@ -25,13 +30,15 @@ public class EnemyStat : MonoBehaviour
     public float RotationSpeed { get { return m_rotationSpeed; } }
 
     [SerializeField]
-    private float m_detectRange;
-    /// <summary>탐지사거리</summary>
-    public float DetectRange { get { return m_detectRange; } }
+    private float m_maxNearDistance;
+    /// <summary>최대로 다가갈 수 있는 거리</summary>
+    public float MaxNearDistance { get { return m_maxNearDistance; } }
     
     private void Awake()
     {
         m_enemyManager = GetComponent<EnemyManager>();
+
+        m_spawnPosition = transform.position;
     }
 
     // 피격
