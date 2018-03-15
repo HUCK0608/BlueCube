@@ -2,14 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class Switch_OnOff : MonoBehaviour
+public class Switch_OnOff : Switch
 {
-    // 스위치가 켜졌는지
-    private bool m_isOn;
-    public bool IsOn { get { return m_isOn; } }
+    private MeshFilter m_meshFilter;
 
-    public void On()
+    [SerializeField]
+    protected Mesh m_onMesh, m_offMesh;
+
+    protected virtual void Awake()
+    {
+        m_meshFilter = GetComponentInChildren<MeshFilter>();
+        m_meshFilter.mesh = m_offMesh;
+    }
+
+    public virtual void SwitchOn()
     {
         m_isOn = true;
+        m_meshFilter.mesh = m_onMesh;
+    }
+
+    public virtual void SwitchOff()
+    {
+        m_isOn = false;
+        m_meshFilter.mesh = m_offMesh;
     }
 }

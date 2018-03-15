@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum E_HitType { PlayerAttack }
 
-public sealed class Switch_Hit : MonoBehaviour
+public sealed class Switch_Hit : Switch
 {
     // 피격 타입
     [SerializeField]
@@ -15,10 +15,6 @@ public sealed class Switch_Hit : MonoBehaviour
     [SerializeField]
     private int m_hp;
 
-    // 스위치가 부셔졌는지
-    private bool m_isBroken;
-    public bool IsBroken { get { return m_isBroken; } }
-
     // 피격 당했을 경우
     public void Hit()
     {
@@ -28,7 +24,7 @@ public sealed class Switch_Hit : MonoBehaviour
         // 체력이 없을경우 부셔짐
         if (m_hp <= 0)
         {
-            m_isBroken = true;
+            m_isOn = true;
         }
     }
 }

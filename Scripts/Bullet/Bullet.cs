@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum E_BulletOwner { Player, Enemy }
+
 public sealed class Bullet : MonoBehaviour
 {
     // 총알 묶음 스크립트
@@ -13,6 +15,10 @@ public sealed class Bullet : MonoBehaviour
     public bool IsUsed { get { return m_isUsed; } }
 
     private bool m_isShoot;
+
+    // 총알의 소유자
+    [SerializeField]
+    private E_BulletOwner m_bulletOwner;
 
     // 충돌 이펙트 타입
     [SerializeField]
@@ -53,18 +59,22 @@ public sealed class Bullet : MonoBehaviour
         // 정면으로 계속 이동
         while(m_isShoot)
         {
-            // 시점변환중이 아니고 활성화 상태일경우만 이동
-            if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging && m_worldObject.Enabled)
+            // 소유자가 적일경우 2D가 아닐때만 이동
+            if (!(m_bulletOwner.Equals(E_BulletOwner.Enemy) && GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(GameLibrary.Enum_View2D)))
             {
-                transform.Translate(direction * m_bundle.Stat.Speed, Space.World);
-
-                // 시간 누적
-                accTime += Time.fixedDeltaTime;
-
-                // 지속시간이 지났을 경우 발사 정지
-                if (accTime >= m_bundle.Stat.DurationTime)
+                // 시점변환중이 아니고 활성화 상태일경우만 이동
+                if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging && m_worldObject.Enabled)
                 {
-                    EndShoot();
+                    transform.Translate(direction * m_bundle.Stat.Speed, Space.World);
+
+                    // 시간 누적
+                    accTime += Time.fixedDeltaTime;
+
+                    // 지속시간이 지났을 경우 발사 정지
+                    if (accTime >= m_bundle.Stat.DurationTime)
+                    {
+                        EndShoot();
+                    }
                 }
             }
             yield return new WaitForFixedUpdate();
