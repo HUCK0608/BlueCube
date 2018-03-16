@@ -13,9 +13,11 @@ public sealed class Door : MonoBehaviour
     [SerializeField]
     private E_OpenDir m_openDir;
 
+    // 문이 열리는 속도
     [SerializeField]
     private float m_moveSpeed;
 
+    // 문 열리기전 딜레이
     [SerializeField]
     private float m_delayTime;
 
@@ -27,7 +29,7 @@ public sealed class Door : MonoBehaviour
 
     private void Awake()
     {
-        m_activate = GetComponent<Activate>();
+        m_activate = GetComponentInParent<Activate>();
 
         InitDoor();
 

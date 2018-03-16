@@ -9,6 +9,7 @@ public sealed class PlayerStat : MonoBehaviour
     // HP
     [SerializeField]
     private int m_Hp;
+    public void HpIncrease(int increaseAmount) { m_Hp += increaseAmount;  Debug.Log("체력증가! 플레이어 체력 : " + m_Hp); }
 
     // 무적
     private bool m_isInvincibility;

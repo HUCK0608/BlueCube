@@ -35,6 +35,9 @@ public sealed class PlayerManager : MonoBehaviour
     private PlayerStat m_stat;
     public PlayerStat Stat { get { return m_stat; } }
 
+    private PlayerInventory m_inventory;
+    public PlayerInventory Inventory { get { return m_inventory; } }
+
     // 시점변환 스킬
     private PlayerSkill_ChangeView m_skill_CV;
     public PlayerSkill_ChangeView Skill_CV { get { return m_skill_CV; } }
@@ -59,6 +62,7 @@ public sealed class PlayerManager : MonoBehaviour
     private void Awake()
     {
         m_stat = GetComponent<PlayerStat>();
+        m_inventory = GetComponent<PlayerInventory>();
         m_skill_CV = GetComponent<PlayerSkill_ChangeView>();
 		InitPlayer();
     }

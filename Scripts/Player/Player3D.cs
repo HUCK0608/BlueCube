@@ -25,6 +25,11 @@ public sealed class Player3D : Player
     private Ray m_ray;
     private RaycastHit m_hit;                       // 레이 충돌 정보를 담을 변수
 
+    [SerializeField]
+    private float m_ladderCheckDistance;
+
+    private bool m_onLadder;
+
     protected override void Awake()
     {
         base.Awake();
@@ -202,25 +207,54 @@ public sealed class Player3D : Player
 
         movement = movement.normalized;
 
-        // 애니메이션 변수 설정
-        SetAni(movement);
+        bool checkLadder = CheckLadder(movement);
 
-        // 가는 방향이 정면일 경우 정면 스피드 적용
-        if (m_aniDirection.Equals(0))
-            movement *= m_playerManager.Stat.ForwardMoveSpeed;
-        // 정면이 아닐경우 조금 느린 스피드 적용
-        else
-            movement *= m_playerManager.Stat.SideBackMoveSpeed;
-
-        // 땅이 아닐경우 중력적용
-        if(!m_playerManager.IsGrounded || m_playerManager.IsJumping)
+        // 사다리가 있을경우
+        if (!checkLadder)
         {
-            float nextVelocity = m_rigidbody.velocity.y + m_playerManager.Stat.Gravity * Time.deltaTime;
-            movement.y = nextVelocity;
+            // 애니메이션 변수 설정
+            SetAni(movement);
+
+            // 가는 방향이 정면일 경우 정면 스피드 적용
+            if (m_aniDirection.Equals(0))
+                movement *= m_playerManager.Stat.ForwardMoveSpeed;
+            // 정면이 아닐경우 조금 느린 스피드 적용
+            else
+                movement *= m_playerManager.Stat.SideBackMoveSpeed;
+
+            // 땅이아니거나 점프중이거나 사다리위가 아닐경우 중력적용
+            if (!m_playerManager.IsGrounded || m_playerManager.IsJumping)
+            {
+                float nextVelocity = m_rigidbody.velocity.y + m_playerManager.Stat.Gravity * Time.deltaTime;
+                movement.y = nextVelocity;
+            }
+        }
+        // 사다리가 없을경우
+        else
+        {
+            movement = Vector3.up * m_playerManager.Stat.ForwardMoveSpeed;
         }
 
         // 이동
         m_rigidbody.velocity = movement;
+    }
+
+    // 사다리가 있는지 체크
+    private bool CheckLadder(Vector3 direction)
+    {
+        m_ray.origin = transform.position + Vector3.up * 0.5f;
+        m_ray.direction = direction;
+
+        // 사다리만 통과하는 레이어마스크
+        int layerMask = GameLibrary.LayerMask_Ladder;
+
+        Debug.DrawRay(m_ray.origin, m_ray.direction * m_ladderCheckDistance, Color.yellow);
+        if (Physics.Raycast(m_ray, m_ladderCheckDistance, layerMask))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     // 점프
