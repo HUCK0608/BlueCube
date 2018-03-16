@@ -17,6 +17,9 @@ public static class GameLibrary
     /// <summary> Ignore Layer Mask (Bullet, Player, Effect) </summary>
     public static int LayerMask_Ignore_BPE { get { return m_layerMask_Igonore_BPE; } }
 
+    private static int m_layerMask_Ladder = 1 << 12;
+    public static int LayerMask_Ladder { get { return m_layerMask_Ladder; } }
+
     // Enum 부분
 
     private static E_ViewType m_enum_View2D = E_ViewType.View2D;
@@ -56,6 +59,9 @@ public static class GameLibrary
 
     private static string m_string_EnemyAttack = "EnemyAttack";
     public static string String_EnemyAttack { get { return m_string_EnemyAttack; } }
+
+    private static string m_string_IgnoreTag = "IgnoreTag";
+    public static string String_IgnoreTag { get { return m_string_IgnoreTag; } }
 
     private static string m_string_EnemyState_Melee = "EnemyState_Melee_";
     /// <summary>EnemyState_Melee_</summary>

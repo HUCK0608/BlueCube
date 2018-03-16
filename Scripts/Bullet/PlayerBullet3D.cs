@@ -30,7 +30,7 @@ public sealed class PlayerBullet3D : MonoBehaviour
             m_bullet.EndShoot();
         }
         // 플레이어가 아니고 적이 아닐경우
-        else if(other.tag != m_playerS && other.tag != m_playerAttackS && other.tag != m_playerSkillS && other.tag != GameLibrary.String_EnemyAttack)
+        else if(other.tag != m_playerS && other.tag != m_playerAttackS && other.tag != m_playerSkillS && other.tag != GameLibrary.String_EnemyAttack && other.tag != GameLibrary.String_IgnoreTag)
         {
             m_bullet.EndShoot();
         }

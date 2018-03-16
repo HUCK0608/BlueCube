@@ -294,6 +294,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
         // 2D변경 상자의 충돌 체크 끄기
         m_changeViewRect_S.CollisionCheckEnable(false);
+
         // 2D 변경 상자 켜기
         m_changeViewRect_GO.SetActive(true);
 
