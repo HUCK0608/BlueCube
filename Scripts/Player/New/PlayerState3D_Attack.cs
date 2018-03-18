@@ -8,4 +8,19 @@ public class PlayerState3D_Attack : PlayerState3D
     {
         base.Awake();
     }
+
+    public override void InitState()
+    {
+        base.InitState();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    public override void EndState()
+    {
+        base.EndState();
+    }
 }

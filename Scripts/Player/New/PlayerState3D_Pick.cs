@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState3D_Pick : MonoBehaviour {
+public class PlayerState3D_Pick : PlayerState3D
+{
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public override void InitState()
+    {
+        base.InitState();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    public override void EndState()
+    {
+        base.EndState();
+    }
 }

@@ -11,4 +11,9 @@ public class PlayerState3D : PlayerState
         base.Awake();
         m_rigidBody = GetComponent<Rigidbody>();
     }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
 }
