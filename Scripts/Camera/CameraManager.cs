@@ -24,6 +24,10 @@ public sealed class CameraManager : MonoBehaviour
     [SerializeField]
     private float m_movingWorkRotSpeed;
 
+    // 무빙워크 각도회전할 때 체크할 최소 값
+    [SerializeField]
+    private float m_movingWorkSlerpCheckDistance;
+
     // 마우스 방향으로 이동하는 속도
     [SerializeField]
     private float m_moveDirecitonSpeed;
@@ -201,8 +205,6 @@ public sealed class CameraManager : MonoBehaviour
         bool moveComplete = false;
         bool angleComplete = false;
 
-        float checkAngleDistance = 0.3f;
-
         // 카메라 플레이어 위치로 이동
         while (true)
         {
@@ -216,8 +218,10 @@ public sealed class CameraManager : MonoBehaviour
             // 이동완료 체크
             if (!moveComplete && m_centerPoint.localPosition.Equals(m_cameraPos2D))
                 moveComplete = true;
+
+
             // 회전완료 체크
-            if (!angleComplete && Vector3.Distance(m_centerPoint.localEulerAngles, m_rotation2D) <= checkAngleDistance)
+            if (!angleComplete && Vector2.Distance(m_centerPoint.localEulerAngles, m_rotation2D) <= m_movingWorkSlerpCheckDistance)
             {
                 angleComplete = true;
                 m_centerPoint.localEulerAngles = Vector3.zero;
@@ -238,13 +242,15 @@ public sealed class CameraManager : MonoBehaviour
         // 오쏘그래픽 해제
         m_camera.orthographic = false;
 
-        float checkAngleDistance = 0.3f;
         while(true)
         {
             m_centerPoint.localRotation = Quaternion.Slerp(m_centerPoint.localRotation, Quaternion.Euler(m_rotation3D), m_movingWorkRotSpeed * Time.deltaTime);
 
-            if (Vector3.Distance(m_centerPoint.localEulerAngles, m_rotation3D) <= checkAngleDistance)
+            if (Vector2.Distance(m_centerPoint.localEulerAngles, m_rotation3D) <= m_movingWorkSlerpCheckDistance)
+            {
+                m_centerPoint.localEulerAngles = m_rotation3D;
                 break;
+            }
 
             yield return null;
         }

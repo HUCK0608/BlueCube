@@ -5,7 +5,7 @@ using UnityEngine;
 public sealed class PlayerHand3D : MonoBehaviour
 {
     // 매니저
-    private PlayerManager_Old m_playerManager;
+    private PlayerManager m_playerManager;
 
     // 각 손
     private Transform m_playerHand2D;
@@ -23,7 +23,7 @@ public sealed class PlayerHand3D : MonoBehaviour
 
     private void Awake()
     {
-		m_playerManager = transform.GetComponentInParent<PlayerManager_Old>();
+		m_playerManager = transform.GetComponentInParent<PlayerManager>();
 
 		m_playerHand2D = m_playerManager.Player2D_GO.transform.Find("PlayerHand");
         m_playerHand3D = transform;

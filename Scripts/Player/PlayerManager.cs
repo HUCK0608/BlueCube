@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class PlayerManager_Old : MonoBehaviour
+public sealed class PlayerManager : MonoBehaviour
 {
     // 시점변환 키
     [SerializeField]

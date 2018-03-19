@@ -158,6 +158,7 @@ MonoBehaviour:
   m_cameraPos2D: {x: 0, y: 8.5, z: 0}
   m_movingWorkMoveSpeed: 20
   m_movingWorkRotSpeed: 5
+  m_movingWorkSlerpCheckDistance: 1
   m_moveDirecitonSpeed: 2
   m_moveDirectionMaxDis: 7
   m_observeViewKey: 324

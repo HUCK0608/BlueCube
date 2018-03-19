@@ -8,7 +8,7 @@ public enum E_ViewType { View3D, View2D }
 public sealed class PlayerSkill_ChangeView : MonoBehaviour
 {
     // 플레이어 매니저
-    private PlayerManager_Old m_playerManager;
+    private PlayerManager m_playerManager;
 
     // 2D로 변하는 공간 오브젝트
     private GameObject m_changeViewRect_GO;
@@ -66,7 +66,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
     private void Awake()
     {
-        m_playerManager = GetComponent<PlayerManager_Old>();
+        m_playerManager = GetComponent<PlayerManager>();
 
         m_blueCubeSize = GameManager.Instance.BlueCubeManager.transform.localScale;
 
@@ -114,8 +114,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
     private void Update()
     {
-        // 시점 변경중이거나 탐지모드가 아니고 카메라 변경 키를 눌렀을 때
-        if (!GameLibrary.Bool_IsCO && Input.GetKeyDown(m_playerManager.ChangeViewKey))
+        // 점프중이아니고 시점변환중이거나 관찰시점이 아니고 시점변환 키를 눌렀을 경우
+        if (!m_playerManager.IsJumping && !GameLibrary.Bool_IsCO && Input.GetKeyDown(m_playerManager.ChangeViewKey))
         {
             // 현재 시점이 3D이면 2D로 변경
             if (m_viewType.Equals(m_view3D))
@@ -234,14 +234,14 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             // 블루큐브 변경
             GameManager.Instance.BlueCubeManager.ChangeCube();
 
+            // 그림자 끄기
+            GameManager.Instance.LightManager.ShadowEnable(false);
+
             // 카메라 무빙워크 (쿼터뷰에서 사이드뷰로 이동)
             yield return StartCoroutine(GameManager.Instance.CameraManager.MovingWork3D());
 
             // 2D 벽 생성
             Wall2D_SetActive(true);
-
-            // 그림자 끄기
-            GameManager.Instance.LightManager.ShadowEnable(false);
         }
         // 변경이 허용되지 않았을경우 원래상태로 돌아감
         else
@@ -323,6 +323,12 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 블루큐브 위치
         Vector3 blueCubePosition = GameManager.Instance.BlueCubeManager.transform.position;
 
+        // 블루큐브로 작아지면서 이동하기 위해 필요한 변수
+        float changeViewRectOldPosX = m_changeViewRect_GO.transform.position.x;
+        float changeViewRectOldScaleX = m_changeViewRect_GO.transform.localScale.x;
+        // (블루큐브x위치 - 변환상자x위치) / 변환상자 스케일
+        float temp = (blueCubePosition.x - changeViewRectOldPosX) / changeViewRectOldScaleX;
+
         // 2D 변경 상자 크기 줄이기
         while (true)
         {
@@ -331,6 +337,10 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
             // 이동
             Vector3 newPosition = m_changeViewRect_GO.transform.position;
+            // x 위치 계산
+            float newPositionX = temp * (changeViewRectOldScaleX - m_changeViewRect_GO.transform.localScale.x);
+            newPosition.x = newPositionX + changeViewRectOldPosX;
+            // z위치 계산
             float newPositionZ = m_blueCubeSize.z * m_changeViewRect_GO.transform.localScale.z * 0.5f;
             newPosition.z = newPositionZ + blueCubePosition.z;
             m_changeViewRect_GO.transform.position = newPosition;

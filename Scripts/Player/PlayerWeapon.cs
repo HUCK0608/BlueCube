@@ -5,7 +5,7 @@ using UnityEngine;
 public sealed class PlayerWeapon : MonoBehaviour
 {
     // 플레이어 매니저
-    private PlayerManager_Old m_playerManager;
+    private PlayerManager m_playerManager;
 
     // 파이어볼 매니저
     [SerializeField]
@@ -17,7 +17,7 @@ public sealed class PlayerWeapon : MonoBehaviour
 
     private void Awake()
     {
-        m_playerManager = GetComponent<PlayerManager_Old>();
+        m_playerManager = GetComponent<PlayerManager>();
 
 		m_fireBallMuzzle2D = m_playerManager.Player2D_GO.transform.Find("FireBallMuzzle");
 		m_fireBallMuzzle3D = m_playerManager.Player3D_GO.transform.Find("FireBallMuzzle");

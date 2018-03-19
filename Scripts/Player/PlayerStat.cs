@@ -4,7 +4,7 @@ using UnityEngine;
 
 public sealed class PlayerStat : MonoBehaviour
 {
-    private PlayerManager_Old m_playerManager;
+    private PlayerManager m_playerManager;
 
     // HP
     [SerializeField]
@@ -43,7 +43,7 @@ public sealed class PlayerStat : MonoBehaviour
 
     private void Awake()
     {
-        m_playerManager = GetComponent<PlayerManager_Old>();
+        m_playerManager = GetComponent<PlayerManager>();
     }
 
     // 피격시 호출
