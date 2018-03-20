@@ -8,7 +8,7 @@ public enum E_ViewType { View3D, View2D }
 public sealed class PlayerSkill_ChangeView : MonoBehaviour
 {
     // 플레이어 매니저
-    private PlayerManager m_playerManager;
+    private PlayerManager_Old m_playerManager;
 
     // 2D로 변하는 공간 오브젝트
     private GameObject m_changeViewRect_GO;
@@ -66,7 +66,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
     private void Awake()
     {
-        m_playerManager = GetComponent<PlayerManager>();
+        m_playerManager = GetComponent<PlayerManager_Old>();
 
         m_blueCubeSize = GameManager.Instance.BlueCubeManager.transform.localScale;
 

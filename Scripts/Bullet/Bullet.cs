@@ -2,100 +2,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_BulletOwner { Player, Enemy }
-
-public sealed class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
-    // 총알 묶음 스크립트
-    private BulletBundle m_bundle;
-    public BulletBundle Bundle { get { return m_bundle; } }
+    private int m_bulletDamage;
+    /// <summary>총알 데미지</summary>
+    public int BulletDamage { get { return m_bulletDamage; } }
 
-    // 총알이 사용중인지 여부
-    private bool m_isUsed;
-    public bool IsUsed { get { return m_isUsed; } }
+    // 총알이 이동중인지 체크
+    private bool m_isMove;
 
-    private bool m_isShoot;
+    private bool m_isUse;
+    /// <summary>총알을 사용중이면 true를 반환</summary>
+    public bool IsUse { get { return m_isUse; } }
 
-    // 총알의 소유자
-    [SerializeField]
-    private E_BulletOwner m_bulletOwner;
-
-    // 충돌 이펙트 타입
-    [SerializeField]
-    Effect_Type m_colEffectType;
-
-    private WorldObject m_worldObject;
-
-    private void Awake()
+    /// <summary>direction * moveSpeed로 총알을 발사. durationTime이 지나면 사라짐</summary>
+    public void Shoot(int damage, Vector3 position, Vector3 direction, float bulletSpeed, float durationTime)
     {
-        m_bundle = transform.GetComponentInParent<BulletBundle>();
+        m_bulletDamage = damage;
 
-        m_worldObject = GetComponent<WorldObject>();
-    }
-
-    // 총알 발사
-    public void Shoot(Vector3 start, Vector3 direction)
-    {
-        m_isUsed = true;
-
-        // 시작위치로 이동
-        transform.position = start;
-
-        // 회전
+        // 발사 위치로 이동
+        transform.position = position;
+        // 발사 방향으로 회전
         transform.rotation = Quaternion.LookRotation(direction);
+        // 활성화
+        gameObject.SetActive(true);
 
-        // 이동 코루틴 시작
-        StartCoroutine(Move(direction));
+        StartCoroutine(Move(direction, bulletSpeed, durationTime));
     }
 
-    // 총알 이동 코루틴
-    private IEnumerator Move(Vector3 direction)
+    // 총알 이동
+    private IEnumerator Move(Vector3 direction, float bulletSpeed, float durationTime)
     {
-        // 누적시간
-        float accTime = 0;
+        m_isUse = true;
+        m_isMove = true;
 
-        m_isShoot = true;
+        float addTime = 0f;
 
-        // 정면으로 계속 이동
-        while(m_isShoot)
+        while(m_isMove)
         {
-            // 소유자가 적일경우 2D가 아닐때만 이동
-            if (!(m_bulletOwner.Equals(E_BulletOwner.Enemy) && GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(GameLibrary.Enum_View2D)))
+            // 유지시간
+            addTime = Time.deltaTime;
+
+            if (addTime >= durationTime)
             {
-                // 시점변환중이 아니고 활성화 상태일경우만 이동
-                if (!GameManager.Instance.PlayerManager.Skill_CV.IsChanging && m_worldObject.Enabled)
-                {
-                    transform.Translate(direction * m_bundle.Stat.Speed, Space.World);
-
-                    // 시간 누적
-                    accTime += Time.fixedDeltaTime;
-
-                    // 지속시간이 지났을 경우 발사 정지
-                    if (accTime >= m_bundle.Stat.DurationTime)
-                    {
-                        EndShoot();
-                    }
-                }
+                m_isMove = false;
+                break;
             }
-            yield return new WaitForFixedUpdate();
+
+            // 발사 방향으로 이동
+            transform.Translate(direction * bulletSpeed * Time.deltaTime);
+
+            yield return null;
         }
 
         // 이펙트 생성
-        GameManager.Instance.EffectManager.CreateEffect(m_colEffectType, transform.position);
-
-        // 먼 지점으로 날림
+        GameManager.Instance.EffectManager.CreateEffect(Effect_Type.FBExplosion, transform.position);
+        // 멀리 보내기
         transform.localPosition = Vector3.zero;
 
-        // 렌더링 및 2D 콜라이더 비활성화
-        m_worldObject.RendererEnable(false);
-        m_worldObject.Collider2DEnable(false);
+        m_isUse = false;
 
-        m_isUsed = false;
+        // 비활성화
+        gameObject.SetActive(false);
     }
 
-    // 총알발사를 멈춤
+    /// <summary>총알의 이동을 멈추고 안보이게 함</summary>
     public void EndShoot()
     {
-        m_isShoot = false;
+        m_isMove = false;
     }
 }
