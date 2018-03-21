@@ -21,17 +21,17 @@ public class Bullet : MonoBehaviour
         m_bulletDamage = damage;
 
         // 발사 위치로 이동
-        transform.position = position;
+        transform.position = position + Vector3.up;
         // 발사 방향으로 회전
         transform.rotation = Quaternion.LookRotation(direction);
         // 활성화
         gameObject.SetActive(true);
 
-        StartCoroutine(Move(direction, bulletSpeed, durationTime));
+        StartCoroutine(Move(bulletSpeed, durationTime));
     }
 
     // 총알 이동
-    private IEnumerator Move(Vector3 direction, float bulletSpeed, float durationTime)
+    private IEnumerator Move(float bulletSpeed, float durationTime)
     {
         m_isUse = true;
         m_isMove = true;
@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour
         while(m_isMove)
         {
             // 유지시간
-            addTime = Time.deltaTime;
+            addTime += Time.deltaTime;
 
             if (addTime >= durationTime)
             {
@@ -50,7 +50,7 @@ public class Bullet : MonoBehaviour
             }
 
             // 발사 방향으로 이동
-            transform.Translate(direction * bulletSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
 
             yield return null;
         }
