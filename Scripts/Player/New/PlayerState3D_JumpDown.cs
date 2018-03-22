@@ -11,17 +11,21 @@ public sealed class PlayerState3D_JumpDown : PlayerState3D
 
     private void Update()
     {
-        // 시점변환중이거나 탐지시점이면 return
-        if (GameLibrary.Bool_IsCO)
-            return;
+        // 관찰 시점이 아닐경우에만 이동 및 회전이 가능하게 함
+        if (!GameManager.Instance.CameraManager.IsObserve)
+        {
+            Vector3 moveDirection = m_subController.GetMoveDirection();
+            Vector3 mouseDirectionToPlayer = GameManager.Instance.CameraManager.GetMouseDirectionToPivot(transform.position);
 
-        Vector3 moveDirection = m_subController.GetMoveDirection();
-        Vector3 mouseDirectionToPlayer = GameManager.Instance.CameraManager.GetMouseDirectionToPivot(transform.position);
-
-        // 이동
-        m_subController.Move(mouseDirectionToPlayer, moveDirection);
-        // 마우스 방향으로의 회전
-        m_subController.RotateHeadAndBody(mouseDirectionToPlayer);
+            // 이동
+            m_subController.Move(mouseDirectionToPlayer, moveDirection);
+            // 마우스 방향으로의 회전
+            m_subController.RotateHeadAndBody(mouseDirectionToPlayer);
+        }
+        else
+        {
+            m_subController.MoveStop();
+        }
 
         ChangeIdleState();
     }

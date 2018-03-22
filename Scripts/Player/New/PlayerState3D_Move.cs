@@ -14,10 +14,6 @@ public sealed class PlayerState3D_Move : PlayerState3D
 
     private void Update()
     {
-        // 시점변환중이거나 탐지시점이면 return
-        if (GameLibrary.Bool_IsCO)
-            return;
-
         // 방향키 입력 방향을 가져옴
         m_moveDirection = m_subController.GetMoveDirection();
         // 플레이어에서 마우스의 방향을 가져옴
@@ -49,7 +45,12 @@ public sealed class PlayerState3D_Move : PlayerState3D
     // Idle 상태로 바뀔지 체크
     private void CheckIdleState()
     {
+        // 이동입력이 없으면 Idle 상태로 변경
         if (m_moveDirection.Equals(Vector3.zero))
+            m_mainController.ChangeState3D(E_PlayerState.Idle);
+
+        // 시점변환중이거나 관찰시점이면 Idle 상태로 변경
+        if (GameLibrary.Bool_IsCO)
             m_mainController.ChangeState3D(E_PlayerState.Idle);
     }
 
