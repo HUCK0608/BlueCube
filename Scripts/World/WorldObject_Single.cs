@@ -10,20 +10,17 @@ public sealed class WorldObject_Single : WorldObject
     
     private void Awake()
     {
-        m_enabled = true;
-
         m_renderer = GetComponentInChildren<MeshRenderer>();
         m_collider2D = GetComponentInChildren<Collider2D>();
         m_defaultMaterial = m_renderer.material;
     }
 
-    public override void RendererEnable(bool value)
+    public override void SetRendererEnable(bool value)
     {
-        m_enabled = value;
         m_renderer.enabled = value;
     }
 
-    public override void Collider2DEnable(bool value)
+    public override void SetCollider2DEnable(bool value)
     {
         if (m_collider2D == null)
             return;
@@ -31,7 +28,7 @@ public sealed class WorldObject_Single : WorldObject
         m_collider2D.enabled = value;
     }
 
-    public override void ChangeMaterial(E_MaterialType materialType)
+    public override void SetMaterial(E_MaterialType materialType)
     {
         if (materialType.Equals(GameLibrary.Enum_Material_Default))
         {

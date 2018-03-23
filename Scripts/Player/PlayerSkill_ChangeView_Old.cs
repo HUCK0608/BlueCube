@@ -220,8 +220,8 @@ public sealed class PlayerSkill_ChangeView_Old : MonoBehaviour
             // 2D상태로 변경됬다고 설정
             m_viewType = m_view2D;
 
-            // 월드 모든 오브젝트의 renderer 끄기
-            GameManager.Instance.WorldManager.RendererEnable(false);
+            //// 월드 모든 오브젝트의 renderer 끄기
+            //GameManager.Instance.WorldManager.RendererEnable(false);
 
             // changeBox 안에 오브젝트만 renderer 및 collider2D 켜기
             m_changeViewRect_S.IncludeWOEnable(true);
@@ -302,8 +302,8 @@ public sealed class PlayerSkill_ChangeView_Old : MonoBehaviour
         // changeBox 안에 오브젝트만 renderer 및 collider2D 끄기
         m_changeViewRect_S.IncludeWOEnable(false);
 
-        // 월드의 모든 오브젝트의 renderer 켜기
-        GameManager.Instance.WorldManager.RendererEnable(true);
+        //// 월드의 모든 오브젝트의 renderer 켜기
+        //GameManager.Instance.WorldManager.RendererEnable(true);
 
         // 플레이어 변경
         m_playerManager.ChangePlayer();

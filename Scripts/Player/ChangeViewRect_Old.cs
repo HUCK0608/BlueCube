@@ -29,8 +29,8 @@ public sealed class ChangeViewRect_Old : MonoBehaviour
 
         for(int i = 0; i < m_includeWOCount; i++)
         {
-            m_includeWO[i].RendererEnable(value);
-            m_includeWO[i].Collider2DEnable(value);
+            m_includeWO[i].SetRendererEnable(value);
+            m_includeWO[i].SetCollider2DEnable(value);
         }
 
         if (!value)
@@ -43,7 +43,7 @@ public sealed class ChangeViewRect_Old : MonoBehaviour
 
         for(int i = 0; i < m_includeWOCount; i++)
         {
-            m_includeWO[i].ChangeMaterial(GameLibrary.Enum_Material_Default);
+            m_includeWO[i].SetMaterial(GameLibrary.Enum_Material_Default);
         }
     }
 
@@ -62,7 +62,7 @@ public sealed class ChangeViewRect_Old : MonoBehaviour
             if (worldObject != null)
             {
                 // 메테리얼 변경
-                worldObject.ChangeMaterial(GameLibrary.Enum_Material_Change);
+                worldObject.SetMaterial(GameLibrary.Enum_Material_Change);
                 // 포함
                 m_includeWO.Add(worldObject);
             }
@@ -79,7 +79,7 @@ public sealed class ChangeViewRect_Old : MonoBehaviour
             if(worldObject != null)
             {
                 // 메테리얼 변경
-                worldObject.ChangeMaterial(GameLibrary.Enum_Material_Default);
+                worldObject.SetMaterial(GameLibrary.Enum_Material_Default);
                 // 제외
                 m_includeWO.Remove(worldObject);
             }

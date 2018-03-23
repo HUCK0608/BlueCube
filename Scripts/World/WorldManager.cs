@@ -4,12 +4,17 @@ using UnityEngine;
 
 public sealed class WorldManager : MonoBehaviour
 {
+    private static WorldManager m_instance;
+    public static WorldManager Instance { get { return m_instance; } }
+
     private List<WorldObject> m_worldObjects;
 
     private int m_worldObjectCount;
 
     private void Awake()
     {
+        m_instance = this;
+
         m_worldObjects = new List<WorldObject>();
 
         m_worldObjects.AddRange(GetComponentsInChildren<WorldObject>());
@@ -17,11 +22,57 @@ public sealed class WorldManager : MonoBehaviour
         m_worldObjectCount = m_worldObjects.Count;
     }
 
-    public void RendererEnable(bool value)
+    /// <summary>월드의 오브젝트를 2D상태에 맞게 변경한다.</summary>
+    public void Change2D()
     {
-        for (int i = 0; i < m_worldObjectCount; i++)
+        for(int i = 0; i < m_worldObjectCount; i++)
         {
-            m_worldObjects[i].RendererEnable(value);
+            // 오브젝트가 상자에 포함되어 있을경우
+            if(m_worldObjects[i].isIncludeChangeViewRect)
+            {
+                // 2D 콜라이더 활성화
+                m_worldObjects[i].SetCollider2DEnable(true);
+                // 기본 메테리얼로 변경
+                m_worldObjects[i].SetMaterial(E_MaterialType.Default);
+            }
+            // 오브젝트가 시점변환 상자에 포함되어 있지 않을 경우
+            else
+            {
+                // 랜더러를 비활성화
+                m_worldObjects[i].SetRendererEnable(false);
+            }
+        }
+    }
+
+    /// <summary>월드의 오브젝트를 3D상태에 맞게 변경한다.</summary>
+    public void Change3D()
+    {
+        for(int i = 0; i < m_worldObjectCount; i++)
+        {
+            // 오브젝트가 시점변환 상자에 포함되어 있을 경우
+            if(m_worldObjects[i].isIncludeChangeViewRect)
+            {
+                // 2D 콜라이더 비활성화
+                m_worldObjects[i].SetCollider2DEnable(false);
+                // 포함되어 있지 않은 상태로 변경
+                m_worldObjects[i].isIncludeChangeViewRect = false;
+            }
+            // 오브젝트가 시점변환 상자에 포함되어 있지 않을 경우
+            else
+            {
+                // 랜더러 활성화
+                m_worldObjects[i].SetRendererEnable(true);
+            }
+        }
+    }
+
+    /// <summary>상자에 포함되어있는 놈들의 메테리얼을 기본메테리얼로 변경</summary>
+    public void SetDefaultMaterialIsInclude()
+    {
+        for(int i = 0; i < m_worldObjectCount; i++)
+        {
+            if (m_worldObjects[i].isIncludeChangeViewRect)
+                m_worldObjects[i].SetMaterial(E_MaterialType.Default);
         }
     }
 }

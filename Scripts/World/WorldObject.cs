@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class WorldObject : MonoBehaviour
 {
-    protected bool m_enabled;
-    public bool Enabled { get { return m_enabled; } }
+    private bool m_isIncludeChangeViewRect;
+    /// <summary>시점변환 상자에 포함되어 있으면 true를 반환</summary>
+    public bool isIncludeChangeViewRect { get { return m_isIncludeChangeViewRect; } set { m_isIncludeChangeViewRect = value; } }
 
-    public virtual void RendererEnable(bool value)
+    public virtual void SetRendererEnable(bool value)
     {
-
+    }
+     
+    public virtual void SetCollider2DEnable(bool value)
+    {
     }
 
-    public virtual void Collider2DEnable(bool value)
+    public virtual void SetMaterial(E_MaterialType materialType)
     {
-
-    }
-
-    public virtual void ChangeMaterial(E_MaterialType materialType)
-    {
-
     }
 }

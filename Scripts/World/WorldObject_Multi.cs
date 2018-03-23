@@ -14,8 +14,6 @@ public sealed class WorldObject_Multi : WorldObject
 
     private void Awake()
     {
-        m_enabled = true;
-
         m_renderers = new List<MeshRenderer>();
         m_collider2D = new List<Collider2D>();
         m_defaultMaterials = new List<Material>();
@@ -32,21 +30,19 @@ public sealed class WorldObject_Multi : WorldObject
         m_materialCount = m_defaultMaterials.Count;
     }
 
-    public override void RendererEnable(bool value)
+    public override void SetRendererEnable(bool value)
     {
-        m_enabled = value;
-
         for (int i = 0; i < m_rendererCount; i++)
             m_renderers[i].enabled = value;
     }
 
-    public override void Collider2DEnable(bool value)
+    public override void SetCollider2DEnable(bool value)
     {
         for (int i = 0; i < m_colliderCount; i++)
             m_collider2D[i].enabled = value;
     }
 
-    public override void ChangeMaterial(E_MaterialType materialType)
+    public override void SetMaterial(E_MaterialType materialType)
     {
         if(materialType.Equals(GameLibrary.Enum_Material_Default))
         {

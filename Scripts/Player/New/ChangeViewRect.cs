@@ -4,6 +4,9 @@ using UnityEngine;
 
 public sealed class ChangeViewRect : MonoBehaviour
 {
+    // 스킬
+    PlayerSkill_ChangeView m_skill;
+
     // 블루큐브
     private Transform m_blueCube;
 
@@ -21,13 +24,26 @@ public sealed class ChangeViewRect : MonoBehaviour
     // 프레임당 상자가 커지는 실제 수치
     private Vector3 m_increaseSizeValueXY;
 
+    // 상자 속성 설정 부분
+    ///<summary>상자 충돌체크 설정</summary>
+    public void SetColliderEnable(bool value) { m_collider.enabled = value; }
+
     private void Awake()
     {
+        m_skill = GetComponentInParent<PlayerSkill_ChangeView>();
+
         m_blueCube = GameManager.Instance.BlueCubeManager.transform;
 
         m_collider = GetComponent<Collider>();
 
         InitChangeViewRect();
+
+    }
+
+    /// <summary>활성화 여부</summary>
+    public void SetActive(bool value)
+    {
+        gameObject.SetActive(value);
     }
 
     // 상자에 필요한 변수 초기화 및 계산
@@ -43,11 +59,11 @@ public sealed class ChangeViewRect : MonoBehaviour
         // 상자의 충돌체크 끄기
         SetColliderEnable(false);
         // 상자 비활성화
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
-    
+
     /// <summary>상자의 x, y 크기가 커짐. 최대 크기까지 커질 경우 종료</summary>
-    public IEnumerator IncreaseSizeXY()
+    public IEnumerator SetIncreaseSizeXY()
     {
         transform.localScale = Vector3.zero;
         transform.position = m_blueCube.position;
@@ -69,14 +85,136 @@ public sealed class ChangeViewRect : MonoBehaviour
         }
     }
 
-    public void SetSizeZ(float positionZ)
+    /// <summary>마우스 좌표로 상자의 z의 크기가 커짐</summary>
+    public IEnumerator SetSizeZToMousePoint()
     {
+        RaycastHit hit;
 
+        Vector3 newRectSize = transform.localScale;
+        // lerp 수치
+        float lerpT = 0.1f;
+
+        while(true)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BPE))
+            {
+                // 충돌된 z좌표를 가져와서 새로운 크기 계산을 함
+                float hitPositionZ = hit.point.z;
+                newRectSize.z = hitPositionZ - m_blueCube.position.z;
+                newRectSize.z = Mathf.Clamp(newRectSize.z, 0f, m_increaseMaxSize.z);
+
+                transform.localScale = Vector3.Lerp(transform.localScale, newRectSize, lerpT);
+
+                // 계산된 z 좌표를 가져옴
+                Vector3 newPosition = transform.position;
+                newPosition.z = CalcPositionZ();
+
+                // 이동
+                transform.position = newPosition;
+            }
+
+            if (m_skill.IsDoChange || m_skill.IsNotChange)
+                break;
+
+            yield return null;
+        }
+
+        // 충돌체크 끄기
+        SetColliderEnable(false);
     }
 
-    ///<summary>상자 충돌체크 설정</summary>
-    public void SetColliderEnable(bool value)
+    /// <summary>상자 작아지게 만들기</summary>
+    public IEnumerator SetDecreaseSize()
     {
-        m_collider.enabled = value;
+        // 활성화가 되어있지 않을경우 활성화
+        if (!gameObject.activeSelf)
+            gameObject.SetActive(true);
+
+        // 감소수치 계산
+        Vector3 decreaseValue = -(transform.localScale * m_increaseSizePerXY * 0.01f);
+
+        // 기존 x좌표 및 x크기
+        float oldPositonX = transform.position.x;
+        float oldScaleX = transform.localScale.x;
+
+        while (true)
+        {
+            // 크기 줄이기
+            transform.localScale += decreaseValue * Time.deltaTime;
+
+            // 이동좌표 가져오기
+            Vector3 newPosition = transform.position;
+            newPosition.x = CalcPositionX(oldPositonX, oldScaleX);
+            newPosition.z = CalcPositionZ();
+
+            // 이동
+            transform.position = newPosition;
+
+            // 최소수치만큼 작아졌을 경우 반복문 종료
+            if (transform.localScale.x <= 0f)
+                break;
+
+            yield return null;
+        }
+
+        // 비활성화
+        gameObject.SetActive(false);
+    }
+
+    // x사이즈에 따라 새로운 위치를 계산함
+    private float CalcPositionX(float thisOldPositionX, float thisOldSizeX)
+    {
+        // (블루큐브x위치 - 변환상자x위치) / 변환상자 기존 x크기
+        float temp = (m_blueCube.position.x - thisOldPositionX) / thisOldSizeX;
+        float newPositionX = (temp * (thisOldSizeX - transform.localScale.x)) + thisOldPositionX;
+
+        return newPositionX;
+    }
+
+    // z사이즈에 따라 새로운 위치를 계산함
+    private float CalcPositionZ()
+    {
+        float newPositionZ = m_blueCube.localScale.z * transform.localScale.z * 0.5f;
+        newPositionZ += m_blueCube.position.z;
+
+        return newPositionZ;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // 플레이어가 아닐경우
+        if(other.tag != GameLibrary.String_Player)
+        {
+            // 월드오브젝트 관련 스크립트 가져오기
+            WorldObject worldObject = other.GetComponentInParent<WorldObject>();
+
+            // 스크립트가 있을 경우에 메테리얼을 변경
+            if (worldObject != null)
+            {
+                worldObject.SetMaterial(GameLibrary.Enum_Material_Change);
+                // 상자에 포함되어있다고 알리기
+                worldObject.isIncludeChangeViewRect = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // 플레이어가 아닐경우
+        if (other.tag != GameLibrary.String_Player)
+        {
+            // 월드오브젝트 관련 스크립트 가져오기
+            WorldObject worldObject = other.GetComponentInParent<WorldObject>();
+
+            // 스크립트가 있을 경우에 메테리얼을 변경
+            if (worldObject != null)
+            {
+                worldObject.SetMaterial(GameLibrary.Enum_Material_Default);
+                // 상자에 포함되지않았다고 알리기
+                worldObject.isIncludeChangeViewRect = false;
+            }
+        }
     }
 }

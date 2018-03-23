@@ -4,6 +4,9 @@ using UnityEngine;
 
 public sealed class BlueCubeManager : MonoBehaviour
 {
+    private static BlueCubeManager m_instance;
+    public static BlueCubeManager Instance { get { return m_instance; } }
+
     // 큐브
     private GameObject m_blueCube2D;
     private GameObject m_blueCube3D;
@@ -27,6 +30,8 @@ public sealed class BlueCubeManager : MonoBehaviour
 
     private void Awake()
     {
+        m_instance = this;
+
         m_blueCube2D = transform.Find("2D").gameObject;
         m_blueCube3D = transform.Find("3D").gameObject;
 
@@ -62,7 +67,7 @@ public sealed class BlueCubeManager : MonoBehaviour
     public void ChangeCube()
     {
         // 2D
-        if(GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(GameLibrary.Enum_View2D))
+        if(PlayerManager.Instance.CurrentView.Equals(GameLibrary.Enum_View2D))
         {
             m_blueCube3D.SetActive(false);
             m_blueCube2D.SetActive(true);
@@ -79,51 +84,51 @@ public sealed class BlueCubeManager : MonoBehaviour
     private void FixedCube()
     {
         // 2D
-        if (GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(GameLibrary.Enum_View2D))
+        if (PlayerManager.Instance.CurrentView.Equals(GameLibrary.Enum_View2D))
         {
-            // 2D방향을 담을 변수
-            int direction = 0;
+            //// 2D방향을 담을 변수
+            //int direction = 0;
 
-            // 왼쪽
-            if (GameManager.Instance.PlayerManager.Player2D_S.LookDirection.Equals(GameLibrary.Enum_LD2D_Left))
-                direction = -1;
-            // 오른쪽
-            else
-                direction = 1;
+            //// 왼쪽
+            //if (GameManager.Instance.PlayerManager.Player2D_S.LookDirection.Equals(GameLibrary.Enum_LD2D_Left))
+            //    direction = -1;
+            //// 오른쪽
+            //else
+            //    direction = 1;
 
-            // 2D방향 적용
-            m_fixedPos2D.x *= direction;
+            //// 2D방향 적용
+            //m_fixedPos2D.x *= direction;
 
-            // 2D 플레이어 위치
-            Vector3 player2D_Position = GameManager.Instance.PlayerManager.Player2D_GO.transform.position;
+            //// 2D 플레이어 위치
+            //Vector3 player2D_Position = GameManager.Instance.PlayerManager.Player2D_GO.transform.position;
 
-            // 큐브위치 이동
-            transform.position = player2D_Position + m_fixedPos2D;
+            //// 큐브위치 이동
+            //transform.position = player2D_Position + m_fixedPos2D;
         }
         // 3D
         else
         {
             // 3D 플레이어 위치
-            Vector3 player3D_Position = GameManager.Instance.PlayerManager.Player3D_GO.transform.position;
+            Vector3 playerPosition = PlayerManager.Instance.Player3D_Object.transform.position;
 
             // 큐브위치 이동
-            transform.position =  player3D_Position + m_fixedPos3D;
+            transform.position =  playerPosition + m_fixedPos3D;
         }
     }
 
     // 3D의 지형이 있는지 체크
     private void CheckGround3D()
     {
-        Vector3 rayOrigin = GameManager.Instance.PlayerManager.Player2D_GO.transform.position;
-        rayOrigin.y += m_rayOriginY;
+        //Vector3 rayOrigin = GameManager.Instance.PlayerManager.Player2D_GO.transform.position;
+        //rayOrigin.y += m_rayOriginY;
 
-        m_ray.origin = rayOrigin;
+        //m_ray.origin = rayOrigin;
 
-        float rayDistance = 1f;
+        //float rayDistance = 1f;
 
-        if (Physics.Raycast(m_ray, rayDistance, GameLibrary.LayerMask_Ignore_BPE))
-            m_renderer2D.color = m_blueColor;
-        else
-            m_renderer2D.color = m_redColor;
+        //if (Physics.Raycast(m_ray, rayDistance, GameLibrary.LayerMask_Ignore_BPE))
+        //    m_renderer2D.color = m_blueColor;
+        //else
+        //    m_renderer2D.color = m_redColor;
     }
 }

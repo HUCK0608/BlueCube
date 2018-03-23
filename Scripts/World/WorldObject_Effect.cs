@@ -13,8 +13,6 @@ public class WorldObject_Effect : WorldObject
 
     private void Awake()
     {
-        m_enabled = true;
-
         m_particles = new List<ParticleSystem>();
 
         m_particles.AddRange(GetComponentsInChildren<ParticleSystem>());
@@ -26,10 +24,8 @@ public class WorldObject_Effect : WorldObject
         m_includeChildren = true;
     }
 
-    public override void RendererEnable(bool value)
+    public override void SetRendererEnable(bool value)
     {
-        m_enabled = value;
-
         if (value)
         {
             for (int i = 0; i < m_particleCount; i++)
@@ -45,10 +41,9 @@ public class WorldObject_Effect : WorldObject
         }
     }
 
-    public override void Collider2DEnable(bool value)
+    public override void SetCollider2DEnable(bool value)
     {
         if (m_collider2D != null)
             m_collider2D.enabled = value;
     }
-
 }

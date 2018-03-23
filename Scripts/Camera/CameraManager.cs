@@ -4,6 +4,9 @@ using UnityEngine;
 
 public sealed class CameraManager : MonoBehaviour
 {
+    private static CameraManager m_instance;
+    public static CameraManager Instance { get { return m_instance; } }
+
     private Camera m_camera;
 
     // 카메라 센터포인트
@@ -62,6 +65,8 @@ public sealed class CameraManager : MonoBehaviour
 
     private void Awake()
     {
+        m_instance = this;
+
         m_camera = GetComponentInChildren<Camera>();
 
         m_centerPoint = transform.Find("CenterPoint");
@@ -87,8 +92,8 @@ public sealed class CameraManager : MonoBehaviour
     // 3D 플레이어를 따라가는 카메라
     private void FollowPlayer3D()
     {
-        if(GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(GameLibrary.Enum_View3D))
-            transform.position = GameManager.Instance.PlayerManager.Player3D_GO.transform.position;
+        if(PlayerManager.Instance.CurrentView.Equals(GameLibrary.Enum_View3D))
+            transform.position = PlayerManager.Instance.Player3D_Object.transform.position;
     }
 
     // 마우스 포인터 위치의 방향을 구해서 카메라 이동
@@ -99,7 +104,7 @@ public sealed class CameraManager : MonoBehaviour
             return;
 
         // 마우스 방향의 월드 방향 구하기
-        Vector3 mouseDirection = GetMouseDirectionToPivot(GameManager.Instance.PlayerManager.Player3D_GO.transform.position);
+        Vector3 mouseDirection = GetMouseDirectionToPivot(PlayerManager.Instance.Player3D_Object.transform.position);
 
         // 이동방향 * 거리
         Vector3 movePoint = mouseDirection.normalized * m_moveDirectionMaxDis;
@@ -215,7 +220,6 @@ public sealed class CameraManager : MonoBehaviour
             // 이동완료 체크
             if (!moveComplete && m_centerPoint.localPosition.Equals(m_cameraPos2D))
                 moveComplete = true;
-
 
             // 회전완료 체크
             if (!angleComplete && Vector2.Distance(m_centerPoint.localEulerAngles, m_rotation2D) <= m_movingWorkSlerpCheckDistance)
