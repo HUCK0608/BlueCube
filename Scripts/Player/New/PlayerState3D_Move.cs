@@ -19,11 +19,17 @@ public sealed class PlayerState3D_Move : PlayerState3D
         // 플레이어에서 마우스의 방향을 가져옴
         m_mouseDirectionToPlayer = GameManager.Instance.CameraManager.GetMouseDirectionToPivot(transform.position);
 
+        // 이동 및 회전
         m_subController.Move(m_mouseDirectionToPlayer, m_moveDirection);
         Rotate();
-        CheckIdleState();
-        CheckAttackState();
+
+        // 중력적용
+        m_subController.ApplyGravity();
+
+        ChangeIdleState();
+        ChangeAttackState();
         ChangeJumpUpState();
+        ChangeLadderInitState();
     }
 
     // 머리와 몸 회전
@@ -43,7 +49,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
     }
 
     // Idle 상태로 바뀔지 체크
-    private void CheckIdleState()
+    private void ChangeIdleState()
     {
         // 이동입력이 없으면 Idle 상태로 변경
         if (m_moveDirection.Equals(Vector3.zero))
@@ -55,7 +61,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
     }
 
     // Attack 상태로 바뀔지 체크
-    private void CheckAttackState()
+    private void ChangeAttackState()
     {
         // 공격키를 눌렀을 때
         if (Input.GetKeyDown(m_playerManager.Stat.AttackKey))
@@ -64,10 +70,34 @@ public sealed class PlayerState3D_Move : PlayerState3D
                 m_mainController.ChangeState3D(E_PlayerState.Attack);
     }
 
+    // JumpUp 상태로 바뀔지 체크
+    private void ChangeJumpUpState()
+    {
+        // 점프키를 눌렀을 때
+        if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))
+            // 땅에 있다면 JumpUp 상태로 변경
+            if (m_mainController.IsGrounded)
+                m_mainController.ChangeState3D(E_PlayerState.JumpUp);
+    }
+
+    // LadderInit 상태로 바뀔지 체크
+    private void ChangeLadderInitState()
+    {
+        // 이동방향에 사다리가 있으면 LadderInit 상태로 변경
+        if(m_subController.CheckLadder.IsOnLadder(m_moveDirection))
+        {
+            // 해당 이동 방향에 있는 곳에 레이를 쏴서 사다리 스크립트를 저장함
+            m_subController.CurrentLadder = m_subController.CheckLadder.GetLadder(m_moveDirection);
+
+            // LadderInit 상태로 변경
+            m_mainController.ChangeState3D(E_PlayerState.LadderInit);
+        }
+    }
+
     public override void EndState()
     {
         base.EndState();
 
-        m_subController.MoveStop();
+        m_subController.MoveStopXZ();
     }
 }

@@ -27,6 +27,8 @@ public sealed class ChangeViewRect : MonoBehaviour
     // 상자 속성 설정 부분
     ///<summary>상자 충돌체크 설정</summary>
     public void SetColliderEnable(bool value) { m_collider.enabled = value; }
+    /// <summary>활성화 여부</summary>
+    public void SetActive(bool value) { gameObject.SetActive(value); }
 
     private void Awake()
     {
@@ -37,15 +39,8 @@ public sealed class ChangeViewRect : MonoBehaviour
         m_collider = GetComponent<Collider>();
 
         InitChangeViewRect();
-
     }
-
-    /// <summary>활성화 여부</summary>
-    public void SetActive(bool value)
-    {
-        gameObject.SetActive(value);
-    }
-
+    
     // 상자에 필요한 변수 초기화 및 계산
     private void InitChangeViewRect()
     {
@@ -59,7 +54,7 @@ public sealed class ChangeViewRect : MonoBehaviour
         // 상자의 충돌체크 끄기
         SetColliderEnable(false);
         // 상자 비활성화
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     /// <summary>상자의 x, y 크기가 커짐. 최대 크기까지 커질 경우 종료</summary>
@@ -98,7 +93,7 @@ public sealed class ChangeViewRect : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BPE))
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BP))
             {
                 // 충돌된 z좌표를 가져와서 새로운 크기 계산을 함
                 float hitPositionZ = hit.point.z;

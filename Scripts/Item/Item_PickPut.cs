@@ -74,7 +74,7 @@ public sealed class Item_PickPut : MonoBehaviour
 
         m_ray.origin = putPos;
 
-        if(Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BPE))
+        if(Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BP))
         {
             putPos.y = m_hit.point.y + 1f;
 

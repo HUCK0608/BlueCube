@@ -6,6 +6,10 @@ public sealed class PlayerStat : MonoBehaviour
 {
     // 키입력 부분
     [SerializeField]
+    private KeyCode m_changeViewKey;
+    public KeyCode ChangeViewKey { get { return m_changeViewKey; } }
+
+    [SerializeField]
     private KeyCode m_attackKey;
     public KeyCode AttackKey { get { return m_attackKey; } }
 
@@ -21,6 +25,10 @@ public sealed class PlayerStat : MonoBehaviour
     [SerializeField]
     private float m_moveSpeed_SideBack;
     public float MoveSpeed_SideBack { get { return m_moveSpeed_SideBack; } }
+
+    [SerializeField]
+    private float m_moveSpeed_Ladder;
+    public float MoveSpeed_Ladder { get { return m_moveSpeed_Ladder; } }
 
     [SerializeField]
     private float m_rotationSpeed;

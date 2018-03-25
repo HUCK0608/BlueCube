@@ -88,7 +88,7 @@ public sealed class Player3D : Player
         }
 
         // 무시해야할 총알, 플레이어 레이어마스크
-        int ignoreLM = GameLibrary.LayerMask_Ignore_BPE;
+        int ignoreLM = GameLibrary.LayerMask_Ignore_BP;
 
         // 각 콜라이더 꼭지점 레이 체크
         // 한 점이라도 충돌된 것이 있으면 땅이라고 적용
@@ -143,7 +143,7 @@ public sealed class Player3D : Player
 
             m_ray.origin = transform.position + m_rayOriginY;
 
-            if (Physics.Raycast(m_ray, out m_hit, m_checkGroundRayDis, GameLibrary.LayerMask_Ignore_BPE))
+            if (Physics.Raycast(m_ray, out m_hit, m_checkGroundRayDis, GameLibrary.LayerMask_Ignore_BP))
             {
                 // 플레이어를 띄울 위치를 계산
                 m_onGroundPos = transform.position;
@@ -301,7 +301,7 @@ public sealed class Player3D : Player
 
             // 레이발사
             // 레이에 충돌체가 있을경우
-            if(Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BPE))
+            if(Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BP))
             {
                 // 착지지점이 활성화 되어있지 않을 경우
                 if (!m_landingPoint.activeSelf)

@@ -27,8 +27,11 @@ public sealed class PlayerState3D_JumpUp : PlayerState3D
         }
         else
         {
-            m_subController.MoveStop();
+            m_subController.MoveStopXZ();
         }
+
+        // 중력적용
+        m_subController.ApplyGravity();
 
         ChangeJumpDownState();
     }

@@ -34,7 +34,8 @@ public sealed class CheckGround : MonoBehaviour
         for(int i = 0; i < m_checkPointCount; i++)
         {
             m_ray.origin = m_checkPoints[i].position;
-            if (Physics.Raycast(m_ray, m_checkDistance, GameLibrary.LayerMask_Ignore_BPE))
+
+            if (Physics.Raycast(m_ray, m_checkDistance, GameLibrary.LayerMask_Ignore_BP))
             {
                 isCol = true;
                 break;
