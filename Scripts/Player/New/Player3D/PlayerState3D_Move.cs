@@ -14,22 +14,34 @@ public sealed class PlayerState3D_Move : PlayerState3D
 
     private void Update()
     {
-        // 방향키 입력 방향을 가져옴
-        m_moveDirection = m_subController.GetMoveDirection();
-        // 플레이어에서 마우스의 방향을 가져옴
-        m_mouseDirectionToPlayer = GameManager.Instance.CameraManager.GetMouseDirectionToPivot(transform.position);
+        // 시점변환중이거나 탐지시점이면 x, z속도를 멈추고 중력적용
+        if (GameLibrary.Bool_IsCO)
+        {
+            m_subController.MoveStopXZ();
 
-        // 이동 및 회전
-        m_subController.Move(m_mouseDirectionToPlayer, m_moveDirection);
-        Rotate();
+            // 중력적용
+            m_subController.ApplyGravity();
+        }
+        // 아닐경우 아래 함수를 진행
+        else
+        {
+            // 방향키 입력 방향을 가져옴
+            m_moveDirection = m_subController.GetMoveDirection();
+            // 플레이어에서 마우스의 방향을 가져옴
+            m_mouseDirectionToPlayer = GameManager.Instance.CameraManager.GetMouseDirectionToPivot(transform.position);
 
-        // 중력적용
-        m_subController.ApplyGravity();
+            // 이동 및 회전
+            m_subController.Move(m_mouseDirectionToPlayer, m_moveDirection);
+            Rotate();
 
-        ChangeIdleState();
-        ChangeAttackState();
-        ChangeJumpUpState();
-        ChangeLadderInitState();
+            // 중력적용
+            m_subController.ApplyGravity();
+
+            ChangeIdleState();
+            ChangeAttackState();
+            ChangeJumpUpState();
+            ChangeLadderInitState();
+        }
     }
 
     // 머리와 몸 회전
@@ -53,11 +65,11 @@ public sealed class PlayerState3D_Move : PlayerState3D
     {
         // 이동입력이 없으면 Idle 상태로 변경
         if (m_moveDirection.Equals(Vector3.zero))
-            m_mainController.ChangeState3D(E_PlayerState.Idle);
+            m_mainController.ChangeState3D(E_PlayerState3D.Idle);
 
         // 시점변환중이거나 관찰시점이면 Idle 상태로 변경
         if (GameLibrary.Bool_IsCO)
-            m_mainController.ChangeState3D(E_PlayerState.Idle);
+            m_mainController.ChangeState3D(E_PlayerState3D.Idle);
     }
 
     // Attack 상태로 바뀔지 체크
@@ -67,7 +79,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
         if (Input.GetKeyDown(m_playerManager.Stat.AttackKey))
             // 무기를 사용할 수 있다면 Attack 상태로 변경
             if (m_playerManager.PlayerWeapon.CanUse)
-                m_mainController.ChangeState3D(E_PlayerState.Attack);
+                m_mainController.ChangeState3D(E_PlayerState3D.Attack);
     }
 
     // JumpUp 상태로 바뀔지 체크
@@ -77,7 +89,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
         if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))
             // 땅에 있다면 JumpUp 상태로 변경
             if (m_mainController.IsGrounded)
-                m_mainController.ChangeState3D(E_PlayerState.JumpUp);
+                m_mainController.ChangeState3D(E_PlayerState3D.JumpUp);
     }
 
     // LadderInit 상태로 바뀔지 체크
@@ -90,7 +102,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
             m_subController.CurrentLadder = m_subController.CheckLadder.GetLadder(m_moveDirection);
 
             // LadderInit 상태로 변경
-            m_mainController.ChangeState3D(E_PlayerState.LadderInit);
+            m_mainController.ChangeState3D(E_PlayerState3D.LadderInit);
         }
     }
 
@@ -98,6 +110,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
     {
         base.EndState();
 
+        // x, z속도를 멈춤
         m_subController.MoveStopXZ();
     }
 }

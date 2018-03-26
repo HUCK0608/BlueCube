@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4824617201130756}
-  - component: {fileID: 114770505803217086}
+  - component: {fileID: 114481786231487374}
   m_Layer: 0
   m_Name: Static_Tree1
   m_TagString: Untagged
@@ -125,7 +125,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.4220352, y: 5.4882526, z: 2.057194}
   m_Center: {x: 0.394392, y: -1.1558738, z: 0.32309306}
---- !u!114 &114770505803217086
+--- !u!114 &114481786231487374
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -133,6 +133,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1334826088252470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

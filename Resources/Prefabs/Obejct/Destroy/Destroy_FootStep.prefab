@@ -57,7 +57,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4611935686422874}
-  - component: {fileID: 114893629586289396}
+  - component: {fileID: 114710938057238626}
   - component: {fileID: 114709530705051076}
   m_Layer: 0
   m_Name: Destroy_FootStep
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_keepTime: 2
   m_regenTime: 3
---- !u!114 &114893629586289396
+--- !u!114 &114710938057238626
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1991674025873614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114928448182635188

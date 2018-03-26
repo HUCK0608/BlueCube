@@ -15,7 +15,7 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
     {
         Move();
         ChangeLadderIdleState();
-        ChangeIdleState();
+        ChangeMoveState();
     }
 
     private void Move()
@@ -34,22 +34,22 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
             m_subController.LadderMove(Vector3.up);
         // 아래로 이동
         else if (angle >= 135f)
-            m_subController.LadderMove(Vector3.down);
+                m_subController.LadderMove(Vector3.down);
     }
 
     // LadderIdle 상태로 변경
     private void ChangeLadderIdleState()
     {
         if (m_moveDirection.Equals(Vector3.zero))
-            m_mainController.ChangeState3D(E_PlayerState.LadderIdle);
+            m_mainController.ChangeState3D(E_PlayerState3D.LadderIdle);
     }
 
-    // Idle 상태로 변경
-    private void ChangeIdleState()
+    // Move 상태로 변경
+    private void ChangeMoveState()
     {
-        // 정면에 사다리가 없을경우 Idle 상태로 변경
-        if (!m_subController.CheckLadder.IsOnLadder(m_subController.Body.forward))
-            m_mainController.ChangeState3D(E_PlayerState.Idle);
+        // 사다리의 제일 아래이거나 맨 위일경우 Move 상태로 변경
+        if (m_subController.CheckLadder.IsLadderDown() || !m_subController.CheckLadder.IsOnLadder(m_subController.Body.forward))
+            m_mainController.ChangeState3D(E_PlayerState3D.Move);
     }
 
     public override void EndState()

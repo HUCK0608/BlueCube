@@ -36,8 +36,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4071287236443706}
-  - component: {fileID: 114315012725318698}
   - component: {fileID: 114818529375102790}
+  - component: {fileID: 114357620247469366}
   m_Layer: 0
   m_Name: Switch_OnOff_SteppingButton
   m_TagString: Untagged
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43f9e146f35b49c4b9331274b34af521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114315012725318698
+--- !u!114 &114357620247469366
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1506271079039482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114818529375102790

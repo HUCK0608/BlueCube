@@ -55,8 +55,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4729856119426880}
-  - component: {fileID: 114004769156236466}
   - component: {fileID: 114694004316737874}
+  - component: {fileID: 114724512184670412}
   m_Layer: 0
   m_Name: Switch_On_SteppingButton
   m_TagString: Untagged
@@ -183,17 +183,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 8, y: 2, z: 8}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114004769156236466
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1460372000335052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114688257786910066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -217,6 +206,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_onMesh: {fileID: 4300000, guid: 429257bb7bf9a974ab46e018bd94906b, type: 3}
+--- !u!114 &114724512184670412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1460372000335052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114954414642579442
 MonoBehaviour:
   m_ObjectHideFlags: 1

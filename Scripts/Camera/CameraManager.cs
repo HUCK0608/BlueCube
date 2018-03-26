@@ -145,7 +145,8 @@ public sealed class CameraManager : MonoBehaviour
     // 관찰시점을 사용할것인지 체크
     private void CheckObserveView()
     {
-        if(!GameLibrary.Bool_IsCOV2D)
+        // 시점변환중이거나 관찰시점이거나 2D가 아니고 땅일경우에만 관찰시점 허용
+        if(!GameLibrary.Bool_IsCOV2D && PlayerManager.Instance.IsGrounded)
         {
             if(Input.GetKeyDown(m_observeViewKey))
             {

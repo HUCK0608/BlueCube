@@ -18,6 +18,14 @@ public sealed class CheckGround : MonoBehaviour
     [SerializeField]
     private float m_checkDistance;
 
+    // 땅이랑 띄워줄 거리
+    [SerializeField]
+    private float m_onGroundUpPosition;
+
+    private float m_onGroundPositionY;
+    /// <summary>땅 위 y좌표를 반환함</summary>
+    public float OnGroundPositionY { get { return m_onGroundPositionY; } }
+
     private void Awake()
     {
         m_ray = new Ray();
@@ -31,13 +39,16 @@ public sealed class CheckGround : MonoBehaviour
     {
         bool isCol = false;
 
+        RaycastHit hit;
+
         for(int i = 0; i < m_checkPointCount; i++)
         {
             m_ray.origin = m_checkPoints[i].position;
 
-            if (Physics.Raycast(m_ray, m_checkDistance, GameLibrary.LayerMask_Ignore_BP))
+            if (Physics.Raycast(m_ray, out hit, m_checkDistance, GameLibrary.LayerMask_Ignore_BP))
             {
                 isCol = true;
+                m_onGroundPositionY = hit.point.y + m_onGroundUpPosition;
                 break;
             }
         }
