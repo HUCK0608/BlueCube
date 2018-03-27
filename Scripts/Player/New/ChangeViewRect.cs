@@ -7,8 +7,8 @@ public sealed class ChangeViewRect : MonoBehaviour
     // 스킬
     PlayerSkill_ChangeView m_skill;
 
-    // 블루큐브
-    private Transform m_blueCube;
+    // 2D 외벽 콜라이더
+    private GameObject m_outWallGroup;
 
     // 콜라이더
     private Collider m_collider;
@@ -34,7 +34,7 @@ public sealed class ChangeViewRect : MonoBehaviour
     {
         m_skill = GetComponentInParent<PlayerSkill_ChangeView>();
 
-        m_blueCube = GameManager.Instance.BlueCubeManager.transform;
+        m_outWallGroup = transform.parent.Find("OutWallGroup").gameObject;
 
         m_collider = GetComponent<Collider>();
 
@@ -55,13 +55,15 @@ public sealed class ChangeViewRect : MonoBehaviour
         SetColliderEnable(false);
         // 상자 비활성화
         gameObject.SetActive(false);
+        // 외벽 비활성화
+        m_outWallGroup.SetActive(false);
     }
 
     /// <summary>상자의 x, y 크기가 커짐. 최대 크기까지 커질 경우 종료</summary>
     public IEnumerator SetIncreaseSizeXY()
     {
         transform.localScale = Vector3.zero;
-        transform.position = m_blueCube.position;
+        transform.position = BlueCubeManager.Instance.BlueCube3D.transform.position;
         // 상자의 충돌체크 켜기
         SetColliderEnable(true);
         // 상자 활성화
@@ -97,7 +99,7 @@ public sealed class ChangeViewRect : MonoBehaviour
             {
                 // 충돌된 z좌표를 가져와서 새로운 크기 계산을 함
                 float hitPositionZ = hit.point.z;
-                newRectSize.z = hitPositionZ - m_blueCube.position.z;
+                newRectSize.z = hitPositionZ - BlueCubeManager.Instance.BlueCube3D.transform.position.z;
                 newRectSize.z = Mathf.Clamp(newRectSize.z, 0f, m_increaseMaxSize.z);
 
                 transform.localScale = Vector3.Lerp(transform.localScale, newRectSize, lerpT);
@@ -162,7 +164,7 @@ public sealed class ChangeViewRect : MonoBehaviour
     private float CalcPositionX(float thisOldPositionX, float thisOldSizeX)
     {
         // (블루큐브x위치 - 변환상자x위치) / 변환상자 기존 x크기
-        float temp = (m_blueCube.position.x - thisOldPositionX) / thisOldSizeX;
+        float temp = (BlueCubeManager.Instance.BlueCube3D.transform.position.x - thisOldPositionX) / thisOldSizeX;
         float newPositionX = (temp * (thisOldSizeX - transform.localScale.x)) + thisOldPositionX;
 
         return newPositionX;
@@ -171,10 +173,17 @@ public sealed class ChangeViewRect : MonoBehaviour
     // z사이즈에 따라 새로운 위치를 계산함
     private float CalcPositionZ()
     {
-        float newPositionZ = m_blueCube.localScale.z * transform.localScale.z * 0.5f;
-        newPositionZ += m_blueCube.position.z;
+        float newPositionZ = transform.localScale.z * 0.5f;
+        newPositionZ += BlueCubeManager.Instance.BlueCube3D.transform.position.z;
 
         return newPositionZ;
+    }
+
+    /// <summary>외벽 활성화 여부</summary>
+    public void SetOutWallEnable(bool value)
+    {
+        m_outWallGroup.transform.position = transform.position;
+        m_outWallGroup.SetActive(value);
     }
 
     private void OnTriggerEnter(Collider other)

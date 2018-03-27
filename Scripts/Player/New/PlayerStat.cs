@@ -9,6 +9,10 @@ public sealed class PlayerStat : MonoBehaviour
     private KeyCode m_changeViewKey;
     public KeyCode ChangeViewKey { get { return m_changeViewKey; } }
 
+    [SerializeField] 
+    private KeyCode m_pickItemKey;
+    public KeyCode PickItemKey { get { return m_pickItemKey; } }
+
     [SerializeField]
     private KeyCode m_attackKey;
     public KeyCode AttackKey { get { return m_attackKey; } }
@@ -45,4 +49,8 @@ public sealed class PlayerStat : MonoBehaviour
     [SerializeField]
     private float m_attackMotionDelay;
     public float AttackMotionDelay { get { return m_attackMotionDelay; } }
+
+    [SerializeField]
+    private float m_itemCheckDistance;
+    public float ItemCheckDistance { get { return m_itemCheckDistance; } }
 }

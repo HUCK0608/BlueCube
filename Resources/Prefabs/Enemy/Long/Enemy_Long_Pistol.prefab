@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4482622153999192}
   - component: {fileID: 54690940042623472}
   - component: {fileID: 65123918959477434}
-  - component: {fileID: 114910390099397544}
+  - component: {fileID: 114256354180004354}
   - component: {fileID: 114423581802465340}
   - component: {fileID: 114621705417144280}
   - component: {fileID: 114985655834541256}
@@ -252,6 +252,17 @@ MonoBehaviour:
   m_moveSpeed: 5
   m_rotationSpeed: 30
   m_maxNearDistance: 5
+--- !u!114 &114256354180004354
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1886426556672980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114317755595808800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -263,6 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3f33107561d07458d88a3bec80e553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_weaponType: 0
 --- !u!114 &114423581802465340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -310,18 +322,6 @@ MonoBehaviour:
   m_firstDelay: 1
   m_lastDelay: 1
   m_reloadDelay: 1
-  m_bulletBundle: {fileID: 0}
---- !u!114 &114910390099397544
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1886426556672980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114985655834541256
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -22,17 +22,18 @@ public class PlayerState2D_JumpUp : PlayerState2D
         // 중력적용
         m_subController.ApplyGravity();
 
-        ChangeJumpDownState();
+        // 상태 변경
+        ChangeStates();
     }
 
-    // JumpDown 상태로 변경
-    private void ChangeJumpDownState()
+    // 상태 변경 모음
+    private void ChangeStates()
     {
-        float velocityY = m_subController.Rigidbody.velocity.y;
-
         // 캐릭터가 최대높이까지 뛰었을 경우 JumpDown 상태로 변경
-        if (velocityY <= 0f)
+        if (m_subController.Rigidbody.velocity.y <= 0f)
+        {
             m_mainController.ChangeState2D(E_PlayerState2D.JumpDown);
+        }
     }
 
     public override void EndState()

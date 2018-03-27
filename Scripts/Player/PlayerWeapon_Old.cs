@@ -33,7 +33,7 @@ public sealed class PlayerWeapon_Old : MonoBehaviour
     public void ShootFireBall()
     {
         // 시점변환중이거나 탐지모드일경우 리턴
-        if (GameLibrary.Bool_IsCO)
+        if (GameLibrary.Bool_IsPlayerStop)
             return;
 
         // 불 발사 키를 눌렀을 경우

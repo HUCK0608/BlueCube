@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class CheckGround : MonoBehaviour
+public sealed class CheckGround2D : MonoBehaviour
 {
-    // 레이
-    private Ray m_ray;
-
     // 체크할 위치들을 인스펙터에서 담을 수 있게 함
     [SerializeField]
     private List<Transform> m_checkPoints;
@@ -28,9 +25,6 @@ public sealed class CheckGround : MonoBehaviour
 
     private void Awake()
     {
-        m_ray = new Ray();
-        m_ray.direction = Vector3.down;
-
         m_checkPointCount = m_checkPoints.Count;
     }
 
@@ -39,13 +33,12 @@ public sealed class CheckGround : MonoBehaviour
     {
         bool isCol = false;
 
-        RaycastHit hit;
 
-        for(int i = 0; i < m_checkPointCount; i++)
+        for (int i = 0; i < m_checkPointCount; i++)
         {
-            m_ray.origin = m_checkPoints[i].position;
+            RaycastHit2D hit;
 
-            if (Physics.Raycast(m_ray, out hit, m_checkDistance, GameLibrary.LayerMask_Ignore_BP))
+            if (GameLibrary.Raycast2D(m_checkPoints[i].position, Vector2.down, out hit, m_checkDistance, GameLibrary.LayerMask_Ignore_BP))
             {
                 isCol = true;
                 m_onGroundPositionY = hit.point.y + m_onGroundUpPosition;

@@ -22,7 +22,7 @@ public sealed class EnemyState_Long_Attack : EnemyState
     private void Update()
     {
         // 게임 시간이 멈춰있을경우 리턴
-        if (GameLibrary.Bool_IsGameStop)
+        if (GameLibrary.Bool_IsGameStop_Old)
             return;
 
         // 공격이 끝났을 때 탐지범위를 벗어나있으면 Return 상태로 변경

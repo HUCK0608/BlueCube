@@ -21,7 +21,7 @@ public sealed class RotationZPanel : MonoBehaviour
 
     private void Update()
     {
-        if (GameLibrary.Bool_IsGameStop)
+        if (GameLibrary.Bool_IsGameStop_Old)
             return;
 
         PanelRotate();

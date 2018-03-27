@@ -74,7 +74,7 @@ public static class GameLibrary
     // Bool 부분
 
     /// <summary>시점변환중이거나 2D일경우 true를 반환</summary>
-    public static bool Bool_IsGameStop
+    public static bool Bool_IsGameStop_Old
     {
         get
         {
@@ -82,6 +82,14 @@ public static class GameLibrary
                      PlayerManager.Instance.CurrentView.Equals(Enum_View2D)
                      ? true : false;
         }
+    }
+
+    /// <summary>시점변환중이거나 랜더러가 꺼져있을경우 true를 반환</summary>
+    public static bool Bool_IsGameStop(WorldObject worldObject)
+    {
+        return PlayerManager.Instance.IsViewChange ||
+                 !worldObject.IsOnRenderer
+                 ? true : false;
     }
 
     /// <summary>시점변환중이거나 관찰시점이거나 2D시점이면 true를 반환</summary>
@@ -96,15 +104,25 @@ public static class GameLibrary
         }
     }
 
-    /// <summary>시점변환중이거나 관찰시점이면 true를 반환</summary>
-    public static bool Bool_IsCO
+    /// <summary>시점변환중이거나 시점변환 준비중이거나 관찰시점이면 true를 반환</summary>
+    public static bool Bool_IsPlayerStop
     {
         get
         {
             return PlayerManager.Instance.IsViewChange ||
+                     PlayerManager.Instance.IsViewChangeReady ||
                      CameraManager.Instance.IsObserve
                      ? true : false;
         }
+    }
+
+    /// <summary>플레이어이거나 플레이어공격이거나 플레이어스킬이면 true를 반환</summary>
+    public static bool Bool_IsPlayerTag(string tag)
+    {
+        if (tag.Equals(m_string_Player) || tag.Equals(m_string_PlayerAttack) || tag.Equals(m_string_PlayerSkill))
+            return true;
+
+        return false;
     }
 
     // Function 부분
@@ -115,7 +133,7 @@ public static class GameLibrary
         while(true)
         {
             // 게임시간이 멈추지 않았을 경우 실행
-            if (!Bool_IsGameStop)
+            if (!Bool_IsGameStop_Old)
             {
                 addTime += Time.deltaTime;
                 if (addTime >= limitTime)
@@ -128,7 +146,7 @@ public static class GameLibrary
     // 레이
     private static Ray m_ray = new Ray();
 
-    /// <summary>파라미터 속성으로 레이를 쏴서 무언가 충돌하면 true를 반환</summary>
+    /// <summary>파라미터 속성으로 3D레이를 쏴서 무언가 충돌하면 true를 반환</summary>
     public static bool Raycast3D(Vector3 origin, Vector3 direction, out RaycastHit hit, float maxDistance, int layerMask)
     {
         m_ray.origin = origin;
@@ -140,13 +158,24 @@ public static class GameLibrary
         return false;
     }
 
-    /// <summary>파라미터 속성으로 레이를 쏴서 무언가 충돌하면 true를 반환</summary>
+    /// <summary>파라미터 속성으로 3D레이를 쏴서 무언가 충돌하면 true를 반환</summary>
     public static bool Raycast3D(Vector3 origin, Vector3 direction, float maxDistance, int layerMask)
     {
         m_ray.origin = origin;
         m_ray.direction = direction;
 
         if (Physics.Raycast(m_ray, maxDistance, layerMask))
+            return true;
+
+        return false;
+    }
+
+    /// <summary>파라미터 속성으로 2D레이를 쏴서 무언가 충돌하면 true를 반환</summary>
+    public static bool Raycast2D(Vector2 origin, Vector2 direction, out RaycastHit2D hit, float maxDistance, int layerMask)
+    {
+        hit = Physics2D.Raycast(origin, direction, maxDistance, layerMask);
+
+        if (hit.collider != null)
             return true;
 
         return false;

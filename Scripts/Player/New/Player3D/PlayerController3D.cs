@@ -9,8 +9,8 @@ public sealed class PlayerController3D : MonoBehaviour
     private PlayerController m_mainController;
 
     // 땅 체크 스크립트
-    private CheckGround m_checkGround;
-    public CheckGround CheckGround { get { return m_checkGround; } }
+    private CheckGround3D m_checkGround;
+    public CheckGround3D CheckGround { get { return m_checkGround; } }
     // 사다리 체크 스크립트
     private CheckLadder m_checkLadder;
     public CheckLadder CheckLadder { get { return m_checkLadder; } }
@@ -37,7 +37,7 @@ public sealed class PlayerController3D : MonoBehaviour
         m_playerManager = GetComponentInParent<PlayerManager>();
         m_mainController = GetComponentInParent<PlayerController>();
 
-        m_checkGround = GetComponent<CheckGround>();
+        m_checkGround = GetComponent<CheckGround3D>();
         m_checkLadder = GetComponent<CheckLadder>();
 
         m_rigidbody = GetComponent<Rigidbody>();

@@ -29,22 +29,12 @@ public sealed class PlayerState3D_JumpUp : PlayerState3D
         // 중력적용
         m_subController.ApplyGravity();
 
-        ChangeJumpDownState();
-        ChangeLadderInitState();
+        // 상태 변경
+        ChangeStates();
     }
 
-    // JumpDown상태로 변경
-    private void ChangeJumpDownState()
-    {
-        float velocityY = m_subController.Rigidbody.velocity.y;
-        
-        // 캐릭터가 최대높이까지 뛰었을 경우 JumpDown 상태로 변경
-        if (velocityY <= 0f)
-            m_mainController.ChangeState3D(E_PlayerState3D.JumpDown);
-    }
-
-    // LadderInit 상태로 바뀔지 체크
-    private void ChangeLadderInitState()
+    // 상태 변경 모음
+    private void ChangeStates()
     {
         // 이동방향에 사다리가 있으면 LadderInit 상태로 변경
         if (m_subController.CheckLadder.IsOnLadder(m_moveDirection))
@@ -54,6 +44,11 @@ public sealed class PlayerState3D_JumpUp : PlayerState3D
 
             // LadderInit 상태로 변경
             m_mainController.ChangeState3D(E_PlayerState3D.LadderInit);
+        }
+        // 캐릭터가 최대높이까지 뛰었을 경우 JumpDown 상태로 변경
+        else if(m_subController.Rigidbody.velocity.y <= 0f)
+        {
+            m_mainController.ChangeState3D(E_PlayerState3D.JumpDown);
         }
     }
 

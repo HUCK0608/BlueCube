@@ -10,6 +10,7 @@ public sealed class BlueCubeManager : MonoBehaviour
     // 큐브
     private GameObject m_blueCube2D;
     private GameObject m_blueCube3D;
+    public GameObject BlueCube3D { get { return m_blueCube3D; } }
 
     // 2D 랜더러
     SpriteRenderer m_renderer2D;

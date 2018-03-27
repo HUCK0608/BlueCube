@@ -24,7 +24,7 @@ public sealed class EnemyState_Long_Move : EnemyState
     private void Update()
     {
         // 게임 시간이 멈춰있을경우 리턴
-        if (GameLibrary.Bool_IsGameStop)
+        if (GameLibrary.Bool_IsGameStop_Old)
             return;
 
         // 탐지범위를 벗어나면 Return 상태로 변경

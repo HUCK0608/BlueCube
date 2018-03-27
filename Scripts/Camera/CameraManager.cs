@@ -100,7 +100,7 @@ public sealed class CameraManager : MonoBehaviour
     public void MoveToMouseDirection()
     {
         // 시점변환중이거나 2D시점이거나 관찰시점일 경우 리턴
-        if (GameLibrary.Bool_IsGameStop)
+        if (GameLibrary.Bool_IsGameStop_Old)
             return;
 
         // 마우스 방향의 월드 방향 구하기

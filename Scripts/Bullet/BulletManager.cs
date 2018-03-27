@@ -68,7 +68,11 @@ public sealed class BulletManager : MonoBehaviour
 
         // 사용가능한 총알이 없을 경우 새로운 총알 생성
         if (canUseBullet == null)
+        {
             canUseBullet = CreateBullet(bulletType);
+            // worldManager에 새로운 오브젝트가 생성됬다고 알림
+            WorldManager.Instance.AddWorldObject(canUseBullet.GetComponent<WorldObject>());
+        }
 
         // 총알 발사
         canUseBullet.Shoot(damage, position, direction, bulletSpeed, durationTime);

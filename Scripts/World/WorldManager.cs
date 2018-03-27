@@ -22,6 +22,13 @@ public sealed class WorldManager : MonoBehaviour
         m_worldObjectCount = m_worldObjects.Count;
     }
 
+    /// <summary>새로 생성된 오브젝트를 리스트에 포함시킴</summary>
+    public void AddWorldObject(WorldObject newObject)
+    {
+        m_worldObjects.Add(newObject);
+        m_worldObjectCount++;
+    }
+
     /// <summary>월드의 오브젝트를 2D상태에 맞게 변경한다.</summary>
     public void Change2D()
     {
