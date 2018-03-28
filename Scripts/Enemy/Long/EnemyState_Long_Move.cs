@@ -12,7 +12,7 @@ public sealed class EnemyState_Long_Move : EnemyState
     {
         base.Awake();
 
-        m_player = GameManager.Instance.PlayerManager.Player3D_GO.transform;
+        m_player = PlayerManager.Instance.Player3D_Object.transform;
 
         m_ray = new Ray();
     }

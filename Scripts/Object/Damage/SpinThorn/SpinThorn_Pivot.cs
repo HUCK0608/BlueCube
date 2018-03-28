@@ -31,7 +31,7 @@ public sealed class SpinThorn_Pivot : MonoBehaviour
             return;
 
         // 2D일경우 멈춤
-        if (GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(E_ViewType.View2D))
+        if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D))
             return;
 
         transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y + m_spinThorn.PivotSpinSpeed * m_spinDir * Time.deltaTime, 0);

@@ -16,7 +16,8 @@ public sealed class OutZone2D : MonoBehaviour
         // 플레이어가 닿았을 경우 체력을 깎고 리스폰
         if(other.tag == "Player")
         {
-            GameManager.Instance.PlayerManager.HitAndRespawn(1, m_outZone.RespawnPoint);
+            // 수정(★)
+            //PlayerManager.Instance.HitAndRespawn(1, m_outZone.RespawnPoint);
         }
     }
 }

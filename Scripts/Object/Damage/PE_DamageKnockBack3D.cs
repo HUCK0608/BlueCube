@@ -32,7 +32,7 @@ public sealed class PE_DamageKnockBack3D : MonoBehaviour
     private void HitAndKnockBackPlayer()
     {
         // 플레이어 매니저
-        PlayerManager_Old playerManager = GameManager.Instance.PlayerManager;
+        PlayerManager playerManager = PlayerManager.Instance;
 
         // 이미 충돌된 물체인지 체크
         bool isHit = m_damageKnockBack.IsHit(playerManager.gameObject);
@@ -42,11 +42,11 @@ public sealed class PE_DamageKnockBack3D : MonoBehaviour
             return;
 
         // 데미지
-        playerManager.Stat.Hit(1);
+        playerManager.Hit(1);
 
         // 넉백
         // 튕길 방향 구하기
-        Vector3 direction = playerManager.Player3D_GO.transform.position - transform.position;
+        Vector3 direction = playerManager.Player3D_Object.transform.position - transform.position;
         direction = direction.normalized;
 
         // x, z 힘 구하기
@@ -54,6 +54,7 @@ public sealed class PE_DamageKnockBack3D : MonoBehaviour
         // y 힘 구하기
         force.y = 1f * m_damageKnockBack.KnockBackPower_Y;
 
-        playerManager.AddForce(force, ForceMode.Impulse);
+        //수정 (★)
+        //playerManager.AddForce(force, ForceMode.Impulse);
     }
 }

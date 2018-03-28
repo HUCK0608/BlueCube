@@ -16,10 +16,6 @@ public sealed class GameManager : MonoBehaviour
     private CameraManager m_cameraManager;
     public CameraManager CameraManager { get { return m_cameraManager; } }
 
-    // 플레이어 매니저
-    private PlayerManager_Old m_playerManager;
-    public PlayerManager_Old PlayerManager { get { return m_playerManager; } }
-
     // 블루큐브 매니저
     private BlueCubeManager m_blueCubeManager;
     public BlueCubeManager BlueCubeManager { get { return m_blueCubeManager; } }
@@ -42,7 +38,6 @@ public sealed class GameManager : MonoBehaviour
 
         m_worldManager = GameObject.Find("World").GetComponent<WorldManager>();
         m_cameraManager = GameObject.Find("CameraGroup").GetComponent<CameraManager>();
-        m_playerManager = GameObject.Find("PlayerGroup").GetComponent<PlayerManager_Old>();
         m_blueCubeManager = GameObject.Find("BlueCube").GetComponent<BlueCubeManager>();
         m_bulletManager = GameObject.Find("Bullets").GetComponent<BulletManager>();
         m_effectManager = GameObject.Find("Effects").GetComponent<EffectManager>();
