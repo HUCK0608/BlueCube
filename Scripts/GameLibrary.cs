@@ -78,8 +78,8 @@ public static class GameLibrary
     {
         get
         {
-            return GameManager.Instance.PlayerManager.Skill_CV.IsChanging ||
-                     GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(Enum_View2D)
+            return PlayerManager.Instance.IsViewChange ||
+                     PlayerManager.Instance.CurrentView.Equals(Enum_View2D)
                      ? true : false;
         }
     }
@@ -89,9 +89,9 @@ public static class GameLibrary
     {
         get
         {
-            return GameManager.Instance.PlayerManager.Skill_CV.IsChanging ||
-                     GameManager.Instance.CameraManager.IsObserve ||
-                     GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(Enum_View2D)
+            return PlayerManager.Instance.IsViewChange ||
+                     CameraManager.Instance.IsObserve ||
+                     PlayerManager.Instance.CurrentView.Equals(Enum_View2D)
                      ? true : false;
         }
     }
@@ -101,8 +101,8 @@ public static class GameLibrary
     {
         get
         {
-            return GameManager.Instance.PlayerManager.Skill_CV.IsChanging ||
-                     GameManager.Instance.CameraManager.IsObserve
+            return PlayerManager.Instance.IsViewChange ||
+                     CameraManager.Instance.IsObserve
                      ? true : false;
         }
     }

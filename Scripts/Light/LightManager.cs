@@ -4,6 +4,9 @@ using UnityEngine;
 
 public sealed class LightManager : MonoBehaviour
 {
+    private static LightManager m_instance;
+    public static LightManager Instance { get { return m_instance; } }
+
     private Light m_light;
 
     private static LightShadows m_noShadows = LightShadows.None;
@@ -11,6 +14,8 @@ public sealed class LightManager : MonoBehaviour
 
     private void Awake()
     {
+        m_instance = this;
+
         m_light = GetComponent<Light>();
     }
 
