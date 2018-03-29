@@ -106,7 +106,6 @@ GameObject:
   - component: {fileID: 4751075468806520}
   - component: {fileID: 50017585941601140}
   - component: {fileID: 58498543132964756}
-  - component: {fileID: 114204599296994574}
   m_Layer: 8
   m_Name: Collider2D
   m_TagString: PlayerAttack
@@ -141,7 +140,6 @@ GameObject:
   - component: {fileID: 4157787307716598}
   - component: {fileID: 54788331246254986}
   - component: {fileID: 135303046005220278}
-  - component: {fileID: 114651724500889564}
   m_Layer: 8
   m_Name: Collider3D
   m_TagString: PlayerAttack
@@ -176,7 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4133982072683962}
   - component: {fileID: 114736601942824848}
-  - component: {fileID: 114916557898104584}
+  - component: {fileID: 114142552581839548}
   m_Layer: 0
   m_Name: Bullet_Player_FireBall
   m_TagString: Untagged
@@ -207,7 +205,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1870386085568902}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9999, y: 9999, z: 9999}
+  m_LocalPosition: {x: -14.542406, y: 661.21185, z: 4.722704}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4694286331912440}
@@ -454,15 +452,15 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114204599296994574
+--- !u!114 &114142552581839548
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1499908406195526}
+  m_GameObject: {fileID: 1870386085568902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69abdafb2ed9a88468a9c1af97b1bfad, type: 3}
+  m_Script: {fileID: 11500000, guid: 08f540f908a3a5e46b564f334271084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114318911197230286
@@ -480,17 +478,6 @@ MonoBehaviour:
   Rows: 2
   FramesPerSecond: 35
   RunOnce: 0
---- !u!114 &114651724500889564
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1777570774702498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85534a77901eff94aa0bad58049eaad5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114668536698413272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -517,18 +504,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0d1d7bad67ce684dbff789ed5fe9bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114916557898104584
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1870386085568902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2e98279c3f73634ab5f5a5a6dd2f9ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_colEffectType: 0
 --- !u!135 &135303046005220278
 SphereCollider:
   m_ObjectHideFlags: 1

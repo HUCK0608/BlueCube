@@ -99,7 +99,7 @@ public sealed class CameraManager : MonoBehaviour
             return;
 
         // 마우스 방향의 월드 방향 구하기
-        Vector3 mouseDirection = GetMouseDirectionToWorld();
+        Vector3 mouseDirection = GetMouseDirectionToPivot(GameManager.Instance.PlayerManager.Player3D_GO.transform.position);
 
         // 이동방향 * 거리
         Vector3 movePoint = mouseDirection.normalized * m_moveDirectionMaxDis;
@@ -108,14 +108,11 @@ public sealed class CameraManager : MonoBehaviour
         m_centerPoint.localPosition = Vector3.Lerp(m_centerPoint.localPosition, movePoint, m_moveDirecitonSpeed * Time.deltaTime);
     }
 
-    // 마우스의 월드방향을 구하는 함수
-    public Vector3 GetMouseDirectionToWorld()
+    /// <summary>pivot에서 마우스포인터의 방향을 구함</summary>
+    public Vector3 GetMouseDirectionToPivot(Vector3 pivot)
     {
-        // 플레이어3D
-        GameObject player3D = GameManager.Instance.PlayerManager.Player3D_GO;
-
-        // 법선이 y양의 방향을 보고있고 플레이어위치에 평면을 생성
-        Plane plane = new Plane(Vector3.up, player3D.transform.position);
+        // 법선이 y양의 방향을 보고있고 pivot위치에 있는 평면을 생성
+        Plane plane = new Plane(Vector3.up, pivot);
 
         // 마우스 위치의 광선 생성
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -134,7 +131,7 @@ public sealed class CameraManager : MonoBehaviour
         }
 
         // 방향 계산
-        Vector3 direction = hitPoint - player3D.transform.position;
+        Vector3 direction = hitPoint - pivot;
 
         // 방향 반환
         return direction.normalized;

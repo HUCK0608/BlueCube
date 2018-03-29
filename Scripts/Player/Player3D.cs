@@ -276,7 +276,7 @@ public sealed class Player3D : Player
             return;
 
         // 마우스 방향 구하기
-        Vector3 mouseDirection = GameManager.Instance.CameraManager.GetMouseDirectionToWorld();
+        Vector3 mouseDirection = GameManager.Instance.CameraManager.GetMouseDirectionToPivot(transform.position);
 
         transform.rotation = Quaternion.LookRotation(mouseDirection);
     }

@@ -32,7 +32,7 @@ public sealed class PE_DamageKnockBack3D : MonoBehaviour
     private void HitAndKnockBackPlayer()
     {
         // 플레이어 매니저
-        PlayerManager playerManager = GameManager.Instance.PlayerManager;
+        PlayerManager_Old playerManager = GameManager.Instance.PlayerManager;
 
         // 이미 충돌된 물체인지 체크
         bool isHit = m_damageKnockBack.IsHit(playerManager.gameObject);
