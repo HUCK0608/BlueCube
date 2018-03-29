@@ -33,10 +33,10 @@ public class PlayerState3D_PickJumpDown : PlayerState3D
     // 상태 변경 모음
     private void ChangeStates()
     {
-        // 플레이어가 땅에 닿으면 Idle 상태로 변경
+        // 플레이어가 땅에 닿으면 PickIdle 상태로 변경
         if (m_mainController.IsGrounded)
         {
-            m_mainController.ChangeState3D(E_PlayerState3D.Idle);
+            m_mainController.ChangeState3D(E_PlayerState3D.PickIdle);
         }
     }
 

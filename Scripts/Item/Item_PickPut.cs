@@ -53,7 +53,7 @@ public sealed class Item_PickPut : MonoBehaviour
         m_isPick = false;
 
         // 아이템이 고정될 위치
-        Vector3 pickItemPosition3D = PlayerManager.Instance.PlayerHand.PickItemPosition3D.position;
+        Vector3 pickItemPosition3D = PlayerManager.Instance.Hand.PickItemPosition3D.position;
 
         while(true)
         {
@@ -77,7 +77,7 @@ public sealed class Item_PickPut : MonoBehaviour
         // 반투명 상자 활성화
         m_fadeBox.gameObject.SetActive(true);
 
-        Transform pickItemPosition = PlayerManager.Instance.PlayerHand.PickItemPosition3D;
+        Transform pickItemPosition = PlayerManager.Instance.Hand.PickItemPosition3D;
 
         // 상자가 올라가는 상태일경우 true를 반환
         bool isUp = true;

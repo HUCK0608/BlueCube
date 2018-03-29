@@ -153,6 +153,17 @@ public sealed class PlayerController3D : MonoBehaviour
         m_rigidbody.velocity = moveDirection * m_playerManager.Stat.MoveSpeed_Ladder;
     }
 
+    /// <summary>moveDireciton방향으로 Stat에 MoveSpeed_Jump속도로 이동함</summary>
+    public void JumpMove(Vector3 moveDireciton)
+    {
+        // 점프 속도를 적용
+        moveDireciton *= m_playerManager.Stat.MoveSpeed_Jump;
+        // y속도는 기존의 것을 사용
+        moveDireciton.y = m_rigidbody.velocity.y;
+
+        m_rigidbody.velocity = moveDireciton;
+    }
+
     /// <summary>x, z의 속도를 멈춤</summary>
     public void MoveStopXZ()
     {
@@ -174,10 +185,10 @@ public sealed class PlayerController3D : MonoBehaviour
         m_rigidbody.AddForce(Vector3.up * m_playerManager.Stat.JumpPower, ForceMode.Impulse);
     }
 
-    /// <summary>direction방향으로 머리 LookRotation 회전</summary>
+    /// <summary>direction방향으로 머리 Slerp 회전</summary>
     public void RotateHead(Vector3 direction)
     {
-        m_head.rotation = Quaternion.LookRotation(direction);
+        m_head.rotation = Quaternion.Slerp(m_head.rotation, Quaternion.LookRotation(direction), m_playerManager.Stat.RotationSpeed * Time.deltaTime);
     }
 
     /// <summary>direction방향으로 몸 slerp 회전</summary>
@@ -186,7 +197,7 @@ public sealed class PlayerController3D : MonoBehaviour
         m_body.rotation = Quaternion.Slerp(m_body.rotation, Quaternion.LookRotation(direction), m_playerManager.Stat.RotationSpeed * Time.deltaTime);
     }
 
-    /// <summary>direction방향으로 머리와 몸 회전(머리는 LookDirection, 몸은 slerp)</summary>
+    /// <summary>direction방향으로 머리와 몸 회전</summary>
     public void RotateHeadAndBody(Vector3 direction)
     {
         RotateHead(direction);

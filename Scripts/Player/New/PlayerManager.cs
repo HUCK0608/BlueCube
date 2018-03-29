@@ -12,7 +12,19 @@ public sealed class PlayerManager : MonoBehaviour
     public PlayerStat Stat { get { return m_stat; } }
 
     // 스킬
-    private PlayerSkill_ChangeView m_playerSkill_ChangeView;
+    private PlayerSkill_ChangeView m_skill;
+
+    private PlayerWeapon m_weapon;
+    /// <summary>플레이어 무기</summary>
+    public PlayerWeapon Weapon { get { return m_weapon; } }
+
+    private PlayerHand m_hand;
+    /// <summary>플레이어 손</summary>
+    public PlayerHand Hand { get { return m_hand; } }
+
+    private PlayerInventory m_inventory;
+    /// <summary>인벤토리</summary>
+    public PlayerInventory Inventory { get { return m_inventory; } }
 
     // 컨트롤러
     // 메인 컨트롤러
@@ -23,14 +35,6 @@ public sealed class PlayerManager : MonoBehaviour
     public PlayerController3D SubController3D { get { return m_subController3D; } }
     /// <summary>플레이어의 2D컨트롤러</summary>
     public PlayerController2D SubController2D { get { return m_subController2D; } }
-
-    private PlayerWeapon m_playerWeapon;
-    /// <summary>플레이어 무기</summary>
-    public PlayerWeapon PlayerWeapon { get { return m_playerWeapon; } }
-
-    private PlayerHand m_playerHand;
-    /// <summary>플레이어 손</summary>
-    public PlayerHand PlayerHand { get { return m_playerHand; } }
 
     private GameObject m_player3D_Object;
     /// <summary>플레이어3D 오브젝트를 반환</summary>
@@ -43,11 +47,11 @@ public sealed class PlayerManager : MonoBehaviour
     // 다른곳에서 플레이어 관련 속성을 편하게 가져가기 위해 만든 변수
     // 시점변환 관련
     /// <summary>현재 시점을 반환 (View2D, View3D)</summary>
-    public E_ViewType CurrentView { get { return m_playerSkill_ChangeView.CurrentView; } }
+    public E_ViewType CurrentView { get { return m_skill.CurrentView; } }
     /// <summary>현재 시점변환이 준비중일경우 true를 반환</summary>
-    public bool IsViewChangeReady { get { return m_playerSkill_ChangeView.IsViewChangeReady; } }
+    public bool IsViewChangeReady { get { return m_skill.IsViewChangeReady; } }
     /// <summary>현재 시점변환이 실행중일경우 true를 반환</summary>
-    public bool IsViewChange { get { return m_playerSkill_ChangeView.IsViewChange; } }
+    public bool IsViewChange { get { return m_skill.IsViewChange; } }
     /// <summary>플레이어가 땅에 있을경우 true를 반환</summary>
     public bool IsGrounded { get { return m_mainController.IsGrounded; } }
 
@@ -56,14 +60,14 @@ public sealed class PlayerManager : MonoBehaviour
         m_instance = this;
 
         m_stat = GetComponent<PlayerStat>();
-        m_playerSkill_ChangeView = GetComponent<PlayerSkill_ChangeView>();
+        m_skill = GetComponent<PlayerSkill_ChangeView>();
+        m_weapon = GetComponent<PlayerWeapon>();
+        m_hand = GetComponent<PlayerHand>();
+        m_inventory = GetComponent<PlayerInventory>();
 
         m_mainController = GetComponent<PlayerController>();
         m_subController3D = GetComponentInChildren<PlayerController3D>();
         m_subController2D = GetComponentInChildren<PlayerController2D>();
-
-        m_playerWeapon = GetComponent<PlayerWeapon>();
-        m_playerHand = GetComponent<PlayerHand>();
 
         m_player3D_Object = transform.Find("Player3D").gameObject;
         m_player2D_Object = transform.Find("Player2D").gameObject;
@@ -111,5 +115,6 @@ public sealed class PlayerManager : MonoBehaviour
     public void Hit(int damage)
     {
         m_stat.DecreaseHp(damage);
+        Debug.Log("플레이어 데미지! 남은체력 : " + m_stat.Hp);
     }
 }

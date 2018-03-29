@@ -4,19 +4,15 @@ using UnityEngine;
 
 public sealed class EnemyWeapon_Long_Pistol : EnemyWeapon
 {
-    //// 총알모음
-    //[SerializeField]
-    //private BulletBundle m_bulletBundle;
+    protected override void UseWeapon()
+    {
+        ShootGun();
+    }
 
-    //protected override void UseWeapon()
-    //{
-    //    ShootGun();
-    //}
+    private void ShootGun()
+    {
+        Vector3 shootDirection = transform.forward;
 
-    //private void ShootGun()
-    //{
-    //    Vector3 shootDirection = transform.forward;
-
-    //    m_bulletBundle.ShootBullet(transform.position, shootDirection.normalized);
-    //}
+        BulletManager.Instance.ShootBullet(E_BulletType.EnemyFireBall, m_bulletDamage, transform.position, shootDirection, m_bulletSpeed, m_bulletDurationTime);
+    }
 }

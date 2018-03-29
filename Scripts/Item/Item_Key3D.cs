@@ -13,7 +13,7 @@ public sealed class Item_Key3D : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals(GameLibrary.String_Player))
+        if(other.tag.Equals(GameLibrary.String_Player))
         {
             m_key.GiveKeyToPlayer();
         }

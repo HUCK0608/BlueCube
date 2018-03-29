@@ -34,7 +34,7 @@ public class PlayerState2D_Idle : PlayerState2D
         // 공격키를 눌렀을 경우 무기를 사용할 수 있다면 Attack 상태로 변경
         if (Input.GetKeyDown(m_playerManager.Stat.AttackKey))
         {
-            if (m_playerManager.PlayerWeapon.CanUse)
+            if (m_playerManager.Weapon.CanUse)
                 m_mainController.ChangeState2D(E_PlayerState2D.Attack);
         }
         // 점프키를 눌렀을 때 땅에 있으면 JumpUp 상태로 변경

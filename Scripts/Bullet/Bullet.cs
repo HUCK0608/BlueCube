@@ -45,7 +45,7 @@ public class Bullet : MonoBehaviour
 
         float addTime = 0f;
 
-        while(true)
+        while(m_isMove)
         {
             // 시간이 멈춰있지 않은 경우에만 실행
             if (!GameLibrary.Bool_IsGameStop(m_worldObject))

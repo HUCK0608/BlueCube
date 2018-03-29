@@ -14,18 +14,9 @@ public sealed class Switch_OnOff_Stepping : Switch_OnOff
     // 스위치가 꺼지는 타이머가 활성화 되어있는지
     private bool m_isOffTimerActive;
 
-    // 메쉬
-    private MeshFilter m_meshFilter;
-
     protected override void Awake()
     {
         base.Awake();
-        InitMesh();
-    }
-
-    private void InitMesh()
-    {
-        m_meshFilter = GetComponentInChildren<MeshFilter>();
     }
 
     /// <summary>스위치 켜기</summary>

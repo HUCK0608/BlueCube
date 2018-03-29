@@ -40,6 +40,10 @@ public sealed class PlayerStat : MonoBehaviour
     public float MoveSpeed_Ladder { get { return m_moveSpeed_Ladder; } }
 
     [SerializeField]
+    private float m_moveSpeed_Jump;
+    public float MoveSpeed_Jump { get { return m_moveSpeed_Jump; } }
+
+    [SerializeField]
     private float m_rotationSpeed;
     public float RotationSpeed { get { return m_rotationSpeed; } }
 
