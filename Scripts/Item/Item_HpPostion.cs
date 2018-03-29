@@ -11,7 +11,8 @@ public sealed class Item_HpPostion : MonoBehaviour
     /// <summary>플레이어 체력 증가시키기</summary>
     public void PlayerHpIncrease()
     {
-        GameManager.Instance.PlayerManager.Stat.HpIncrease(m_hpIncreaseAmount);
+        // 수정(★)
+        //PlayerManager.Instance.Stat.HpIncrease(m_hpIncreaseAmount);
         gameObject.SetActive(false);
     }
 }

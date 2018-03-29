@@ -17,14 +17,15 @@ public sealed class Activate_Key : Activate
 
     public void KeyCheck()
     {
-        PlayerInventory playerInventory = GameManager.Instance.PlayerManager.Inventory;
-        int playerKeyAmount = playerInventory.KeyAmount;
+        // 수정(★)
+        //PlayerInventory playerInventory = PlayerManager.Instance.Inventory;
+        //int playerKeyAmount = playerInventory.KeyAmount;
 
-        if (playerKeyAmount >= m_needKeyAmount)
-        {
-            playerInventory.UseKey(m_needKeyAmount);
-            m_isActivate = true;
-            m_keyCheckBox.gameObject.SetActive(false);
-        }
+        //if (playerKeyAmount >= m_needKeyAmount)
+        //{
+        //    playerInventory.UseKey(m_needKeyAmount);
+        //    m_isActivate = true;
+        //    m_keyCheckBox.gameObject.SetActive(false);
+        //}
     }
 }

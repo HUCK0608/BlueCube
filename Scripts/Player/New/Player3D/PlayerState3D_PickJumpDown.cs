@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class PlayerState3D_JumpDown : PlayerState3D
+public class PlayerState3D_PickJumpDown : PlayerState3D
 {
     private Vector3 m_moveDirection;
 
@@ -33,17 +33,8 @@ public sealed class PlayerState3D_JumpDown : PlayerState3D
     // 상태 변경 모음
     private void ChangeStates()
     {
-        // 이동방향에 사다리가 있으면 LadderInit 상태로 변경
-        if (m_subController.CheckLadder.IsOnLadder(m_moveDirection))
-        {
-            // 해당 이동 방향에 있는 곳에 레이를 쏴서 사다리 스크립트를 저장함
-            m_subController.CurrentLadder = m_subController.CheckLadder.GetLadder(m_moveDirection);
-
-            // LadderInit 상태로 변경
-            m_mainController.ChangeState3D(E_PlayerState3D.LadderInit);
-        }
         // 플레이어가 땅에 닿으면 Idle 상태로 변경
-        else if(m_mainController.IsGrounded)
+        if (m_mainController.IsGrounded)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.Idle);
         }

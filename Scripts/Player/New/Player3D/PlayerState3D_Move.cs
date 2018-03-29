@@ -17,7 +17,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
         // 방향키 입력 방향을 가져옴
         m_moveDirection = m_subController.GetMoveDirection();
         // 플레이어에서 마우스의 방향을 가져옴
-        m_mouseDirectionToPlayer = GameManager.Instance.CameraManager.GetMouseDirectionToPivot(transform.position);
+        m_mouseDirectionToPlayer = CameraManager.Instance.GetMouseDirectionToPivot(transform.position);
 
         // 이동 및 회전
         m_subController.Move(m_mouseDirectionToPlayer, m_moveDirection);
@@ -80,8 +80,5 @@ public sealed class PlayerState3D_Move : PlayerState3D
     public override void EndState()
     {
         base.EndState();
-
-        // x, z속도를 멈춤
-        m_subController.MoveStopXZ();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum E_MaterialType { Default, Change }
+public enum E_ViewType { View3D, View2D }
 
 public static class GameLibrary
 {
@@ -27,12 +28,6 @@ public static class GameLibrary
 
     private static E_ViewType m_enum_View3D = E_ViewType.View3D;
     public static E_ViewType Enum_View3D { get { return m_enum_View3D; } }
-
-    private static E_LookDirection2D m_enum_LD2D_Left = E_LookDirection2D.Left;
-    public static E_LookDirection2D Enum_LD2D_Left { get { return m_enum_LD2D_Left; } }
-
-    private static E_LookDirection2D m_enum_LD2D_Right = E_LookDirection2D.Right;
-    public static E_LookDirection2D Enum_LD2D_Right { get { return m_enum_LD2D_Right; } }
 
     private static E_MaterialType m_enum_Material_Default = E_MaterialType.Default;
     public static E_MaterialType Enum_Material_Default { get { return m_enum_Material_Default; } }

@@ -11,7 +11,7 @@ public sealed class MovePanel3D : MonoBehaviour
         if (other.tag.Equals(m_playerTagS))
         {
             // 플레이어 고정
-            GameManager.Instance.PlayerManager.transform.parent = transform.parent;
+            PlayerManager.Instance.transform.parent = transform.parent;
         }
     }
 
@@ -20,7 +20,7 @@ public sealed class MovePanel3D : MonoBehaviour
         if(other.tag.Equals(m_playerTagS))
         {
             // 플레이어 고정 해제
-            GameManager.Instance.PlayerManager.transform.parent = null;
+            PlayerManager.Instance.transform.parent = null;
         }
     }
 }

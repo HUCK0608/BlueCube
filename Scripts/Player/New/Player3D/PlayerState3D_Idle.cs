@@ -10,7 +10,10 @@ public sealed class PlayerState3D_Idle : PlayerState3D
     }
 
     private void Update()
-    {
+    {        
+        // x, z 이동을 멈춤
+        m_subController.MoveStopXZ();
+
         if (GameLibrary.Bool_IsPlayerStop)
         {
             // 중력만 적용
@@ -19,13 +22,10 @@ public sealed class PlayerState3D_Idle : PlayerState3D
         }
 
         // 플레이어에서 마우스의 방향을 가져옴
-        Vector3 mouseDirectionToPlayer = GameManager.Instance.CameraManager.GetMouseDirectionToPivot(transform.position);
+        Vector3 mouseDirectionToPlayer = CameraManager.Instance.GetMouseDirectionToPivot(transform.position);
 
         // 머리, 몸 회전
         m_subController.RotateHeadAndBody(mouseDirectionToPlayer);
-
-        // x, z 이동 멈춤
-        m_subController.MoveStopXZ();
 
         // 중력적용
         m_subController.ApplyGravity();
@@ -44,8 +44,15 @@ public sealed class PlayerState3D_Idle : PlayerState3D
         {
             int layerMask = (1 << 9);
             Vector3 rayOrigin = transform.position + Vector3.up;
-            if (GameLibrary.Raycast3D(rayOrigin, m_subController.Body.forward, m_playerManager.Stat.ItemCheckDistance, layerMask))
+            RaycastHit hit;
+
+            // 바라보는 방향으로 레이를 쏨
+            if (GameLibrary.Raycast3D(rayOrigin, m_subController.Head.forward, out hit, m_playerManager.Stat.ItemCheckDistance, layerMask))
             {
+                // 아이템 스크립트를 저장시킴
+                m_playerManager.PlayerHand.CurrentPickItem = hit.transform.GetComponent<Item_PickPut>();
+
+                // 상태 변경
                 m_mainController.ChangeState3D(E_PlayerState3D.PickInit);
             }
         }

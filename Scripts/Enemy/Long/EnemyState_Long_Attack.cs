@@ -10,7 +10,7 @@ public sealed class EnemyState_Long_Attack : EnemyState
     {
         base.Awake();
 
-        m_player = GameManager.Instance.PlayerManager.Player3D_GO.transform;
+        m_player = PlayerManager.Instance.Player3D_Object.transform;
     }
 
     public override void InitState()

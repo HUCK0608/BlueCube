@@ -28,6 +28,10 @@ public sealed class PlayerManager : MonoBehaviour
     /// <summary>플레이어 무기</summary>
     public PlayerWeapon PlayerWeapon { get { return m_playerWeapon; } }
 
+    private PlayerHand m_playerHand;
+    /// <summary>플레이어 손</summary>
+    public PlayerHand PlayerHand { get { return m_playerHand; } }
+
     private GameObject m_player3D_Object;
     /// <summary>플레이어3D 오브젝트를 반환</summary>
     public GameObject Player3D_Object { get { return m_player3D_Object; } }
@@ -59,6 +63,7 @@ public sealed class PlayerManager : MonoBehaviour
         m_subController2D = GetComponentInChildren<PlayerController2D>();
 
         m_playerWeapon = GetComponent<PlayerWeapon>();
+        m_playerHand = GetComponent<PlayerHand>();
 
         m_player3D_Object = transform.Find("Player3D").gameObject;
         m_player2D_Object = transform.Find("Player2D").gameObject;
@@ -93,5 +98,18 @@ public sealed class PlayerManager : MonoBehaviour
         m_player3D_Object.transform.parent = m_player2D_Object.transform;
         // 2D플레이어 활성화
         m_player2D_Object.SetActive(true);
+    }
+
+    // 체력감소 부분
+    /// <summary>체력이 0이하일 경우 true를 반환</summary>
+    private bool DieCheck()
+    {
+        return m_stat.Hp <= 0 ? true : false;
+    }
+
+    /// <summary>플레이어에게 데미지를 입힌다</summary>
+    public void Hit(int damage)
+    {
+        m_stat.DecreaseHp(damage);
     }
 }

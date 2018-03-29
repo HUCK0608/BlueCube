@@ -4,141 +4,197 @@ using UnityEngine;
 
 public sealed class Item_PickPut : MonoBehaviour
 {
-    // 들었을 때 떨어질 위치 표시를 위한 오브젝트
-    private static Transform m_fadeBox;
+    private Transform m_fadeBox;
 
-    // 3D 리지드바디
-    private Rigidbody m_rigidbody3D;
+    private bool m_isPick;
+    /// <summary>아이템 들어올리기를 완료했을경우 true를 반환</summary>
+    public bool IsPick { get { return m_isPick; } }
 
-    // 아이템을 플레이어가 소유중인지
-    private bool m_isHave;
+    private bool m_isPut;
+    /// <summary>아이템 놓기를 완료했을경우 true를 반환</summary>
+    public bool IsPut { get { return m_isPut; } }
 
-    // 들었을 때 떨어질 위치표시를 위한 변수
-    private Ray m_ray;
-    private RaycastHit m_hit;
+    // 아이템을 드는 속도
+    [SerializeField]
+    private float m_pickUpSlerpSpeed;
+
+    // 어느 정도 거리까지 왔을 때 고정상태로 변경할 건지 체크하는 변수
+    [SerializeField]
+    private float m_changeFixedDistance;
+
+    // 고정되어 있을 때 위 아래 왔다갔다할 범위
+    [SerializeField]
+    private float m_fixedUpDownRange;
+    // 위 아래 왔다갔다할 스피드
+    [SerializeField]
+    private float m_fixedUpDownSpeed;
 
     private void Awake()
     {
-        if(m_fadeBox == null)
-            m_fadeBox = GameObject.Find("Item_Box_PickPut_Fade").transform;
-
-        m_rigidbody3D = GetComponent<Rigidbody>();
-
-        m_ray = new Ray();
-        m_ray.direction = Vector3.down;
+        m_fadeBox = GameObject.Find("GameLibrary").transform.Find("Item_Box_PickPut_Fade");
     }
 
-    // 중력 사용 여부
-    private void UseGravity(bool value)
+    /// <summary>아이템 들기</summary>
+    public void PickItem()
     {
-        m_rigidbody3D.useGravity = value;
+        StartCoroutine(PickInit());
     }
 
-    // 들기
-    public void PickUp(Transform playerHand2D, Transform playerHand3D)
+    /// <summary>아이템 놓기</summary>
+    public void PutItem()
     {
-        StartCoroutine(FixedItem(playerHand2D, playerHand3D));
+        m_isPick = false;
+        StartCoroutine(PickEnd());
     }
 
-    // 플레이어 손에 고정
-    private IEnumerator FixedItem(Transform playerHand2D, Transform playerHand3D)
+    // 상자가 고정될 지점으로 올라가는 코루틴
+    private IEnumerator PickInit()
     {
-        m_isHave = true;
+        m_isPick = false;
 
-        // 중력 끄기
-        UseGravity(false);
+        // 아이템이 고정될 위치
+        Vector3 pickItemPosition3D = PlayerManager.Instance.PlayerHand.PickItemPosition3D.position;
 
-        // fadeBox 활성화
-        m_fadeBox.gameObject.SetActive(true);
-
-        while(m_isHave)
+        while(true)
         {
-            if (GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(E_ViewType.View2D))
-                transform.position = playerHand2D.position;
-            else if (GameManager.Instance.PlayerManager.Skill_CV.ViewType.Equals(E_ViewType.View3D))
-                transform.position = playerHand3D.position;
+            // 아이템 들기
+            transform.position = Vector3.Slerp(transform.position, pickItemPosition3D, m_pickUpSlerpSpeed * Time.deltaTime);
 
-            // fadeBox 그리기
-            DrawFadeBox();
+            // 고정될 위치에 근접했으면 반복문 종료
+            if (Vector3.Distance(transform.position, pickItemPosition3D) <= m_changeFixedDistance)
+                break;
 
             yield return null;
         }
 
-        m_fadeBox.gameObject.SetActive(false);
+        m_isPick = true;
+        StartCoroutine(FixedItem());
     }
 
-    /// <summary>FadeBox 그리기</summary>
-    private void DrawFadeBox()
+    // 상자를 아이템 위치에 고정하며 위아래 왔다갔다 함
+    private IEnumerator FixedItem()
     {
-        Vector3 putPos = CalcPutPos();
+        // 반투명 상자 활성화
+        m_fadeBox.gameObject.SetActive(true);
 
-        m_ray.origin = putPos;
+        Transform pickItemPosition = PlayerManager.Instance.PlayerHand.PickItemPosition3D;
 
-        if(Physics.Raycast(m_ray, out m_hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BP))
+        // 상자가 올라가는 상태일경우 true를 반환
+        bool isUp = true;
+        // 처음 기존 상자 위치
+        Vector3 startDefaultPosition = transform.position;
+        // 시작 아이템 고정 위치
+        Vector3 startDefaultFixedPosition = pickItemPosition.position;
+        // 기존 위치에 더해줄 y위치
+        float addPositionY = 0f;
+
+        while(IsPick)
         {
-            putPos.y = m_hit.point.y + 1f;
+            // 기존 위치에 더해줄 위치 계산
+            if (isUp)
+                addPositionY += m_fixedUpDownSpeed * Time.deltaTime;
+            else
+                addPositionY -= m_fixedUpDownSpeed * Time.deltaTime;
 
-            m_fadeBox.position = putPos;
+            // 고정될 위치 계산
+            Vector3 fixedPosition = startDefaultPosition + (pickItemPosition.position - startDefaultFixedPosition);
+            fixedPosition.y += addPositionY;
+            transform.position = fixedPosition;
+
+            // 상자가 올라갈지 내려갈지 결정
+            if (addPositionY >= m_fixedUpDownRange)
+                isUp = false;
+            else if (addPositionY <= -m_fixedUpDownRange)
+                isUp = true;
+
+            DrawFadeBox();
+
+            yield return null;
         }
     }
 
-    /// <summary>아이템 놓기</summary>
-    public void Put()
+    // 반투명 상자로 떨어질 위치를 그려줌
+    private void DrawFadeBox()
     {
-        // 고정 풀기
-        m_isHave = false;
-
-        // 떨어질 위치 받아오기
-        Vector3 putPos = CalcPutPos();
-
-        // 정규화 위치 이동
-        transform.position = putPos;
-
-        // 중력사용
-        UseGravity(true);
+        m_fadeBox.position = CalcPutPositon();
     }
 
-    /// <summary>떨어질 위치 계산</summary>
-    private Vector3 CalcPutPos()
+    // 상자 내려놓기
+    private IEnumerator PickEnd()
     {
-        // 위치값
-        float posX = transform.position.x;
-        float posZ = transform.position.z;
+        // 반투명 상자 비활성화
+        m_fadeBox.gameObject.SetActive(false);
 
-        // 위치값 내림
-        float floorX = Mathf.Floor(posX);
-        float floorZ = Mathf.Floor(posZ);
+        m_isPut = false;
 
-        Vector3 putPos = Vector3.zero;
+        // 떨어질 최종 위치
+        Vector3 putPosition = CalcPutPositon();
+        // 이동할 x, z 위치
+        Vector3 putPositionXZ = putPosition;
+        putPositionXZ.y = transform.position.y;
 
-        // x 좌표 계산
-        float newPosX = 0f;
+        while(true)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, putPositionXZ, 10f * Time.deltaTime);
 
-        // 내림한 값을 2로 나눈 나머지가 1인 경우
-        if (floorX % 2 == 1)
-            // 내림한 값에 1을 더함
-            newPosX = floorX + 1;
-        // 내림한 값을 2로 나눈 나머지가 -1인 경우
-        else if (floorX % 2 == -1)
-            // 내림한 값에 1을 뺌
-            newPosX = floorX - 1;
-        // 내림한 값을 2로 나눈 나머지가 0인 경우
-        else
-            // 내림한 값이 새로운 위치
-            newPosX = floorX;
+            if (transform.position.Equals(putPositionXZ))
+                break;
 
-        // z 좌표 계산, 위와 동일한 계산
-        float newPosZ = 0f;
+            yield return null;
+        }
 
-        if (floorZ % 2 == 1)
-            newPosZ = floorZ + 1;
-        else
-            newPosZ = floorZ;
+        while(true)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, putPosition, 10f * Time.deltaTime);
 
-        putPos.x = newPosX;
-        putPos.y = transform.transform.position.y;
-        putPos.z = newPosZ;
+            if (transform.position.Equals(putPosition))
+                break;
 
-        return putPos;
+            yield return null;
+        }
+
+        m_isPut = true;
+    }
+
+    // 상자가 떨어질 위치를 계산해서 반환
+    private Vector3 CalcPutPositon()
+    {
+        // 최종 계산 위치
+        Vector3 putPosition = transform.position;
+
+        // 계산에 필요한 변수
+        float zero = 0f;
+        float one = 1f;
+        float two = 2f;
+
+        // x, z 좌표 내림
+        float calcX = Mathf.Floor(putPosition.x);
+        float calcZ = Mathf.Floor(putPosition.z);
+
+        // x 계산
+        // 내림한 값에 나누기2를 한 나머지가 0이아니면 1을 더해줌
+        if(!(calcX % two).Equals(zero))
+            calcX += one;
+
+        // z 계산
+        // 내림한 값에 나누기2를 한 나머지가 0이아니면 1을 더해줌
+        if (!(calcZ % two).Equals(zero))
+            calcZ += one;
+
+        // y 계산
+        // y는 밑으로 레이를 쏴서 부딪히는 곳에서 1f를 더함
+        float calcY = zero;
+        RaycastHit hit;
+
+        if (GameLibrary.Raycast3D(transform.position, Vector3.down, out hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BP))
+            calcY = hit.point.y + one;
+
+        // 계산된 값을 적용
+        putPosition.x = calcX;
+        putPosition.z = calcZ;
+        putPosition.y = calcY;
+
+        // 반환
+        return putPosition;
     }
 }

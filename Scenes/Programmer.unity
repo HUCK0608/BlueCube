@@ -2572,6 +2572,7 @@ GameObject:
   - component: {fileID: 63456362}
   - component: {fileID: 63456363}
   - component: {fileID: 63456364}
+  - component: {fileID: 63456368}
   - component: {fileID: 63456365}
   - component: {fileID: 63456366}
   - component: {fileID: 63456367}
@@ -2640,6 +2641,7 @@ MonoBehaviour:
   m_pickItemKey: 101
   m_attackKey: 323
   m_jumpKey: 32
+  m_hp: 0
   m_moveSpeed_Forward: 7
   m_moveSpeed_SideBack: 3
   m_moveSpeed_Ladder: 5
@@ -2677,6 +2679,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_doChangeKey: 323
   m_notChangeKey: 324
+--- !u!114 &63456368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 63456361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1137b0d24f7d06d439e8370b701934d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pickItemPosition3D: {fileID: 2056567727}
+  m_pickItemPosition2D: {fileID: 0}
 --- !u!1001 &63683193
 Prefab:
   m_ObjectHideFlags: 0
@@ -50144,7 +50159,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4337532444426738, guid: bba04dbf859c83c479fa69a9371622ed, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4337532444426738, guid: bba04dbf859c83c479fa69a9371622ed, type: 2}
       propertyPath: m_LocalPosition.y
@@ -50177,7 +50192,42 @@ Prefab:
     - target: {fileID: 54883520607985688, guid: bba04dbf859c83c479fa69a9371622ed,
         type: 2}
       propertyPath: m_Constraints
-      value: 122
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114211927692962678, guid: bba04dbf859c83c479fa69a9371622ed,
+        type: 2}
+      propertyPath: m_pickUpSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114211927692962678, guid: bba04dbf859c83c479fa69a9371622ed,
+        type: 2}
+      propertyPath: m_pickUpSlerpSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114211927692962678, guid: bba04dbf859c83c479fa69a9371622ed,
+        type: 2}
+      propertyPath: m_changeFixedDistance
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114211927692962678, guid: bba04dbf859c83c479fa69a9371622ed,
+        type: 2}
+      propertyPath: m_fixedUpDownRange
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114211927692962678, guid: bba04dbf859c83c479fa69a9371622ed,
+        type: 2}
+      propertyPath: m_fixedUpDownSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114211927692962678, guid: bba04dbf859c83c479fa69a9371622ed,
+        type: 2}
+      propertyPath: m_fadeBox
+      value: 
+      objectReference: {fileID: 1274631276}
+    - target: {fileID: 54883520607985688, guid: bba04dbf859c83c479fa69a9371622ed,
+        type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bba04dbf859c83c479fa69a9371622ed, type: 2}
@@ -50875,6 +50925,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4557627344517892, guid: d1805a805b53e7e49a776f028884cdb5,
     type: 2}
   m_PrefabInternal: {fileID: 1272892967}
+--- !u!4 &1274631276 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4828832257600122, guid: 2aa2b958c5711364787e2a476b839231,
+    type: 2}
+  m_PrefabInternal: {fileID: 1362219237}
 --- !u!1001 &1278402354
 Prefab:
   m_ObjectHideFlags: 0
@@ -67266,8 +67321,9 @@ GameObject:
   - component: {fileID: 1742496745}
   - component: {fileID: 1742496744}
   - component: {fileID: 1742496743}
-  - component: {fileID: 1742496742}
   - component: {fileID: 1742496741}
+  - component: {fileID: 1742496746}
+  - component: {fileID: 1742496742}
   m_Layer: 11
   m_Name: Player3D
   m_TagString: Player
@@ -67477,7 +67533,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1742496726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e39af695094af5a4ea42ca8a9bfdc91d, type: 3}
+  m_Script: {fileID: 11500000, guid: 37a1b96c9e290974a92878d1076ebb6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1742496743
@@ -67511,6 +67567,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96ffa64f73abd154186fd1e31821b2de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1742496746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1742496726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565603e21719f6c43ade039c2e7f4b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1743020562
@@ -69929,7 +69996,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2056567727}
   m_Father: {fileID: 1742496727}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -79284,6 +79352,34 @@ Transform:
   m_PrefabParentObject: {fileID: 4557627344517892, guid: d1805a805b53e7e49a776f028884cdb5,
     type: 2}
   m_PrefabInternal: {fileID: 2052165532}
+--- !u!1 &2056567726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2056567727}
+  m_Layer: 11
+  m_Name: PickItemPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2056567727
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2056567726}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.57, z: 3.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1807801801}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2058324865
 Prefab:
   m_ObjectHideFlags: 0

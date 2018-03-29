@@ -21,6 +21,7 @@ public sealed class PlayerController3D : MonoBehaviour
 
     // 머리, 몸
     private Transform m_head;
+    public Transform Head { get { return m_head; } }
     private Transform m_body;
     public Transform Body { get { return m_body; } }
 
