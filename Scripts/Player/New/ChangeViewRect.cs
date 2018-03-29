@@ -53,8 +53,6 @@ public sealed class ChangeViewRect : MonoBehaviour
 
         // 상자의 충돌체크 끄기
         SetColliderEnable(false);
-        // 상자 비활성화
-        gameObject.SetActive(false);
         // 외벽 비활성화
         m_outWallGroup.SetActive(false);
     }
