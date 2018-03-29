@@ -124,7 +124,7 @@ public sealed class PlayerController3D : MonoBehaviour
     /// <summary>Rigidbody.velocity 를 Vector3.zero로 변경(y 속도는 변경하지 않음)</summary>
     public void MoveStop()
     {
-        Vector3 newVelocity = m_rigidbody.velocity;
+        Vector3 newVelocity = Vector3.zero;
         newVelocity.y = m_rigidbody.velocity.y;
 
         m_rigidbody.velocity = newVelocity;
