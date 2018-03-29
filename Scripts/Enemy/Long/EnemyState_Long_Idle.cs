@@ -10,7 +10,7 @@ public sealed class EnemyState_Long_Idle : EnemyState
     {
         base.Awake();
 
-        //m_player = PlayerManager.Instance.Player3D_Object;
+        m_player = PlayerManager.Instance.Player3D_Object.transform;
     }
 
     public override void InitState()

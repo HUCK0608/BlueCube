@@ -17,7 +17,7 @@ public class PlayerState3D_PickInit : PlayerState3D
         m_subController.MoveStopAll();
 
         // 아이템 들기
-        m_playerManager.PlayerHand.CurrentPickItem.PickItem();
+        m_playerManager.Hand.CurrentPickItem.PickItem();
 
         m_isPick = true;
     }
@@ -32,7 +32,7 @@ public class PlayerState3D_PickInit : PlayerState3D
     private void ChangeStates()
     {
         // 아이템 들어올리기와 현재 애니메이션 들어올리기가 끝나면 PickIdle 상태로 변경
-        if (m_isPick && m_playerManager.PlayerHand.CurrentPickItem.IsPick)
+        if (m_isPick && m_playerManager.Hand.CurrentPickItem.IsPick)
             m_mainController.ChangeState3D(E_PlayerState3D.PickIdle);
     }
 

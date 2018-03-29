@@ -16,7 +16,7 @@ public class PlayerState2D_Attack : PlayerState2D
 
     private void Attack()
     {
-        m_playerManager.PlayerWeapon.ShootFireBall2D(m_subController.Forward);
+        m_playerManager.Weapon.ShootFireBall2D(m_subController.Forward);
     }
 
     private void Update()

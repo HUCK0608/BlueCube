@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class EnemyWeapon : MonoBehaviour
 {
+    protected EnemyManager m_enemyManager;
+
     private bool m_isAttack;
     public bool IsAttack { get { return m_isAttack; } }
 
     private bool m_isReload;
     public bool IsReload { get { return m_isReload; } }
+
+    // 아래 3개 다 구조화 해서 다시 짜야함(★)
+    [SerializeField]
+    protected int m_bulletDamage;
+
+    [SerializeField]
+    protected float m_bulletSpeed;
+
+    [SerializeField]
+    protected float m_bulletDurationTime;
 
     // 선딜레이
     [SerializeField]
@@ -21,6 +33,11 @@ public class EnemyWeapon : MonoBehaviour
     // 재장전 시간
     [SerializeField]
     private float m_reloadDelay;
+
+    protected virtual void Awake()
+    {
+        m_enemyManager = GetComponent<EnemyManager>();
+    }
 
     // 공격
     public void Attack()

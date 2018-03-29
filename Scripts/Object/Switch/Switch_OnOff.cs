@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Switch_OnOff : Switch
 {
-    private MeshFilter m_meshFilter;
+    protected MeshFilter m_meshFilter;
 
     [SerializeField]
     protected Mesh m_onMesh, m_offMesh;

@@ -38,7 +38,7 @@ public class PlayerState3D_PickIdle : PlayerState3D
     private void ChangeStates()
     {
         Vector3 moveDirection = m_subController.GetMoveDirection();
-        Debug.Log(m_playerManager.IsViewChangeReady);
+
         // 아이템 들기 키를 눌렀을 때 PickItemEnd 상태로 변경
         if(Input.GetKeyDown(m_playerManager.Stat.PickItemKey) || m_playerManager.IsViewChangeReady)
         {

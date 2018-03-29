@@ -14,6 +14,8 @@ public sealed class Switch_On_Stepping2D : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag.Equals(GameLibrary.String_Player))
+        {
             m_switch.SwitchOn();
+        }
     }
 }

@@ -11,6 +11,16 @@ public sealed class MovePath : MonoBehaviour
     private int m_pathCount;
     public int PathCount { get { return m_pathCount; } }
 
+    private void Awake()
+    {
+        m_paths = new List<Transform>();
+
+        m_pathCount = transform.childCount;
+
+        for (int i = 0; i < m_pathCount; i++)
+            m_paths.Add(transform.GetChild(i));
+    }
+
     private void OnDrawGizmos()
     {
         m_paths = new List<Transform>();

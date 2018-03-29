@@ -50,7 +50,7 @@ public sealed class PlayerState3D_Idle : PlayerState3D
             if (GameLibrary.Raycast3D(rayOrigin, m_subController.Head.forward, out hit, m_playerManager.Stat.ItemCheckDistance, layerMask))
             {
                 // 아이템 스크립트를 저장시킴
-                m_playerManager.PlayerHand.CurrentPickItem = hit.transform.GetComponent<Item_PickPut>();
+                m_playerManager.Hand.CurrentPickItem = hit.transform.GetComponent<Item_PickPut>();
 
                 // 상태 변경
                 m_mainController.ChangeState3D(E_PlayerState3D.PickInit);
@@ -59,7 +59,7 @@ public sealed class PlayerState3D_Idle : PlayerState3D
         // 공격키를 눌렀을 때 무기가 사용 가능하면 Attack 상태로 변경
         else if (Input.GetKeyDown(m_playerManager.Stat.AttackKey))
         {
-            if (m_playerManager.PlayerWeapon.CanUse)
+            if (m_playerManager.Weapon.CanUse)
                 m_mainController.ChangeState3D(E_PlayerState3D.Attack);
         }
         // 점프키를 눌렀을 때 땅에 있으면 JumpUp 상태로 변경
