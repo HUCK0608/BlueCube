@@ -18,6 +18,12 @@ public sealed class BulletManager : MonoBehaviour
     private int m_playerBulletCount;
     private int m_enemyBulletCount;
 
+    private void Awake()
+    {
+        m_playerBullets = new List<Bullet>();
+        m_enemyBullets = new List<Bullet>();
+    }
+
     /// <summary>총알 발사(타입, 데미지, 발사위치, 발사방향, 속도, 유지시간)</summary>
     public void ShootBullet(E_BulletType bulletType, int damage, Vector3 position, Vector3 direction, float bulletSpeed, float durationTime)
     {
@@ -71,8 +77,7 @@ public sealed class BulletManager : MonoBehaviour
         switch(bulletType)
         {
             case E_BulletType.PlayerFireBall:
-                GameObject newObject = Instantiate(m_playerFireBallPrefab, transform);
-                newObject.transform.localPosition = Vector3.zero;
+                Bullet newObject = Instantiate(m_playerFireBallPrefab, transform).GetComponent<Bullet>();
                 newBullet = newObject.GetComponent<Bullet>();
                 m_playerBullets.Add(newBullet);
                 m_playerBulletCount++;

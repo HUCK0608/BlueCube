@@ -1,25 +1,24 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_PlayerState { Idle, Move }
+public enum E_PlayerState { Idle, Move, Attack, JumpUp, JumpDown }
 
 public sealed class PlayerController : MonoBehaviour
 {
-    private PlayerWeapon m_playerWeapon;
-    /// <summary>플레이어 무기</summary>
-    public PlayerWeapon PlayerWeapon { get { return m_playerWeapon; } }
-
     // 플레이어 3D 상태 모음
     private Dictionary<E_PlayerState, PlayerState> m_states3D;
 
     // 플레이어 3D 현재 상태
     private PlayerState m_currentState3D;
 
+    private bool m_isGrounded;
+    /// <summary>캐릭터가 땅에 있을경우 true를 반환</summary>
+    public bool IsGrounded { get { return m_isGrounded; } set { m_isGrounded = value; } }
+
     private void Awake()
     {
-        m_playerWeapon = GetComponent<PlayerWeapon>();
-
         InitStates3D();
     }
 
