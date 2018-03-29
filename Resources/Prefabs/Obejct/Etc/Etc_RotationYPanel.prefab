@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4366208636944330}
-  - component: {fileID: 114817152580837384}
+  - component: {fileID: 114924610920557930}
   - component: {fileID: 114759309573250338}
   m_Layer: 0
   m_Name: Etc_RotationYPanel
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rotationSpeed: 30
   m_rotationDirection: 1
---- !u!114 &114817152580837384
+--- !u!114 &114924610920557930
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -251,6 +251,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1364457726210508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

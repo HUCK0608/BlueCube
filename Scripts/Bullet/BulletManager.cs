@@ -6,6 +6,9 @@ public enum E_BulletType { PlayerFireBall, EnemyFireBall }
 
 public sealed class BulletManager : MonoBehaviour
 {
+    private static BulletManager m_instance;
+    public static BulletManager Instance { get { return m_instance; } }
+
     [SerializeField]
     private GameObject m_playerFireBallPrefab;
 
@@ -20,6 +23,8 @@ public sealed class BulletManager : MonoBehaviour
 
     private void Awake()
     {
+        m_instance = this;
+
         m_playerBullets = new List<Bullet>();
         m_enemyBullets = new List<Bullet>();
     }

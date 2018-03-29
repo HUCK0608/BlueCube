@@ -38,7 +38,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4268056289906048}
-  - component: {fileID: 114297709159438114}
+  - component: {fileID: 114658201248468732}
   - component: {fileID: 114921883292252136}
   m_Layer: 0
   m_Name: Activate_Switch_Door_Left
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4607407457944066}
-  - component: {fileID: 114668481521307906}
+  - component: {fileID: 114045572763882758}
   - component: {fileID: 114943252380602400}
   m_Layer: 0
   m_Name: Activate_Switch_Door_Right
@@ -120,7 +120,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1159588108566330}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.956394, y: 4.95, z: 17.54841}
+  m_LocalPosition: {x: -1.6633182, y: 5, z: 3.1890883}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4607407457944066}
@@ -304,6 +304,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 8, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114045572763882758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1277312875371512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114267080171428542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -316,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_switches: []
---- !u!114 &114297709159438114
+--- !u!114 &114658201248468732
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -324,18 +335,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1043405477697484}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114668481521307906
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1277312875371512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114921883292252136

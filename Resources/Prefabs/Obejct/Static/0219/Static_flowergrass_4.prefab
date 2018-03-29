@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4443675145042700}
-  - component: {fileID: 114982120363429170}
+  - component: {fileID: 114311486734956764}
   m_Layer: 0
   m_Name: Static_flowergrass_4
   m_TagString: Untagged
@@ -112,7 +112,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1916380210937216}
   m_Mesh: {fileID: 4300000, guid: 995c5f7693f062e4f9e85957ad126ebb, type: 3}
---- !u!114 &114982120363429170
+--- !u!114 &114311486734956764
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -120,6 +120,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1627726227350554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

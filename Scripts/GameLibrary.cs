@@ -14,7 +14,7 @@ public static class GameLibrary
     // layerMask 부분
 
     private static int m_layerMask_Igonore_BP = (-1) - ((1 << 8) | (1 << 11));
-    /// <summary> Ignore Layer Mask (Bullet, Player, Effect) </summary>
+    /// <summary> Ignore Layer Mask (Bullet, Player) </summary>
     public static int LayerMask_Ignore_BP { get { return m_layerMask_Igonore_BP; } }
 
     private static int m_layerMask_Ladder = 1 << 12;
@@ -123,5 +123,32 @@ public static class GameLibrary
             }
             yield return null;
         }
+    }
+
+    // 레이
+    private static Ray m_ray = new Ray();
+
+    /// <summary>파라미터 속성으로 레이를 쏴서 무언가 충돌하면 true를 반환</summary>
+    public static bool Raycast3D(Vector3 origin, Vector3 direction, out RaycastHit hit, float maxDistance, int layerMask)
+    {
+        m_ray.origin = origin;
+        m_ray.direction = direction;
+
+        if(Physics.Raycast(m_ray, out hit, maxDistance, layerMask))
+            return true;
+
+        return false;
+    }
+
+    /// <summary>파라미터 속성으로 레이를 쏴서 무언가 충돌하면 true를 반환</summary>
+    public static bool Raycast3D(Vector3 origin, Vector3 direction, float maxDistance, int layerMask)
+    {
+        m_ray.origin = origin;
+        m_ray.direction = direction;
+
+        if (Physics.Raycast(m_ray, maxDistance, layerMask))
+            return true;
+
+        return false;
     }
 }

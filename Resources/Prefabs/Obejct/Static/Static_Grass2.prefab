@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4000212565214058}
-  - component: {fileID: 114127298442452208}
+  - component: {fileID: 114616413833098758}
   m_Layer: 0
   m_Name: Static_Grass2
   m_TagString: Untagged
@@ -112,7 +112,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1545931530312206}
   m_Mesh: {fileID: 4300000, guid: d8d34afc28f3a0d4292e6f73445d1701, type: 3}
---- !u!114 &114127298442452208
+--- !u!114 &114616413833098758
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -120,6 +120,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1250861843345198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

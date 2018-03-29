@@ -49,10 +49,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
     private void ChangeView()
     {
-        // 점프했을경우 시점변환 못하게 막아야함(★)
-
-        // 시점변환중이거나 탐지시점일 경우 리턴
-        if (GameLibrary.Bool_IsCO)
+        // 시점변환중이거나 탐지시점이거나 땅이아닐경우 리턴
+        if (GameLibrary.Bool_IsCO || !m_playerManager.IsGrounded)
             return;
 
         // 현재 시점이 3D일 때 2D로 변경
@@ -112,7 +110,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             // 오브젝트를 2D상태에 맞게 변경
             WorldManager.Instance.Change2D();
 
-            // 플레이어 변경 넣어야함(★)
+            // 플레이어 2D로 변경
+            PlayerManager.Instance.PlayerChange2D();
 
             // 블루큐브 변경
             BlueCubeManager.Instance.ChangeCube();
@@ -156,7 +155,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 오브젝트를 3D상태에 맞게 변경
         WorldManager.Instance.Change3D();
 
-        // 플레이어 변경 넣어야함(★)
+        // 플레이어 3D로 변경
+        PlayerManager.Instance.PlayerChange3D();
 
         // 블루큐브 변경
         BlueCubeManager.Instance.ChangeCube();

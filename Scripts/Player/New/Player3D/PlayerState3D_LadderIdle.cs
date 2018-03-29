@@ -4,11 +4,6 @@ using UnityEngine;
 
 public sealed class PlayerState3D_LadderIdle : PlayerState3D
 {
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
     public override void InitState()
     {
         base.InitState();
@@ -29,7 +24,7 @@ public sealed class PlayerState3D_LadderIdle : PlayerState3D
         // 이동 입력이 있을 경우 LadderMove 상태로 변경
         if(!moveDirection.Equals(Vector3.zero))
         {
-            m_mainController.ChangeState3D(E_PlayerState.LadderMove);
+            m_mainController.ChangeState3D(E_PlayerState3D.LadderMove);
         }
     }
 

@@ -11,22 +11,12 @@ public sealed class BlueCubeManager : MonoBehaviour
     private GameObject m_blueCube2D;
     private GameObject m_blueCube3D;
 
-    // 시점에 따른 큐브 고정위치
-    [SerializeField]
-    private Vector3 m_fixedPos2D;
-    [SerializeField]
-    private Vector3 m_fixedPos3D;
-
     // 2D 랜더러
     SpriteRenderer m_renderer2D;
 
     // 레드, 블루 큐브
     Color32 m_redColor;
     Color32 m_blueColor;
-
-    // 땅 체크를 위한 변수
-    private Ray m_ray;
-    private float m_rayOriginY;
 
     private void Awake()
     {
@@ -39,17 +29,6 @@ public sealed class BlueCubeManager : MonoBehaviour
 
         m_redColor = Color.red;
         m_blueColor = Color.blue;
-
-        InitCheckGorund3D();
-    }
-
-    // 땅 체크 변수 초기화
-    private void InitCheckGorund3D()
-    {
-        m_ray = new Ray();
-        m_ray.direction = Vector3.down;
-
-        m_rayOriginY = 0.5f;
     }
 
     private void Start()
@@ -60,7 +39,7 @@ public sealed class BlueCubeManager : MonoBehaviour
     private void Update()
     {
         FixedCube();
-        CheckGround3D();
+        ChangeColor2D();
     }
 
     // 큐브 교체
@@ -86,49 +65,45 @@ public sealed class BlueCubeManager : MonoBehaviour
         // 2D
         if (PlayerManager.Instance.CurrentView.Equals(GameLibrary.Enum_View2D))
         {
-            //// 2D방향을 담을 변수
-            //int direction = 0;
+            // 2D플레이어 위치
+            Vector3 playerPosition = PlayerManager.Instance.Player2D_Object.transform.position;
 
-            //// 왼쪽
-            //if (GameManager.Instance.PlayerManager.Player2D_S.LookDirection.Equals(GameLibrary.Enum_LD2D_Left))
-            //    direction = -1;
-            //// 오른쪽
-            //else
-            //    direction = 1;
+            // 이동
+            transform.position = playerPosition;
 
-            //// 2D방향 적용
-            //m_fixedPos2D.x *= direction;
+            Vector3 newDirection = Vector3.one;
+            newDirection.x = PlayerManager.Instance.SubController2D.Forward.x;
 
-            //// 2D 플레이어 위치
-            //Vector3 player2D_Position = GameManager.Instance.PlayerManager.Player2D_GO.transform.position;
-
-            //// 큐브위치 이동
-            //transform.position = player2D_Position + m_fixedPos2D;
+            // 방향회전
+            transform.localScale = newDirection;
         }
         // 3D
         else
         {
+            // 현재 스케일이 1, 1, 1이 아니면 1, 1, 1로 바꿈
+            if (!transform.localScale.Equals(Vector3.one))
+                transform.localScale = Vector3.one;
+
             // 3D 플레이어 위치
             Vector3 playerPosition = PlayerManager.Instance.Player3D_Object.transform.position;
 
-            // 큐브위치 이동
-            transform.position =  playerPosition + m_fixedPos3D;
+            // 이동
+            transform.position =  playerPosition;
         }
     }
 
-    // 3D의 지형이 있는지 체크
-    private void CheckGround3D()
+    // 2D에서 3D위치에 땅이 있는지 체크해서 색을 바꿈
+    private void ChangeColor2D()
     {
-        //Vector3 rayOrigin = GameManager.Instance.PlayerManager.Player2D_GO.transform.position;
-        //rayOrigin.y += m_rayOriginY;
-
-        //m_ray.origin = rayOrigin;
-
-        //float rayDistance = 1f;
-
-        //if (Physics.Raycast(m_ray, rayDistance, GameLibrary.LayerMask_Ignore_BPE))
-        //    m_renderer2D.color = m_blueColor;
-        //else
-        //    m_renderer2D.color = m_redColor;
+        // 2D일 경우에만 실행
+        if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D))
+        {
+            // 3D상태에 무언가 있다면 파란색으로 바꿈
+            if (PlayerManager.Instance.SubController3D.CheckGround.Check())
+                m_renderer2D.color = m_blueColor;
+            // 없다면 빨간색으로 바꿈
+            else
+                m_renderer2D.color = m_redColor;
+        }
     }
 }

@@ -21,9 +21,12 @@ public sealed class PlayerState3D_Idle : PlayerState3D
         // 머리, 몸 회전
         m_subController.RotateHeadAndBody(mouseDirectionToPlayer);
 
+        // x, z 이동 멈춤
+        m_subController.MoveStopXZ();
+
         // 중력적용
         m_subController.ApplyGravity();
-
+        
         ChangeMoveState();
         ChangeAttackState();
         ChangeJumpUpState();
@@ -37,7 +40,7 @@ public sealed class PlayerState3D_Idle : PlayerState3D
 
         // 이동이 있을 경우 Move 상태로 변경
         if (movement != Vector3.zero)
-            m_mainController.ChangeState3D(E_PlayerState.Move);
+            m_mainController.ChangeState3D(E_PlayerState3D.Move);
     }
 
     // Attack 상태로 바뀔지 체크
@@ -47,7 +50,7 @@ public sealed class PlayerState3D_Idle : PlayerState3D
         if (Input.GetKeyDown(m_playerManager.Stat.AttackKey))
             // 무기를 사용할 수 있다면 Attack 상태로 변경
             if (m_playerManager.PlayerWeapon.CanUse)
-                m_mainController.ChangeState3D(E_PlayerState.Attack);
+                m_mainController.ChangeState3D(E_PlayerState3D.Attack);
     }
 
     // JumpUp 상태로 바뀔지 체크
@@ -57,7 +60,7 @@ public sealed class PlayerState3D_Idle : PlayerState3D
         if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))
             // 땅에 있다면 JumpUp 상태로 변경
             if (m_mainController.IsGrounded)
-                m_mainController.ChangeState3D(E_PlayerState.JumpUp);
+                m_mainController.ChangeState3D(E_PlayerState3D.JumpUp);
     }
 
     public override void EndState()

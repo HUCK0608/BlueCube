@@ -80,10 +80,6 @@ public sealed class Item_PickPut : MonoBehaviour
 
             m_fadeBox.position = putPos;
         }
-        else
-        {
-            
-        }
     }
 
     /// <summary>아이템 놓기</summary>

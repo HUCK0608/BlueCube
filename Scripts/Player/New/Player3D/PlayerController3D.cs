@@ -4,16 +4,18 @@ using UnityEngine;
 
 public sealed class PlayerController3D : MonoBehaviour
 {
-    // 플레이어 매니저
+    // 플레이어 매니저 및 메인 컨트롤러
     private PlayerManager m_playerManager;
     private PlayerController m_mainController;
 
     // 땅 체크 스크립트
     private CheckGround m_checkGround;
+    public CheckGround CheckGround { get { return m_checkGround; } }
     // 사다리 체크 스크립트
     private CheckLadder m_checkLadder;
     public CheckLadder CheckLadder { get { return m_checkLadder; } }
 
+    // 리지드바디
     private Rigidbody m_rigidbody;
     public Rigidbody Rigidbody { get { return m_rigidbody; } }
 
@@ -44,17 +46,31 @@ public sealed class PlayerController3D : MonoBehaviour
         m_body = transform.Find("Body");
     }
 
-    /// <summary>땅인지 체크를 한 후 땅이 아닐 경우 중력을 적용시킨다</summary>
+    /// <summary>땅인지 체크를 한 후 땅이 아닐 경우 중력을 적용시키며 땅일경우 땅이랑 살짝 띄워준다</summary>
     public void ApplyGravity()
     {
+        // 땅인지 체크
         m_mainController.IsGrounded = m_checkGround.Check();
-        Debug.Log(m_mainController.IsGrounded);
+
+        // 땅이아닐경우 중력 적용
         if(!m_mainController.IsGrounded)
         {
             Vector3 newVelocity = m_rigidbody.velocity;
             newVelocity.y += m_playerManager.Stat.Gravity * Time.deltaTime;
 
             m_rigidbody.velocity = newVelocity;
+        }
+        // 땅일 경우
+        else
+        {
+            // y속도가 0아래일경우에만 땅이랑 살짝 띄워줌
+            if (m_rigidbody.velocity.y <= 0f)
+            {
+                Vector3 onGroundPosition = transform.position;
+                onGroundPosition.y = m_checkGround.OnGroundPositionY;
+
+                transform.position = onGroundPosition;
+            }
         }
     }
 
@@ -65,20 +81,21 @@ public sealed class PlayerController3D : MonoBehaviour
 
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
+        float zero = 0f;
 
-        if (moveX.Equals(0f) && moveZ.Equals(0f))
+        if (moveX.Equals(zero) && moveZ.Equals(zero))
             return moveDirection;
 
         Vector3 rightKeyPos = Vector3.right + Vector3.back;
         Vector3 upKeyPos = Vector3.forward + Vector3.right;
 
-        if (moveX > 0f)
+        if (moveX > zero)
             moveDirection += rightKeyPos;
-        if (moveX < 0f)
+        if (moveX < zero)
             moveDirection += -rightKeyPos;
-        if (moveZ > 0f)
+        if (moveZ > zero)
             moveDirection += upKeyPos;
-        if (moveZ < 0f)
+        if (moveZ < zero)
             moveDirection += -upKeyPos;
 
         return moveDirection.normalized;
@@ -135,7 +152,7 @@ public sealed class PlayerController3D : MonoBehaviour
         m_rigidbody.velocity = moveDirection * m_playerManager.Stat.MoveSpeed_Ladder;
     }
 
-    /// <summary>Rigidbody.velocity를 Vector3.zero로 변경(y 속도는 변경하지 않음)</summary>
+    /// <summary>x, z의 속도를 멈춤</summary>
     public void MoveStopXZ()
     {
         Vector3 newVelocity = Vector3.zero;
@@ -144,12 +161,10 @@ public sealed class PlayerController3D : MonoBehaviour
         m_rigidbody.velocity = newVelocity;
     }
 
-    /// <summary>Rigidbody.velocity를 Vector3.zero로 변경</summary>
+    /// <summary>모든 속도를 멈춤</summary>
     public void MoveStopAll()
     {
-        Vector3 newVelocity = Vector3.zero;
-
-        m_rigidbody.velocity = newVelocity;
+        m_rigidbody.velocity = Vector3.zero;
     }
 
     /// <summary>스탯에 있는 jumPower로 Rigidbody에 힘을 가함</summary>
@@ -158,22 +173,29 @@ public sealed class PlayerController3D : MonoBehaviour
         m_rigidbody.AddForce(Vector3.up * m_playerManager.Stat.JumpPower, ForceMode.Impulse);
     }
 
-    /// <summary>direction방향으로 머리 회전</summary>
+    /// <summary>direction방향으로 머리 LookRotation 회전</summary>
     public void RotateHead(Vector3 direction)
     {
         m_head.rotation = Quaternion.LookRotation(direction);
     }
 
-    /// <summary>direction방향으로 몸 회전</summary>
+    /// <summary>direction방향으로 몸 slerp 회전</summary>
     public void RotateBody(Vector3 direction)
     {
         m_body.rotation = Quaternion.Slerp(m_body.rotation, Quaternion.LookRotation(direction), m_playerManager.Stat.RotationSpeed * Time.deltaTime);
     }
 
-    /// <summary>direction방향으로 머리와 몸 회전</summary>
+    /// <summary>direction방향으로 머리와 몸 회전(머리는 LookDirection, 몸은 slerp)</summary>
     public void RotateHeadAndBody(Vector3 direction)
     {
         RotateHead(direction);
         RotateBody(direction);
+    }
+
+    /// <summary>direction방향으로 머리와 몸 LookRotation 회전</summary>
+    public void LookRotationHeadAndBody(Vector3 direction)
+    {
+        RotateHead(direction);
+        m_body.rotation = Quaternion.LookRotation(direction);
     }
 }

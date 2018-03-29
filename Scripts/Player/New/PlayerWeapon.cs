@@ -34,7 +34,16 @@ public sealed class PlayerWeapon : MonoBehaviour
     {
         Vector3 playerPosition = m_playerManager.Player3D_Object.transform.position;
 
-        GameManager.Instance.BulletManager.ShootBullet(E_BulletType.PlayerFireBall, m_fireBallDamage, playerPosition, direction, m_fireBallSpeed, m_fireBallDurationTime);
+        BulletManager.Instance.ShootBullet(E_BulletType.PlayerFireBall, m_fireBallDamage, playerPosition, direction, m_fireBallSpeed, m_fireBallDurationTime);
+        StartCoroutine(Reload());
+    }
+
+    /// <summary>2D방식의 파이어볼 발사</summary>
+    public void ShootFireBall2D(Vector3 direction)
+    {
+        Vector3 playerPosition = m_playerManager.Player2D_Object.transform.position;
+
+        BulletManager.Instance.ShootBullet(E_BulletType.PlayerFireBall, m_fireBallDamage, playerPosition, direction, m_fireBallSpeed, m_fireBallDurationTime);
         StartCoroutine(Reload());
     }
 

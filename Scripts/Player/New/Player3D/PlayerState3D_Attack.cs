@@ -17,27 +17,25 @@ public sealed class PlayerState3D_Attack : PlayerState3D
     // 공격
     private void Attack()
     {
-        // 시점변환중이거나 탐지시점이면 return
-        if (GameLibrary.Bool_IsCO)
-            return;
-
         Vector3 mouseDirection = GameManager.Instance.CameraManager.GetMouseDirectionToPivot(transform.position);
         m_playerManager.PlayerWeapon.ShootFireBall3D(mouseDirection);
     }
 
     private void Update()
     {
-        CheckDelay();
+        ChangeIdleState();
     }
     
-    // 무기 딜레이 체크
-    private void CheckDelay()
+    // Idle 상태로 변경
+    private void ChangeIdleState()
     {
+        // 시간 누적
         m_attackAddTime += Time.deltaTime;
 
+        // 모션 딜레이가 지나면 Idle 상태로 변경
         if(m_attackAddTime >= m_playerManager.Stat.AttackMotionDelay)
         {
-            m_mainController.ChangeState3D(E_PlayerState.Idle);
+            m_mainController.ChangeState3D(E_PlayerState3D.Idle);
         }
     }
 
