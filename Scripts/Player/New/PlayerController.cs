@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_PlayerState { Idle, Move, Attack, JumpUp, JumpDown }
+public enum E_PlayerState { Idle, Move, Attack, JumpUp, JumpDown, LadderInit, LadderIdle, LadderMove }
 
 public sealed class PlayerController : MonoBehaviour
 {

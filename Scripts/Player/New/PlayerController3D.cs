@@ -4,20 +4,31 @@ using UnityEngine;
 
 public sealed class PlayerController3D : MonoBehaviour
 {
+    // 플레이어 매니저
     private PlayerManager m_playerManager;
     private PlayerController m_mainController;
 
+    // 땅 체크 스크립트
     private CheckGround m_checkGround;
+    // 사다리 체크 스크립트
+    private CheckLadder m_checkLadder;
+    public CheckLadder CheckLadder { get { return m_checkLadder; } }
 
     private Rigidbody m_rigidbody;
     public Rigidbody Rigidbody { get { return m_rigidbody; } }
 
+    // 머리, 몸
     private Transform m_head;
     private Transform m_body;
+    public Transform Body { get { return m_body; } }
 
     private int m_moveDirection;
     /// <summary>이동방향 (Forward = 0, Back = 1, Left = 2, Right = 3)</summary>
     public int MoveDirection { get { return m_moveDirection; } }
+
+    private Ladder m_currentLadder;
+    /// <summary>현재 사용중인 사다리</summary>
+    public Ladder CurrentLadder { get { return m_currentLadder; } set { m_currentLadder = value; } }
 
     private void Awake()
     {
@@ -25,6 +36,7 @@ public sealed class PlayerController3D : MonoBehaviour
         m_mainController = GetComponentInParent<PlayerController>();
 
         m_checkGround = GetComponent<CheckGround>();
+        m_checkLadder = GetComponent<CheckLadder>();
 
         m_rigidbody = GetComponent<Rigidbody>();
 
@@ -32,15 +44,11 @@ public sealed class PlayerController3D : MonoBehaviour
         m_body = transform.Find("Body");
     }
 
-    private void Update()
+    /// <summary>땅인지 체크를 한 후 땅이 아닐 경우 중력을 적용시킨다</summary>
+    public void ApplyGravity()
     {
         m_mainController.IsGrounded = m_checkGround.Check();
-        ApplyGravity();
-    }
-
-    // 땅이 아닐경우 중력을 적용한다.
-    private void ApplyGravity()
-    {
+        Debug.Log(m_mainController.IsGrounded);
         if(!m_mainController.IsGrounded)
         {
             Vector3 newVelocity = m_rigidbody.velocity;
@@ -121,11 +129,25 @@ public sealed class PlayerController3D : MonoBehaviour
         m_rigidbody.velocity = moveDirection;
     }
 
-    /// <summary>Rigidbody.velocity 를 Vector3.zero로 변경(y 속도는 변경하지 않음)</summary>
-    public void MoveStop()
+    /// <summary>moveDirection방향으로 Stat에 MoveSpeed_Ladder속도로 이동함</summary>
+    public void LadderMove(Vector3 moveDirection)
+    {
+        m_rigidbody.velocity = moveDirection * m_playerManager.Stat.MoveSpeed_Ladder;
+    }
+
+    /// <summary>Rigidbody.velocity를 Vector3.zero로 변경(y 속도는 변경하지 않음)</summary>
+    public void MoveStopXZ()
     {
         Vector3 newVelocity = Vector3.zero;
         newVelocity.y = m_rigidbody.velocity.y;
+
+        m_rigidbody.velocity = newVelocity;
+    }
+
+    /// <summary>Rigidbody.velocity를 Vector3.zero로 변경</summary>
+    public void MoveStopAll()
+    {
+        Vector3 newVelocity = Vector3.zero;
 
         m_rigidbody.velocity = newVelocity;
     }

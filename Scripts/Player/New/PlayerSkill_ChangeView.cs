@@ -44,8 +44,29 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-            StartCoroutine(ViewChange2D());
+        ChangeView();
+    }
+
+    private void ChangeView()
+    {
+        // 점프했을경우 시점변환 못하게 막아야함(★)
+
+        // 시점변환중이거나 탐지시점일 경우 리턴
+        if (GameLibrary.Bool_IsCO)
+            return;
+
+        // 현재 시점이 3D일 때 2D로 변경
+        if (m_currentView.Equals(E_ViewType.View3D))
+        {
+            if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
+                StartCoroutine(ChangeView2D());
+        }
+        // 현재 시점이 2D일 때 3D로 변경
+        else
+        {
+            if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
+                StartCoroutine(ChangeView3D());
+        }
     }
 
     // 시점변환을 허용할 건지 체크하는 코루틴
@@ -71,7 +92,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     }
 
     // 3D에서 2D로 변경
-    private IEnumerator ViewChange2D()
+    private IEnumerator ChangeView2D()
     {
         m_isViewChange = true;
 
@@ -91,7 +112,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             // 오브젝트를 2D상태에 맞게 변경
             WorldManager.Instance.Change2D();
 
-            // 플레이어 변경 넣어야함
+            // 플레이어 변경 넣어야함(★)
 
             // 블루큐브 변경
             BlueCubeManager.Instance.ChangeCube();
@@ -102,32 +123,53 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             // 쿼터뷰에서 사이드뷰로 카메라가 이동함
             yield return StartCoroutine(GameManager.Instance.CameraManager.MovingWork3D());
 
-            // 2D벽 생성 넣어야함
+            // 2D벽 생성 넣어야함(★)
         }
         // 변경이 허용되지 않았을 경우
         else
         {
             // 포함되었던 오브젝트들의 메테리얼을 기본 메테리얼로 변경
             WorldManager.Instance.SetDefaultMaterialIsInclude();
+
+            // 상자 크기 줄이기
+            yield return StartCoroutine(m_changeViewRect.SetDecreaseSize());
         }
+
+        // 상자 비활성화
+        m_changeViewRect.SetActive(false);
+
+        m_isViewChange = false;
+    }
+
+    // 2D에서 3D상태로 변경
+    private IEnumerator ChangeView3D()
+    {
+        m_isViewChange = true;
+
+        m_currentView = E_ViewType.View3D;
+
+        // 2D벽 삭제 넣어야함(★)
+
+        // 변경상자 활성화
+        m_changeViewRect.SetActive(true);
+
+        // 오브젝트를 3D상태에 맞게 변경
+        WorldManager.Instance.Change3D();
+
+        // 플레이어 변경 넣어야함(★)
+
+        // 블루큐브 변경
+        BlueCubeManager.Instance.ChangeCube();
+
+        // 그림자 켜기
+        LightManager.Instance.ShadowEnable(true);
+
+        // 사이드뷰에서 쿼터뷰로 카메라가 이동함
+        yield return StartCoroutine(CameraManager.Instance.MovingWork2D());
 
         // 상자 크기 감소
         yield return StartCoroutine(m_changeViewRect.SetDecreaseSize());
 
         m_isViewChange = false;
     }
-
-    // 2D에서 3D상태로 변경
-    //private IEnumerator ViewChange3D()
-    //{
-    //    m_isViewChange = true;
-
-    //    m_currentView = E_ViewType.View2D;
-
-    //    // 2D벽 삭제 넣어야함
-
-    //    // 변경상자 활성화
-    //    m_changeViewRect.SetActive(true);
-
-    //}
 }

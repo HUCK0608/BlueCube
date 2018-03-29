@@ -72,7 +72,10 @@ public sealed class WorldManager : MonoBehaviour
         for(int i = 0; i < m_worldObjectCount; i++)
         {
             if (m_worldObjects[i].isIncludeChangeViewRect)
+            {
                 m_worldObjects[i].SetMaterial(E_MaterialType.Default);
+                m_worldObjects[i].isIncludeChangeViewRect = false;
+            }
         }
     }
 }

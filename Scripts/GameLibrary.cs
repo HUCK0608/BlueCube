@@ -13,9 +13,9 @@ public static class GameLibrary
 
     // layerMask 부분
 
-    private static int m_layerMask_Igonore_BPE = (-1) - ((1 << 8) | (1 << 11) | (1 << 12));
+    private static int m_layerMask_Igonore_BP = (-1) - ((1 << 8) | (1 << 11));
     /// <summary> Ignore Layer Mask (Bullet, Player, Effect) </summary>
-    public static int LayerMask_Ignore_BPE { get { return m_layerMask_Igonore_BPE; } }
+    public static int LayerMask_Ignore_BP { get { return m_layerMask_Igonore_BP; } }
 
     private static int m_layerMask_Ladder = 1 << 12;
     public static int LayerMask_Ladder { get { return m_layerMask_Ladder; } }
