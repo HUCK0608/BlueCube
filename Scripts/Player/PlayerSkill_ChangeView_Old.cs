@@ -115,7 +115,7 @@ public sealed class PlayerSkill_ChangeView_Old : MonoBehaviour
     private void Update()
     {
         // 점프중이아니고 시점변환중이거나 관찰시점이 아니고 시점변환 키를 눌렀을 경우
-        if (!m_playerManager.IsJumping && !GameLibrary.Bool_IsCO && Input.GetKeyDown(m_playerManager.ChangeViewKey))
+        if (!m_playerManager.IsJumping && !GameLibrary.Bool_IsPlayerStop && Input.GetKeyDown(m_playerManager.ChangeViewKey))
         {
             // 현재 시점이 3D이면 2D로 변경
             if (m_viewType.Equals(m_view3D))

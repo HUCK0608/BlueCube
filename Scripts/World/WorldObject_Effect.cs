@@ -11,8 +11,10 @@ public class WorldObject_Effect : WorldObject
 
     private bool m_includeChildren;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         m_particles = new List<ParticleSystem>();
 
         m_particles.AddRange(GetComponentsInChildren<ParticleSystem>());
@@ -26,6 +28,8 @@ public class WorldObject_Effect : WorldObject
 
     public override void SetRendererEnable(bool value)
     {
+        base.SetRendererEnable(value);
+
         if (value)
         {
             for (int i = 0; i < m_particleCount; i++)

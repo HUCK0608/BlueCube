@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23627872032719818}
   - component: {fileID: 54387693593546534}
   - component: {fileID: 65618573427718246}
-  - component: {fileID: 114417935202639280}
+  - component: {fileID: 114406650719195666}
   - component: {fileID: 114676026792934354}
   m_Layer: 0
   m_Name: Item_Box_Push
@@ -189,7 +189,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114417935202639280
+--- !u!114 &114406650719195666
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1502523786197726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114676026792934354

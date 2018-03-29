@@ -77,7 +77,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
-        if (GameLibrary.Bool_IsGameStop)
+        if (GameLibrary.Bool_IsGameStop_Old)
             return;
 
         CheckDie();

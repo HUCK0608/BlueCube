@@ -25,20 +25,11 @@ public sealed class PlayerState3D_JumpDown : PlayerState3D
         // 중력적용
         m_subController.ApplyGravity();
 
-        ChangeIdleState();
-        ChangeLadderInitState();
+        // 상태 변경
+        ChangeStates();
     }
 
-    // Idle 상태로 변경
-    private void ChangeIdleState()
-    {
-        // 땅일경우 Idle 상태로 변경
-        if (m_mainController.IsGrounded)
-            m_mainController.ChangeState3D(E_PlayerState3D.Idle);
-    }
-
-    // LadderInit 상태로 바뀔지 체크
-    private void ChangeLadderInitState()
+    private void ChangeStates()
     {
         // 이동방향에 사다리가 있으면 LadderInit 상태로 변경
         if (m_subController.CheckLadder.IsOnLadder(m_moveDirection))
@@ -48,6 +39,11 @@ public sealed class PlayerState3D_JumpDown : PlayerState3D
 
             // LadderInit 상태로 변경
             m_mainController.ChangeState3D(E_PlayerState3D.LadderInit);
+        }
+        // 플레이어가 땅에 닿으면 Idle 상태로 변경
+        else if(m_mainController.IsGrounded)
+        {
+            m_mainController.ChangeState3D(E_PlayerState3D.Idle);
         }
     }
 

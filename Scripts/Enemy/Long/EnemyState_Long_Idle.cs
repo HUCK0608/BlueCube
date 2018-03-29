@@ -10,7 +10,7 @@ public sealed class EnemyState_Long_Idle : EnemyState
     {
         base.Awake();
 
-        m_player = GameManager.Instance.PlayerManager.Player3D_GO.transform;
+        //m_player = PlayerManager.Instance.Player3D_Object;
     }
 
     public override void InitState()
@@ -21,7 +21,7 @@ public sealed class EnemyState_Long_Idle : EnemyState
     private void Update()
     {
         // 게임 시간이 멈춰있을경우 리턴
-        if (GameLibrary.Bool_IsGameStop)
+        if (GameLibrary.Bool_IsGameStop_Old)
             return;
 
         // 플레이어가 탐지범위에 들어오면 Move 상태로 변경

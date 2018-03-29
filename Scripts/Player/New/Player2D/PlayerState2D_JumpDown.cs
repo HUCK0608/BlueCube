@@ -20,15 +20,17 @@ public class PlayerState2D_JumpDown : PlayerState2D
         // 중력적용
         m_subController.ApplyGravity();
 
-        ChangeIdleState();
+        ChangeStates();
     }
 
-    // Idle 상태로 변경
-    private void ChangeIdleState()
+    // 상태 변경 모음
+    private void ChangeStates()
     {
         // 땅일경우 Idle 상태로 변경
         if (m_mainController.IsGrounded)
+        {
             m_mainController.ChangeState2D(E_PlayerState2D.Idle);
+        }
     }
 
     public override void EndState()

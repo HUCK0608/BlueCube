@@ -21,10 +21,11 @@ public class PlayerState2D_Attack : PlayerState2D
 
     private void Update()
     {
-        ChangeIdleState();
+        ChangeStates();
     }
 
-    private void ChangeIdleState()
+    // 상태 변경
+    private void ChangeStates()
     {
         // 시간 누적
         m_attackAddTime += Time.deltaTime;

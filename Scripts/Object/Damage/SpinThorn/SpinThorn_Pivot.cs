@@ -27,7 +27,7 @@ public sealed class SpinThorn_Pivot : MonoBehaviour
     private void Rotation()
     {
         // 시점변환중이거나 탐지모드이거나 2D이면 리턴
-        if (GameLibrary.Bool_IsGameStop)
+        if (GameLibrary.Bool_IsGameStop_Old)
             return;
 
         // 2D일경우 멈춤

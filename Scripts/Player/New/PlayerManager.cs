@@ -40,7 +40,9 @@ public sealed class PlayerManager : MonoBehaviour
     // 시점변환 관련
     /// <summary>현재 시점을 반환 (View2D, View3D)</summary>
     public E_ViewType CurrentView { get { return m_playerSkill_ChangeView.CurrentView; } }
-    /// <summary>현재 시점변환 중일경우 true를 반환</summary>
+    /// <summary>현재 시점변환이 준비중일경우 true를 반환</summary>
+    public bool IsViewChangeReady { get { return m_playerSkill_ChangeView.IsViewChangeReady; } }
+    /// <summary>현재 시점변환이 실행중일경우 true를 반환</summary>
     public bool IsViewChange { get { return m_playerSkill_ChangeView.IsViewChange; } }
     /// <summary>플레이어가 땅에 있을경우 true를 반환</summary>
     public bool IsGrounded { get { return m_mainController.IsGrounded; } }

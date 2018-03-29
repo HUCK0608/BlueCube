@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4496990271113350}
   - component: {fileID: 54365392122510182}
   - component: {fileID: 65315535773748086}
-  - component: {fileID: 114185697251690216}
+  - component: {fileID: 114895103558910006}
   - component: {fileID: 114231194099747798}
   - component: {fileID: 114701329317048232}
   - component: {fileID: 114937988628526110}
@@ -239,20 +239,6 @@ MonoBehaviour:
   m_firstDelay: 1
   m_lastDelay: 1
   m_reloadDelay: 5
-  m_bulletBundle: {fileID: 0}
-  m_angleBetweenBullets: 15
-  m_shootCount: 5
---- !u!114 &114185697251690216
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1393040701179162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328783101d9e0574c8b3b1a627819fac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114187631407516794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -264,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3f33107561d07458d88a3bec80e553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_weaponType: 0
 --- !u!114 &114231194099747798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -322,6 +309,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9da0f1ebe76c1945950c0d55e54a34e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114895103558910006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1393040701179162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114937988628526110

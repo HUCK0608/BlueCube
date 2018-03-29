@@ -22,8 +22,12 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     /// <summary>현재 시점을 반환 (View2D, View3D)</summary>
     public E_ViewType CurrentView { get { return m_currentView; } }
 
+    private bool m_isViewChangeReady;
+    /// <summary>현재 시점변환이 준비중일경우 true를 반환</summary>
+    public bool IsViewChangeReady { get { return m_isViewChangeReady; } }
+
     private bool m_isViewChange;
-    /// <summary>현재 시점변환 중일경우 true를 반환</summary>
+    /// <summary>현재 시점변환이 실행중일경우 true를 반환</summary>
     public bool IsViewChange { get { return m_isViewChange; } }
 
     // 변경을 할지 안할지 체크하는 변수
@@ -50,7 +54,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     private void ChangeView()
     {
         // 시점변환중이거나 탐지시점이거나 땅이아닐경우 리턴
-        if (GameLibrary.Bool_IsCO || !m_playerManager.IsGrounded)
+        if (GameLibrary.Bool_IsPlayerStop || !m_playerManager.IsGrounded)
             return;
 
         // 현재 시점이 3D일 때 2D로 변경
@@ -92,7 +96,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     // 3D에서 2D로 변경
     private IEnumerator ChangeView2D()
     {
-        m_isViewChange = true;
+        // 전환준비중 설정
+        m_isViewChangeReady = true;
 
         // x, y 사이즈 커짐
         yield return StartCoroutine(m_changeViewRect.SetIncreaseSizeXY());
@@ -104,6 +109,9 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 변경이 허용됬을 경우
         if(IsDoChange)
         {
+            // 시간 정지
+            m_isViewChange = true;
+
             // 2D상태로 변경됬다고 설정
             m_currentView = E_ViewType.View2D;
 
@@ -122,7 +130,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             // 쿼터뷰에서 사이드뷰로 카메라가 이동함
             yield return StartCoroutine(GameManager.Instance.CameraManager.MovingWork3D());
 
-            // 2D벽 생성 넣어야함(★)
+            // 2D외벽 활성화
+            m_changeViewRect.SetOutWallEnable(true);
         }
         // 변경이 허용되지 않았을 경우
         else
@@ -137,7 +146,11 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 상자 비활성화
         m_changeViewRect.SetActive(false);
 
+        // 시간 정지를 풀기
         m_isViewChange = false;
+
+        // 전환준비중 해제
+        m_isViewChangeReady = false;
     }
 
     // 2D에서 3D상태로 변경
@@ -147,7 +160,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
         m_currentView = E_ViewType.View3D;
 
-        // 2D벽 삭제 넣어야함(★)
+        // 2D외벽 비활성화
+        m_changeViewRect.SetOutWallEnable(false);
 
         // 변경상자 활성화
         m_changeViewRect.SetActive(true);

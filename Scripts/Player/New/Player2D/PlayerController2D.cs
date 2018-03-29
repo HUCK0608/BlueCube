@@ -9,7 +9,7 @@ public sealed class PlayerController2D : MonoBehaviour
     private PlayerController m_mainController;
 
     // 땅 체크 스크립트
-    private CheckGround m_checkGround;
+    private CheckGround2D m_checkGround;
 
     // 리지드바디
     private Rigidbody2D m_rigidbody;
@@ -33,7 +33,7 @@ public sealed class PlayerController2D : MonoBehaviour
         m_playerManager = GetComponentInParent<PlayerManager>();
         m_mainController = GetComponentInParent<PlayerController>();
 
-        m_checkGround = GetComponent<CheckGround>();
+        m_checkGround = GetComponent<CheckGround2D>();
 
         m_rigidbody = GetComponent<Rigidbody2D>();
     }

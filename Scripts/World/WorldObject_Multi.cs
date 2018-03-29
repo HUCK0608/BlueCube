@@ -12,8 +12,10 @@ public sealed class WorldObject_Multi : WorldObject
     private int m_colliderCount;
     private int m_materialCount;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         m_renderers = new List<MeshRenderer>();
         m_collider2D = new List<Collider2D>();
         m_defaultMaterials = new List<Material>();
@@ -32,6 +34,8 @@ public sealed class WorldObject_Multi : WorldObject
 
     public override void SetRendererEnable(bool value)
     {
+        base.SetRendererEnable(value);
+
         for (int i = 0; i < m_rendererCount; i++)
             m_renderers[i].enabled = value;
     }

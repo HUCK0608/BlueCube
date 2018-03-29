@@ -12,7 +12,7 @@ public sealed class EnemyState_Long_Return : EnemyState
     private void Update()
     {
         // 게임 시간이 멈춰있을경우 리턴
-        if (GameLibrary.Bool_IsGameStop)
+        if (GameLibrary.Bool_IsGameStop_Old)
             return;
 
         MoveToSpawnPosition();

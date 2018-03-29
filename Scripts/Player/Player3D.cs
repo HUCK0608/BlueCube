@@ -159,7 +159,7 @@ public sealed class Player3D : Player
     private void Move()
     {
         // 시점변환중이거나 관찰시점이면 리턴
-        if (GameLibrary.Bool_IsCO)
+        if (GameLibrary.Bool_IsPlayerStop)
         {
             m_rigidbody.velocity = Vector3.zero;
             return;
@@ -272,7 +272,7 @@ public sealed class Player3D : Player
     private void RotationToMousePoint()
     {
         // 시점변환중이거나 관찰시점이면 리턴
-        if (GameLibrary.Bool_IsCO)
+        if (GameLibrary.Bool_IsPlayerStop)
             return;
 
         // 마우스 방향 구하기

@@ -8,21 +8,23 @@ public sealed class PlayerState3D_LadderIdle : PlayerState3D
     {
         base.InitState();
 
+        // 전체 속도 멈춤
         m_subController.MoveStopAll();
     }
 
     private void Update()
     {
-        ChangeLadderMove();
+        // 상태 변경
+        ChangeStates();
     }
 
-    // LadderMove 상태로 변경
-    private void ChangeLadderMove()
+    private void ChangeStates()
     {
+        // 이동 입력 가져오기
         Vector3 moveDirection = m_subController.GetMoveDirection();
 
         // 이동 입력이 있을 경우 LadderMove 상태로 변경
-        if(!moveDirection.Equals(Vector3.zero))
+        if (!moveDirection.Equals(Vector3.zero))
         {
             m_mainController.ChangeState3D(E_PlayerState3D.LadderMove);
         }
