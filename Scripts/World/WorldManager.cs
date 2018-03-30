@@ -20,7 +20,6 @@ public sealed class WorldManager : MonoBehaviour
         m_worldObjects.AddRange(GetComponentsInChildren<WorldObject>());
 
         m_worldObjectCount = m_worldObjects.Count;
-        Debug.Log(m_worldObjectCount);
     }
 
     /// <summary>새로 생성된 오브젝트를 리스트에 포함시킴</summary>
