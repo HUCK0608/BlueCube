@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState3D_PickInit : PlayerState3D
+public sealed class PlayerState3D_PickInit : PlayerState3D
 {
     // 들기 애니메이션이 끝났는지 체크하는 변수
     private bool m_isPick;

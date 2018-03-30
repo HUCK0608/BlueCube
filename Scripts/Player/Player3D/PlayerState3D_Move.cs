@@ -49,21 +49,31 @@ public sealed class PlayerState3D_Move : PlayerState3D
     // 상태 변경 모음
     private void ChangeStates()
     {
-        // 아이템 들기를 눌렀을 때 몸의 정면방향에 들 수 있는 아이템이 있을 경우 PickInit 상태로 변경
-        if (Input.GetKeyDown(m_playerManager.Stat.PickItemKey))
+        // 상호작용 키를 눌렀을 때
+        if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey))
         {
-            int layerMask = (1 << 9);
             Vector3 rayOrigin = transform.position + Vector3.up;
             RaycastHit hit;
+            int pickItemLayerMask = (1 << 9);
+            int pushItemLayerMask = (1 << 10);
 
-            // 바라보는 방향으로 레이를 쏨
-            if (GameLibrary.Raycast3D(rayOrigin, m_subController.Head.forward, out hit, m_playerManager.Stat.ItemCheckDistance, layerMask))
+            // 바라보는 방향에 들 수 있는 아이템이 있으면 PickInit 상태로 변경
+            if (GameLibrary.Raycast3D(rayOrigin, m_subController.Head.forward, out hit, m_playerManager.Stat.ItemCheckDistance, pickItemLayerMask))
             {
-                // 아이템 스크립트를 저장시킴
+                // 아이템 스크립트를 저장
                 m_playerManager.Hand.CurrentPickItem = hit.transform.GetComponent<Item_PickPut>();
 
                 // 상태 변경
                 m_mainController.ChangeState3D(E_PlayerState3D.PickInit);
+            }
+            // 바라보는 방향에 밀 수 있는 아이템이 있으면 PushInit 상태로 변경
+            else if(GameLibrary.Raycast3D(rayOrigin, m_subController.Head.forward, out hit, m_playerManager.Stat.ItemCheckDistance, pushItemLayerMask))
+            {
+                // 아이템 스크립트를 저장
+                m_playerManager.Hand.CurrentPushItem = hit.transform.GetComponent<Item_Push>();
+
+                // 상태 변경
+                m_mainController.ChangeState3D(E_PlayerState3D.PushInit);
             }
         }
         // 이동방향에 사다리가 있으면 LadderInit 상태로 변경

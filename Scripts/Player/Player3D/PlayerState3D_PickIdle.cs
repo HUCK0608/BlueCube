@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState3D_PickIdle : PlayerState3D
+public sealed class PlayerState3D_PickIdle : PlayerState3D
 {
     public override void InitState()
     {
@@ -39,8 +39,8 @@ public class PlayerState3D_PickIdle : PlayerState3D
     {
         Vector3 moveDirection = m_subController.GetMoveDirection();
 
-        // 아이템 들기 키를 눌렀을 때 PickItemEnd 상태로 변경
-        if(Input.GetKeyDown(m_playerManager.Stat.PickItemKey) || m_playerManager.IsViewChangeReady)
+        // 상호작용키를 눌렀을 때 PickItemEnd 상태로 변경
+        if(Input.GetKeyDown(m_playerManager.Stat.InteractionKey) || m_playerManager.IsViewChangeReady)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.PickEnd);
         }

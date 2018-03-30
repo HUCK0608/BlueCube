@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_PlayerState3D { Idle, Move, Attack, JumpUp, JumpDown, LadderInit, LadderIdle, LadderMove, PickInit, PickIdle, PickMove, PickJumpUp, PickJumpDown, PickEnd }
+public enum E_PlayerState3D { Idle, Move, Attack, JumpUp, JumpDown, LadderInit, LadderIdle, LadderMove, PickInit, PickIdle, PickMove, PickJumpUp, PickJumpDown, PickEnd, PushInit, PushIdle, PushMove }
 public enum E_PlayerState2D { Idle, Move, Attack, JumpUp, JumpDown }
 
 public sealed class PlayerController : MonoBehaviour

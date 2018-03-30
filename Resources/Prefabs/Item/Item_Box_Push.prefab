@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 54387693593546534}
   - component: {fileID: 65618573427718246}
   - component: {fileID: 114406650719195666}
-  - component: {fileID: 114676026792934354}
-  m_Layer: 0
+  - component: {fileID: 114480578573074554}
+  m_Layer: 10
   m_Name: Item_Box_Push
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4885041534562638}
   - component: {fileID: 50859328650319376}
   - component: {fileID: 61124770409823308}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1502523786197726}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.712653, y: 2, z: 8.288494}
+  m_LocalPosition: {x: 2, y: 1.7, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4885041534562638}
@@ -150,7 +150,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!61 &61124770409823308
 BoxCollider2D:
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114676026792934354
+--- !u!114 &114480578573074554
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -208,8 +208,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1502523786197726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f65731468655fa4cb73031d86de6b35, type: 3}
+  m_Script: {fileID: 11500000, guid: c3aaf29743680f54b8e66a5d1e8833e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_checkColTime: 0.2
-  m_moveSpeed: 10

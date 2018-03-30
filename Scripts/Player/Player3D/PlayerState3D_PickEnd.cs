@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState3D_PickEnd : PlayerState3D
+public sealed class PlayerState3D_PickEnd : PlayerState3D
 {
     private bool m_isPut;
 

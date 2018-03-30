@@ -207,7 +207,7 @@ public sealed class PlayerController3D : MonoBehaviour
     /// <summary>direction방향으로 머리와 몸 LookRotation 회전</summary>
     public void LookRotationHeadAndBody(Vector3 direction)
     {
-        RotateHead(direction);
+        m_head.rotation = Quaternion.LookRotation(direction);
         m_body.rotation = Quaternion.LookRotation(direction);
     }
 }

@@ -109,6 +109,29 @@ public sealed class PlayerController2D : MonoBehaviour
             transform.localScale = scale;
     }
 
+    /// <summary>moveDireciton방향으로 Stat에 MoveSpeed_Jump속도로 이동함</summary>
+    public void JumpMoveAndRotate(Vector2 direction)
+    {
+        // 이동방향 * 속도 계산 및 y는 기존의 속도 사용
+        Vector2 movement = direction * m_playerManager.Stat.MoveSpeed_Jump;
+        movement.y = m_rigidbody.velocity.y;
+
+        // 이동
+        m_rigidbody.velocity = movement;
+
+        if (direction.Equals(Vector2.zero))
+            return;
+
+        // 스케일 변화로 회전값 구하기
+        Vector3 scale = Vector3.one;
+        scale.x = direction.x;
+
+        // 스케일 변경으로 회전
+        // 만약 스케일 값이 같지 않다면 스케일 변경
+        if (!transform.localScale.x.Equals(scale.x))
+            transform.localScale = scale;
+    }
+
     /// <summary>x 속도를 멈춤</summary>
     public void MoveStopX()
     {

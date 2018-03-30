@@ -53,14 +53,13 @@ public sealed class MovePanel : MonoBehaviour
     // 패널 이동
     private IEnumerator Move()
     {
-        // 처음에 대기시간 없게 하기 위한 변수
-        bool m_isFirst = true;
-
         while(true)
         {
             // 시점변환중이 아니고 탐지모드가 아니고 2D가 아닐경우 실행
             if (!GameLibrary.Bool_IsGameStop_Old)
             {
+                yield return new WaitForSeconds(m_waitTime);
+
                 m_moveGroup.position = Vector3.MoveTowards(m_moveGroup.position, m_path.PathPosition(m_currentPath), m_moveSpeed * Time.deltaTime);
 
                 // 정해진 경로에 도착했다면 다음 경로로 바꿔줌
@@ -72,11 +71,6 @@ public sealed class MovePanel : MonoBehaviour
                     // 아닐 경우 다음 경로로 바꿈
                     else
                         m_currentPath++;
-
-                    if (!m_isFirst)
-                        yield return new WaitForSeconds(m_waitTime);
-                    else
-                        m_isFirst = false;
                 }
             }
             yield return null;

@@ -2,26 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState2D_Idle : PlayerState2D
+public sealed class PlayerState2D_Move : PlayerState2D
 {
     public override void InitState()
     {
         base.InitState();
-
-        // 모든 속도 멈춤
-        m_subController.MoveStopAll();
     }
 
     private void Update()
     {
-        if (GameLibrary.Bool_IsPlayerStop)
-        {
-            // 중력 적용
-            m_subController.ApplyGravity();
-            return;
-        }
+        // 이동방향 가져오기
+        Vector2 moveDirection = m_subController.GetMoveDirection();
 
-        // 중력 적용
+        // 이동 및 회전
+        m_subController.MoveAndRotate(moveDirection);
+
+        // 중력적용
         m_subController.ApplyGravity();
 
         // 상태 변경
@@ -43,15 +39,18 @@ public class PlayerState2D_Idle : PlayerState2D
             if (m_mainController.IsGrounded)
                 m_mainController.ChangeState2D(E_PlayerState2D.JumpUp);
         }
-        // 이동 입력이 있다면 Move 상태로 변경
-        else if (!m_subController.GetMoveDirection().Equals(Vector2.zero))
+        // 이동입력이 없거나 플레이어가 멈춰야 하는 상황이면 Idle 상태로 변경
+        else if (m_subController.GetMoveDirection().Equals(Vector2.zero) || GameLibrary.Bool_IsPlayerStop)
         {
-            m_mainController.ChangeState2D(E_PlayerState2D.Move);
+            m_mainController.ChangeState2D(E_PlayerState2D.Idle);
         }
     }
 
     public override void EndState()
     {
         base.EndState();
+
+        // x속도를 멈춤
+        m_subController.MoveStopX();
     }
 }

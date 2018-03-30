@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState2D_Attack : PlayerState2D
+public sealed class PlayerState2D_Attack : PlayerState2D
 {
     private float m_attackAddTime;
 

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState3D_PickJumpDown : PlayerState3D
+public sealed class PlayerState3D_PickJumpUp : PlayerState3D
 {
     private Vector3 m_moveDirection;
 
     public override void InitState()
     {
         base.InitState();
+
+        // 점프
+        m_subController.Jump();
     }
 
     private void Update()
@@ -33,10 +36,10 @@ public class PlayerState3D_PickJumpDown : PlayerState3D
     // 상태 변경 모음
     private void ChangeStates()
     {
-        // 플레이어가 땅에 닿으면 PickIdle 상태로 변경
-        if (m_mainController.IsGrounded)
+        // 캐릭터가 최대높이까지 뛰었을 경우 PickJumpDown 상태로 변경
+        if(m_subController.Rigidbody.velocity.y <= 0f)
         {
-            m_mainController.ChangeState3D(E_PlayerState3D.PickIdle);
+            m_mainController.ChangeState3D(E_PlayerState3D.PickJumpDown);
         }
     }
 

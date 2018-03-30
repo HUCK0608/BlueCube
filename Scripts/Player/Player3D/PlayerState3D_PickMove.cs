@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState3D_PickMove : PlayerState3D
+public sealed class PlayerState3D_PickMove : PlayerState3D
 {
     private Vector3 m_moveDirection;
     private Vector3 m_mouseDirectionToPlayer;
@@ -49,8 +49,8 @@ public class PlayerState3D_PickMove : PlayerState3D
     // 상태 변경 모음
     private void ChangeStates()
     {
-        // 아이템 들기 키를 눌렀을 때 PickItemEnd 상태로 변경
-        if (Input.GetKeyDown(m_playerManager.Stat.PickItemKey) || m_playerManager.IsViewChangeReady)
+        // 상호작용키를 눌렀을 때 PickItemEnd 상태로 변경
+        if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey) || m_playerManager.IsViewChangeReady)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.PickEnd);
         }
