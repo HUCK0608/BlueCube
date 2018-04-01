@@ -14,6 +14,10 @@ public class Item_Push : MonoBehaviour
     /// <summary>한번 밀 때 이동거리</summary>
     public float MoveDistance { get { return m_moveDistance; } }
 
+    private bool m_isMove;
+    /// <summary>이동중일 경우 true를 반환</summary>
+    public bool IsMove { get { return m_isMove; } }
+
     private void Awake()
     {
         m_collider = GetComponent<Collider>();
@@ -109,5 +113,60 @@ public class Item_Push : MonoBehaviour
         }
 
         return canMove;
+    }
+
+    /// <summary>direction 방향으로 아이템을 민다</summary>
+    public void PushItem(Vector3 direction)
+    {
+        StartCoroutine(Move(direction));
+    }
+
+    // 상자 이동
+    private IEnumerator Move(Vector3 direction)
+    {
+        m_isMove = true;
+
+        // 위쪽에 다른 Item이 있을경우 자식에 포함
+        RaycastHit[] anotherItems = AddAnotherItem();
+
+        // 이동 위치 계산
+        Vector3 movePosition = transform.position + (direction * m_moveDistance);
+
+        while(true)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, movePosition, PlayerManager.Instance.Stat.MoveSpeed_Push * Time.deltaTime);
+
+            if (transform.position.Equals(movePosition))
+                break;
+
+            yield return null;
+        }
+
+        // 포함되었던 다른 Item을 제외시킴
+        RemoveAnotherItem(anotherItems);
+
+        m_isMove = false;
+    }
+
+    // 위쪽에 다른 아이템이 있는지 체크해서 있을 경우 자식으로 포함시킴
+    private RaycastHit[] AddAnotherItem()
+    {
+        int layerMask = (1 << 9);
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.up, Mathf.Infinity, layerMask);
+        int hitCount = hits.Length;
+
+        for (int i = 0; i < hitCount; i++)
+            hits[i].transform.parent = transform;
+
+        return hits;
+    }
+
+    // 포함되어 있는 아이템을 제외시킴
+    private void RemoveAnotherItem(RaycastHit[] hits)
+    {
+        int hitCount = hits.Length;
+
+        for (int i = 0; i < hitCount; i++)
+            hits[i].transform.parent = transform.parent;
     }
 }

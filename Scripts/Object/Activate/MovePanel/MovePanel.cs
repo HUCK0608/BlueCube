@@ -58,7 +58,6 @@ public sealed class MovePanel : MonoBehaviour
             // 시점변환중이 아니고 탐지모드가 아니고 2D가 아닐경우 실행
             if (!GameLibrary.Bool_IsGameStop_Old)
             {
-                yield return new WaitForSeconds(m_waitTime);
 
                 m_moveGroup.position = Vector3.MoveTowards(m_moveGroup.position, m_path.PathPosition(m_currentPath), m_moveSpeed * Time.deltaTime);
 
@@ -71,6 +70,8 @@ public sealed class MovePanel : MonoBehaviour
                     // 아닐 경우 다음 경로로 바꿈
                     else
                         m_currentPath++;
+
+                    yield return new WaitForSeconds(m_waitTime);
                 }
             }
             yield return null;
