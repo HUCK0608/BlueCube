@@ -75,15 +75,6 @@ public sealed class BulletManager : MonoBehaviour
 
             // worldManager에 새로운 오브젝트가 생성됬다고 알림
             WorldManager.Instance.AddWorldObject(canUseBulletWorldObject);
-
-            // 2D일 경우 변환상자에 포함됬다고 알리고 2D콜라이더 켜기
-            if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D))
-            {
-                canUseBulletWorldObject.isIncludeChangeViewRect = true;
-                canUseBulletWorldObject.SetRendererEnable(true);
-                canUseBulletWorldObject.SetCollider2DEnable(true);
-            }
-
         }
 
         // 총알 발사

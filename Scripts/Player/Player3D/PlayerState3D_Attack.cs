@@ -17,7 +17,7 @@ public sealed class PlayerState3D_Attack : PlayerState3D
     // 공격
     private void Attack()
     {
-        Vector3 mouseDirection = GameManager.Instance.CameraManager.GetMouseDirectionToPivot(transform.position);
+        Vector3 mouseDirection = CameraManager.Instance.GetMouseDirectionToPivot(transform.position);
         m_playerManager.Weapon.ShootFireBall3D(mouseDirection);
     }
 

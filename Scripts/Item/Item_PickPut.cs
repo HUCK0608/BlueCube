@@ -186,7 +186,7 @@ public sealed class Item_PickPut : MonoBehaviour
         float calcY = zero;
         RaycastHit hit;
 
-        if (GameLibrary.Raycast3D(transform.position, Vector3.down, out hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BP))
+        if (GameLibrary.Raycast3D(transform.position, Vector3.down, out hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_RBP))
             calcY = hit.point.y + one;
 
         // 계산된 값을 적용

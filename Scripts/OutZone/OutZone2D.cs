@@ -13,11 +13,10 @@ public sealed class OutZone2D : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 플레이어가 닿았을 경우 체력을 깎고 리스폰
-        if(other.tag == "Player")
+        // 플레이어가 충돌하면 데미지를 입히고 리스폰 좌표로 이동시킨다
+        if(other.tag.Equals(GameLibrary.String_Player))
         {
-            // 수정(★)
-            //PlayerManager.Instance.HitAndRespawn(1, m_outZone.RespawnPoint);
+            m_outZone.HitAndRespawnPlayer();
         }
     }
 }

@@ -83,32 +83,30 @@ public sealed class ChangeViewRect : MonoBehaviour
     /// <summary>마우스 좌표로 상자의 z의 크기가 커짐</summary>
     public IEnumerator SetSizeZToMousePoint()
     {
-        RaycastHit hit;
+        Vector3 player3DPosition = PlayerManager.Instance.Player3D_Object.transform.position;
 
         Vector3 newRectSize = transform.localScale;
+
         // lerp 수치
         float lerpT = 0.1f;
 
         while(true)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Vector3 hitPoint = CameraManager.Instance.GetMouseHitPointToPivot(player3DPosition);
 
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_BP))
-            {
-                // 충돌된 z좌표를 가져와서 새로운 크기 계산을 함
-                float hitPositionZ = hit.point.z;
-                newRectSize.z = hitPositionZ - BlueCubeManager.Instance.BlueCube3D.transform.position.z;
-                newRectSize.z = Mathf.Clamp(newRectSize.z, 0f, m_increaseMaxSize.z);
+            // 충돌된 z좌표를 가져와서 새로운 크기 계산을 함
+            float hitPositionZ = hitPoint.z;
+            newRectSize.z = hitPositionZ - BlueCubeManager.Instance.BlueCube3D.transform.position.z;
+            newRectSize.z = Mathf.Clamp(newRectSize.z, 0f, m_increaseMaxSize.z);
 
-                transform.localScale = Vector3.Lerp(transform.localScale, newRectSize, lerpT);
+            transform.localScale = Vector3.Lerp(transform.localScale, newRectSize, lerpT);
 
-                // 계산된 z 좌표를 가져옴
-                Vector3 newPosition = transform.position;
-                newPosition.z = CalcPositionZ();
+            // 계산된 z 좌표를 가져옴
+            Vector3 newPosition = transform.position;
+            newPosition.z = CalcPositionZ();
 
-                // 이동
-                transform.position = newPosition;
-            }
+            // 이동
+            transform.position = newPosition;
 
             if (m_skill.IsDoChange || m_skill.IsNotChange)
                 break;
@@ -195,7 +193,7 @@ public sealed class ChangeViewRect : MonoBehaviour
             // 스크립트가 있을 경우에 메테리얼을 변경
             if (worldObject != null)
             {
-                worldObject.SetMaterial(GameLibrary.Enum_Material_Change);
+                worldObject.SetMaterial(E_MaterialType.Change);
                 // 상자에 포함되어있다고 알리기
                 worldObject.isIncludeChangeViewRect = true;
             }
@@ -213,7 +211,7 @@ public sealed class ChangeViewRect : MonoBehaviour
             // 스크립트가 있을 경우에 메테리얼을 변경
             if (worldObject != null)
             {
-                worldObject.SetMaterial(GameLibrary.Enum_Material_Default);
+                worldObject.SetMaterial(E_MaterialType.Default);
                 // 상자에 포함되지않았다고 알리기
                 worldObject.isIncludeChangeViewRect = false;
             }

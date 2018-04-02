@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum E_MaterialType { Default, Change }
 [SelectionBase]
 public class WorldObject : MonoBehaviour
 {

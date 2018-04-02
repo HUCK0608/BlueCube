@@ -91,10 +91,10 @@ public sealed class PlayerState3D_Move : PlayerState3D
             if (m_mainController.IsGrounded)
                 m_mainController.ChangeState3D(E_PlayerState3D.JumpUp);
         }
-        // 공격키를 눌렀을 때 무기가 사용 가능하면 Attack 상태로 변경
+        // 공격키를 눌렀을 때 무기가 사용 가능하고 땅에 있다면 Attack 상태로 변경
         else if (Input.GetKeyDown(m_playerManager.Stat.AttackKey))
         {
-            if (m_playerManager.Weapon.CanUse)
+            if (m_playerManager.Weapon.CanUse && m_playerManager.IsGrounded)
                 m_mainController.ChangeState3D(E_PlayerState3D.Attack);
         }
         // 이동 입력이 없거나 플레이어가 멈춰야 하는 상황이면 Idle 상태로 변경

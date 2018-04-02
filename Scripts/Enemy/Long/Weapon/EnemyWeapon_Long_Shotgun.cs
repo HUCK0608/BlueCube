@@ -14,8 +14,10 @@ public sealed class EnemyWeapon_Long_Shotgun : EnemyWeapon
 
     private Quaternion m_startAngleQuaternion;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         // 짝수일경우
         if (m_shootCount % 2 == 0)
         {

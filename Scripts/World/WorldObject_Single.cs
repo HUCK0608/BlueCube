@@ -34,7 +34,7 @@ public sealed class WorldObject_Single : WorldObject
 
     public override void SetMaterial(E_MaterialType materialType)
     {
-        if (materialType.Equals(GameLibrary.Enum_Material_Default))
+        if (materialType.Equals(E_MaterialType.Default))
         {
             m_renderer.material = m_defaultMaterial;
         }

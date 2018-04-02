@@ -16,7 +16,7 @@ public sealed class PlayerState3D_PickJumpDown : PlayerState3D
         // 이동방향 가져오기
         m_moveDirection = m_subController.GetMoveDirection();
         // 마우스 방향 가져오기
-        Vector3 mouseDirectionToPlayer = GameManager.Instance.CameraManager.GetMouseDirectionToPivot(transform.position);
+        Vector3 mouseDirectionToPlayer = CameraManager.Instance.GetMouseDirectionToPivot(transform.position);
 
         // 이동
         m_subController.Move(mouseDirectionToPlayer, m_moveDirection);

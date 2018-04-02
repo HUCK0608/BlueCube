@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum E_ViewType { View3D, View2D }
 public sealed class PlayerSkill_ChangeView : MonoBehaviour
 {
     // 플레이어 매니저
@@ -72,6 +73,24 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         }
     }
 
+    /// 시점변환이 가능할 경우 true를 반환
+    //private bool IsCanChange()
+    //{
+    //    // 3D이든 2D이든 땅이 아니면 false를 반환
+    //    if (!m_playerManager.IsGrounded)
+    //        return false;
+
+    //    // 3D일 경우
+    //    if (m_playerManager.CurrentView.Equals(E_ViewType.View3D))
+    //    {
+    //        E_PlayerState3D currentState3D = m_playerManager.MainController.CurrentState3D;
+    //    }
+    //    else
+    //    {
+    //        E_PlayerState2D currentState2D = m_playerManager.MainController.CurrentState2D;
+    //    }
+    //}
+
     // 시점변환을 허용할 건지 체크하는 코루틴
     private IEnumerator CheckKey()
     {
@@ -113,6 +132,9 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             // 시간 정지
             m_isViewChange = true;
 
+            // 커서 비활성화
+            GameManager.Instance.SetCursorEnable(false);
+
             // 2D상태로 변경됬다고 설정
             m_currentView = E_ViewType.View2D;
 
@@ -129,7 +151,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             LightManager.Instance.ShadowEnable(false);
 
             // 쿼터뷰에서 사이드뷰로 카메라가 이동함
-            yield return StartCoroutine(GameManager.Instance.CameraManager.MovingWork3D());
+            yield return StartCoroutine(CameraManager.Instance.MovingWork3D());
 
             // 2D외벽 활성화
             m_changeViewRect.SetOutWallEnable(true);
@@ -160,6 +182,9 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_isViewChange = true;
 
         m_currentView = E_ViewType.View3D;
+
+        // 커서 활성화
+        GameManager.Instance.SetCursorEnable(true);
 
         // 2D외벽 비활성화
         m_changeViewRect.SetOutWallEnable(false);

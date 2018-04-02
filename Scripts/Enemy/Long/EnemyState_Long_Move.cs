@@ -73,7 +73,7 @@ public sealed class EnemyState_Long_Move : EnemyState
 
         float rayDistance = 1.5f;
 
-        if(Physics.Raycast(m_ray, rayDistance, GameLibrary.LayerMask_Ignore_BP))
+        if(Physics.Raycast(m_ray, rayDistance, GameLibrary.LayerMask_Ignore_RBP))
         {
             checkForward = true;
         }

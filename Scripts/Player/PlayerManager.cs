@@ -27,10 +27,11 @@ public sealed class PlayerManager : MonoBehaviour
     public PlayerInventory Inventory { get { return m_inventory; } }
 
     // 컨트롤러
-    // 메인 컨트롤러
     private PlayerController m_mainController;
     private PlayerController3D m_subController3D;
     private PlayerController2D m_subController2D;
+    /// <summary>플레이어의 메인 컨트롤러</summary>
+    public PlayerController MainController { get { return m_mainController; } }
     /// <summary>플레이어의 3D컨트롤러</summary>
     public PlayerController3D SubController3D { get { return m_subController3D; } }
     /// <summary>플레이어의 2D컨트롤러</summary>
@@ -116,5 +117,14 @@ public sealed class PlayerManager : MonoBehaviour
     {
         m_stat.DecreaseHp(damage);
         Debug.Log("플레이어 데미지! 남은체력 : " + m_stat.Hp);
+    }
+
+    /// <summar>플레이어를 teleportPosition으로 이동시킨다</summar>
+    public void Teleport(Vector3 teleportPosition)
+    {
+        if (CurrentView.Equals(E_ViewType.View3D))
+            m_player3D_Object.transform.position = teleportPosition;
+        else
+            m_player2D_Object.transform.position = teleportPosition;
     }
 }

@@ -26,7 +26,7 @@ public sealed class CameraManager : MonoBehaviour
     // 회전속도
     [SerializeField]
     private float m_movingWorkRotSpeed;
-
+    
     // 무빙워크 각도회전할 때 체크할 최소 값
     [SerializeField]
     private float m_movingWorkSlerpCheckDistance;
@@ -92,7 +92,7 @@ public sealed class CameraManager : MonoBehaviour
     // 3D 플레이어를 따라가는 카메라
     private void FollowPlayer3D()
     {
-        if(PlayerManager.Instance.CurrentView.Equals(GameLibrary.Enum_View3D))
+        if(PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
             transform.position = PlayerManager.Instance.Player3D_Object.transform.position;
     }
 
@@ -140,6 +140,32 @@ public sealed class CameraManager : MonoBehaviour
 
         // 방향 반환
         return direction.normalized;
+    }
+
+    /// <summary>pivot높이를 중심으로 마우스의 충돌위치를 구함</summary>
+    public Vector3 GetMouseHitPointToPivot(Vector3 pivot)
+    {
+        // 법선이 y양의 방향을 보고있고 pivot위치에 있는 평면을 생성
+        Plane plane = new Plane(Vector3.up, pivot);
+
+        // 마우스 위치의 광선 생성
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        // 충돌된 거리를 담을 변수
+        float rayDistance;
+
+        // 충돌 위치를 담을 변수
+        Vector3 hitPoint = Vector3.zero;
+
+        // 평면에서 광선 발사
+        if (plane.Raycast(ray, out rayDistance))
+        {
+            // 충돌 위치 구하기
+            hitPoint = ray.GetPoint(rayDistance);
+        }
+
+        //위치 반환
+        return hitPoint;
     }
 
     // 관찰시점을 사용할것인지 체크

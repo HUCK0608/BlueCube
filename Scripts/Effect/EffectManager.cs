@@ -6,12 +6,17 @@ public enum Effect_Type { FBExplosion, Boom }
 
 public sealed class EffectManager : MonoBehaviour
 {
+    private static EffectManager m_instance;
+    public static EffectManager Instance { get { return m_instance; } }
+
     private static string m_effectName = "Effect_";
 
     Dictionary<Effect_Type, GameObject> m_effects;
 
     private void Awake()
     {
+        m_instance = this;
+
         InitEffects();
     }
 

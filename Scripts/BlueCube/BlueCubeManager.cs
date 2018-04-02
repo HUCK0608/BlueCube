@@ -47,7 +47,7 @@ public sealed class BlueCubeManager : MonoBehaviour
     public void ChangeCube()
     {
         // 2D
-        if(PlayerManager.Instance.CurrentView.Equals(GameLibrary.Enum_View2D))
+        if(PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D))
         {
             m_blueCube3D.SetActive(false);
             m_blueCube2D.SetActive(true);
@@ -64,7 +64,7 @@ public sealed class BlueCubeManager : MonoBehaviour
     private void FixedCube()
     {
         // 2D
-        if (PlayerManager.Instance.CurrentView.Equals(GameLibrary.Enum_View2D))
+        if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D))
         {
             // 2D플레이어 위치
             Vector3 playerPosition = PlayerManager.Instance.Player2D_Object.transform.position;

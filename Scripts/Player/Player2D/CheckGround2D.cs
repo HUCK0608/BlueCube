@@ -38,7 +38,7 @@ public sealed class CheckGround2D : MonoBehaviour
         {
             RaycastHit2D hit;
 
-            if (GameLibrary.Raycast2D(m_checkPoints[i].position, Vector2.down, out hit, m_checkDistance, GameLibrary.LayerMask_Ignore_BP))
+            if (GameLibrary.Raycast2D(m_checkPoints[i].position, Vector2.down, out hit, m_checkDistance, GameLibrary.LayerMask_Ignore_RBP))
             {
                 isCol = true;
                 m_onGroundPositionY = hit.point.y + m_onGroundUpPosition;

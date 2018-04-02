@@ -83,9 +83,9 @@ public class Item_Push : MonoBehaviour
         maxCheckPosition.y += (boundY - temp);
 
         // 최소 최대 위치 체크
-        if (GameLibrary.Raycast3D(minCheckPosition, direction, m_moveDistance, GameLibrary.LayerMask_Ignore_BP))
+        if (GameLibrary.Raycast3D(minCheckPosition, direction, m_moveDistance, GameLibrary.LayerMask_Ignore_RBP))
             return false;
-        else if (GameLibrary.Raycast3D(maxCheckPosition, direction, m_moveDistance, GameLibrary.LayerMask_Ignore_BP))
+        else if (GameLibrary.Raycast3D(maxCheckPosition, direction, m_moveDistance, GameLibrary.LayerMask_Ignore_RBP))
             return false;
 
         // 시작 체크 높이
@@ -99,7 +99,7 @@ public class Item_Push : MonoBehaviour
         while(true)
         {
             // 무언가 충돌하면 충돌했다고 알리고 반복문 종료
-            if(GameLibrary.Raycast3D(checkPosition, direction, m_moveDistance, GameLibrary.LayerMask_Ignore_BP))
+            if(GameLibrary.Raycast3D(checkPosition, direction, m_moveDistance, GameLibrary.LayerMask_Ignore_RBP))
             {
                 canMove = false;
                 break;

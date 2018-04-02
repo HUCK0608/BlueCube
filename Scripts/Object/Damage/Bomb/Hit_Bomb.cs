@@ -66,7 +66,7 @@ public sealed class Hit_Bomb : MonoBehaviour
     // 폭발
     private void Boom()
     {
-        GameManager.Instance.EffectManager.CreateEffect(Effect_Type.Boom, transform.position);
+        EffectManager.Instance.CreateEffect(Effect_Type.Boom, transform.position);
         gameObject.SetActive(false);
     }
 }

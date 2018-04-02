@@ -59,7 +59,5 @@ public class EnemyWeapon : MonoBehaviour
     }
 
     // 무기사용
-    protected virtual void UseWeapon()
-    {
-    }
+    protected virtual void UseWeapon() { }
 }

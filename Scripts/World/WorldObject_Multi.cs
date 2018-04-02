@@ -48,7 +48,7 @@ public sealed class WorldObject_Multi : WorldObject
 
     public override void SetMaterial(E_MaterialType materialType)
     {
-        if(materialType.Equals(GameLibrary.Enum_Material_Default))
+        if(materialType.Equals(E_MaterialType.Default))
         {
             for (int i = 0; i < m_materialCount; i++)
                 m_renderers[i].material = m_defaultMaterials[i];

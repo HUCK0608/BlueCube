@@ -37,7 +37,7 @@ public sealed class CheckGround3D : MonoBehaviour
 
         for(int i = 0; i < m_checkPointCount; i++)
         {
-            if (GameLibrary.Raycast3D(m_checkPoints[i].position, Vector3.down, out hit, m_checkDistance, GameLibrary.LayerMask_Ignore_BP))
+            if (GameLibrary.Raycast3D(m_checkPoints[i].position, Vector3.down, out hit, m_checkDistance, GameLibrary.LayerMask_Ignore_RBP))
             {
                 isCol = true;
                 m_onGroundPositionY = hit.point.y + m_onGroundUpPosition;

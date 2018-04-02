@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_MaterialType { Default, Change }
-public enum E_ViewType { View3D, View2D }
-
 public static class GameLibrary
 {
     // Material 부분
@@ -14,26 +11,9 @@ public static class GameLibrary
 
     // layerMask 부분
 
-    private static int m_layerMask_Igonore_BP = (-1) - ((1 << 8) | (1 << 11));
-    /// <summary> Ignore Layer Mask (Bullet, Player) </summary>
-    public static int LayerMask_Ignore_BP { get { return m_layerMask_Igonore_BP; } }
-
-    private static int m_layerMask_Ladder = 1 << 12;
-    public static int LayerMask_Ladder { get { return m_layerMask_Ladder; } }
-
-    // Enum 부분
-
-    private static E_ViewType m_enum_View2D = E_ViewType.View2D;
-    public static E_ViewType Enum_View2D { get { return m_enum_View2D; } }
-
-    private static E_ViewType m_enum_View3D = E_ViewType.View3D;
-    public static E_ViewType Enum_View3D { get { return m_enum_View3D; } }
-
-    private static E_MaterialType m_enum_Material_Default = E_MaterialType.Default;
-    public static E_MaterialType Enum_Material_Default { get { return m_enum_Material_Default; } }
-
-    private static E_MaterialType m_enum_Material_Change = E_MaterialType.Change;
-    public static E_MaterialType Enum_Material_Change { get { return m_enum_Material_Change; } }
+    private static int m_layerMask_Igonore_RBP = (-1) - ((1 << 2) | (1 << 8) | (1 << 11));
+    /// <summary> Ignore Layer Mask (Respawn, Bullet, Player) </summary>
+    public static int LayerMask_Ignore_RBP { get { return m_layerMask_Igonore_RBP; } }
 
     // string 부분
 
@@ -49,22 +29,11 @@ public static class GameLibrary
     private static string m_string_Enemy = "Enemy";
     public static string String_Enemy { get { return m_string_Enemy; } }
 
-    private static string m_string_Effect = "Effect";
-    public static string String_Effect { get { return m_string_Effect; } }
-
     private static string m_string_EnemyAttack = "EnemyAttack";
     public static string String_EnemyAttack { get { return m_string_EnemyAttack; } }
 
     private static string m_string_IgnoreTag = "IgnoreTag";
     public static string String_IgnoreTag { get { return m_string_IgnoreTag; } }
-
-    private static string m_string_EnemyState_Melee = "EnemyState_Melee_";
-    /// <summary>EnemyState_Melee_</summary>
-    public static string String_EnemyState_Melee { get { return m_string_EnemyState_Melee; } }
-
-    private static string m_string_EnemyState_Long = "EnemyState_Long_";
-    /// <summary>EnemyState_Long_</summary>
-    public static string String_EnemyState_Long { get { return m_string_EnemyState_Long; } }
 
     // Bool 부분
 
@@ -74,7 +43,7 @@ public static class GameLibrary
         get
         {
             return PlayerManager.Instance.IsViewChange ||
-                     PlayerManager.Instance.CurrentView.Equals(Enum_View2D)
+                     PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D)
                      ? true : false;
         }
     }
@@ -94,7 +63,7 @@ public static class GameLibrary
         {
             return PlayerManager.Instance.IsViewChange ||
                      CameraManager.Instance.IsObserve ||
-                     PlayerManager.Instance.CurrentView.Equals(Enum_View2D)
+                     PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D)
                      ? true : false;
         }
     }

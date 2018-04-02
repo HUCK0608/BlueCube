@@ -31,8 +31,16 @@ public class Bullet : MonoBehaviour
         transform.position = position + Vector3.up;
         // 발사 방향으로 회전
         transform.rotation = Quaternion.LookRotation(direction);
-        // 활성화
-        gameObject.SetActive(true);
+
+        // 2D일 경우 변환 상자에 포함되었다고 알리고 2D콜라이더를 킴
+        if(PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D))
+        {
+            m_worldObject.isIncludeChangeViewRect = true;
+            m_worldObject.SetCollider2DEnable(true);
+        }
+
+        // 랜더러 활성화
+        m_worldObject.SetRendererEnable(true);
 
         StartCoroutine(Move(bulletSpeed, durationTime));
     }
@@ -67,15 +75,12 @@ public class Bullet : MonoBehaviour
         }
 
         // 이펙트 생성
-        GameManager.Instance.EffectManager.CreateEffect(Effect_Type.FBExplosion, transform.position);
+        EffectManager.Instance.CreateEffect(Effect_Type.FBExplosion, transform.position);
 
         // 멀리 보내기
         transform.localPosition = Vector3.zero;
 
         m_isUse = false;
-
-        // 비활성화
-        gameObject.SetActive(false);
     }
 
     /// <summary>총알의 이동을 멈추고 안보이게 함</summary>
