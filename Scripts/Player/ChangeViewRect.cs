@@ -178,6 +178,8 @@ public sealed class ChangeViewRect : MonoBehaviour
     /// <summary>외벽 활성화 여부</summary>
     public void SetOutWallEnable(bool value)
     {
+        if (value)
+            m_outWallGroup.transform.localScale = transform.localScale;
         m_outWallGroup.transform.position = transform.position;
         m_outWallGroup.SetActive(value);
     }
@@ -185,7 +187,7 @@ public sealed class ChangeViewRect : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 플레이어가 아닐경우
-        if(other.tag != GameLibrary.String_Player)
+        if(!other.tag.Equals(GameLibrary.String_Player))
         {
             // 월드오브젝트 관련 스크립트 가져오기
             WorldObject worldObject = other.GetComponentInParent<WorldObject>();
@@ -203,7 +205,7 @@ public sealed class ChangeViewRect : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         // 플레이어가 아닐경우
-        if (other.tag != GameLibrary.String_Player)
+        if(!other.tag.Equals(GameLibrary.String_Player))
         {
             // 월드오브젝트 관련 스크립트 가져오기
             WorldObject worldObject = other.GetComponentInParent<WorldObject>();

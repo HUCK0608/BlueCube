@@ -15,13 +15,9 @@ public sealed class PlayerState3D_JumpDown : PlayerState3D
     {
         // 이동방향 가져오기
         m_moveDirection = m_subController.GetMoveDirection();
-        // 마우스 방향 가져오기
-        Vector3 mouseDirectionToPlayer = CameraManager.Instance.GetMouseDirectionToPivot(transform.position);
 
-        // 이동
-        m_subController.JumpMove(m_moveDirection);
-        // 마우스 방향으로의 회전
-        m_subController.RotateHeadAndBody(mouseDirectionToPlayer);
+        // 이동 및 회전
+        m_subController.MoveAndRotation(m_moveDirection, m_playerManager.Stat.MoveSpeed_Jump);
 
         // 중력적용
         m_subController.ApplyGravity();

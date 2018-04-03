@@ -9,7 +9,7 @@ public sealed class PlayerState3D_LadderInit : PlayerState3D
         base.InitState();
 
         // 머리와 몸이 사다리를 바라보게 만듬
-        m_subController.LookRotationHeadAndBody(m_subController.CurrentLadder.Forward);
+        m_subController.LookRotation(m_subController.CurrentLadder.Forward);
 
         // 매달릴 위치를 가져와서 적용, y는 현재 위치를 넣어줌
         Vector3 hangPosition = m_subController.CurrentLadder.HangPosition;

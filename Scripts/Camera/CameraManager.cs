@@ -41,7 +41,9 @@ public sealed class CameraManager : MonoBehaviour
 
     // 관찰용시점 입력 키
     [SerializeField]
-    private KeyCode m_observeViewKey;
+    private KeyCode m_observeViewLeftKey;
+    [SerializeField]
+    private KeyCode m_observeViewRightKey;
 
     // 관찰용시점 최소, 최대 허용 각
     [SerializeField]
@@ -85,7 +87,6 @@ public sealed class CameraManager : MonoBehaviour
     private void Update()
     {
         FollowPlayer3D();
-        MoveToMouseDirection();
         CheckObserveView();
     }
 
@@ -94,52 +95,6 @@ public sealed class CameraManager : MonoBehaviour
     {
         if(PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
             transform.position = PlayerManager.Instance.Player3D_Object.transform.position;
-    }
-
-    // 마우스 포인터 위치의 방향을 구해서 카메라 이동
-    public void MoveToMouseDirection()
-    {
-        // 시점변환중이거나 2D시점이거나 관찰시점일 경우 리턴
-        if (GameLibrary.Bool_IsGameStop_Old)
-            return;
-
-        // 마우스 방향의 월드 방향 구하기
-        Vector3 mouseDirection = GetMouseDirectionToPivot(PlayerManager.Instance.Player3D_Object.transform.position);
-
-        // 이동방향 * 거리
-        Vector3 movePoint = mouseDirection.normalized * m_moveDirectionMaxDis;
-
-        // 이동
-        m_centerPoint.localPosition = Vector3.Lerp(m_centerPoint.localPosition, movePoint, m_moveDirecitonSpeed * Time.deltaTime);
-    }
-
-    /// <summary>pivot에서 마우스포인터의 방향을 구함</summary>
-    public Vector3 GetMouseDirectionToPivot(Vector3 pivot)
-    {
-        // 법선이 y양의 방향을 보고있고 pivot위치에 있는 평면을 생성
-        Plane plane = new Plane(Vector3.up, pivot);
-
-        // 마우스 위치의 광선 생성
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        // 충돌된 거리를 담을 변수
-        float rayDistance;
-
-        // 충돌 위치를 담을 변수
-        Vector3 hitPoint = Vector3.zero;
-
-        // 평면에서 광선 발사
-        if(plane.Raycast(ray, out rayDistance))
-        {
-            // 충돌 위치 구하기
-            hitPoint = ray.GetPoint(rayDistance);
-        }
-
-        // 방향 계산
-        Vector3 direction = hitPoint - pivot;
-
-        // 방향 반환
-        return direction.normalized;
     }
 
     /// <summary>pivot높이를 중심으로 마우스의 충돌위치를 구함</summary>
@@ -171,10 +126,13 @@ public sealed class CameraManager : MonoBehaviour
     // 관찰시점을 사용할것인지 체크
     private void CheckObserveView()
     {
-        // 시점변환중이거나 관찰시점이거나 2D가 아니고 땅일경우에만 관찰시점 허용
-        if(!GameLibrary.Bool_IsCOV2D && PlayerManager.Instance.IsGrounded)
+        // 시점변환 준비중이거나 시점변환중이거나 2D이거나 땅이아닐경우 탐지시점 발동
+        if(!PlayerManager.Instance.IsViewChangeReady &&
+           !PlayerManager.Instance.IsViewChange && 
+           !PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D)
+           && PlayerManager.Instance.IsGrounded)
         {
-            if(Input.GetKeyDown(m_observeViewKey))
+            if(Input.GetKeyDown(m_observeViewLeftKey) || Input.GetKeyDown(m_observeViewRightKey))
             {
                 StartCoroutine(ObserveView());
             }
@@ -189,11 +147,20 @@ public sealed class CameraManager : MonoBehaviour
         Vector3 newCameraAngle = m_centerPoint.eulerAngles;
 
         // 관찰시점 키가 눌러있을 경우에만 루턴
-        while(Input.GetKey(m_observeViewKey))
+        while(true)
         {
-            float mouseX = Input.GetAxis("Mouse X") * m_observeViewSensitivity;
+            // 두개의 키 입력 받기
+            bool isOnLeftKey = Input.GetKey(m_observeViewLeftKey);
+            bool isOnRightKey = Input.GetKey(m_observeViewRightKey);
 
-            newCameraAngle.y -= mouseX;
+            // 두개의 키가 모두 입력되지 않았을경우 반복문 종료
+            if (!isOnLeftKey && !isOnRightKey)
+                break;
+
+            if (isOnLeftKey)
+                newCameraAngle.y += m_observeViewSensitivity;
+            else if (isOnRightKey)
+                newCameraAngle.y -= m_observeViewSensitivity;
 
             newCameraAngle.y = Mathf.Clamp(newCameraAngle.y, m_observeViewMinAngle, m_observeViewMaxAngle);
 

@@ -21,12 +21,6 @@ public sealed class PlayerState3D_PickIdle : PlayerState3D
             return;
         }
 
-        // 플레이어에서 마우스의 방향을 가져옴
-        Vector3 mouseDirectionToPlayer = CameraManager.Instance.GetMouseDirectionToPivot(transform.position);
-
-        // 머리, 몸 회전
-        m_subController.RotateHeadAndBody(mouseDirectionToPlayer);
-
         // 중력적용
         m_subController.ApplyGravity();
 

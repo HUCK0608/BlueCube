@@ -34,14 +34,8 @@ public sealed class PlayerState2D_Idle : PlayerState2D
     // 상태 변경 모음
     private void ChangeStates()
     {
-        // 공격키를 눌렀을 경우 무기를 사용할 수 있고 땅에 있다면 Attack 상태로 변경
-        if (Input.GetKeyDown(m_playerManager.Stat.AttackKey))
-        {
-            if (m_playerManager.Weapon.CanUse && m_playerManager.IsGrounded)
-                m_mainController.ChangeState2D(E_PlayerState2D.Attack);
-        }
         // 점프키를 눌렀을 때 땅에 있으면 JumpUp 상태로 변경
-        else if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))
+        if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))
         {
             if (m_mainController.IsGrounded)
                 m_mainController.ChangeState2D(E_PlayerState2D.JumpUp);

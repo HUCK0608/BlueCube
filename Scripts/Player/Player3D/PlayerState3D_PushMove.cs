@@ -15,11 +15,11 @@ public sealed class PlayerState3D_PushMove : PlayerState3D
         m_currentPushItem = m_playerManager.Hand.CurrentPushItem;
 
         // 플레이어 이동 위치 구하기
-        Vector3 movePosition = m_subController.Body.forward * m_playerManager.Hand.CurrentPushItem.MoveDistance;
+        Vector3 movePosition = m_subController.Forward * m_playerManager.Hand.CurrentPushItem.MoveDistance;
         m_playerMovePositon = transform.position + movePosition;
 
         // 상자 이동
-        m_currentPushItem.PushItem(m_subController.Body.forward);
+        m_currentPushItem.PushItem(m_subController.Forward);
     }
 
     private void Update()

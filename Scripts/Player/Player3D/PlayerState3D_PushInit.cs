@@ -17,7 +17,7 @@ public sealed class PlayerState3D_PushInit : PlayerState3D
 
         Vector3 directionToItem = m_playerManager.Hand.CurrentPushItem.transform.position - transform.position;
         directionToItem.y = 0f;
-        m_subController.LookRotationHeadAndBody(directionToItem.normalized);
+        m_subController.LookRotation(directionToItem.normalized);
 
         m_mainController.ChangeState3D(E_PlayerState3D.PushIdle);
     }

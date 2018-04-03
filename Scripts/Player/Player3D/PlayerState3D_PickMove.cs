@@ -5,7 +5,6 @@ using UnityEngine;
 public sealed class PlayerState3D_PickMove : PlayerState3D
 {
     private Vector3 m_moveDirection;
-    private Vector3 m_mouseDirectionToPlayer;
 
     public override void InitState()
     {
@@ -16,34 +15,15 @@ public sealed class PlayerState3D_PickMove : PlayerState3D
     {
         // 방향키 입력 방향을 가져옴
         m_moveDirection = m_subController.GetMoveDirection();
-        // 플레이어에서 마우스의 방향을 가져옴
-        m_mouseDirectionToPlayer = CameraManager.Instance.GetMouseDirectionToPivot(transform.position);
 
         // 이동 및 회전
-        m_subController.Move(m_mouseDirectionToPlayer, m_moveDirection);
-        Rotate();
+        m_subController.MoveAndRotation(m_moveDirection, m_playerManager.Stat.MoveSpeed_Forward);
 
         // 중력적용
         m_subController.ApplyGravity();
 
         // 상태 변경
         ChangeStates();
-    }
-
-    // 머리와 몸 회전
-    private void Rotate()
-    {
-        // 정면 이동일 경우 머리는 마우스방향을 바라보고 몸은 이동방향으로 바라봄
-        if (m_subController.MoveDirection.Equals(0))
-        {
-            m_subController.RotateHead(m_mouseDirectionToPlayer);
-            m_subController.RotateBody(m_moveDirection);
-        }
-        // 정면 이동이 아닐경우 마우스 방향을 바라봄
-        else
-        {
-            m_subController.RotateHeadAndBody(m_mouseDirectionToPlayer);
-        }
     }
 
     // 상태 변경 모음

@@ -43,7 +43,7 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
     private void ChangeStates()
     {
         // 사다리의 제일 아래이거나 맨 위일경우 Move 상태로 변경
-        if (m_subController.CheckLadder.IsLadderDown() || !m_subController.CheckLadder.IsOnLadder(m_subController.Body.forward))
+        if (m_subController.CheckLadder.IsLadderDown() || !m_subController.CheckLadder.IsOnLadder(m_subController.Forward))
         {
             m_mainController.ChangeState3D(E_PlayerState3D.Move);
         }

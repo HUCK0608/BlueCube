@@ -14,10 +14,6 @@ public sealed class PlayerManager : MonoBehaviour
     // 스킬
     private PlayerSkill_ChangeView m_skill;
 
-    private PlayerWeapon m_weapon;
-    /// <summary>플레이어 무기</summary>
-    public PlayerWeapon Weapon { get { return m_weapon; } }
-
     private PlayerHand m_hand;
     /// <summary>플레이어 손</summary>
     public PlayerHand Hand { get { return m_hand; } }
@@ -62,7 +58,6 @@ public sealed class PlayerManager : MonoBehaviour
 
         m_stat = GetComponent<PlayerStat>();
         m_skill = GetComponent<PlayerSkill_ChangeView>();
-        m_weapon = GetComponent<PlayerWeapon>();
         m_hand = GetComponent<PlayerHand>();
         m_inventory = GetComponent<PlayerInventory>();
 

@@ -24,12 +24,6 @@ public sealed class PlayerState3D_Idle : PlayerState3D
             return;
         }
 
-        // 플레이어에서 마우스의 방향을 가져옴
-        Vector3 mouseDirectionToPlayer = CameraManager.Instance.GetMouseDirectionToPivot(transform.position);
-
-        // 머리, 몸 회전
-        m_subController.RotateHeadAndBody(mouseDirectionToPlayer);
-
         // 중력적용
         m_subController.ApplyGravity();
 
@@ -49,9 +43,10 @@ public sealed class PlayerState3D_Idle : PlayerState3D
             RaycastHit hit;
             int pickItemLayerMask = (1 << 9);
             int pushItemLayerMask = (1 << 10);
+            int hintItemLayerMask = (1 << 13);
 
             // 바라보는 방향에 들 수 있는 아이템이 있으면 PickInit 상태로 변경
-            if (GameLibrary.Raycast3D(rayOrigin, m_subController.Head.forward, out hit, m_playerManager.Stat.ItemCheckDistance, pickItemLayerMask))
+            if (GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, pickItemLayerMask))
             {
                 // 아이템 스크립트를 저장
                 m_playerManager.Hand.CurrentPickItem = hit.transform.GetComponent<Item_PickPut>();
@@ -60,7 +55,7 @@ public sealed class PlayerState3D_Idle : PlayerState3D
                 m_mainController.ChangeState3D(E_PlayerState3D.PickInit);
             }
             // 바라보는 방향에 밀 수 있는 아이템이 있으면 PushInit 상태로 변경
-            else if (GameLibrary.Raycast3D(rayOrigin, m_subController.Head.forward, out hit, m_playerManager.Stat.ItemCheckDistance, pushItemLayerMask))
+            else if (GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, pushItemLayerMask))
             {
                 // 아이템 스크립트를 저장
                 m_playerManager.Hand.CurrentPushItem = hit.transform.GetComponent<Item_Push>();
@@ -68,12 +63,12 @@ public sealed class PlayerState3D_Idle : PlayerState3D
                 // 상태 변경
                 m_mainController.ChangeState3D(E_PlayerState3D.PushInit);
             }
-        }
-        // 공격키를 눌렀을 때 무기가 사용 가능하고 땅에 있다면 Attack 상태로 변경
-        else if (Input.GetKeyDown(m_playerManager.Stat.AttackKey))
-        {
-            if (m_playerManager.Weapon.CanUse && m_playerManager.IsGrounded)
-                m_mainController.ChangeState3D(E_PlayerState3D.Attack);
+            // 바라보는 방향에 힌트 아이템이 있을경우 힌트를 표시
+            else if (GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, hintItemLayerMask))
+            {
+                // 힌트를 표시
+                hit.transform.GetComponent<Item_HintObject>().ShowHint();
+            }
         }
         // 점프키를 눌렀을 때 땅에 있으면 JumpUp 상태로 변경
         else if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))

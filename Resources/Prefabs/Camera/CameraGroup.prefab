@@ -161,10 +161,11 @@ MonoBehaviour:
   m_movingWorkSlerpCheckDistance: 1
   m_moveDirecitonSpeed: 2
   m_moveDirectionMaxDis: 7
-  m_observeViewKey: 324
+  m_observeViewLeftKey: 113
+  m_observeViewRightKey: 101
   m_observeViewMinAngle: -45
   m_observeViewMaxAngle: 135
-  m_observeViewSensitivity: 5
+  m_observeViewSensitivity: 4
   m_returnDefaultViewRotationSpeed: 200
 --- !u!124 &124915451261855278
 Behaviour:

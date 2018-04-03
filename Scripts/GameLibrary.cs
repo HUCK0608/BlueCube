@@ -9,6 +9,9 @@ public static class GameLibrary
     private static Material m_material_red = Resources.Load("Materials/Dumy2") as Material;
     public static Material Material_Red { get { return m_material_red; } }
 
+    private static Material m_material_blue = Resources.Load("Materials/Dumy3") as Material;
+    public static Material Material_Blue { get { return m_material_blue; } }
+
     // layerMask 부분
 
     private static int m_layerMask_Igonore_RBP = (-1) - ((1 << 2) | (1 << 8) | (1 << 11));
@@ -54,18 +57,6 @@ public static class GameLibrary
         return PlayerManager.Instance.IsViewChange ||
                  !worldObject.IsOnRenderer
                  ? true : false;
-    }
-
-    /// <summary>시점변환중이거나 관찰시점이거나 2D시점이면 true를 반환</summary>
-    public static bool Bool_IsCOV2D
-    {
-        get
-        {
-            return PlayerManager.Instance.IsViewChange ||
-                     CameraManager.Instance.IsObserve ||
-                     PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D)
-                     ? true : false;
-        }
     }
 
     /// <summary>시점변환중이거나 시점변환 준비중이거나 관찰시점이면 true를 반환</summary>
