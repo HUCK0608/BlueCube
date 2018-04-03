@@ -29,8 +29,14 @@ public sealed class PlayerState3D_Move : PlayerState3D
     // 상태 변경 모음
     private void ChangeStates()
     {
+        // 시점변환 키를 눌렀을 때 시점변환이 가능하면 Idle 상태로 변경
+        if(Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
+        {
+            if (m_playerManager.Skill.ChangeView())
+                m_mainController.ChangeState3D(E_PlayerState3D.Idle);
+        }
         // 상호작용 키를 눌렀을 때
-        if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey))
+        else if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey))
         {
             Vector3 rayOrigin = transform.position + Vector3.up;
             RaycastHit hit;

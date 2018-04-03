@@ -48,16 +48,12 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_changeViewRect.SetActive(false);
     }
 
-    private void Update()
-    {
-        ChangeView();
-    }
-
-    private void ChangeView()
+    /// <summary>시점변환이 진행되면 true를 반환</summary>
+    public bool ChangeView()
     {
         // 시점변환중이거나 탐지시점이거나 땅이아닐경우 리턴
         if (GameLibrary.Bool_IsPlayerStop || !m_playerManager.IsGrounded)
-            return;
+            return false;
 
         // 현재 시점이 3D일 때 2D로 변경
         if (m_currentView.Equals(E_ViewType.View3D))
@@ -71,6 +67,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
                 StartCoroutine(ChangeView3D());
         }
+
+        return true;
     }
 
     /// 시점변환이 가능할 경우 true를 반환

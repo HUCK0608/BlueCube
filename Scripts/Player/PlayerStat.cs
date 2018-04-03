@@ -62,8 +62,4 @@ public sealed class PlayerStat : MonoBehaviour
     [SerializeField]
     private float m_itemCheckDistance;
     public float ItemCheckDistance { get { return m_itemCheckDistance; } }
-
-    [SerializeField]
-    private float m_pushActivateTime;
-    public float PushActivateTime { get { return m_pushActivateTime; } }
 }

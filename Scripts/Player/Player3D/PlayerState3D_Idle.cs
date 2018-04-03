@@ -36,8 +36,13 @@ public sealed class PlayerState3D_Idle : PlayerState3D
         // 키 입력에 따른 이동 방향 벡터를 가져옴
         Vector3 moveDirection = m_subController.GetMoveDirection();
 
+        // 시점변환 키를 눌렀을 때 시점변환 실행
+        if(Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
+        {
+            m_playerManager.Skill.ChangeView();
+        }
         // 상호작용 키를 눌렀을 때
-        if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey))
+        else if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey))
         {
             Vector3 rayOrigin = transform.position + Vector3.up;
             RaycastHit hit;

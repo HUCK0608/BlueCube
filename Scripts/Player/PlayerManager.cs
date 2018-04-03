@@ -13,6 +13,8 @@ public sealed class PlayerManager : MonoBehaviour
 
     // 스킬
     private PlayerSkill_ChangeView m_skill;
+    /// <summary>시점변환 스킬</summary>
+    public PlayerSkill_ChangeView Skill { get { return m_skill; } }
 
     private PlayerHand m_hand;
     /// <summary>플레이어 손</summary>
@@ -94,6 +96,8 @@ public sealed class PlayerManager : MonoBehaviour
         m_player3D_Object.SetActive(false);
         // 2D플레이어의 부모를 그룹의 루트로 변경
         m_player2D_Object.transform.parent = transform;
+        // 2D플레이어의 각도를 0으로 만듬
+        m_player2D_Object.transform.eulerAngles = Vector3.zero;
         // 3D플레이어의 부모를 2D플레이어로 변경
         m_player3D_Object.transform.parent = m_player2D_Object.transform;
         // 2D플레이어 활성화
