@@ -5,18 +5,15 @@ using UnityEngine;
 public sealed class Item_PickPut : MonoBehaviour
 {
     private Transform m_fadeBox;
+    private Material m_fadeBoxMaterial;
 
-    private bool m_isPick;
-    /// <summary>아이템 들어올리기를 완료했을경우 true를 반환</summary>
-    public bool IsPick { get { return m_isPick; } }
-
-    private bool m_isPut;
-    /// <summary>아이템 놓기를 완료했을경우 true를 반환</summary>
-    public bool IsPut { get { return m_isPut; } }
+    // 아이템을 놓을 수 있는 최대거리
+    [SerializeField]
+    private float m_putMaxDistance;
 
     // 아이템을 드는 속도
     [SerializeField]
-    private float m_pickUpSlerpSpeed;
+    private float m_pickUpMoveSpeed;
 
     // 어느 정도 거리까지 왔을 때 고정상태로 변경할 건지 체크하는 변수
     [SerializeField]
@@ -29,9 +26,25 @@ public sealed class Item_PickPut : MonoBehaviour
     [SerializeField]
     private float m_fixedUpDownSpeed;
 
+    /// <summary>아이템을 놓을 위치를 반환</summary>
+    public Vector3 PutPosition { get { return m_fadeBox.position; } }
+
+    private bool m_isPick;
+    /// <summary>아이템 들어올리기를 완료했을경우 true를 반환</summary>
+    public bool IsPick { get { return m_isPick; } }
+
+    private bool m_isPut;
+    /// <summary>아이템 놓기를 완료했을경우 true를 반환</summary>
+    public bool IsPut { get { return m_isPut; } }
+
+    private bool m_isCanPut;
+    /// <summary>아이템을 놓을 수 있으면 true를 반환</summary>
+    public bool IsCanPut { get { return m_isCanPut; } }
+
     private void Awake()
     {
         m_fadeBox = GameObject.Find("GameLibrary").transform.Find("Item_Box_PickPut_Fade");
+        m_fadeBoxMaterial = m_fadeBox.GetComponent<MeshRenderer>().material;
     }
 
     /// <summary>아이템 들기</summary>
@@ -58,7 +71,7 @@ public sealed class Item_PickPut : MonoBehaviour
         while(true)
         {
             // 아이템 들기
-            transform.position = Vector3.Slerp(transform.position, pickItemPosition3D, m_pickUpSlerpSpeed * Time.deltaTime);
+            transform.position = Vector3.Slerp(transform.position, pickItemPosition3D, m_pickUpMoveSpeed * Time.deltaTime);
 
             // 고정될 위치에 근접했으면 반복문 종료
             if (Vector3.Distance(transform.position, pickItemPosition3D) <= m_changeFixedDistance)
@@ -116,7 +129,54 @@ public sealed class Item_PickPut : MonoBehaviour
     // 반투명 상자로 떨어질 위치를 그려줌
     private void DrawFadeBox()
     {
-        m_fadeBox.position = CalcPutPositon();
+        // 떨어질 위치 받아오기
+        Vector3 putPosition = CalcPutPositon();
+
+        // 플레이어 위치를 가져오고 높이는 현재 계산된 위치의 높이랑 같게 함
+        Vector3 playerPosition = PlayerManager.Instance.Player3D_Object.transform.position;
+        playerPosition.y = putPosition.y;
+
+        // 새로 입력될 색
+        Color newColor = Color.white;
+        // 플레이어까지의 거리
+        float distanceToPlayer = 0f;
+
+        // 아이템을 놓을 수 있는 위치일 경우
+        if (!putPosition.Equals(Vector3.one))
+        {
+            // 놓을 수 있는 위치에서 플레이어까지 거리 측정하기
+            distanceToPlayer = Vector3.Distance(putPosition, playerPosition);
+        }
+        // 놓을 수 없는 위치일 경우
+        else
+        {
+            // 떨어질 위치에 기존 위치를 입력
+            putPosition = m_fadeBox.position;
+
+            // 기존 위치에서 플레이어까지 거리 측정하기
+            distanceToPlayer = Vector3.Distance(m_fadeBox.position, playerPosition);
+        }
+
+        // 해당 거리가 최대 놓을 수 있는 거리를 벗어나지 않고 제한높이를 벗어나지 않을경우
+        if (distanceToPlayer <= m_putMaxDistance && putPosition.y < transform.position.y)
+        {
+            newColor = Color.white;
+            newColor.a = m_fadeBoxMaterial.color.a;
+            m_isCanPut = true;
+        }
+        // 벗어 났을 경우
+        else
+        {
+            newColor = Color.red;
+            newColor.a = m_fadeBoxMaterial.color.a;
+            m_isCanPut = false;
+        }
+
+        // 반투명 상자 색변경
+        m_fadeBoxMaterial.color = newColor;
+
+        // 반투명 상자 이동
+        m_fadeBox.position = putPosition;
     }
 
     // 상자 내려놓기
@@ -128,7 +188,7 @@ public sealed class Item_PickPut : MonoBehaviour
         m_isPut = false;
 
         // 떨어질 최종 위치
-        Vector3 putPosition = CalcPutPositon();
+        Vector3 putPosition = m_fadeBox.position;
         // 이동할 x, z 위치
         Vector3 putPositionXZ = putPosition;
         putPositionXZ.y = transform.position.y;
@@ -156,45 +216,22 @@ public sealed class Item_PickPut : MonoBehaviour
         m_isPut = true;
     }
 
-    // 상자가 떨어질 위치를 계산해서 반환
+    /// <summary>상자가 떨어질 위치를 계산하여 반환. 떨어질 수 있는 위치가 없을경우 (1, 1, 1)를 반환<summary>
     private Vector3 CalcPutPositon()
     {
-        // 최종 계산 위치
-        Vector3 putPosition = transform.position;
-
-        // 계산에 필요한 변수
-        float zero = 0f;
-        float one = 1f;
-        float two = 2f;
-
-        // x, z 좌표 내림
-        float calcX = Mathf.Floor(putPosition.x);
-        float calcZ = Mathf.Floor(putPosition.z);
-
-        // x 계산
-        // 내림한 값에 나누기2를 한 나머지가 0이아니면 1을 더해줌
-        if(!(calcX % two).Equals(zero))
-            calcX += one;
-
-        // z 계산
-        // 내림한 값에 나누기2를 한 나머지가 0이아니면 1을 더해줌
-        if (!(calcZ % two).Equals(zero))
-            calcZ += one;
-
-        // y 계산
-        // y는 밑으로 레이를 쏴서 부딪히는 곳에서 1f를 더함
-        float calcY = zero;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (GameLibrary.Raycast3D(transform.position, Vector3.down, out hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_RBP))
-            calcY = hit.point.y + one;
+        Vector3 putPosition = Vector3.one;
+        // 레이어 마스크에 이 아이템의 레이어마스크도 무시하겠다고 추가
+        int layermask = GameLibrary.LayerMask_Ignore_RBP - (1 << gameObject.layer);
 
-        // 계산된 값을 적용
-        putPosition.x = calcX;
-        putPosition.z = calcZ;
-        putPosition.y = calcY;
+        // 레이를 쏴서 충돌하는 오브젝트 위의 상자 좌표를 구함
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layermask))
+            putPosition = hit.transform.position + Vector3.up * 2f;
 
         // 반환
         return putPosition;
     }
+
 }

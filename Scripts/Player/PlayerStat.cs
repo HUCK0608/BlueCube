@@ -28,10 +28,6 @@ public sealed class PlayerStat : MonoBehaviour
     public float MoveSpeed_Forward { get { return m_moveSpeed_Forward; } }
 
     [SerializeField]
-    private float m_moveSpeed_SideBack;
-    public float MoveSpeed_SideBack { get { return m_moveSpeed_SideBack; } }
-
-    [SerializeField]
     private float m_moveSpeed_Ladder;
     public float MoveSpeed_Ladder { get { return m_moveSpeed_Ladder; } }
 

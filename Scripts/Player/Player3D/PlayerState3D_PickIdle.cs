@@ -33,8 +33,8 @@ public sealed class PlayerState3D_PickIdle : PlayerState3D
     {
         Vector3 moveDirection = m_subController.GetMoveDirection();
 
-        // 상호작용키나 시점변환 키를 누를경우 PickEnd 상태로 변경
-        if(Input.GetKeyDown(m_playerManager.Stat.InteractionKey) || Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
+        // 상호작용키를 누르고 아이템을 놓을 수 있을 때 PickEnd 상태로 변경
+        if(Input.GetKeyDown(m_playerManager.Stat.InteractionKey) && m_playerManager.Hand.CurrentPickItem.IsCanPut)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.PickEnd);
         }

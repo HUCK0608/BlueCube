@@ -101,9 +101,15 @@ public sealed class PlayerController3D : MonoBehaviour
         Vector3 movement = moveDirection * speed;
         movement.y = m_rigidbody.velocity.y;
 
-        m_rigidbody.velocity = movement;
+        LerpRotation(moveDirection);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), m_playerManager.Stat.RotationSpeed * Time.deltaTime);
+        m_rigidbody.velocity = movement;
+    }
+
+    /// <summary>플레이어가 lerp로 direction 방향을 바라보게 함</summary>
+    public void LerpRotation(Vector3 direction)
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), m_playerManager.Stat.RotationSpeed * Time.deltaTime);
     }
 
     /// <summary>플레이어가 direciton 방향을 바라보게 함</summary>

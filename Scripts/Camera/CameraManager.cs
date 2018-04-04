@@ -19,6 +19,8 @@ public sealed class CameraManager : MonoBehaviour
     // 카메라 위치
     [SerializeField]
     private Vector3 m_cameraPos2D;
+    [SerializeField]
+    private Vector3 m_cameraPos3D;
 
     [SerializeField]
     private float m_movingWorkMoveSpeed;
@@ -95,6 +97,34 @@ public sealed class CameraManager : MonoBehaviour
     {
         if(PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
             transform.position = PlayerManager.Instance.Player3D_Object.transform.position;
+    }
+
+    /// <summary>pivot에서 마우스 위치의 방향을 구함</summary>
+    public Vector3 GetMouseDirectionToPivot(Vector3 pivot)
+    {
+        // 법선이 y양의 방향을 보고있고 pivot위치에 있는 평면을 생성
+        Plane plane = new Plane(Vector3.up, pivot);
+
+        // 마우스 위치의 광선 생성
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        // 충돌된 거리를 담을 변수
+        float rayDistance;
+
+        // 충돌 위치를 담을 변수
+        Vector3 hitPoint = Vector3.zero;
+
+        // 평면에서 광선 발사
+        if (plane.Raycast(ray, out rayDistance))
+        {
+            // 충돌 위치 구하기
+            hitPoint = ray.GetPoint(rayDistance);
+        }
+
+        Vector3 direction = hitPoint - pivot;
+
+        //위치 반환
+        return direction.normalized;
     }
 
     /// <summary>pivot높이를 중심으로 마우스의 충돌위치를 구함</summary>
@@ -199,7 +229,7 @@ public sealed class CameraManager : MonoBehaviour
 
         // 이동 및 회전체크용 변수
         bool moveComplete = false;
-        bool angleComplete = false;
+        bool rotationComplete = false;
 
         // 카메라 플레이어 위치로 이동
         while (true)
@@ -208,22 +238,21 @@ public sealed class CameraManager : MonoBehaviour
             if(!moveComplete)
                 m_centerPoint.localPosition = Vector3.MoveTowards(m_centerPoint.localPosition, m_cameraPos2D, m_movingWorkMoveSpeed * Time.deltaTime);
             // 회전
-            if(!angleComplete)
+            if(!rotationComplete)
                 m_centerPoint.localRotation = Quaternion.Slerp(m_centerPoint.localRotation, Quaternion.Euler(m_rotation2D), m_movingWorkRotSpeed * Time.deltaTime);
 
             // 이동완료 체크
             if (!moveComplete && m_centerPoint.localPosition.Equals(m_cameraPos2D))
                 moveComplete = true;
-
             // 회전완료 체크
-            if (!angleComplete && Vector2.Distance(m_centerPoint.localEulerAngles, m_rotation2D) <= m_movingWorkSlerpCheckDistance)
+            if (!rotationComplete && Vector2.Distance(m_centerPoint.localEulerAngles, m_rotation2D) <= m_movingWorkSlerpCheckDistance)
             {
-                angleComplete = true;
+                rotationComplete = true;
                 m_centerPoint.localEulerAngles = Vector3.zero;
             }
 
             // 이동과 회전이 완료되면 반복문 종료
-            if (moveComplete && angleComplete)
+            if (moveComplete && rotationComplete)
                 break;
 
             yield return null;
@@ -237,15 +266,31 @@ public sealed class CameraManager : MonoBehaviour
         // 오쏘그래픽 해제
         m_camera.orthographic = false;
 
+        bool moveComplete = false;
+        bool rotationComplete = false;
+
         while(true)
         {
-            m_centerPoint.localRotation = Quaternion.Slerp(m_centerPoint.localRotation, Quaternion.Euler(m_rotation3D), m_movingWorkRotSpeed * Time.deltaTime);
+            // 이동
+            if (!moveComplete)
+                m_centerPoint.localPosition = Vector3.MoveTowards(m_centerPoint.localPosition, m_cameraPos3D, m_movingWorkMoveSpeed * Time.deltaTime);
+            // 회전
+            if(!rotationComplete)
+                m_centerPoint.localRotation = Quaternion.Slerp(m_centerPoint.localRotation, Quaternion.Euler(m_rotation3D), m_movingWorkRotSpeed * Time.deltaTime);
 
-            if (Vector2.Distance(m_centerPoint.localEulerAngles, m_rotation3D) <= m_movingWorkSlerpCheckDistance)
+            // 이동완료 체크
+            if (!moveComplete && m_centerPoint.localPosition.Equals(m_cameraPos3D))
+                moveComplete = true;
+            // 회전완료 체크
+            if(!rotationComplete && Vector2.Distance(m_centerPoint.localEulerAngles, m_rotation3D) <= m_movingWorkSlerpCheckDistance)
             {
+                rotationComplete = true;
                 m_centerPoint.localEulerAngles = m_rotation3D;
-                break;
             }
+
+            // 이동과 회전이 완료되면 반복문 종료
+            if (moveComplete && rotationComplete)
+                break;
 
             yield return null;
         }
