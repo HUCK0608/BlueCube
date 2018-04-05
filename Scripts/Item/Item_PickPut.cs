@@ -26,8 +26,9 @@ public sealed class Item_PickPut : MonoBehaviour
     [SerializeField]
     private float m_fixedUpDownSpeed;
 
+    private Vector3 m_currentPutPosition;
     /// <summary>아이템을 놓을 위치를 반환</summary>
-    public Vector3 PutPosition { get { return m_fadeBox.position; } }
+    public Vector3 CurrentPutPosition { get { return m_currentPutPosition; } }
 
     private bool m_isPick;
     /// <summary>아이템 들어올리기를 완료했을경우 true를 반환</summary>
@@ -120,6 +121,7 @@ public sealed class Item_PickPut : MonoBehaviour
             else if (addPositionY <= -m_fixedUpDownRange)
                 isUp = true;
 
+            // 떨어질 위치 그려주기
             DrawFadeBox();
 
             yield return null;
@@ -134,7 +136,8 @@ public sealed class Item_PickPut : MonoBehaviour
 
         // 플레이어 위치를 가져오고 높이는 현재 계산된 위치의 높이랑 같게 함
         Vector3 playerPosition = PlayerManager.Instance.Player3D_Object.transform.position;
-        playerPosition.y = putPosition.y;
+        Vector3 playerPositionXZ = playerPosition;
+        playerPositionXZ.y = putPosition.y;
 
         // 새로 입력될 색
         Color newColor = Color.white;
@@ -144,8 +147,8 @@ public sealed class Item_PickPut : MonoBehaviour
         // 아이템을 놓을 수 있는 위치일 경우
         if (!putPosition.Equals(Vector3.one))
         {
-            // 놓을 수 있는 위치에서 플레이어까지 거리 측정하기
-            distanceToPlayer = Vector3.Distance(putPosition, playerPosition);
+            // 계산된 놓을 위치에서 플레이어까지 거리 측정하기
+            distanceToPlayer = Vector3.Distance(putPosition, playerPositionXZ);
         }
         // 놓을 수 없는 위치일 경우
         else
@@ -154,15 +157,16 @@ public sealed class Item_PickPut : MonoBehaviour
             putPosition = m_fadeBox.position;
 
             // 기존 위치에서 플레이어까지 거리 측정하기
-            distanceToPlayer = Vector3.Distance(m_fadeBox.position, playerPosition);
+            distanceToPlayer = Vector3.Distance(m_fadeBox.position, playerPositionXZ);
         }
 
         // 해당 거리가 최대 놓을 수 있는 거리를 벗어나지 않고 제한높이를 벗어나지 않을경우
-        if (distanceToPlayer <= m_putMaxDistance && putPosition.y < transform.position.y)
+        if (distanceToPlayer <= m_putMaxDistance && putPosition.y < transform.position.y && putPosition.y > playerPosition.y)
         {
             newColor = Color.white;
             newColor.a = m_fadeBoxMaterial.color.a;
             m_isCanPut = true;
+            m_currentPutPosition = putPosition;
         }
         // 벗어 났을 경우
         else
@@ -188,7 +192,7 @@ public sealed class Item_PickPut : MonoBehaviour
         m_isPut = false;
 
         // 떨어질 최종 위치
-        Vector3 putPosition = m_fadeBox.position;
+        Vector3 putPosition = m_currentPutPosition;
         // 이동할 x, z 위치
         Vector3 putPositionXZ = putPosition;
         putPositionXZ.y = transform.position.y;
@@ -226,9 +230,59 @@ public sealed class Item_PickPut : MonoBehaviour
         // 레이어 마스크에 이 아이템의 레이어마스크도 무시하겠다고 추가
         int layermask = GameLibrary.LayerMask_Ignore_RBP - (1 << gameObject.layer);
 
-        // 레이를 쏴서 충돌하는 오브젝트 위의 상자 좌표를 구함
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layermask))
-            putPosition = hit.transform.position + Vector3.up * 2f;
+        {
+            // 충돌 오브젝트의 원점에서 충돌좌표를 구함
+            Vector3 localHitPosition = hit.point - hit.transform.position;
+
+            // 절대값으로 변경
+            float absX = Mathf.Abs(localHitPosition.x);
+            float absY = Mathf.Abs(localHitPosition.y);
+            float absZ = Mathf.Abs(localHitPosition.z);
+
+            // 절대값이 제일 높은 값을 기준으로 방향을 구함
+            if(absX > absY)
+            {
+                if(absX > absZ)
+                {
+                    localHitPosition.y = 0f;
+                    localHitPosition.z = 0f;
+                }
+                else
+                {
+                    localHitPosition.x = 0f;
+                    localHitPosition.y = 0f;
+                }
+            }
+            else
+            {
+                if(absY > absZ)
+                {
+                    localHitPosition.x = 0f;
+                    localHitPosition.z = 0f;
+                }
+                else
+                {
+                    localHitPosition.x = 0f;
+                    localHitPosition.y = 0f;
+                }
+            }
+
+            // 놓을위치를 계산
+            putPosition = hit.transform.position + localHitPosition.normalized * 2f;
+
+            // 놓을위치에서 아래쪽에 레이를 쏨
+            if(GameLibrary.Raycast3D(putPosition, Vector3.down, out hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_RBP))
+            {
+                // 무언가 있다면 그 오브젝트 위에 최종 위치를 구함
+                putPosition = hit.point + Vector3.up;
+            }
+            else
+            {
+                // 무언가 없다면 놓을 수 없다고 알림
+                putPosition = Vector3.one;
+            }
+        }
 
         // 반환
         return putPosition;

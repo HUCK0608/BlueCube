@@ -7,7 +7,7 @@ public sealed class WorldObject_Single : WorldObject
     private MeshRenderer m_renderer;
     private Collider2D m_collider2D;
     private Material m_defaultMaterial;
-    
+
     protected override void Awake()
     {
         base.Awake();
@@ -40,7 +40,7 @@ public sealed class WorldObject_Single : WorldObject
         }
         else
         {
-            m_renderer.material = GameLibrary.Material_Red;
+            m_renderer.material = GameLibrary.Material_CanChange;
         }
     }
 }

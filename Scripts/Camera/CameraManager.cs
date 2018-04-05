@@ -62,6 +62,9 @@ public sealed class CameraManager : MonoBehaviour
     // 카메라의 기본 EulerAngles
     private Vector3 m_cameraDefualtEulerAngles;
 
+    [SerializeField]
+    private Material m_skyBoxTest;
+
     // 관찰중인지
     private bool m_isObserve;
     /// <summary>현재 관찰용 시점인지 체크(관찰중일 경우 true를 반환)</summary>
@@ -227,6 +230,7 @@ public sealed class CameraManager : MonoBehaviour
         // 오쏘그래픽으로 변경
         m_camera.orthographic = true;
 
+        RenderSettings.skybox = m_skyBoxTest;
         // 이동 및 회전체크용 변수
         bool moveComplete = false;
         bool rotationComplete = false;
@@ -257,7 +261,6 @@ public sealed class CameraManager : MonoBehaviour
 
             yield return null;
         }
-
     }
 
     // 카메라 무빙워크 (사이드뷰에서 쿼터뷰로 이동)

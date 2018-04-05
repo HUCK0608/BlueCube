@@ -69,7 +69,7 @@ public class Item_Push : MonoBehaviour
     }
 
     /// <summary>direction방향으로 이동할 수 있다면 true를 반환</summary>
-    public bool IsCanMoveToDirection(Vector3 direction)
+    public bool IsCanMove(Vector3 direction)
     {
 
         float temp = 0.1f;

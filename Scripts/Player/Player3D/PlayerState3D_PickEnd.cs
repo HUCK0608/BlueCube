@@ -24,7 +24,7 @@ public sealed class PlayerState3D_PickEnd : PlayerState3D
         Item_PickPut currentPickItem = m_playerManager.Hand.CurrentPickItem;
 
         // 회전방향 구하기
-        Vector3 directionToPutPosition = currentPickItem.PutPosition - transform.position;
+        Vector3 directionToPutPosition = currentPickItem.CurrentPutPosition - transform.position;
         directionToPutPosition.y = 0f;
 
         float checkAngle = 5f;

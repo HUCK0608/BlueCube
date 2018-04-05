@@ -40,7 +40,7 @@ public sealed class PlayerState3D_PushIdle : PlayerState3D
         // 이동입력을 받을 때 미는 방향이 일치하고 밀 방향에 아무것도 없을경우 PushMove 상태로 변경
         else if(!moveDirection.Equals(Vector3.zero) && Vector3.Angle(moveDirection, m_directionToItem).Equals(0f))
         {
-            if (m_currentPushItem.IsCanMoveToDirection(moveDirection))
+            if (m_currentPushItem.IsCanMove(moveDirection))
                 m_mainController.ChangeState3D(E_PlayerState3D.PushMove);
         }
     }

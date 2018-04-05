@@ -56,7 +56,7 @@ public sealed class WorldObject_Multi : WorldObject
         else
         {
             for (int i = 0; i < m_materialCount; i++)
-                m_renderers[i].material = GameLibrary.Material_Red;
+                m_renderers[i].material = GameLibrary.Material_CanChange;
         }
     }
 }
