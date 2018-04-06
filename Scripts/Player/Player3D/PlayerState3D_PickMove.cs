@@ -30,7 +30,7 @@ public sealed class PlayerState3D_PickMove : PlayerState3D
     private void ChangeStates()
     {
         // 상호작용키를 누르고 아이템을 놓을 수 있을 경우 PickEnd 상태로 변경
-        if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey) && m_playerManager.Hand.CurrentPickItem.IsCanPut)
+        if ((Input.GetKeyDown(m_playerManager.Stat.InteractionKey) || Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey)) && m_playerManager.Hand.CurrentPickItem.IsCanPut)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.PickEnd);
         }

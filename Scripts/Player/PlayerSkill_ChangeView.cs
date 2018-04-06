@@ -45,6 +45,10 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_playerManager = GetComponent<PlayerManager>();
 
         m_changeViewRect = GetComponentInChildren<ChangeViewRect>();
+    }
+
+    private void Start()
+    {
         m_changeViewRect.SetActive(false);
     }
 

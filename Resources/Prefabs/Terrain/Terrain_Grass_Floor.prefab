@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4557627344517892}
   - component: {fileID: 114437461828142298}
+  - component: {fileID: 114773479611646582}
   m_Layer: 0
   m_Name: Terrain_Grass_Floor
   m_TagString: Untagged
@@ -191,3 +192,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114773479611646582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1354416862550486}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 625244b86a36d9543a7e97db3266be4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_child:
+  - {fileID: 4958325463337380}
+  - {fileID: 4537378025909212}

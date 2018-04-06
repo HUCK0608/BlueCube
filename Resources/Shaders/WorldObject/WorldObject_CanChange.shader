@@ -1,12 +1,10 @@
 ﻿Shader "Custom/WorldObject/CanChange" {
 	Properties {
-		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("default_UV", 2D) = "white" {}
 		_MainTex2 ("Emission_UV", 2D) = "white" {}
 		_MainTex3 ("Spectrum", 2D) = "white" {}
 		_Emission ("Emission_Power", float) = 1
 		_Speed("Emission_Speed", float) = 1
-		_Alpha("Alpha", Range(0,1)) = 0.5
 	}
 	SubShader {
 		Tags { "RenderType"="Transparent" "Opaque"="Transparent" }
@@ -29,10 +27,8 @@
 			float3 worldNormal;
 		};
 
-		fixed4 _Color;
 		float _Emission;
 		float _Speed;
-		float _Alpha;
 
 		UNITY_INSTANCING_BUFFER_START(Props)
 		UNITY_INSTANCING_BUFFER_END(Props)
@@ -54,7 +50,6 @@
 			o.Emission = lerp(topTex, frontTex, abs(IN.worldNormal.z));
 			o.Emission = lerp(o.Emission, sideTex, abs(IN.worldNormal.x));
 			o.Emission = o.Emission * _Emission * d.r;
-			o.Alpha = _Alpha;
 		}
 		ENDCG
 	}

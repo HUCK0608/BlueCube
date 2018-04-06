@@ -6,7 +6,7 @@ public static class GameLibrary
 {
     // Material 부분
 
-    private static Material m_material_CanChange = Resources.Load("Materials/New/WorldObject_CanChange_Material") as Material;
+    private static Material m_material_CanChange = Resources.Load("Shaders/WorldObject/WorldObject_CanChange_Material") as Material;
     public static Material Material_CanChange { get { return m_material_CanChange; } }
 
     private static Material m_material_blue = Resources.Load("Materials/Dumy3") as Material;
