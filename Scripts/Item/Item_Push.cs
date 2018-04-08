@@ -68,13 +68,29 @@ public class Item_Push : MonoBehaviour
         return nearPosition;
     }
 
+    private void Update()
+    {
+        IsCanMove(Vector3.right);
+    }
+
     /// <summary>direction방향으로 이동할 수 있다면 true를 반환</summary>
     public bool IsCanMove(Vector3 direction)
     {
-
         float temp = 0.1f;
         float boundY = m_collider.bounds.extents.y;
-        
+
+        // 밀 수 있는 길인지 체크
+        int canPushWayLayerMask = (1 << 14);
+
+        Vector3 canPushWayCheckPosition = transform.position;
+        canPushWayCheckPosition.y -= boundY;
+
+        RaycastHit hit;
+
+        // 갈 수 없는 길일 경우 false반환
+        if (!GameLibrary.Raycast3D(canPushWayCheckPosition, direction, out hit, m_moveDistance, canPushWayLayerMask))
+            return false;
+
         // 최소 최대 체크 위치 계산
         Vector3 minCheckPosition = transform.position;
         Vector3 maxCheckPosition = transform.position;
