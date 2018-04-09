@@ -16100,11 +16100,11 @@ Prefab:
         type: 2}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: 69d47dc4fed8c1843972ed4e3354b68e, type: 3}
+      objectReference: {fileID: 4300000, guid: d700ad22785aa9b4dafcf963889273fc, type: 3}
     - target: {fileID: 114503370691805638, guid: d1805a805b53e7e49a776f028884cdb5,
         type: 2}
       propertyPath: m_selectSnowGrassNumber
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d1805a805b53e7e49a776f028884cdb5, type: 2}

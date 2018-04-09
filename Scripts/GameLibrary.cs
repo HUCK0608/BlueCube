@@ -5,7 +5,7 @@ using UnityEngine;
 public static class GameLibrary
 {
     // Material 부분
-    private static Material m_material_MainMaterial3D = Resources.Load("Materials/New/BackGround3D_Material") as Material;
+    private static Material m_material_MainMaterial3D = Resources.Load("Materials/Background/BackGround3D_Material") as Material;
     public static Material Material_MainMaterial3D { get { return m_material_MainMaterial3D; } }
 
     private static Material m_material_CanChange = Resources.Load("Shaders/WorldObject/WorldObject_CanChange_Material") as Material;
