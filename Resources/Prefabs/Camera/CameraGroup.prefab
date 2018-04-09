@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4123037835463328}
+  - component: {fileID: 95108074975403800}
   - component: {fileID: 114657262838335570}
   m_Layer: 0
   m_Name: CameraGroup
@@ -145,6 +146,23 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1894522955602372}
   m_Enabled: 1
+--- !u!95 &95108074975403800
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1315016706924534}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114057038872682930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -156,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 746ba3d5d84ab93438436eb166c5d177, type: 2}
+  profile: {fileID: 0}
 --- !u!114 &114657262838335570
 MonoBehaviour:
   m_ObjectHideFlags: 1
