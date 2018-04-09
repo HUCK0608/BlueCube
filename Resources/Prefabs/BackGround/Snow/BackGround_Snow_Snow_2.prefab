@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33562649940324528}
   - component: {fileID: 23240843944398020}
   - component: {fileID: 65059430436719440}
-  m_Layer: 2
+  m_Layer: 31
   m_Name: ModelAndCollider3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4037980963986882}
   - component: {fileID: 114196644747810736}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: BackGround_Snow_Snow_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
