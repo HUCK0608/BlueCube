@@ -95,15 +95,15 @@ public sealed class PlayerController3D : MonoBehaviour
     /// <summary>moveDirection 방향으로 speed 속도로 이동</summary>
     public void MoveAndRotation(Vector3 moveDirection, float speed)
     {
-        if (moveDirection.Equals(Vector3.zero))
-            return;
-
         Vector3 movement = moveDirection * speed;
         movement.y = m_rigidbody.velocity.y;
 
-        LerpRotation(moveDirection);
-
         m_rigidbody.velocity = movement;
+
+        if (moveDirection.Equals(Vector3.zero))
+            return;
+
+        LerpRotation(moveDirection);
     }
 
     /// <summary>플레이어가 lerp로 direction 방향을 바라보게 함</summary>

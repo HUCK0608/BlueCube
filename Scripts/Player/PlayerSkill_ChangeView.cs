@@ -131,6 +131,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 변경이 허용됬을 경우
         if(IsDoChange)
         {
+            EffectManager.Instance.CreateEffect(Effect_Type.ChangeView, m_playerManager.Player3D_Object.transform.position + Vector3.up * 1.5f);
+
             // 시간 정지
             m_isViewChange = true;
 
@@ -143,9 +145,6 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             // 오브젝트를 2D상태에 맞게 변경
             WorldManager.Instance.Change2D();
 
-            // 플레이어 2D로 변경
-            PlayerManager.Instance.PlayerChange2D();
-
             // 블루큐브 변경
             BlueCubeManager.Instance.ChangeCube();
 
@@ -154,6 +153,9 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
             // 쿼터뷰에서 사이드뷰로 카메라가 이동함
             yield return StartCoroutine(CameraManager.Instance.MovingWork3D());
+
+            // 플레이어 2D로 변경
+            PlayerManager.Instance.PlayerChange2D();
 
             // 2D외벽 활성화
             m_changeViewRect.SetOutWallEnable(true);
