@@ -152,7 +152,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             LightManager.Instance.ShadowEnable(false);
 
             // 쿼터뷰에서 사이드뷰로 카메라가 이동함
-            yield return StartCoroutine(CameraManager.Instance.MovingWork3D());
+            yield return StartCoroutine(CameraManager.Instance.StartMovingWork());
 
             // 플레이어 2D로 변경
             PlayerManager.Instance.PlayerChange2D();
@@ -209,7 +209,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         LightManager.Instance.ShadowEnable(true);
 
         // 사이드뷰에서 쿼터뷰로 카메라가 이동함
-        yield return StartCoroutine(CameraManager.Instance.MovingWork2D());
+        yield return StartCoroutine(CameraManager.Instance.StartMovingWork());
 
         // 상자 크기 감소
         yield return StartCoroutine(m_changeViewRect.SetDecreaseSize());

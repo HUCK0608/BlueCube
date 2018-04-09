@@ -8,6 +8,8 @@ public sealed class CameraManager : MonoBehaviour
     public static CameraManager Instance { get { return m_instance; } }
 
     private Camera m_camera;
+    private Animator m_animator;
+    private static string m_animatorParameterName = "CurrentView";
 
     // 카메라 센터포인트
     private Transform m_centerPoint;
@@ -62,19 +64,19 @@ public sealed class CameraManager : MonoBehaviour
     // 카메라의 기본 EulerAngles
     private Vector3 m_cameraDefualtEulerAngles;
 
-    [SerializeField]
-    private Material m_skyBoxTest;
-
     // 관찰중인지
     private bool m_isObserve;
     /// <summary>현재 관찰용 시점인지 체크(관찰중일 경우 true를 반환)</summary>
     public bool IsObserve { get { return m_isObserve; } }
+
+    private bool m_isOnMovingWork;
 
     private void Awake()
     {
         m_instance = this;
 
         m_camera = GetComponentInChildren<Camera>();
+        m_animator = GetComponent<Animator>();
 
         m_centerPoint = transform.Find("CenterPoint");
 
@@ -224,78 +226,24 @@ public sealed class CameraManager : MonoBehaviour
         }
     }
 
-    // 카메라 무빙워크 (쿼터뷰에서 사이드뷰로 이동)
-    public IEnumerator MovingWork3D()
+    /// <summary>카메라 무빙워크 시작</summary>
+    public IEnumerator StartMovingWork()
     {
-        // 오쏘그래픽으로 변경
-        m_camera.orthographic = true;
+        // 애니메이션 실행
+        m_animator.SetInteger(m_animatorParameterName, (int)PlayerManager.Instance.CurrentView);
 
-        RenderSettings.skybox = m_skyBoxTest;
-        // 이동 및 회전체크용 변수
-        bool moveComplete = false;
-        bool rotationComplete = false;
+        m_isOnMovingWork = true;
 
         // 카메라 플레이어 위치로 이동
-        while (true)
+        while (m_isOnMovingWork)
         {
-            // 이동
-            if(!moveComplete)
-                m_centerPoint.localPosition = Vector3.MoveTowards(m_centerPoint.localPosition, m_cameraPos2D, m_movingWorkMoveSpeed * Time.deltaTime);
-            // 회전
-            if(!rotationComplete)
-                m_centerPoint.localRotation = Quaternion.Slerp(m_centerPoint.localRotation, Quaternion.Euler(m_rotation2D), m_movingWorkRotSpeed * Time.deltaTime);
-
-            // 이동완료 체크
-            if (!moveComplete && m_centerPoint.localPosition.Equals(m_cameraPos2D))
-                moveComplete = true;
-            // 회전완료 체크
-            if (!rotationComplete && Vector2.Distance(m_centerPoint.localEulerAngles, m_rotation2D) <= m_movingWorkSlerpCheckDistance)
-            {
-                rotationComplete = true;
-                m_centerPoint.localEulerAngles = Vector3.zero;
-            }
-
-            // 이동과 회전이 완료되면 반복문 종료
-            if (moveComplete && rotationComplete)
-                break;
-
             yield return null;
         }
     }
 
-    // 카메라 무빙워크 (사이드뷰에서 쿼터뷰로 이동)
-    public IEnumerator MovingWork2D()
+    /// <summary>카메라 무빙워크가 끝났다고 설정</summary>
+    public void CompleteMovingWork()
     {
-        // 오쏘그래픽 해제
-        m_camera.orthographic = false;
-
-        bool moveComplete = false;
-        bool rotationComplete = false;
-
-        while(true)
-        {
-            // 이동
-            if (!moveComplete)
-                m_centerPoint.localPosition = Vector3.MoveTowards(m_centerPoint.localPosition, m_cameraPos3D, m_movingWorkMoveSpeed * Time.deltaTime);
-            // 회전
-            if(!rotationComplete)
-                m_centerPoint.localRotation = Quaternion.Slerp(m_centerPoint.localRotation, Quaternion.Euler(m_rotation3D), m_movingWorkRotSpeed * Time.deltaTime);
-
-            // 이동완료 체크
-            if (!moveComplete && m_centerPoint.localPosition.Equals(m_cameraPos3D))
-                moveComplete = true;
-            // 회전완료 체크
-            if(!rotationComplete && Vector2.Distance(m_centerPoint.localEulerAngles, m_rotation3D) <= m_movingWorkSlerpCheckDistance)
-            {
-                rotationComplete = true;
-                m_centerPoint.localEulerAngles = m_rotation3D;
-            }
-
-            // 이동과 회전이 완료되면 반복문 종료
-            if (moveComplete && rotationComplete)
-                break;
-
-            yield return null;
-        }
+        m_isOnMovingWork = false;
     }
 }
