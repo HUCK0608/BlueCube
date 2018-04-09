@@ -73,7 +73,13 @@ public sealed class EnemyState_Long_Move : EnemyState
 
         float rayDistance = 1.5f;
 
-        if(Physics.Raycast(m_ray, rayDistance, GameLibrary.LayerMask_Ignore_RBP))
+        // 무시할 레이어 마스크
+        int layerMask = (-1) - (GameLibrary.LayerMask_Player | 
+                                     GameLibrary.LayerMask_Bullet | 
+                                     GameLibrary.LayerMask_IgnoreRaycast | 
+                                     GameLibrary.LayerMask_BackgroundTrigger);
+
+        if(Physics.Raycast(m_ray, rayDistance, layerMask))
         {
             checkForward = true;
         }

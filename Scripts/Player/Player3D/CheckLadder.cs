@@ -73,7 +73,13 @@ public sealed class CheckLadder : MonoBehaviour
         m_ray.origin = m_downPoint.position;
         m_ray.direction = Vector3.down;
 
-        if(Physics.Raycast(m_ray, m_downCheckDistance, GameLibrary.LayerMask_Ignore_RBP))
+        // 무시할 레이어 마스크
+        int layerMask = (-1) - (GameLibrary.LayerMask_Player |
+                                     GameLibrary.LayerMask_Bullet |
+                                     GameLibrary.LayerMask_IgnoreRaycast |
+                                     GameLibrary.LayerMask_BackgroundTrigger);
+
+        if (Physics.Raycast(m_ray, m_downCheckDistance, layerMask))
         {
             isLadderDown = true;
         }

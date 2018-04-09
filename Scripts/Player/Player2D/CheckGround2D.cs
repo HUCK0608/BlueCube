@@ -33,12 +33,17 @@ public sealed class CheckGround2D : MonoBehaviour
     {
         bool isCol = false;
 
+        RaycastHit2D hit;
+
+        // 무시할 레이어 마스크
+        int layerMask = (-1) - (GameLibrary.LayerMask_Player |
+                                     GameLibrary.LayerMask_Bullet |
+                                     GameLibrary.LayerMask_IgnoreRaycast |
+                                     GameLibrary.LayerMask_BackgroundTrigger);
 
         for (int i = 0; i < m_checkPointCount; i++)
         {
-            RaycastHit2D hit;
-
-            if (GameLibrary.Raycast2D(m_checkPoints[i].position, Vector2.down, out hit, m_checkDistance, GameLibrary.LayerMask_Ignore_RBP))
+            if (GameLibrary.Raycast2D(m_checkPoints[i].position, Vector2.down, out hit, m_checkDistance, layerMask))
             {
                 isCol = true;
                 m_onGroundPositionY = hit.point.y + m_onGroundUpPosition;

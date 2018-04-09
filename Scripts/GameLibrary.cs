@@ -16,9 +16,23 @@ public static class GameLibrary
 
     // layerMask 부분
 
-    private static int m_layerMask_Igonore_RBP = (-1) - ((1 << 2) | (1 << 8) | (1 << 11));
-    /// <summary> Ignore Layer Mask (Respawn, Bullet, Player) </summary>
-    public static int LayerMask_Ignore_RBP { get { return m_layerMask_Igonore_RBP; } }
+    private static int m_layerMask_Player = LayerMask.NameToLayer("Player");
+    public static int LayerMask_Player { get { return m_layerMask_Player.Shift(); } }
+
+    private static int m_layerMask_Bullet = LayerMask.NameToLayer("Bullet");
+    public static int LayerMask_Bullet { get { return m_layerMask_Bullet.Shift(); } }
+
+    private static int m_layerMask_IgnoreRaycast = LayerMask.NameToLayer("Ignore Raycast");
+    public static int LayerMask_IgnoreRaycast { get { return m_layerMask_IgnoreRaycast.Shift(); } }
+
+    private static int m_layerMask_BackgroundCollision = LayerMask.NameToLayer("Background Collision");
+    public static int LayerMask_BackgroundCollision { get { return m_layerMask_BackgroundCollision.Shift(); } }
+
+    private static int m_layerMask_BackgroundTrigger = LayerMask.NameToLayer("Background Trigger");
+    public static int LayerMask_BackgroundTrigger { get { return m_layerMask_BackgroundTrigger.Shift(); } }
+
+    private static int m_layerMask_CanPushWay = LayerMask.NameToLayer("CanPushWay");
+    public static int LayerMask_CanPushWay { get { return m_layerMask_CanPushWay.Shift(); } }
 
     // string 부분
 
@@ -98,6 +112,11 @@ public static class GameLibrary
             }
             yield return null;
         }
+    }
+
+    public static int Shift(this int value)
+    {
+        return (1 << value);
     }
 
     // 레이

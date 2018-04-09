@@ -227,8 +227,13 @@ public sealed class Item_PickPut : MonoBehaviour
         RaycastHit hit;
 
         Vector3 putPosition = Vector3.one;
-        // 레이어 마스크에 이 아이템의 레이어마스크도 무시하겠다고 추가
-        int layermask = GameLibrary.LayerMask_Ignore_RBP - (1 << gameObject.layer);
+
+        // 무시할 레이어마스크
+        int layermask = (-1) - (GameLibrary.LayerMask_Bullet |
+                                     GameLibrary.LayerMask_Player |
+                                     GameLibrary.LayerMask_IgnoreRaycast |
+                                     GameLibrary.LayerMask_BackgroundTrigger |
+                                     gameObject.layer.Shift());
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layermask))
         {
@@ -247,11 +252,8 @@ public sealed class Item_PickPut : MonoBehaviour
             Vector3 hitPivot = hit.transform.position;
             hitPivot.y = putPositionY;
 
-            Debug.Log("HitPivot : " + hitPivot);
-            Debug.Log("HitPoint : " + hit.point);
             // 충돌 오브젝트의 피벗을 구해서 충돌 로컬좌표를 구함
             Vector3 localHitPosition = hit.point - hitPivot;
-            Debug.Log("localHitPosition : " + localHitPosition);
 
             // 절대값으로 변경
             float absX = Mathf.Abs(localHitPosition.x);
@@ -290,9 +292,8 @@ public sealed class Item_PickPut : MonoBehaviour
             putPosition = hitPivot + localHitPosition.normalized * two;
             putPosition.y = putPositionY;
 
-            Debug.Log("놓을위치 : " + putPosition);
             // 놓을위치에서 아래쪽에 레이를 쏨
-            if (GameLibrary.Raycast3D(putPosition, Vector3.down, out hit, Mathf.Infinity, GameLibrary.LayerMask_Ignore_RBP))
+            if (GameLibrary.Raycast3D(putPosition, Vector3.down, out hit, Mathf.Infinity, layermask))
             {
                 // 무언가 있다면 그 오브젝트 위에 최종 위치를 구함
                 putPosition = hit.point + Vector3.up;

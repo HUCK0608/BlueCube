@@ -68,19 +68,11 @@ public class Item_Push : MonoBehaviour
         return nearPosition;
     }
 
-    private void Update()
-    {
-        IsCanMove(Vector3.right);
-    }
-
     /// <summary>direction방향으로 이동할 수 있다면 true를 반환</summary>
     public bool IsCanMove(Vector3 direction)
     {
         float temp = 0.1f;
         float boundY = m_collider.bounds.extents.y;
-
-        // 밀 수 있는 길인지 체크
-        int canPushWayLayerMask = (1 << 14);
 
         Vector3 canPushWayCheckPosition = transform.position;
         canPushWayCheckPosition.y -= boundY;
@@ -88,7 +80,7 @@ public class Item_Push : MonoBehaviour
         RaycastHit hit;
 
         // 갈 수 없는 길일 경우 false반환
-        if (!GameLibrary.Raycast3D(canPushWayCheckPosition, direction, out hit, m_moveDistance, canPushWayLayerMask))
+        if (!GameLibrary.Raycast3D(canPushWayCheckPosition, direction, out hit, m_moveDistance, GameLibrary.LayerMask_CanPushWay))
             return false;
 
         // 최소 최대 체크 위치 계산
@@ -98,10 +90,16 @@ public class Item_Push : MonoBehaviour
         minCheckPosition.y -= (boundY - temp);
         maxCheckPosition.y += (boundY - temp);
 
+        // 무시할 레이어 마스크
+        int layerMask = (-1) - (GameLibrary.LayerMask_Player |
+                                     GameLibrary.LayerMask_Bullet |
+                                     GameLibrary.LayerMask_IgnoreRaycast |
+                                     GameLibrary.LayerMask_BackgroundTrigger);
+
         // 최소 최대 위치 체크
-        if (GameLibrary.Raycast3D(minCheckPosition, direction, m_moveDistance, GameLibrary.LayerMask_Ignore_RBP))
+        if (GameLibrary.Raycast3D(minCheckPosition, direction, m_moveDistance, layerMask))
             return false;
-        else if (GameLibrary.Raycast3D(maxCheckPosition, direction, m_moveDistance, GameLibrary.LayerMask_Ignore_RBP))
+        else if (GameLibrary.Raycast3D(maxCheckPosition, direction, m_moveDistance, layerMask))
             return false;
 
         // 시작 체크 높이
@@ -115,7 +113,7 @@ public class Item_Push : MonoBehaviour
         while(true)
         {
             // 무언가 충돌하면 충돌했다고 알리고 반복문 종료
-            if(GameLibrary.Raycast3D(checkPosition, direction, m_moveDistance, GameLibrary.LayerMask_Ignore_RBP))
+            if(GameLibrary.Raycast3D(checkPosition, direction, m_moveDistance, layerMask))
             {
                 canMove = false;
                 break;
