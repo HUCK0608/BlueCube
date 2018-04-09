@@ -155,7 +155,7 @@ Animator:
   m_GameObject: {fileID: 1315016706924534}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b651bab7e43938948b555fd72b7b46ec, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -199,7 +199,6 @@ MonoBehaviour:
   m_observeViewMaxAngle: 135
   m_observeViewSensitivity: 4
   m_returnDefaultViewRotationSpeed: 200
-  m_skyBoxTest: {fileID: 0}
 --- !u!124 &124915451261855278
 Behaviour:
   m_ObjectHideFlags: 1
