@@ -131,6 +131,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 변경이 허용됬을 경우
         if(IsDoChange)
         {
+            // 시점변환 이펙트 생성
             EffectManager.Instance.CreateEffect(Effect_Type.ChangeView, m_playerManager.Player3D_Object.transform.position + Vector3.up * 1.5f);
 
             // 시간 정지

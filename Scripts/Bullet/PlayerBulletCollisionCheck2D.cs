@@ -33,7 +33,9 @@ public sealed class PlayerBulletCollisionCheck2D : MonoBehaviour
             m_bullet.EndShoot();
         }
         // 플레이어 관련 태그가 아니고 적의 공격이 아니면
-        else if(!GameLibrary.Bool_IsPlayerTag(collisionTag) && !collisionTag.Equals(GameLibrary.String_EnemyAttack) && !collisionTag.Equals(GameLibrary.String_IgnoreTag))
+        else if(!GameLibrary.Bool_IsPlayerTag(collisionTag) && 
+                 !collisionTag.Equals(GameLibrary.String_EnemyAttack) && 
+                 !collisionTag.Equals(GameLibrary.String_IgnoreTag))
         {
             // 해당 지점에서 멈춤
             m_bullet.EndShoot();

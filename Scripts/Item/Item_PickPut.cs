@@ -44,7 +44,7 @@ public sealed class Item_PickPut : MonoBehaviour
 
     private void Awake()
     {
-        m_fadeBox = GameObject.Find("GameLibrary").transform.Find("Item_Box_PickPut_Fade");
+        m_fadeBox = GameObject.Find("GameLibrary").transform.Find("Interaction_PickPutBox_Fade");
         m_fadeBoxMaterial = m_fadeBox.GetComponent<MeshRenderer>().material;
     }
 

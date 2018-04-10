@@ -150,6 +150,8 @@ public sealed class PlayerController2D : MonoBehaviour
     /// <summary>스탯에 있는 jumpPower로 Rigidbody에 힘을 가함</summary>
     public void Jump()
     {
-        m_rigidbody.AddForce(Vector2.up * m_playerManager.Stat.JumpPower, ForceMode2D.Impulse);
+        Vector3 newVelocity = m_rigidbody.velocity;
+        newVelocity.y = m_playerManager.Stat.JumpPower;
+        m_rigidbody.velocity = newVelocity;
     }
 }

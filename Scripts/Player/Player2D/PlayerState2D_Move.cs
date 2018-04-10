@@ -27,14 +27,19 @@ public sealed class PlayerState2D_Move : PlayerState2D
     // 상태 변경 모음
     private void ChangeStates()
     {
+        // 땅이 아니라면 Falling 상태로 변경
+        if (!m_mainController.IsGrounded)
+        {
+            m_mainController.ChangeState2D(E_PlayerState2D.Falling);
+        }
         // 시점변환 키를 눌렀을 때 시점변환이 가능하면 Idle 상태로 변경
-        if(Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
+        else if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
         {
             if (m_playerManager.Skill.ChangeView())
                 m_mainController.ChangeState2D(E_PlayerState2D.Idle);
         }
         // 점프키를 눌렀을 때 땅에 있으면 JumpUp 상태로 변경
-        if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))
+        else if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))
         {
             if (m_mainController.IsGrounded)
                 m_mainController.ChangeState2D(E_PlayerState2D.JumpUp);

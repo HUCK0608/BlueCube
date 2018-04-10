@@ -119,6 +119,30 @@ public static class GameLibrary
         return (1 << value);
     }
 
+    /// <summary>게임상 정규화 된 위치로 반환</summary>
+    public static Vector3 GameNormalized(this Vector3 position)
+    {
+        Vector3 normalizedPosition = position;
+        
+        // 각 좌표 내림
+        normalizedPosition.x = Mathf.Floor(normalizedPosition.x);
+        normalizedPosition.y = Mathf.Floor(normalizedPosition.y);
+        normalizedPosition.z = Mathf.Floor(normalizedPosition.z);
+
+        float one = 1f;
+        float two = 2f;
+
+        // 각 좌표에 2로 나눈 나머지의 절대값이 1일 경우 1을 더해줌
+        if (Mathf.Abs((normalizedPosition.x % two)).Equals(one))
+            normalizedPosition.x += one;
+        if (Mathf.Abs((normalizedPosition.y % two)).Equals(one))
+            normalizedPosition.y += one;
+        if (Mathf.Abs((normalizedPosition.z % two)).Equals(one))
+            normalizedPosition.z += one;
+
+        return normalizedPosition;
+    }
+
     // 레이
     private static Ray m_ray = new Ray();
 
