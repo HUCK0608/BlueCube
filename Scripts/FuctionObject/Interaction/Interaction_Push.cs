@@ -78,6 +78,8 @@ public sealed class Interaction_Push : MonoBehaviour
             // PickMove 상태면 그리기 종료
             if (playerCurrentState3D.Equals(E_PlayerState3D.PickMove))
                 break;
+
+            yield return null;
         }
     }
 
