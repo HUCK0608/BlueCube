@@ -1536,6 +1536,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_changeViewKey: 323
   m_interactionKey: 101
+  m_acceptKey: 323
+  m_cancelKey: 324
   m_jumpKey: 32
   m_hp: 5
   m_moveSpeed_Forward: 6.5
@@ -1609,8 +1611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85f380977ea233e49868166d1f59c105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_doChangeKey: 323
-  m_notChangeKey: 324
 --- !u!114 &114568683018790088
 MonoBehaviour:
   m_ObjectHideFlags: 1

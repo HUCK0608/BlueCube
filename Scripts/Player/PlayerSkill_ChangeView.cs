@@ -11,13 +11,6 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     // 시점변환 상자
     private ChangeViewRect m_changeViewRect;
 
-    // 키 입력
-    [SerializeField]
-    private KeyCode m_doChangeKey;
-
-    [SerializeField]
-    private KeyCode m_notChangeKey;
-
     // 현재 상태
     private E_ViewType m_currentView;
     /// <summary>현재 시점을 반환 (View2D, View3D)</summary>
@@ -102,11 +95,11 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 모든 키가 안눌렸을 경우 반복
         while(!m_isDoChange && !m_isNotChange)
         {
-            if(Input.GetKeyDown(m_doChangeKey))
+            if(Input.GetKeyDown(m_playerManager.Stat.AcceptKey))
             {
                 m_isDoChange = true;
             }
-            else if(Input.GetKeyDown(m_notChangeKey))
+            else if(Input.GetKeyDown(m_playerManager.Stat.CancelKey))
             {
                 m_isNotChange = true;
             }

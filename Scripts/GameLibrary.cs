@@ -34,6 +34,9 @@ public static class GameLibrary
     private static int m_layerMask_CanPushWay = LayerMask.NameToLayer("CanPushWay");
     public static int LayerMask_CanPushWay { get { return m_layerMask_CanPushWay.Shift(); } }
 
+    private static int m_layerMask_Item_PickPut = LayerMask.NameToLayer("Item_PickPut");
+    public static int LayerMask_Item_PickPut { get { return m_layerMask_Item_PickPut.Shift(); } }
+
     // string 부분
 
     private static string m_string_Player = "Player";

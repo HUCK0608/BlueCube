@@ -11,7 +11,7 @@ public sealed class PlayerState3D_PushInit : PlayerState3D
         m_subController.MoveStopAll();
 
         // 싹 수정해야함(★)
-        Vector3 nearHangPosition = m_playerManager.Hand.CurrentPushItem.GetNearHangPosition(transform.position);
+        Vector3 nearHangPosition = m_playerManager.Hand.CurrentPushItem.GetHangPosition(transform.position);
         nearHangPosition.y = transform.position.y;
         transform.position = nearHangPosition;
 

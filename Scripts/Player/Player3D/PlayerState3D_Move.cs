@@ -57,7 +57,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
             else if(GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, pushItemLayerMask))
             {
                 // 아이템 스크립트를 저장
-                m_playerManager.Hand.CurrentPushItem = hit.transform.GetComponent<Item_Push>();
+                m_playerManager.Hand.CurrentPushItem = hit.transform.GetComponentInParent<Interaction_Push>();
 
                 // 상태 변경
                 m_mainController.ChangeState3D(E_PlayerState3D.PushInit);

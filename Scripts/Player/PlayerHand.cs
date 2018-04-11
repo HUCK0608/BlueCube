@@ -13,7 +13,7 @@ public sealed class PlayerHand : MonoBehaviour
     /// <summary>현재 들고 있는 아이템</summary>
     public Item_PickPut CurrentPickItem { get { return m_currentPickItem; }  set { m_currentPickItem = value; } }
 
-    private Item_Push m_currentPushItem;
+    private Interaction_Push m_currentPushItem;
     /// <summary>현재 밀고 있는 아이템</summary>
-    public Item_Push CurrentPushItem { get { return m_currentPushItem; } set { m_currentPushItem = value; } }
+    public Interaction_Push CurrentPushItem { get { return m_currentPushItem; } set { m_currentPushItem = value; } }
 }

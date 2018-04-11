@@ -14,6 +14,14 @@ public sealed class PlayerStat : MonoBehaviour
     public KeyCode InteractionKey { get { return m_interactionKey; } }
 
     [SerializeField]
+    private KeyCode m_acceptKey;
+    public KeyCode AcceptKey { get { return m_acceptKey; } }
+
+    [SerializeField]
+    private KeyCode m_cancelKey;
+    public KeyCode CancelKey { get { return m_cancelKey; } }
+
+    [SerializeField]
     private KeyCode m_jumpKey;
     public KeyCode JumpKey { get { return m_jumpKey; } }
 
