@@ -66,4 +66,8 @@ public sealed class PlayerStat : MonoBehaviour
     [SerializeField]
     private float m_itemCheckDistance;
     public float ItemCheckDistance { get { return m_itemCheckDistance; } }
+
+    [SerializeField]
+    private float m_objectPickSpeed;
+    public float ObjectPickSpeed { get { return m_objectPickSpeed; } }
 }

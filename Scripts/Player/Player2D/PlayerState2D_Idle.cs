@@ -40,7 +40,7 @@ public sealed class PlayerState2D_Idle : PlayerState2D
             m_mainController.ChangeState2D(E_PlayerState2D.Falling);
         }
         // 시점변환 키를 눌렀을 경우 시점변환 실행
-        else if(Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
+        else if(Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey) || Input.GetKeyDown(m_playerManager.Stat.CancelKey))
         {
             m_playerManager.Skill.ChangeView();
         }
