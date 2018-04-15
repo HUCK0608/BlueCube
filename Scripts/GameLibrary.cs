@@ -37,6 +37,9 @@ public static class GameLibrary
     private static int m_layerMask_Item_PickPut = LayerMask.NameToLayer("Item_PickPut");
     public static int LayerMask_Item_PickPut { get { return m_layerMask_Item_PickPut.Shift(); } }
 
+    private static int m_layerMask_InteractionPickPut = LayerMask.NameToLayer("Interaction PickPut");
+    public static int LayerMask_InteractionPickPut { get { return m_layerMask_InteractionPickPut.Shift(); } }
+
     // string 부분
 
     private static string m_string_Player = "Player";
@@ -117,11 +120,6 @@ public static class GameLibrary
         }
     }
 
-    public static int Shift(this int value)
-    {
-        return (1 << value);
-    }
-
     /// <summary>게임상 정규화 된 위치로 반환</summary>
     public static Vector3 GameNormalized(this Vector3 position)
     {
@@ -144,6 +142,12 @@ public static class GameLibrary
             normalizedPosition.z += one;
 
         return normalizedPosition;
+    }
+
+    // 확장 메서드 부분
+    public static int Shift(this int value)
+    {
+        return (1 << value);
     }
 
     // 레이

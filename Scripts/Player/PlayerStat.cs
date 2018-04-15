@@ -60,10 +60,6 @@ public sealed class PlayerStat : MonoBehaviour
     public float Gravity { get { return m_gravity; } }
 
     [SerializeField]
-    private float m_attackMotionDelay;
-    public float AttackMotionDelay { get { return m_attackMotionDelay; } }
-
-    [SerializeField]
     private float m_itemCheckDistance;
     public float ItemCheckDistance { get { return m_itemCheckDistance; } }
 

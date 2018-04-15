@@ -13,16 +13,11 @@ public sealed class PlayerState3D_PickIdle : PlayerState3D
     {
         // x, z 이동을 멈춤
         m_subController.MoveStopXZ();
-
-        if(GameLibrary.Bool_IsPlayerStop)
-        {
-            // 중력만 적용
-            m_subController.ApplyGravity();
-            return;
-        }
-
         // 중력적용
         m_subController.ApplyGravity();
+
+        if (GameLibrary.Bool_IsPlayerStop)
+            return;
 
         // 상태 변경
         ChangeStates();
@@ -33,10 +28,10 @@ public sealed class PlayerState3D_PickIdle : PlayerState3D
     {
         Vector3 moveDirection = m_subController.GetMoveDirection();
 
-        // 수행 키를 누르고 해당 위치에 내려놓을 수 있을 때 PickEnd 상태로 변경
-        if((Input.GetKeyDown(m_playerManager.Stat.InteractionKey) || Input.GetKeyDown(m_playerManager.Stat.AcceptKey)) && m_playerManager.Hand.CurrentPickItem.IsCanPut)
+        // 수행 키를 누르고 해당 위치에 내려놓을 수 있을 때 PutInit 상태로 변경
+        if((Input.GetKeyDown(m_playerManager.Stat.InteractionKey) || Input.GetKeyDown(m_playerManager.Stat.AcceptKey)) && m_playerManager.Hand.CurrentPickPutObject.IsCanPut)
         {
-            m_mainController.ChangeState3D(E_PlayerState3D.PickEnd);
+            m_mainController.ChangeState3D(E_PlayerState3D.PutInit);
         }
         // 점프키를 눌렀을 때 땅에 있으면 PickJumpUp 상태로 변경
         else if(Input.GetKeyDown(m_playerManager.Stat.JumpKey))

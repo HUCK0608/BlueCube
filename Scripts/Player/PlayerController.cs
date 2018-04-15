@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_PlayerState3D { Idle, Move, JumpUp, JumpDown, LadderInit, LadderIdle, LadderMove, PickInit, PickIdle, PickMove, PickJumpUp, PickJumpDown, PickEnd, PushInit, PushIdle, PushMove }
+public enum E_PlayerState3D { Idle, Move, JumpUp, JumpDown, LadderInit, LadderIdle, LadderMove, PickInit, PickIdle, PickMove, PickJumpUp, PickJumpDown, PutInit, PutDefault, PutThrow, PushInit, PushIdle, PushMove }
 public enum E_PlayerState2D { Idle, Move, JumpUp, Falling, Landing }
 
 public sealed class PlayerController : MonoBehaviour
@@ -56,6 +56,7 @@ public sealed class PlayerController : MonoBehaviour
         {
             // 찾을 상태 컴포넌트의 풀 네임
             string statePath = stateFirstPath + enumValues[i].ToString("G");
+            Debug.Log(statePath);
             // 상태 컴포넌트 찾기
             PlayerState state = player3D.GetComponent(statePath) as PlayerState;
             // 상태 컴포넌트 저장

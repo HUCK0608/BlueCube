@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_PutType { Default, Throw }
 public sealed class Interaction_PickPut : MonoBehaviour
-{
-    private Collider m_collider;
+{ 
+    // 놓기 스크립트
+    private Interaction_Put m_put;
 
-    [SerializeField]
-    private E_PutType m_putType;
-
-    // 아이템을 들 때 고정상태로 바뀔 최소 거리
+    // 오브젝트를 들 때 고정상태로 바뀔 최소 거리
     [SerializeField]
     private float m_changeFixedMinDistance;
 
@@ -24,13 +21,21 @@ public sealed class Interaction_PickPut : MonoBehaviour
     /// <summary>오브젝트를 들고 고정되었을 경우 true를 반환</summary>
     public bool IsPick { get { return m_isPick; } }
 
-    private bool m_isPutEnd;
-    /// <summary>놓기 과정이 모두 끝났을 경우 true를 반환</summary>
-    public bool IsPutEnd { get { return m_isPutEnd; } }
+    /// <summary>놓을 위치를 반환</summary>
+    public Vector3 GetPutPosition() { return m_put.PutPosition; }
+
+    /// <summary>오브젝트의 던지기 방식을 반환</summary>
+    public E_PutType PutType { get { return m_put.PutType; } }
+
+    /// <summary>오브젝트를 놓을 수 있을 경우 true를 반환</summary>
+    public bool IsCanPut { get { return m_put.IsCanPut; } }
+
+    /// <summary>오브젝트 놓기 과정이 끝났을경우 true를 반환</summary>
+    public bool IsPutEnd { get { return m_put.IsPutEnd; } }
 
     private void Awake()
     {
-        m_collider = GetComponentInChildren<Collider>();
+        m_put = GetComponent<Interaction_Put>();
     }
 
     /// <summary>오브젝트를 든다</summary>
@@ -39,14 +44,12 @@ public sealed class Interaction_PickPut : MonoBehaviour
         StartCoroutine(MovePlayerPickPosition());
     }
 
-    /// <summary>아이템을 놓는다</summary>
+    /// <summary>오브젝트를 놓는다</summary>
     public void PutObject()
     {
         m_isPick = false;
 
-        // 던지기 타입에 따라 오브젝트를 놓는다
-        if(m_putType.Equals(E_PutType.Throw))
-            PutThrow();
+        m_put.Put();
     }
 
     /// <summary>오브젝트를 플레이어의 PickPosition으로 이동</summary>
@@ -69,6 +72,9 @@ public sealed class Interaction_PickPut : MonoBehaviour
         }
 
         m_isPick = true;
+
+        // put스크립트 로직 실행
+        m_put.StartPutRogic();
 
         // 고정 코루틴 실행
         StartCoroutine(FixedObject());
@@ -95,7 +101,7 @@ public sealed class Interaction_PickPut : MonoBehaviour
             else
                 upDownValue -= m_fixedUpDownSpeed * Time.deltaTime;
 
-            Vector3 fixedPosition = pickPoint.position + errorPosition;
+            Vector3 fixedPosition = pickPoint.position - errorPosition;
             fixedPosition.y += upDownValue;
             transform.position = fixedPosition;
 
@@ -106,31 +112,5 @@ public sealed class Interaction_PickPut : MonoBehaviour
 
             yield return null;
         }
-    }
-
-    /// <summary>포물선 방식으로 던진다</summary>
-    private void PutThrow()
-    {
-        m_isPutEnd = false;
-    }
-
-    /// <summary>정규화 되지 않은 놓을 위치를 반환한다. 놓을 수 없는 위치일 경우 (1, 1, 1)을 반환한다.</summary>
-    public Vector3 GetPutPosition()
-    {
-        Vector3 putPosition = Vector3.one;
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if(Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {
-
-        }
-    }
-
-    /// <summary>정규화된 놓을 위치를 반환한다</summary>
-    public void GetNormalizedPutPosition()
-    {
-        
     }
 }

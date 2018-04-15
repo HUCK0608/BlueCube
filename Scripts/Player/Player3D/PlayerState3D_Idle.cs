@@ -50,8 +50,18 @@ public sealed class PlayerState3D_Idle : PlayerState3D
             int pushItemLayerMask = (1 << 10);
             int hintItemLayerMask = (1 << 13);
 
+            if(GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, GameLibrary.LayerMask_InteractionPickPut))
+            {
+                // 들고놓기 오브젝트 저장
+                m_playerManager.Hand.CurrentPickPutObject = hit.transform.GetComponentInParent<Interaction_PickPut>();
+
+                Debug.Log(m_playerManager.Hand.CurrentPickPutObject);
+
+                // PickInit 상태로 변경
+                m_mainController.ChangeState3D(E_PlayerState3D.PickInit);
+            }
             // 바라보는 방향에 들 수 있는 아이템이 있으면 PickInit 상태로 변경
-            if (GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, pickItemLayerMask))
+            else if (GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, pickItemLayerMask))
             {
                 // 아이템 스크립트를 저장
                 m_playerManager.Hand.CurrentPickItem = hit.transform.GetComponent<Item_PickPut>();
