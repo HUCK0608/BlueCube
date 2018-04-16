@@ -190,7 +190,7 @@ public sealed class Interaction_Push : MonoBehaviour
             // 플레이어가 바라보는 방향
             Vector3 playerDirection = PlayerManager.Instance.SubController3D.Forward;
             // 충돌된 마우스 위치의 피벗 구하기
-            Vector3 hitPivot = hit.point.GameNormalized();
+            Vector3 hitPivot = hit.point.GetGamePivot();
 
             float one = 1f;
 

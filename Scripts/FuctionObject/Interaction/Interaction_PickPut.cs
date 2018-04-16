@@ -7,6 +7,9 @@ public sealed class Interaction_PickPut : MonoBehaviour
     // 놓기 스크립트
     private Interaction_Put m_put;
 
+    // 모델
+    private Transform m_model;
+
     // 오브젝트를 들 때 고정상태로 바뀔 최소 거리
     [SerializeField]
     private float m_changeFixedMinDistance;
@@ -36,6 +39,8 @@ public sealed class Interaction_PickPut : MonoBehaviour
     private void Awake()
     {
         m_put = GetComponent<Interaction_Put>();
+
+        m_model = transform.Find("ModelAndCollider3D").transform;
     }
 
     /// <summary>오브젝트를 든다</summary>
@@ -62,10 +67,10 @@ public sealed class Interaction_PickPut : MonoBehaviour
         while(true)
         {
             // 들기
-            transform.position = Vector3.Slerp(transform.position, pickPosition, objectPickSpeed * Time.deltaTime);
+            m_model.position = Vector3.Slerp(m_model.position, pickPosition, objectPickSpeed * Time.deltaTime);
 
             // 고정될 위치에 근접했을경우 반복문 종료
-            if (Vector3.Distance(transform.position, pickPosition) <= m_changeFixedMinDistance)
+            if (Vector3.Distance(m_model.position, pickPosition) <= m_changeFixedMinDistance)
                 break;
 
             yield return null;
@@ -89,7 +94,7 @@ public sealed class Interaction_PickPut : MonoBehaviour
         bool isUp = true;
 
         // 현재 위치와 실제 고정될 위치와의 오차
-        Vector3 errorPosition = pickPoint.position - transform.position;
+        Vector3 errorPosition = pickPoint.position - m_model.position;
         // 위 아래로 왔다갔다 하기 위한 값
         float upDownValue = 0f;
 
@@ -103,7 +108,7 @@ public sealed class Interaction_PickPut : MonoBehaviour
 
             Vector3 fixedPosition = pickPoint.position - errorPosition;
             fixedPosition.y += upDownValue;
-            transform.position = fixedPosition;
+            m_model.position = fixedPosition;
 
             if (upDownValue >= m_fixedUpDownRange)
                 isUp = false;

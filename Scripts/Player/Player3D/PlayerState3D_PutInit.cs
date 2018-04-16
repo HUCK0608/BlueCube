@@ -37,12 +37,11 @@ public sealed class PlayerState3D_PutInit : PlayerState3D
             E_PutType putType = m_playerManager.Hand.CurrentPickPutObject.PutType;
 
             // 던지기 방식에 따른 상태 변경
-            if (putType.Equals(E_PutType.Put))
+            if (putType.Equals(E_PutType.Defalut))
                 m_mainController.ChangeState3D(E_PlayerState3D.PutDefault);
             else if (putType.Equals(E_PutType.Throw))
                 m_mainController.ChangeState3D(E_PlayerState3D.PutThrow);
         }
-
     }
 
     public override void EndState()

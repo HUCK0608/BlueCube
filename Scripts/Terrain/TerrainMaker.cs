@@ -48,6 +48,4 @@ public class TerrainMaker : MonoBehaviour
         InitSnowGrass();
         GetComponentInChildren<MeshFilter>().mesh = m_snowGrass[m_selectSnowGrassNumber];
     }
-
-
 }

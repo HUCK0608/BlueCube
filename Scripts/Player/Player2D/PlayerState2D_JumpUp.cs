@@ -29,7 +29,7 @@ public sealed class PlayerState2D_JumpUp : PlayerState2D
     // 상태 변경 모음
     private void ChangeStates()
     {
-        // 캐릭터가 최대높이까지 뛰었을 경우 JumpDown 상태로 변경
+        // 캐릭터가 최대높이까지 뛰었을 경우 Falling 상태로 변경
         if (m_subController.Rigidbody.velocity.y <= 0f)
         {
             m_mainController.ChangeState2D(E_PlayerState2D.Falling);

@@ -11,8 +11,11 @@ public static class GameLibrary
     private static Material m_material_CanChange = Resources.Load("Shaders/WorldObject/WorldObject_CanChange_Material") as Material;
     public static Material Material_CanChange { get { return m_material_CanChange; } }
 
-    private static Material m_material_blue = Resources.Load("Materials/Dumy3") as Material;
-    public static Material Material_Blue { get { return m_material_blue; } }
+    private static Material m_material_Blue = Resources.Load("Materials/Dumy3") as Material;
+    public static Material Material_Blue { get { return m_material_Blue; } }
+
+    private static Material m_material_Red = Resources.Load("Materials/Dumy2") as Material;
+    public static Material Material_Red { get { return m_material_Red; } }
 
     // layerMask 부분
 
@@ -59,6 +62,9 @@ public static class GameLibrary
 
     private static string m_string_IgnoreTag = "IgnoreTag";
     public static string String_IgnoreTag { get { return m_string_IgnoreTag; } }
+
+    private static string m_string_Damage = "Damage";
+    public static string String_Damage { get { return m_string_Damage; } }
 
     // Bool 부분
 
@@ -120,8 +126,8 @@ public static class GameLibrary
         }
     }
 
-    /// <summary>게임상 정규화 된 위치로 반환</summary>
-    public static Vector3 GameNormalized(this Vector3 position)
+    /// <summary>position위치의 피벗을 반환</summary>
+    public static Vector3 GetGamePivot(this Vector3 position)
     {
         Vector3 normalizedPosition = position;
         
@@ -133,7 +139,10 @@ public static class GameLibrary
         float one = 1f;
         float two = 2f;
 
+        normalizedPosition.y -= one;
+
         // 각 좌표에 2로 나눈 나머지의 절대값이 1일 경우 1을 더해줌
+        // y는 1을 빼줌
         if (Mathf.Abs((normalizedPosition.x % two)).Equals(one))
             normalizedPosition.x += one;
         if (Mathf.Abs((normalizedPosition.y % two)).Equals(one))
@@ -142,6 +151,47 @@ public static class GameLibrary
             normalizedPosition.z += one;
 
         return normalizedPosition;
+    }
+
+    /// <summary>pivot에서 target의 제일 큰 방향값을 반환</summary>
+    public static Vector3 GetDirectionAtPivot(Vector3 pivot, Vector3 target)
+    {
+        Vector3 directionToPivot = target - pivot;
+
+        float absX = Mathf.Abs(directionToPivot.x);
+        float absY = Mathf.Abs(directionToPivot.y);
+        float absZ = Mathf.Abs(directionToPivot.z);
+
+        float zero = 0f;
+
+        if(absX > absY)
+        {
+            if(absX > absZ)
+            {
+                directionToPivot.y = zero;
+                directionToPivot.z = zero;
+            }
+            else
+            {
+                directionToPivot.x = zero;
+                directionToPivot.y = zero;
+            }
+        }
+        else
+        {
+            if(absY > absZ)
+            {
+                directionToPivot.x = zero;
+                directionToPivot.z = zero;
+            }
+            else
+            {
+                directionToPivot.x = zero;
+                directionToPivot.y = zero;
+            }
+        }
+        Debug.Log("피벗에서 방향 : " + directionToPivot.normalized);
+        return directionToPivot.normalized;
     }
 
     // 확장 메서드 부분

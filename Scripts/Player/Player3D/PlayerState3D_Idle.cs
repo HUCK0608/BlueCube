@@ -36,8 +36,13 @@ public sealed class PlayerState3D_Idle : PlayerState3D
         // 키 입력에 따른 이동 방향 벡터를 가져옴
         Vector3 moveDirection = m_subController.GetMoveDirection();
 
+        // 밑에 아무것도 없다면 Falling 상태로 변경
+        if(!m_mainController.IsGrounded)
+        {
+            m_mainController.ChangeState3D(E_PlayerState3D.Falling);
+        }
         // 시점변환 키를 눌렀을 때 시점변환 실행
-        if(Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
+        else if(Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
         {
             m_playerManager.Skill.ChangeView();
         }
@@ -50,12 +55,15 @@ public sealed class PlayerState3D_Idle : PlayerState3D
             int pushItemLayerMask = (1 << 10);
             int hintItemLayerMask = (1 << 13);
 
-            if(GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, GameLibrary.LayerMask_InteractionPickPut))
+            // 땅이 아니라면 Falling 상태로 변경
+            if(!m_mainController.IsGrounded)
+            {
+                m_mainController.ChangeState3D(E_PlayerState3D.Falling);
+            }
+            else if(GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, GameLibrary.LayerMask_InteractionPickPut))
             {
                 // 들고놓기 오브젝트 저장
                 m_playerManager.Hand.CurrentPickPutObject = hit.transform.GetComponentInParent<Interaction_PickPut>();
-
-                Debug.Log(m_playerManager.Hand.CurrentPickPutObject);
 
                 // PickInit 상태로 변경
                 m_mainController.ChangeState3D(E_PlayerState3D.PickInit);

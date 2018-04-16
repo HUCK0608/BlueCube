@@ -41,10 +41,10 @@ public sealed class PlayerState3D_JumpUp : PlayerState3D
             // LadderInit 상태로 변경
             m_mainController.ChangeState3D(E_PlayerState3D.LadderInit);
         }
-        // 캐릭터가 최대높이까지 뛰었을 경우 JumpDown 상태로 변경
+        // 캐릭터가 최대높이까지 뛰었을 경우 Falling 상태로 변경
         else if(m_subController.Rigidbody.velocity.y <= 0f)
         {
-            m_mainController.ChangeState3D(E_PlayerState3D.JumpDown);
+            m_mainController.ChangeState3D(E_PlayerState3D.Falling);
         }
     }
 

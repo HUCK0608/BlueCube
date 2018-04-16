@@ -29,8 +29,13 @@ public sealed class PlayerState3D_Move : PlayerState3D
     // 상태 변경 모음
     private void ChangeStates()
     {
+        // 밑에 아무것도 없다면 Falling 상태로 변경
+        if (!m_mainController.IsGrounded)
+        {
+            m_mainController.ChangeState3D(E_PlayerState3D.Falling);
+        }
         // 시점변환 키를 눌렀을 때 시점변환이 가능하면 Idle 상태로 변경
-        if(Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
+        else if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
         {
             if (m_playerManager.Skill.ChangeView())
                 m_mainController.ChangeState3D(E_PlayerState3D.Idle);

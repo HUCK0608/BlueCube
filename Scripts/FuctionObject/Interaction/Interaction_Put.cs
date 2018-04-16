@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_PutType { Put, Throw }
+public enum E_PutType { Defalut, Throw }
 public abstract class Interaction_Put : MonoBehaviour
 {
     // pickPut
     private Interaction_PickPut m_pickPut;
+
+    // 모델
+    protected Transform m_model;
 
     // 반투명 오브젝트
     [SerializeField]
@@ -38,6 +41,8 @@ public abstract class Interaction_Put : MonoBehaviour
     {
         m_pickPut = GetComponent<Interaction_PickPut>();
 
+        m_model = transform.Find("ModelAndCollider3D").transform;
+
         m_fadeObjectMaterial = m_fadeObject.GetComponent<MeshRenderer>().material;
     }
 
@@ -49,10 +54,10 @@ public abstract class Interaction_Put : MonoBehaviour
     /// <summary>이 스크립트의 로직을 실행</summary>
     public void StartPutRogic()
     {
-        StartCoroutine(PutRogic());
+        StartCoroutine(PutLogic());
     }
 
-    private IEnumerator PutRogic()
+    private IEnumerator PutLogic()
     {
         // 오브젝트를 잡고 있는 동안에만 실행
         while(m_pickPut.IsPick)
@@ -82,11 +87,11 @@ public abstract class Interaction_Put : MonoBehaviour
     // 저장된 놓을 수 있는 위치에 놓을 수 있는지 체크
     private void CheckCanPut()
     {
-        Vector3 thisPositionXZ = transform.position;
-        thisPositionXZ.y = m_putPosition.y;
+        Vector3 playerPositionXZ = PlayerManager.Instance.Player3D_Object.transform.position;
+        playerPositionXZ.y = m_putPosition.y;
 
         // 놓을 위치의 높이가 제한 높이를 초과하지 않고 던질 거리가 최대 제한거리를 벗어나지 않을경우 던질 수 있다고 설정
-        if (m_putPosition.y < PlayerManager.Instance.Hand.PickObjectPoint.position.y && Vector3.Distance(thisPositionXZ, m_putPosition) < m_maxPutDistacne)
+        if (m_putPosition.y < PlayerManager.Instance.Hand.PickObjectPoint.position.y && Vector3.Distance(playerPositionXZ, m_putPosition) < m_maxPutDistacne)
             m_isCanPut = true;
         else
             m_isCanPut = false;

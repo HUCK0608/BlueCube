@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class PlayerState2D_Landing : PlayerState2D
+public sealed class PlayerState3D_Landing : PlayerState3D
 {
     // 착지 모션이 끝났는지 여부
     private bool m_isEndLandingMotion;
@@ -17,12 +17,12 @@ public sealed class PlayerState2D_Landing : PlayerState2D
     private void Update()
     {
         // 이동방향 가져오기
-        Vector2 moveDirection = m_subController.GetMoveDirection();
+        Vector3 moveDirection = m_subController.GetMoveDirection();
 
         // 이동 및 회전
-        m_subController.JumpMoveAndRotate(moveDirection);
+        m_subController.MoveAndRotation(moveDirection, m_playerManager.Stat.MoveSpeed_Jump);
 
-        // 중력적용
+        // 중력 적용
         m_subController.ApplyGravity();
 
         ChangeStates();
@@ -32,14 +32,14 @@ public sealed class PlayerState2D_Landing : PlayerState2D
     private void ChangeStates()
     {
         // 점프 키를 누를 경우 JumpUp 상태로 변경
-        if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))
+        if(Input.GetKeyDown(m_playerManager.Stat.JumpKey))
         {
-            m_mainController.ChangeState2D(E_PlayerState2D.JumpUp);
+            m_mainController.ChangeState3D(E_PlayerState3D.JumpUp);
         }
         // 착지 모션이 끝날 경우 Idle 상태로 변경
-        else if (m_isEndLandingMotion)
+        else if(m_isEndLandingMotion)
         {
-            m_mainController.ChangeState2D(E_PlayerState2D.Idle);
+            m_mainController.ChangeState3D(E_PlayerState3D.Idle);
         }
     }
 
