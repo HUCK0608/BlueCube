@@ -17,10 +17,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
         m_moveDirection = m_subController.GetMoveDirection();
 
         // 이동 및 회전
-        m_subController.MoveAndRotation(m_moveDirection, m_playerManager.Stat.MoveSpeed_Forward);
-
-        // 중력적용
-        m_subController.ApplyGravity();
+        m_subController.MoveAndRotate(m_moveDirection);
 
         // 상태 변경
         ChangeStates();
@@ -45,21 +42,18 @@ public sealed class PlayerState3D_Move : PlayerState3D
         {
             Vector3 rayOrigin = transform.position + Vector3.up;
             RaycastHit hit;
-            int pickItemLayerMask = (1 << 9);
-            int pushItemLayerMask = (1 << 10);
             int hintItemLayerMask = (1 << 13);
 
-            // 바라보는 방향에 들 수 있는 아이템이 있으면 PickInit 상태로 변경
-            if (GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, pickItemLayerMask))
+            if (GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, GameLibrary.LayerMask_InteractionPickPut))
             {
-                // 아이템 스크립트를 저장
-                m_playerManager.Hand.CurrentPickItem = hit.transform.GetComponent<Item_PickPut>();
+                // 들고놓기 오브젝트 저장
+                m_playerManager.Hand.CurrentPickPutObject = hit.transform.GetComponentInParent<Interaction_PickPut>();
 
-                // 상태 변경
+                // PickInit 상태로 변경
                 m_mainController.ChangeState3D(E_PlayerState3D.PickInit);
             }
             // 바라보는 방향에 밀 수 있는 아이템이 있으면 PushInit 상태로 변경
-            else if(GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, pushItemLayerMask))
+            else if(GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, GameLibrary.LayerMask_InteractionPush))
             {
                 // 아이템 스크립트를 저장
                 m_playerManager.Hand.CurrentPushItem = hit.transform.GetComponentInParent<Interaction_Push>();

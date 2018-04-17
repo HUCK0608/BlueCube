@@ -7,9 +7,6 @@ public sealed class PlayerState2D_Idle : PlayerState2D
     public override void InitState()
     {
         base.InitState();
-
-        // 모든 속도 멈춤
-        m_subController.MoveStopAll();
     }
 
     private void Update()
@@ -18,14 +15,7 @@ public sealed class PlayerState2D_Idle : PlayerState2D
         m_subController.MoveStopX();
 
         if (GameLibrary.Bool_IsPlayerStop)
-        {
-            // 중력 적용
-            m_subController.ApplyGravity();
             return;
-        }
-
-        // 중력 적용
-        m_subController.ApplyGravity();
 
         // 상태 변경
         ChangeStates();

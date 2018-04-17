@@ -112,7 +112,7 @@ public sealed class Interaction_Push : MonoBehaviour
         m_isPush = true;
 
         // 위쪽에 있는 다른 아이템을 같이 이동시키기 위해 자식으로 포함
-        int layerMask = GameLibrary.LayerMask_Item_PickPut;
+        int layerMask = GameLibrary.LayerMask_InteractionPickPut;
         Debug.Log(layerMask);
         RaycastHit[] anotherItems = Physics.RaycastAll(transform.position, Vector3.up, Mathf.Infinity, layerMask);
         Debug.Log(anotherItems.Length);

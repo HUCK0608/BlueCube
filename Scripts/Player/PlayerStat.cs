@@ -44,20 +44,24 @@ public sealed class PlayerStat : MonoBehaviour
     public float MoveSpeed_Jump { get { return m_moveSpeed_Jump; } }
 
     [SerializeField]
-    private float m_moveSpeed_Push;
-    public float MoveSpeed_Push { get { return m_moveSpeed_Push; } }
-
-    [SerializeField]
     private float m_rotationSpeed;
     public float RotationSpeed { get { return m_rotationSpeed; } }
 
     [SerializeField]
-    private float m_jumpPower;
-    public float JumpPower { get { return m_jumpPower; } }
+    private float m_jumpSpeed;
+    public float JumpSpeed { get { return m_jumpSpeed; } }
 
     [SerializeField]
     private float m_gravity;
     public float Gravity { get { return m_gravity; } }
+
+    [SerializeField]
+    private float m_skinWidth;
+    public float SkinWidth { get { return m_skinWidth; } }
+
+    [SerializeField]
+    private float m_groundCheckDistance;
+    public float GroundCheckDistance { get { return m_groundCheckDistance; } }
 
     [SerializeField]
     private float m_itemCheckDistance;

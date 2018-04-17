@@ -56,7 +56,7 @@ public sealed class CheckLadder : MonoBehaviour
 
         m_ray.origin = m_forwardPoint.position;
         m_ray.direction = direction;
-
+        Debug.DrawRay(m_ray.origin, m_ray.direction * m_forwardCheckDistance, Color.red);
         if (Physics.Raycast(m_ray, m_forwardCheckDistance, m_layerMask))
         {
             isLadder = true;

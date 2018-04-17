@@ -17,9 +17,6 @@ public sealed class PlayerState2D_Falling : PlayerState2D
         // 이동 및 회전
         m_subController.JumpMoveAndRotate(moveDirection);
 
-        // 중력적용
-        m_subController.ApplyGravity();
-
         ChangeStates();
     }
 

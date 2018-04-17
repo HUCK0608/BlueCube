@@ -11,6 +11,7 @@ public sealed class PlayerController3D : MonoBehaviour
     // 땅 체크 스크립트
     private CheckGround3D m_checkGround;
     public CheckGround3D CheckGround { get { return m_checkGround; } }
+
     // 사다리 체크 스크립트
     private CheckLadder m_checkLadder;
     public CheckLadder CheckLadder { get { return m_checkLadder; } }
@@ -37,32 +38,38 @@ public sealed class PlayerController3D : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody>();
     }
 
-    /// <summary>땅인지 체크를 한 후 땅이 아닐 경우 중력을 적용시키며 땅일경우 땅이랑 살짝 띄워준다</summary>
+    private void LateUpdate()
+    {
+        ApplyGravity();
+    }
+
+    /// <summary>중력 적용</summary>
     public void ApplyGravity()
     {
+        if (m_playerManager.IsViewChange || m_playerManager.IsViewChangeReady)
+        {
+            MoveStopAll();
+            return;
+        }
+
         // 땅인지 체크
         m_mainController.IsGrounded = m_checkGround.Check();
 
-        // 땅이아닐경우 중력 적용
-        if(!m_mainController.IsGrounded)
-        {
-            Vector3 newVelocity = m_rigidbody.velocity;
-            newVelocity.y += m_playerManager.Stat.Gravity * Time.deltaTime;
+        Vector3 newVelocity = m_rigidbody.velocity;
 
-            m_rigidbody.velocity = newVelocity;
+        // 땅까지의 거리가 SkinWidth이내이고 현재 낙하 속도가 0이내일 경우 중력을 적용하지 않음
+        if(m_checkGround.DistanceToGround <= m_playerManager.Stat.SkinWidth && m_rigidbody.velocity.y <= 0f)
+        {
+            newVelocity.y = 0f;
         }
-        // 땅일 경우
+        //  그 외엔 중력을 적용함
         else
         {
-            // y속도가 0아래일경우에만 땅이랑 살짝 띄워줌
-            if (m_rigidbody.velocity.y <= 0f)
-            {
-                Vector3 onGroundPosition = transform.position;
-                onGroundPosition.y = m_checkGround.OnGroundPositionY;
-
-                transform.position = onGroundPosition;
-            }
+            newVelocity.y += m_playerManager.Stat.Gravity * Time.deltaTime;
         }
+
+        // 속도적용
+        m_rigidbody.velocity = newVelocity;
     }
 
     /// <summary>이동 방향 벡터를 반환. 입력이 없으면 (0, 0, 0)을 반환</summary>
@@ -92,22 +99,61 @@ public sealed class PlayerController3D : MonoBehaviour
         return moveDirection.normalized;
     }
 
-    /// <summary>moveDirection 방향으로 speed 속도로 이동</summary>
-    public void MoveAndRotation(Vector3 moveDirection, float speed)
+    /// <summary>direction방향으로 이동 및 회전을 함</summary>
+    public void MoveAndRotate(Vector3 direction)
     {
-        Vector3 movement = moveDirection * speed;
+        // 이동방향 * 속도 계산
+        // y는 기존의 속도를 이용
+        Vector3 movement = direction * m_playerManager.Stat.MoveSpeed_Forward;
         movement.y = m_rigidbody.velocity.y;
 
+        // 속도 적용
         m_rigidbody.velocity = movement;
 
-        if (moveDirection.Equals(Vector3.zero))
+        // 이동 입력이 없다면 리턴
+        if (direction.Equals(Vector3.zero))
             return;
 
-        LerpRotation(moveDirection);
+        // 회전
+        LerpRotation(direction);
+    }
+
+    /// <summary>Jump상태에서 direction방향으로 이동 및 회전을 함</summary>
+    public void JumpMoveAndRotate(Vector3 direction)
+    {
+        // 이동방향 * 속도 계산
+        // y는 기존의 속도를 이용
+        Vector3 movement = direction * m_playerManager.Stat.MoveSpeed_Jump;
+        movement.y = m_rigidbody.velocity.y;
+
+        // 속도 적용
+        m_rigidbody.velocity = movement;
+
+        // 이동 입력이 없다면 리턴
+        if (direction.Equals(Vector3.zero))
+            return;
+
+        // 회전
+        LerpRotation(direction);
+    }
+
+    /// <summary>moveDirection방향으로 Stat에 MoveSpeed_Ladder속도로 이동함</summary>
+    public void LadderMove(Vector3 moveDirection)
+    {
+        m_rigidbody.velocity = moveDirection * m_playerManager.Stat.MoveSpeed_Ladder;
+    }
+
+    /// <summary>점프</summary>
+    public void Jump()
+    {
+        Vector3 newVelocity = m_rigidbody.velocity;
+        newVelocity.y = m_playerManager.Stat.JumpSpeed;
+        m_rigidbody.velocity = newVelocity;
     }
 
     /// <summary>플레이어가 lerp로 direction 방향을 바라보게 함</summary>
     public void LerpRotation(Vector3 direction)
+
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), m_playerManager.Stat.RotationSpeed * Time.deltaTime);
     }
@@ -116,12 +162,6 @@ public sealed class PlayerController3D : MonoBehaviour
     public void LookRotation(Vector3 direction)
     {
         transform.rotation = Quaternion.LookRotation(direction);
-    }
-
-    /// <summary>moveDirection방향으로 Stat에 MoveSpeed_Ladder속도로 이동함</summary>
-    public void LadderMove(Vector3 moveDirection)
-    {
-        m_rigidbody.velocity = moveDirection * m_playerManager.Stat.MoveSpeed_Ladder;
     }
 
     /// <summary>x, z의 속도를 멈춤</summary>
@@ -139,54 +179,4 @@ public sealed class PlayerController3D : MonoBehaviour
         m_rigidbody.velocity = Vector3.zero;
     }
 
-    /// <summary>스탯에 있는 jumPower로 Rigidbody에 힘을 가함</summary>
-    public void Jump()
-    {
-        m_rigidbody.AddForce(Vector3.up * m_playerManager.Stat.JumpPower, ForceMode.Impulse);
-    }
-
-    /// <summary>moveDirection방향으로 바라보는방향과 이동방향의 각도를 계산하여 정해진 속도로 이동</summary>
-    //public void Move(Vector3 lookDirection, Vector3 moveDirection)
-    //{
-    //    // 현재 바라보는 방향에서 걷는방향의 각도를 구함
-    //    float angle = Vector3.Angle(lookDirection, moveDirection);
-    //    // 부호를 구하기 위한 연산
-    //    Vector3 cross = Vector3.Cross(lookDirection, moveDirection);
-
-    //    if (cross.y < 0) angle = -angle;
-
-    //    // 바라보는 방향에서 걷는방향의 각도를 이용하여 걷기 애니메이션을 정함
-    //    // Forward
-    //    if (angle >= -50f && angle <= 50f)
-    //        m_moveDirection = 0;
-    //    // Left
-    //    else if (angle > -130f && angle < -50f)
-    //        m_moveDirection = 2;
-    //    // Right
-    //    else if (angle > 50f && angle < 130f)
-    //        m_moveDirection = 3;
-    //    // Back
-    //    else
-    //        m_moveDirection = 1;
-
-    //    moveDirection.y = m_rigidbody.velocity.y;
-
-    //    // 정면 이동일 경우 정면 속도로 이동
-    //    if (m_moveDirection.Equals(0))
-    //    {
-    //        // 속도적용
-    //        moveDirection *= m_playerManager.Stat.MoveSpeed_Forward;
-    //    }
-    //    // 정면이 아닌 이동일 경우 옆, 뒤 속도로 이동
-    //    else
-    //    {
-    //        // 속도적용
-    //        moveDirection *= m_playerManager.Stat.MoveSpeed_SideBack;
-    //    }
-
-    //    // y속도는 기존의 것을 사용
-    //    moveDirection.y = m_rigidbody.velocity.y;
-
-    //    m_rigidbody.velocity = moveDirection;
-    //}
 }

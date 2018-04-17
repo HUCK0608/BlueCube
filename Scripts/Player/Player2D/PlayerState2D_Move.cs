@@ -17,9 +17,6 @@ public sealed class PlayerState2D_Move : PlayerState2D
         // 이동 및 회전
         m_subController.MoveAndRotate(moveDirection);
 
-        // 중력적용
-        m_subController.ApplyGravity();
-
         // 상태 변경
         ChangeStates();
     }

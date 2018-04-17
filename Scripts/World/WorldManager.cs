@@ -23,9 +23,10 @@ public sealed class WorldManager : MonoBehaviour
     }
 
     /// <summary>새로 생성된 오브젝트를 리스트에 포함시킴</summary>
-    public void AddWorldObject(WorldObject newObject)
+    public void AddWorldObject(WorldObject worldObject)
     {
-        m_worldObjects.Add(newObject);
+        worldObject.transform.parent = transform;
+        m_worldObjects.Add(worldObject);
         m_worldObjectCount++;
     }
 

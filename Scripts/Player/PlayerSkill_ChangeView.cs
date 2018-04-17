@@ -48,43 +48,23 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     /// <summary>시점변환이 진행되면 true를 반환</summary>
     public bool ChangeView()
     {
-        // 시점변환중이거나 탐지시점이거나 땅이아닐경우 리턴
-        if (GameLibrary.Bool_IsPlayerStop || !m_playerManager.IsGrounded)
+        // 이미 시점변환 중이거나 시점변환 준비중이면 리턴
+        if (m_playerManager.IsViewChange || m_playerManager.IsViewChangeReady)
             return false;
 
         // 현재 시점이 3D일 때 2D로 변경
         if (m_currentView.Equals(E_ViewType.View3D))
         {
-            if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
-                StartCoroutine(ChangeView2D());
+            StartCoroutine(ChangeView2D());
         }
         // 현재 시점이 2D일 때 3D로 변경
         else
         {
-            if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
-                StartCoroutine(ChangeView3D());
+            StartCoroutine(ChangeView3D());
         }
 
         return true;
     }
-
-    /// 시점변환이 가능할 경우 true를 반환
-    //private bool IsCanChange()
-    //{
-    //    // 3D이든 2D이든 땅이 아니면 false를 반환
-    //    if (!m_playerManager.IsGrounded)
-    //        return false;
-
-    //    // 3D일 경우
-    //    if (m_playerManager.CurrentView.Equals(E_ViewType.View3D))
-    //    {
-    //        E_PlayerState3D currentState3D = m_playerManager.MainController.CurrentState3D;
-    //    }
-    //    else
-    //    {
-    //        E_PlayerState2D currentState2D = m_playerManager.MainController.CurrentState2D;
-    //    }
-    //}
 
     // 시점변환을 허용할 건지 체크하는 코루틴
     private IEnumerator CheckKey()

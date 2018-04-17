@@ -14,13 +14,11 @@ public sealed class PlayerState2D_JumpUp : PlayerState2D
 
     private void Update()
     {
+        // 이동 방향 가져오기
         Vector2 moveDirection = m_subController.GetMoveDirection();
 
         // 이동 및 회전
         m_subController.JumpMoveAndRotate(moveDirection);
-
-        // 중력적용
-        m_subController.ApplyGravity();
 
         // 상태 변경
         ChangeStates();

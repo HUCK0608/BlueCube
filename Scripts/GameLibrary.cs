@@ -37,8 +37,8 @@ public static class GameLibrary
     private static int m_layerMask_CanPushWay = LayerMask.NameToLayer("CanPushWay");
     public static int LayerMask_CanPushWay { get { return m_layerMask_CanPushWay.Shift(); } }
 
-    private static int m_layerMask_Item_PickPut = LayerMask.NameToLayer("Item_PickPut");
-    public static int LayerMask_Item_PickPut { get { return m_layerMask_Item_PickPut.Shift(); } }
+    private static int m_layerMask_InteractionPush = LayerMask.NameToLayer("Interaction Push");
+    public static int LayerMask_InteractionPush { get { return m_layerMask_InteractionPush.Shift(); } }
 
     private static int m_layerMask_InteractionPickPut = LayerMask.NameToLayer("Interaction PickPut");
     public static int LayerMask_InteractionPickPut { get { return m_layerMask_InteractionPickPut.Shift(); } }
@@ -139,8 +139,6 @@ public static class GameLibrary
         float one = 1f;
         float two = 2f;
 
-        normalizedPosition.y -= one;
-
         // 각 좌표에 2로 나눈 나머지의 절대값이 1일 경우 1을 더해줌
         // y는 1을 빼줌
         if (Mathf.Abs((normalizedPosition.x % two)).Equals(one))
@@ -190,7 +188,6 @@ public static class GameLibrary
                 directionToPivot.y = zero;
             }
         }
-        Debug.Log("피벗에서 방향 : " + directionToPivot.normalized);
         return directionToPivot.normalized;
     }
 

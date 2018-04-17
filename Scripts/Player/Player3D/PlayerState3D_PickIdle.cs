@@ -13,8 +13,6 @@ public sealed class PlayerState3D_PickIdle : PlayerState3D
     {
         // x, z 이동을 멈춤
         m_subController.MoveStopXZ();
-        // 중력적용
-        m_subController.ApplyGravity();
 
         if (GameLibrary.Bool_IsPlayerStop)
             return;

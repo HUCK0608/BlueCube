@@ -20,10 +20,7 @@ public sealed class PlayerState3D_Landing : PlayerState3D
         Vector3 moveDirection = m_subController.GetMoveDirection();
 
         // 이동 및 회전
-        m_subController.MoveAndRotation(moveDirection, m_playerManager.Stat.MoveSpeed_Jump);
-
-        // 중력 적용
-        m_subController.ApplyGravity();
+        m_subController.MoveAndRotate(moveDirection);
 
         ChangeStates();
     }

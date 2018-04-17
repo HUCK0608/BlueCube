@@ -5,9 +5,11 @@ using UnityEngine;
 
 public sealed class Interaction_Put_Defalut : Interaction_Put
 {
+    [SerializeField]
+    private float m_moveSpeed;
+
     public override void Put()
     {
-        m_isPutEnd = false;
         StartCoroutine(Move());
     }
 
@@ -29,14 +31,10 @@ public sealed class Interaction_Put_Defalut : Interaction_Put
         {
             // 히트 피벗 구하기
             Vector3 hitPivot = hit.point.GetGamePivot();
-            Vector3 newPutPosition = hitPivot + GameLibrary.GetDirectionAtPivot(hitPivot, hit.point) * 2f;
-            Debug.Log("레이충돌 위치 : " + hit.point);
-            Debug.Log("레이충돌 피벗 : " + hitPivot);
-            Debug.Log("계산된 위치 : " + newPutPosition);
+            Vector3 newPutPosition = hitPivot + GameLibrary.GetDirectionAtPivot(hit.transform.position, hit.point) * 2f;
+
             if (GameLibrary.Raycast3D(newPutPosition, Vector3.down, out hit, Mathf.Infinity, layermask))
                 putPosition = hit.point + Vector3.up;
-
-            Debug.Log("최종 좌표 : " + putPosition);
         }
 
         return putPosition;
@@ -45,11 +43,34 @@ public sealed class Interaction_Put_Defalut : Interaction_Put
     // 이동
     private IEnumerator Move()
     {
+        m_isPutEnd = false;
+
+        Vector3 putPosition = GetPutPosition();
+        Vector3 putPositionXZ = putPosition;
+        putPositionXZ.y = m_model.position.y;
+
+        // x, z 이동
         while(true)
         {
+            m_model.position = Vector3.MoveTowards(m_model.position, putPositionXZ, m_moveSpeed * Time.deltaTime);
+
+            if (m_model.position.Equals(putPositionXZ))
+                break;
+
             yield return null;
         }
 
-        m_isPutEnd = false;
+        // 최종 위치로의 이동
+        while(true)
+        {
+            m_model.position = Vector3.MoveTowards(m_model.position, putPosition, m_moveSpeed * Time.deltaTime);
+
+            if (m_model.position.Equals(putPosition))
+                break;
+
+            yield return null;
+        }
+
+        m_isPutEnd = true;
     }
 }

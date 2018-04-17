@@ -20,10 +20,7 @@ public sealed class PlayerState3D_JumpUp : PlayerState3D
         m_moveDirection = m_subController.GetMoveDirection();
 
         // 이동 및 회전
-        m_subController.MoveAndRotation(m_moveDirection, m_playerManager.Stat.MoveSpeed_Jump);
-
-        // 중력적용
-        m_subController.ApplyGravity();
+        m_subController.JumpMoveAndRotate(m_moveDirection);
 
         // 상태 변경
         ChangeStates();

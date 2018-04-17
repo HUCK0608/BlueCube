@@ -11,7 +11,7 @@ public sealed class EffectManager : MonoBehaviour
 
     private static string m_effectName = "Effect_";
 
-    Dictionary<Effect_Type, GameObject> m_effects;
+    private Dictionary<Effect_Type, GameObject> m_effects;
 
     private void Awake()
     {

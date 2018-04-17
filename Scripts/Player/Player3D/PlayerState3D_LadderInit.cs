@@ -8,6 +8,8 @@ public sealed class PlayerState3D_LadderInit : PlayerState3D
     {
         base.InitState();
 
+        m_subController.MoveStopAll();
+
         // 머리와 몸이 사다리를 바라보게 만듬
         m_subController.LookRotation(m_subController.CurrentLadder.Forward);
 
