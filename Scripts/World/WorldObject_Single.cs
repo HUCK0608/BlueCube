@@ -38,9 +38,67 @@ public sealed class WorldObject_Single : WorldObject
         {
             m_renderer.material = m_defaultMaterial;
         }
-        else
+        else if(materialType.Equals(E_MaterialType.Change))
         {
             m_renderer.material = GameLibrary.Material_CanChange;
         }
+        else if(materialType.Equals(E_MaterialType.Block))
+        {
+            if(!m_isShowBlock)
+                StartCoroutine(ShowBlock());
+        }
+    }
+
+    private IEnumerator ShowBlock()
+    {
+        m_isShowBlock = true;
+
+        // 반복 횟수
+        int cycleCount = 0;
+        // 누적 시간
+        float addTime = 0f;
+
+        bool isChangeMaterial = false;
+
+        while(PlayerManager.Instance.IsViewChangeReady && isIncludeChangeViewRect)
+        {
+            addTime += Time.deltaTime;
+
+            // 누적시간이 반복 시간을 넘겼다면 실행
+            if(addTime >= WorldManager.Instance.ShowBlockCycleTime)
+            {
+                // 순서에 따른 머테리얼 변경
+                if (isChangeMaterial)
+                {
+                    m_renderer.material = GameLibrary.Material_CanChange;
+                    isChangeMaterial = false;
+
+                    // 한 사이클이 돌았다고 설정
+                    cycleCount++;
+                }
+                else
+                {
+                    m_renderer.material = GameLibrary.Material_Red;
+                    isChangeMaterial = true;
+                }
+
+
+                if (cycleCount.Equals(WorldManager.Instance.MaxShowBlockCycle))
+                    break;
+
+                // 누적시간 초기화
+                addTime = 0f;
+            }
+
+            yield return null;
+        }
+
+        // 현재 상태에 따라 메테리얼 변경
+        if (isIncludeChangeViewRect)
+            SetMaterial(E_MaterialType.Change);
+        else
+            SetMaterial(E_MaterialType.Default);
+                
+        m_isShowBlock = false;
     }
 }

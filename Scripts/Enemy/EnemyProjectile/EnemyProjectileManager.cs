@@ -66,6 +66,10 @@ public sealed class EnemyProjectileManager : MonoBehaviour
 
             m_projectiles_Bomb.Add(newProjectile);
             m_projectile_BombCount++;
+
+            // 월드오브젝트에 포함시키기
+            WorldObject newWorldObject = newProjectile.GetComponent<WorldObject>();
+            WorldManager.Instance.AddWorldObject(newWorldObject);
         }
 
         return newProjectile;

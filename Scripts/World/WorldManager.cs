@@ -11,6 +11,14 @@ public sealed class WorldManager : MonoBehaviour
 
     private int m_worldObjectCount;
 
+    [SerializeField]
+    private int m_maxShowBlockCycle;
+    public int MaxShowBlockCycle { get { return m_maxShowBlockCycle; } }
+
+    [SerializeField]
+    private float m_showBlockCycleTime;
+    public float ShowBlockCycleTime { get { return m_showBlockCycleTime; } }
+
     private void Awake()
     {
         m_instance = this;

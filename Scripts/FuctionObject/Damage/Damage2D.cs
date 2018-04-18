@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class Damage3D : MonoBehaviour
+public sealed class Damage2D : MonoBehaviour
 {
     private Damage m_damage;
 
@@ -11,7 +11,7 @@ public sealed class Damage3D : MonoBehaviour
         m_damage = GetComponentInParent<Damage>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         m_damage.DoHit(other.transform.parent.gameObject);
     }

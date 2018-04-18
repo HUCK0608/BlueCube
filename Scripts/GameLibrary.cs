@@ -224,6 +224,19 @@ public static class GameLibrary
         return false;
     }
 
+    private static RaycastHit2D m_hit2D;
+
+    /// <summary>파라미터 속성으로 2D레이를 쏴서 무언가 충돌하면 true를 반환</summary>
+    public static bool Raycast2D(Vector2 origin, Vector2 direction, float maxDistance, int layerMask)
+    {
+        m_hit2D = Physics2D.Raycast(origin, direction, maxDistance, layerMask);
+
+        if (m_hit2D.collider != null)
+            return true;
+
+        return false;
+    }
+
     /// <summary>파라미터 속성으로 2D레이를 쏴서 무언가 충돌하면 true를 반환</summary>
     public static bool Raycast2D(Vector2 origin, Vector2 direction, out RaycastHit2D hit, float maxDistance, int layerMask)
     {

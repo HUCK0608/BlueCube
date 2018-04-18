@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
+    protected WorldObject m_worldObject;
     protected Rigidbody m_rigidbody;
 
     protected bool m_isCanUse;
@@ -12,6 +13,7 @@ public class EnemyProjectile : MonoBehaviour
 
     protected virtual void Awake()
     {
+        m_worldObject = GetComponent<WorldObject>();
         m_rigidbody = GetComponentInChildren<Rigidbody>();
     }
 
@@ -19,6 +21,8 @@ public class EnemyProjectile : MonoBehaviour
     public virtual void UseProjectile(Vector3 origin, Vector3 destination)
     {
         m_isCanUse = false;
+
+        m_worldObject.SetRendererEnable(true);
     }
 
     /// <summary>발사체 사용을 중지</summary>

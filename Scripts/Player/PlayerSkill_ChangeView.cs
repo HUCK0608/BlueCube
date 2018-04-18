@@ -10,6 +10,10 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
     // 시점변환 상자
     private ChangeViewRect m_changeViewRect;
+    public ChangeViewRect ChangeViewRect { get { return m_changeViewRect; } }
+
+    // 끼임 체크 스크립트
+    private CheckBlock m_checkBlock;
 
     // 현재 상태
     private E_ViewType m_currentView;
@@ -38,6 +42,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_playerManager = GetComponent<PlayerManager>();
 
         m_changeViewRect = GetComponentInChildren<ChangeViewRect>();
+
+        m_checkBlock = GetComponentInChildren<CheckBlock>();
     }
 
     private void Start()
@@ -75,10 +81,17 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 모든 키가 안눌렸을 경우 반복
         while(!m_isDoChange && !m_isNotChange)
         {
+            // 수행 키를 누를 경우
             if(Input.GetKeyDown(m_playerManager.Stat.AcceptKey))
             {
-                m_isDoChange = true;
+                // 끼일 오브젝트가 있다면 시각적인 이벤트 실행
+                if (m_checkBlock.IsBlock())
+                    ;
+                // 끼일 오브젝트가 없다면 시점변환 실행
+                else
+                    m_isDoChange = true;
             }
+            // 취소 키를 누를 경우
             else if(Input.GetKeyDown(m_playerManager.Stat.CancelKey))
             {
                 m_isNotChange = true;

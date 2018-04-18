@@ -5,7 +5,7 @@ using UnityEngine;
 public sealed class ChangeViewRect : MonoBehaviour
 {
     // 스킬
-    PlayerSkill_ChangeView m_skill;
+    private PlayerSkill_ChangeView m_skill;
 
     // 2D 외벽 콜라이더
     private GameObject m_outWallGroup;
@@ -29,6 +29,9 @@ public sealed class ChangeViewRect : MonoBehaviour
     public void SetColliderEnable(bool value) { m_collider.enabled = value; }
     /// <summary>활성화 여부</summary>
     public void SetActive(bool value) { gameObject.SetActive(value); }
+
+    /// <summary>상자의 z크기를 반환</summary>
+    public float SizeZ { get { return transform.localScale.z; } }
 
     private void Awake()
     {

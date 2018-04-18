@@ -84,7 +84,6 @@ public sealed class EnemyProjectile_Bomb : EnemyProjectile
     private IEnumerator Move()
     {
         m_rigidbody.isKinematic = false;
-        m_rigidbody.AddForce(m_currentVelocity, ForceMode.Impulse);
 
         float stopDistanceY = m_collider.bounds.extents.y + 0.2f;
         int layerMask = (-1) - (GameLibrary.LayerMask_BackgroundTrigger |
@@ -93,13 +92,30 @@ public sealed class EnemyProjectile_Bomb : EnemyProjectile
 
         while(true)
         {
-            m_currentVelocity = m_rigidbody.velocity;
-            m_currentVelocity.y = m_currentVelocity.y + m_gravity * Time.deltaTime;
-            m_rigidbody.velocity = m_currentVelocity;
+            if (!GameLibrary.Bool_IsGameStop(m_worldObject))
+            {
+                m_currentVelocity.y = m_currentVelocity.y + m_gravity * Time.deltaTime;
+                m_rigidbody.velocity = m_currentVelocity;
 
-            // 밑에 무언가 있다면 이동 코루틴 종료
-            if (GameLibrary.Raycast3D(m_rigidbody.transform.position, Vector3.down, stopDistanceY, layerMask))
-                break;
+                // 3D일 경우
+                if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
+                {
+                    // 3D레이로 밑에 무언가 있다면 이동 코루틴 종료
+                    if (GameLibrary.Raycast3D(m_rigidbody.transform.position, Vector3.down, stopDistanceY, layerMask))
+                        break;
+                }
+                // 2D일 경우
+                else
+                {
+                    // 2D레이로 밑에 무언가 있다면 이동 코루틴 종료
+                    if (GameLibrary.Raycast2D(m_rigidbody.transform.position, Vector2.down, stopDistanceY, layerMask))
+                        break;
+                }
+            }
+            else
+            {
+                m_rigidbody.velocity = Vector3.zero;
+            }
 
             yield return null;
         }

@@ -19,13 +19,23 @@ public sealed class EnemyDetectionArea : MonoBehaviour
 
     public bool CheckDetected(Vector3 target)
     {
+        if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
+            return CheckDetected3D(target);
+        else
+            return CheckDetected2D(target);
+    }
+
+    private bool CheckDetected3D(Vector3 target)
+    {
         bool checkX = false;
         bool checkY = false;
         bool checkZ = false;
 
-        float halfX = m_size.x * 0.5f;
-        float halfY = m_size.y * 0.5f;
-        float halfZ = m_size.z * 0.5f;
+        float half = 0.5f;
+
+        float halfX = m_size.x * half;
+        float halfY = m_size.y * half;
+        float halfZ = m_size.z * half;
 
         Vector3 thisPosition = transform.position;
 
@@ -39,6 +49,30 @@ public sealed class EnemyDetectionArea : MonoBehaviour
             checkZ = true;
 
         if (checkX && checkY && checkZ)
+            return true;
+
+        return false;
+    }
+
+    private bool CheckDetected2D(Vector3 target)
+    {
+        bool checkX = false;
+        bool checkY = false;
+
+        float half = 0.5f;
+
+        float halfX = m_size.x * half;
+        float halfY = m_size.y * half;
+
+        Vector3 thisPosition = transform.position;
+
+        if (target.x >= thisPosition.x - halfX && target.x <= thisPosition.x + halfX)
+            checkX = true;
+
+        if (target.y >= thisPosition.y - halfY && target.y <= thisPosition.y + halfY)
+            checkY = true;
+
+        if (checkX && checkY)
             return true;
 
         return false;

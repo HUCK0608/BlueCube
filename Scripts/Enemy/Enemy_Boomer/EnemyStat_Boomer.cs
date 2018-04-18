@@ -9,10 +9,10 @@ public sealed class EnemyStat_Boomer : EnemyStat
     public float RotationSpeed { get { return m_rotationSpeed; } }
 
     [SerializeField]
-    private float m_shootDelay;
-    public float ShootDelay { get { return m_shootDelay; } }
-
-    [SerializeField]
     private Transform m_shootPosition;
     public Transform ShootPosition { get { return m_shootPosition; } }
+
+    [SerializeField]
+    private float m_shootDelay;
+    public float ShootDelay { get { return m_shootDelay; } }
 }

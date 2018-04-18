@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_MaterialType { Default, Change }
+public enum E_MaterialType { Default, Change, Block }
 [SelectionBase]
 public class WorldObject : MonoBehaviour
 {
@@ -12,6 +12,8 @@ public class WorldObject : MonoBehaviour
     private bool m_isIncludeChangeViewRect;
     /// <summary>시점변환 상자에 포함되어 있으면 true를 반환</summary>
     public bool isIncludeChangeViewRect { get { return m_isIncludeChangeViewRect; } set { m_isIncludeChangeViewRect = value; } }
+
+    protected bool m_isShowBlock;
 
     protected virtual void Awake()
     {
