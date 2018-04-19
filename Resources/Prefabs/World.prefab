@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d1c93103f26fe47b9d1fcfb865f22a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxShowBlockCycle: 3
+  m_maxShowBlockCycleCount: 3
   m_showBlockCycleTime: 0.2
 --- !u!114 &114865851418333656
 MonoBehaviour:

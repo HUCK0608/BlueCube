@@ -5,10 +5,10 @@ using UnityEngine;
 public static class GameLibrary
 {
     // Material 부분
-    private static Material m_material_MainMaterial3D = Resources.Load("Materials/Background/BackGround3D_Material") as Material;
+    private static Material m_material_MainMaterial3D = Resources.Load("Materials/WorldObject/WorldObject3D_Material") as Material;
     public static Material Material_MainMaterial3D { get { return m_material_MainMaterial3D; } }
 
-    private static Material m_material_CanChange = Resources.Load("Shaders/WorldObject/WorldObject_CanChange_Material") as Material;
+    private static Material m_material_CanChange = Resources.Load("Materials/WorldObject/WorldObject_CanChange_Material") as Material;
     public static Material Material_CanChange { get { return m_material_CanChange; } }
 
     private static Material m_material_Blue = Resources.Load("Materials/Dumy3") as Material;
@@ -87,14 +87,13 @@ public static class GameLibrary
                  ? true : false;
     }
 
-    /// <summary>시점변환중이거나 시점변환 준비중이거나 관찰시점이면 true를 반환</summary>
+    /// <summary>시점변환중이거나 시점변환 준비중이면 true를 반환</summary>
     public static bool Bool_IsPlayerStop
     {
         get
         {
             return PlayerManager.Instance.IsViewChange ||
-                     PlayerManager.Instance.IsViewChangeReady ||
-                     CameraManager.Instance.IsObserve
+                     PlayerManager.Instance.IsViewChangeReady
                      ? true : false;
         }
     }

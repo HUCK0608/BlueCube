@@ -134,7 +134,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.07890411
+      - time: 0.15550862
         functionName: CompleteLandingMotion
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ac09983536087e946a37d56a00e84428,

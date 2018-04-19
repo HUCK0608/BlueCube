@@ -85,10 +85,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             if(Input.GetKeyDown(m_playerManager.Stat.AcceptKey))
             {
                 // 끼일 오브젝트가 있다면 시각적인 이벤트 실행
-                if (m_checkBlock.IsBlock())
-                    ;
                 // 끼일 오브젝트가 없다면 시점변환 실행
-                else
+                if (!m_checkBlock.IsBlock())
                     m_isDoChange = true;
             }
             // 취소 키를 누를 경우
@@ -150,8 +148,8 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 변경이 허용되지 않았을 경우
         else
         {
-            // 포함되었던 오브젝트들의 메테리얼을 기본 메테리얼로 변경
-            WorldManager.Instance.SetDefaultMaterialIsInclude();
+            // 오브젝트를 다시 3D상태로 변경
+            WorldManager.Instance.Change3D();
 
             // 상자 크기 줄이기
             yield return StartCoroutine(m_changeViewRect.SetDecreaseSize());

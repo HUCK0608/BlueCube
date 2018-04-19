@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public enum E_PlayerState3D { Idle, Move, JumpUp, Falling, Landing, LadderInit, LadderIdle, LadderMove, PickInit, PickIdle, PickMove, PickJumpUp, PickJumpDown, PutInit, PutDefault, PutThrow, PushInit, PushIdle, PushMove }
 public enum E_PlayerState2D { Idle, Move, JumpUp, Falling, Landing }

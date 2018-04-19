@@ -31,7 +31,7 @@ public sealed class Interaction_Put_Defalut : Interaction_Put
         {
             // 히트 피벗 구하기
             Vector3 hitPivot = hit.point.GetGamePivot();
-            Vector3 newPutPosition = hitPivot + GameLibrary.GetDirectionAtPivot(hit.transform.position, hit.point) * 2f;
+            Vector3 newPutPosition = hitPivot + GameLibrary.GetDirectionAtPivot(hitPivot, hit.point) * 2f;
 
             if (GameLibrary.Raycast3D(newPutPosition, Vector3.down, out hit, Mathf.Infinity, layermask))
                 putPosition = hit.point + Vector3.up;

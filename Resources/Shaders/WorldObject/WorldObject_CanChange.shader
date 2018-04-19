@@ -1,4 +1,4 @@
-﻿Shader "Custom/WorldObject/CanChange" {
+﻿Shader "BlueCube/WorldObject/CanChange" {
 	Properties {
 		_MainTex ("default_UV", 2D) = "white" {}
 		_MainTex2 ("Emission_UV", 2D) = "white" {}

@@ -18,6 +18,7 @@ public sealed class CheckBlock : MonoBehaviour
     {
         int layerMask = (-1) - (GameLibrary.LayerMask_Bullet |
                                      GameLibrary.LayerMask_BackgroundTrigger |
+                                     GameLibrary.LayerMask_BackgroundCollision |
                                      GameLibrary.LayerMask_IgnoreRaycast |
                                      GameLibrary.LayerMask_Player);
 
@@ -31,7 +32,7 @@ public sealed class CheckBlock : MonoBehaviour
             {
                 WorldObject blockWorldObject = hit.transform.GetComponentInParent<WorldObject>();
 
-                blockWorldObject.SetMaterial(E_MaterialType.Block);
+                blockWorldObject.ShowBlock();
 
                 return true;
             }

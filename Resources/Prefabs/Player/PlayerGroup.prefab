@@ -1107,6 +1107,8 @@ GameObject:
   - component: {fileID: 114790643177190700}
   - component: {fileID: 114855091282968528}
   - component: {fileID: 114628544694581528}
+  - component: {fileID: 114152479182290262}
+  - component: {fileID: 114937687947983468}
   - component: {fileID: 114168316380745084}
   - component: {fileID: 114880859049581568}
   - component: {fileID: 114365777259786022}
@@ -1121,8 +1123,6 @@ GameObject:
   - component: {fileID: 114425650324703498}
   - component: {fileID: 114999482525841594}
   - component: {fileID: 114577612994108486}
-  - component: {fileID: 114937687947983468}
-  - component: {fileID: 114152479182290262}
   m_Layer: 11
   m_Name: Player3D
   m_TagString: Player

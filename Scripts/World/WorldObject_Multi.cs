@@ -5,118 +5,99 @@ using UnityEngine;
 public sealed class WorldObject_Multi : WorldObject
 {
     private List<MeshRenderer> m_renderers;
-    private List<Collider2D> m_collider2D;
     private List<Material> m_defaultMaterials;
-
     private int m_rendererCount;
-    private int m_colliderCount;
-    private int m_materialCount;
+
+    private List<Collider2D> m_collider2D;
+    private int m_collider2DCount;
 
     protected override void Awake()
     {
         base.Awake();
 
         m_renderers = new List<MeshRenderer>();
-        m_collider2D = new List<Collider2D>();
         m_defaultMaterials = new List<Material>();
+        m_collider2D = new List<Collider2D>();
 
         m_renderers.AddRange(GetComponentsInChildren<MeshRenderer>());
         m_collider2D.AddRange(GetComponentsInChildren<Collider2D>());
 
         m_rendererCount = m_renderers.Count;
-        m_colliderCount = m_collider2D.Count;
+        m_collider2DCount = m_collider2D.Count;
 
         for(int i = 0; i < m_rendererCount; i++)
             m_defaultMaterials.Add(m_renderers[i].material);
-
-        m_materialCount = m_defaultMaterials.Count;
     }
 
+    /// <summary>멀티 오브젝트를 3D 상태로 변경</summary>
+    public override void Change3D()
+    {
+        // 2D전환상자에 포함되어 있었을 경우 2D콜라이더를 비활성화 시키고 2D변환상자에서 제외되었다고 설정
+        if (m_isIncludeChangeViewRect)
+        {
+            SetCollider2DEnable(false);
+            m_isIncludeChangeViewRect = false;
+            SetMaterial(E_MaterialType.Default);
+        }
+        // 2D전환상자에 포함되어 있지 않았을 경우 렌더러가 비활성화 된 오브젝트의 렌더러를 킨다
+        else
+        {
+            if (!m_isOnRenderer)
+                SetRendererEnable(true);
+        }
+    }
+
+    /// <summary>멀티 오브젝트를 2D 상태로 변경</summary>
+    public override void Change2D()
+    {
+        // 2D전환상자에 포함되어 있을 경우 2D콜라이더를 활성화 시킨다
+        if (m_isIncludeChangeViewRect)
+        {
+            SetCollider2DEnable(true);
+            SetMaterial(E_MaterialType.Default);
+        }
+        // 2D전환상자에 포함되어 있지 않을 경우 렌더러를 끈다
+        else
+        {
+            SetRendererEnable(false);
+        }
+    }
+
+    /// <summary>멀티 오브젝트의 활성화 여부를 설정</summary>
     public override void SetRendererEnable(bool value)
     {
-        base.SetRendererEnable(value);
-
         for (int i = 0; i < m_rendererCount; i++)
             m_renderers[i].enabled = value;
+        m_isOnRenderer = value;
     }
 
-    public override void SetCollider2DEnable(bool value)
+    /// <summary>멀티 오브젝트의 2D콜라이더 활성화 여부를 설정</summary>
+    private void SetCollider2DEnable(bool value)
     {
-        for (int i = 0; i < m_colliderCount; i++)
-            m_collider2D[i].enabled = value;
+        if(m_collider2D != null)
+        {
+            for (int i = 0; i < m_collider2DCount; i++)
+                m_collider2D[i].enabled = value;
+        }
     }
 
+    /// <summary>멀티 오브젝트의 메테리얼을 설정</summary>
     public override void SetMaterial(E_MaterialType materialType)
     {
-        if(materialType.Equals(E_MaterialType.Default))
+        if (materialType.Equals(E_MaterialType.Default))
         {
-            for (int i = 0; i < m_materialCount; i++)
+            for (int i = 0; i < m_rendererCount; i++)
                 m_renderers[i].material = m_defaultMaterials[i];
         }
-        else if(materialType.Equals(E_MaterialType.Change))
+        else if (materialType.Equals(E_MaterialType.Change))
         {
-            for (int i = 0; i < m_materialCount; i++)
+            for (int i = 0; i < m_rendererCount; i++)
                 m_renderers[i].material = GameLibrary.Material_CanChange;
         }
-        else if(materialType.Equals(E_MaterialType.Block))
+        else if (materialType.Equals(E_MaterialType.Block))
         {
-            if (!m_isShowBlock)
-                StartCoroutine(ShowBlock());
+            for (int i = 0; i < m_rendererCount; i++)
+                m_renderers[i].material = GameLibrary.Material_Red;
         }
-    }
-
-    private IEnumerator ShowBlock()
-    {
-        m_isShowBlock = true;
-
-        // 반복 횟수
-        int cycleCount = 0;
-        // 누적 시간
-        float addTime = 0f;
-
-        bool isChangeMaterial = false;
-
-        while (PlayerManager.Instance.IsViewChangeReady && isIncludeChangeViewRect)
-        {
-            addTime += Time.deltaTime;
-
-            // 누적시간이 반복 시간을 넘겼다면 실행
-            if (addTime >= WorldManager.Instance.ShowBlockCycleTime)
-            {
-                // 순서에 따른 머테리얼 변경
-                if (isChangeMaterial)
-                {
-                    SetMaterial(E_MaterialType.Change);
-                    isChangeMaterial = false;
-
-                    // 한 사이클이 돌았다고 설정
-                    cycleCount++;
-                }
-                else
-                {
-                    for (int i = 0; i < m_rendererCount; i++)
-                        m_renderers[i].material = GameLibrary.Material_Red;
-
-                    isChangeMaterial = true;
-                }
-
-
-                if (cycleCount.Equals(WorldManager.Instance.MaxShowBlockCycle))
-                    break;
-
-                // 누적시간 초기화
-                addTime = 0f;
-            }
-
-            yield return null;
-        }
-
-        // 현재 상태에 따라 메테리얼 변경
-        if (isIncludeChangeViewRect)
-            SetMaterial(E_MaterialType.Change);
-        else
-            SetMaterial(E_MaterialType.Default);
-
-        m_isShowBlock = false;
     }
 }
