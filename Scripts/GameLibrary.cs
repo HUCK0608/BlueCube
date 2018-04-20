@@ -17,6 +17,9 @@ public static class GameLibrary
     private static Material m_material_Red = Resources.Load("Materials/Dumy2") as Material;
     public static Material Material_Red { get { return m_material_Red; } }
 
+    private static Material m_material_Block = Resources.Load("Materials/WorldObject/WorldObject_Block_Material") as Material;
+    public static Material Material_Block { get { return m_material_Block; } }
+
     // layerMask 부분
 
     private static int m_layerMask_Player = LayerMask.NameToLayer("Player");
@@ -148,46 +151,6 @@ public static class GameLibrary
             normalizedPosition.z += one;
 
         return normalizedPosition;
-    }
-
-    /// <summary>pivot에서 target의 제일 큰 방향값을 반환</summary>
-    public static Vector3 GetDirectionAtPivot(Vector3 pivot, Vector3 target)
-    {
-        Vector3 directionToPivot = target - pivot;
-
-        float absX = Mathf.Abs(directionToPivot.x);
-        float absY = Mathf.Abs(directionToPivot.y);
-        float absZ = Mathf.Abs(directionToPivot.z);
-
-        float zero = 0f;
-
-        if(absX > absY)
-        {
-            if(absX > absZ)
-            {
-                directionToPivot.y = zero;
-                directionToPivot.z = zero;
-            }
-            else
-            {
-                directionToPivot.x = zero;
-                directionToPivot.y = zero;
-            }
-        }
-        else
-        {
-            if(absY > absZ)
-            {
-                directionToPivot.x = zero;
-                directionToPivot.z = zero;
-            }
-            else
-            {
-                directionToPivot.x = zero;
-                directionToPivot.y = zero;
-            }
-        }
-        return directionToPivot.normalized;
     }
 
     // 확장 메서드 부분

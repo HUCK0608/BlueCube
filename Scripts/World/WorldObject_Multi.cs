@@ -97,7 +97,7 @@ public sealed class WorldObject_Multi : WorldObject
         else if (materialType.Equals(E_MaterialType.Block))
         {
             for (int i = 0; i < m_rendererCount; i++)
-                m_renderers[i].material = GameLibrary.Material_Red;
+                m_renderers[i].material = GameLibrary.Material_Block;
         }
     }
 }

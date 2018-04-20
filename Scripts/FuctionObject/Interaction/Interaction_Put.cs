@@ -25,7 +25,7 @@ public abstract class Interaction_Put : MonoBehaviour
     [SerializeField]
     protected float m_maxPutDistacne;
 
-    private Vector3 m_putPosition;
+    protected Vector3 m_putPosition;
     /// <summary>놓을 위치를 반환</summary>
     public Vector3 PutPosition { get { return m_putPosition; } }
 
@@ -59,9 +59,14 @@ public abstract class Interaction_Put : MonoBehaviour
 
     private IEnumerator PutLogic()
     {
+        PlayerController playerMainController = PlayerManager.Instance.MainController;
+
         // 오브젝트를 잡고 있는 동안에만 실행
         while(m_pickPut.IsPick)
         {
+            if (playerMainController.CurrentState3D.Equals(E_PlayerState3D.PutInit))
+                break;
+
             // 놓을 위치를 가져옴
             Vector3 putPosition = GetPutPosition();
             

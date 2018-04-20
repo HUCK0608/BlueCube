@@ -31,7 +31,8 @@ public sealed class Interaction_Put_Defalut : Interaction_Put
         {
             // 히트 피벗 구하기
             Vector3 hitPivot = hit.point.GetGamePivot();
-            Vector3 newPutPosition = hitPivot + GameLibrary.GetDirectionAtPivot(hitPivot, hit.point) * 2f;
+
+            Vector3 newPutPosition = hitPivot + hit.normal * 2f;
 
             if (GameLibrary.Raycast3D(newPutPosition, Vector3.down, out hit, Mathf.Infinity, layermask))
                 putPosition = hit.point + Vector3.up;
@@ -45,8 +46,7 @@ public sealed class Interaction_Put_Defalut : Interaction_Put
     {
         m_isPutEnd = false;
 
-        Vector3 putPosition = GetPutPosition();
-        Vector3 putPositionXZ = putPosition;
+        Vector3 putPositionXZ = m_putPosition;
         putPositionXZ.y = m_model.position.y;
 
         // x, z 이동
@@ -63,9 +63,9 @@ public sealed class Interaction_Put_Defalut : Interaction_Put
         // 최종 위치로의 이동
         while(true)
         {
-            m_model.position = Vector3.MoveTowards(m_model.position, putPosition, m_moveSpeed * Time.deltaTime);
+            m_model.position = Vector3.MoveTowards(m_model.position, m_putPosition, m_moveSpeed * Time.deltaTime);
 
-            if (m_model.position.Equals(putPosition))
+            if (m_model.position.Equals(m_putPosition))
                 break;
 
             yield return null;

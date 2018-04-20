@@ -50,7 +50,7 @@ public sealed class Interaction_Put_Throw : Interaction_Put
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            Vector3 newPutPosition = hit.point.GetGamePivot();
+            Vector3 newPutPosition = hit.point + hit.normal;
 
             if (GameLibrary.Raycast3D(newPutPosition, Vector3.down, out hit, Mathf.Infinity, layermask))
                 putPosition = hit.point + Vector3.up;
@@ -62,7 +62,7 @@ public sealed class Interaction_Put_Throw : Interaction_Put
     // 이동
     private IEnumerator Move()
     {
-        CalcStartVelocity(GetPutPosition());
+        CalcStartVelocity(m_putPosition);
 
         m_rigidbody.isKinematic = false;
         m_rigidbody.AddForce(m_velocity, ForceMode.Impulse);

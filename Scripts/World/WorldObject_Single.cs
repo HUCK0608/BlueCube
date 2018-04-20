@@ -79,7 +79,7 @@ public sealed class WorldObject_Single : WorldObject
         }
         else if (materialType.Equals(E_MaterialType.Block))
         {
-            m_renderer.material = GameLibrary.Material_Red;
+            m_renderer.material = GameLibrary.Material_Block;
         }
     }
 }
