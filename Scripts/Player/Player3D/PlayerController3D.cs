@@ -104,7 +104,7 @@ public sealed class PlayerController3D : MonoBehaviour
     {
         // 이동방향 * 속도 계산
         // y는 기존의 속도를 이용
-        Vector3 movement = direction * m_playerManager.Stat.MoveSpeed_Forward;
+        Vector3 movement = direction * m_playerManager.Stat.MoveSpeed;
         movement.y = m_rigidbody.velocity.y;
 
         // 속도 적용

@@ -32,8 +32,8 @@ public sealed class PlayerStat : MonoBehaviour
     public void DecreaseHp(int value) { m_hp -= value; }
 
     [SerializeField]
-    private float m_moveSpeed_Forward;
-    public float MoveSpeed_Forward { get { return m_moveSpeed_Forward; } }
+    private float m_moveSpeed;
+    public float MoveSpeed { get { return m_moveSpeed; } }
 
     [SerializeField]
     private float m_moveSpeed_Ladder;

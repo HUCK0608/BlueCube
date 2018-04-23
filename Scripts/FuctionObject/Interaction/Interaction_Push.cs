@@ -113,14 +113,11 @@ public sealed class Interaction_Push : MonoBehaviour
 
         // 위쪽에 있는 다른 아이템을 같이 이동시키기 위해 자식으로 포함
         int layerMask = GameLibrary.LayerMask_InteractionPickPut;
-        Debug.Log(layerMask);
         RaycastHit[] anotherItems = Physics.RaycastAll(transform.position, Vector3.up, Mathf.Infinity, layerMask);
-        Debug.Log(anotherItems.Length);
         int anotherItemCount = anotherItems.Length;
         for (int i = 0; i < anotherItemCount; i++)
         {
-            Debug.Log("call");
-            anotherItems[i].transform.parent = transform;
+            anotherItems[i].transform.parent.parent = transform;
         }
 
         while (true)
@@ -137,7 +134,7 @@ public sealed class Interaction_Push : MonoBehaviour
 
         // 포함되었던 다른 아이템을 제외시킴
         for (int i = 0; i < anotherItemCount; i++)
-            anotherItems[i].transform.parent = transform.parent;
+            anotherItems[i].transform.parent.parent = transform.parent;
 
         // 이동이 끝났다고 설정
         m_isPush = false;

@@ -2,40 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class PlayerController2D : MonoBehaviour
+public sealed class PlayerController_Intro : MonoBehaviour
 {
-    // 플레이어매니저 및 메인 컨트롤러
-    private PlayerManager m_playerManager;
-    private PlayerController m_mainController;
+    // 플레이어
+    private Transform m_player;
+
+    private PlayerStat_Intro m_stat;
+    /// <summary>스탯</summary>
+    public PlayerStat_Intro Stat { get { return m_stat; } }
+
+    // 상태 모음
+    private Dictionary<E_PlayerState2D, PlayerState_Intro> m_states;
+    // 플레이어 현재 상태
+    private E_PlayerState2D m_currentState;
 
     // 땅 체크 스크립트
     private CheckGround2D m_checkGround;
 
     // 리지드바디
     private Rigidbody2D m_rigidbody;
-    public Rigidbody2D Rigidbody { get { return m_rigidbody; } }
 
-    // 캐릭터 속성부분
+    private bool m_isGrounded;
+    /// <summary>땅일경우 true를 반환</summary>
+    public bool IsGrounded { get { return m_isGrounded; } }
 
-    /// <summary>캐릭터의 정면 방향을 반환. (1, 0, 0) 또는 (-1, 0, 0)</summary>
-    public Vector3 Forward
-    {
-        get
-        {
-            Vector3 forward = Vector3.zero;
-            forward.x = transform.localScale.x;
-            return forward;
-        }
-    }
+    private bool m_isInit;
 
     private void Awake()
     {
-        m_playerManager = GetComponentInParent<PlayerManager>();
-        m_mainController = GetComponentInParent<PlayerController>();
+        m_player = transform.Find("Player");
 
-        m_checkGround = GetComponent<CheckGround2D>();
+        m_stat = GetComponent<PlayerStat_Intro>();
 
-        m_rigidbody = GetComponent<Rigidbody2D>();
+        m_checkGround = GetComponentInChildren<CheckGround2D>();
+
+        m_rigidbody = GetComponentInChildren<Rigidbody2D>();
+
+        InitStates();
+    }
+
+    private void Start()
+    {
+        m_isInit = true;
+        ChangeState(E_PlayerState2D.Idle);
+        m_isInit = false;
     }
 
     private void LateUpdate()
@@ -43,30 +53,63 @@ public sealed class PlayerController2D : MonoBehaviour
         ApplyGravity();
     }
 
+    /// <summary>상태 초기화</summary>
+    private void InitStates()
+    {
+        m_states = new Dictionary<E_PlayerState2D, PlayerState_Intro>();
+
+        // 찾을 상태 컴포넌트의 앞 글자
+        string stateFirstPath = "PlayerState_Intro_";
+        // E_PlayerState2D Value 가져오기
+        E_PlayerState2D[] enumValues = (E_PlayerState2D[])System.Enum.GetValues(typeof(E_PlayerState2D));
+        // Value들의 개수
+        int enumCount = enumValues.Length;
+
+        for(int i = 0; i <enumCount; i++)
+        {
+            // 찾을 상태 컴포넌트의 풀 네임
+            string statePath = stateFirstPath + enumValues[i].ToString("G");
+            // 상태 컴포넌트 찾기
+            PlayerState_Intro state = m_player.GetComponent(statePath) as PlayerState_Intro;
+            // 상태 컴포넌트 저장
+            m_states.Add(enumValues[i], state);
+            // 상태 컴포넌트 update 비활성화
+            state.enabled = false;
+        }
+    }
+
+    /// <summary>플레이어 상태 변경</summary>
+    public void ChangeState(E_PlayerState2D newState)
+    {
+        if(!m_isInit)
+        {
+            m_states[m_currentState].enabled = false;
+            m_states[m_currentState].EndState();
+        }
+
+        m_currentState = newState;
+
+        m_states[m_currentState].InitState();
+        m_states[m_currentState].enabled = true;
+    }
+
     /// <summary>땅인지 체크를 한 후 땅이 아닐 경우 중력을 적용시킨다</summary>
     private void ApplyGravity()
     {
-        // 시점변환중이거나 시점변환 준비중일경우 모든 속도를 멈추고 리턴
-        if(m_playerManager.IsViewChange || m_playerManager.IsViewChangeReady)
-        {
-            MoveStopAll();
-            return;
-        }
-
         // 밑이 땅인지 체크
-        m_mainController.IsGrounded = m_checkGround.Check();
+        m_isGrounded = m_checkGround.Check();
 
         Vector2 newVelocity = m_rigidbody.velocity;
 
         // 땅까지의 거리가 SkinWidth이내이고 현재 낙하 속도가 0이내일 경우 중력을 적용하지 않음
-        if(m_checkGround.DistanceToGround <= m_playerManager.Stat.SkinWidth && m_rigidbody.velocity.y <= 0f)
+        if (m_checkGround.DistanceToGround <= m_stat.SkinWidth && m_rigidbody.velocity.y <= 0f)
         {
             newVelocity.y = 0f;
         }
         //  그 외엔 중력을 적용함
         else
         {
-            newVelocity.y += m_playerManager.Stat.Gravity * Time.deltaTime;
+            newVelocity.y += m_stat.Gravity * Time.deltaTime;
         }
 
         // 속도적용
@@ -97,7 +140,7 @@ public sealed class PlayerController2D : MonoBehaviour
     {
         // 이동방향 * 속도 계산
         // y는 기존의 속도를 이용
-        Vector2 movement = direction * m_playerManager.Stat.MoveSpeed;
+        Vector2 movement = direction * m_stat.MoveSpeed;
         movement.y = m_rigidbody.velocity.y;
 
         // 속도 적용
@@ -121,7 +164,7 @@ public sealed class PlayerController2D : MonoBehaviour
     public void JumpMoveAndRotate(Vector2 direction)
     {
         // 이동방향 * 속도 계산 및 y는 기존의 속도 사용
-        Vector2 movement = direction * m_playerManager.Stat.MoveSpeed_Jump;
+        Vector2 movement = direction * m_stat.MoveSpeed_Jump;
         movement.y = m_rigidbody.velocity.y;
 
         // 이동
@@ -144,7 +187,7 @@ public sealed class PlayerController2D : MonoBehaviour
     public void Jump()
     {
         Vector2 newVelocity = m_rigidbody.velocity;
-        newVelocity.y = m_playerManager.Stat.JumpSpeed;
+        newVelocity.y = m_stat.JumpSpeed;
         m_rigidbody.velocity = newVelocity;
     }
 
@@ -156,7 +199,7 @@ public sealed class PlayerController2D : MonoBehaviour
 
         m_rigidbody.velocity = newVelocity;
     }
-    
+
     /// <summary>모든 속도를 멈춤</summary>
     public void MoveStopAll()
     {
