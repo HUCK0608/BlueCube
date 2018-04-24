@@ -5,21 +5,19 @@ using UnityEngine;
 public sealed class PlayerState3D_PickInit : PlayerState3D
 {
     // 들기 애니메이션이 끝났는지 체크하는 변수
-    private bool m_isPickAniStop;
+    private bool m_isEndPickInitMotion;
 
     public override void InitState()
     {
         base.InitState();
 
-        m_isPickAniStop = false;
+        m_isEndPickInitMotion = false;
 
         // 모든 속도를 멈춤
         m_subController.MoveStopAll();
 
         // 오브젝트 들기
         m_playerManager.Hand.CurrentPickPutObject.PickObject();
-
-        m_isPickAniStop = true;
     }
 
     private void Update()
@@ -32,12 +30,17 @@ public sealed class PlayerState3D_PickInit : PlayerState3D
     private void ChangeStates()
     {
         // 들기 애니메이션이 끝나고 오브젝트 들기가 완료됬을 경우 PickIdle 상태로 변경
-        if (m_isPickAniStop && m_playerManager.Hand.CurrentPickPutObject.IsPick)
+        if (m_isEndPickInitMotion && m_playerManager.Hand.CurrentPickPutObject.IsPick)
             m_mainController.ChangeState3D(E_PlayerState3D.PickIdle);
     }
 
     public override void EndState()
     {
         base.EndState();
+    }
+
+    public void CompletePickInitMotion()
+    {
+        m_isEndPickInitMotion = true;
     }
 }

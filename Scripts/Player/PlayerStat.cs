@@ -29,6 +29,7 @@ public sealed class PlayerStat : MonoBehaviour
     [SerializeField]
     private int m_hp;
     public int Hp { get { return m_hp; } }
+    public void IncreaseHp(int value) { m_hp += value; }
     public void DecreaseHp(int value) { m_hp -= value; }
 
     [SerializeField]

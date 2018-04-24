@@ -7,6 +7,12 @@ public enum E_MaterialType { Default, Change, Block }
 [SelectionBase]
 public class WorldObject : MonoBehaviour
 {
+    protected static string Shader_ChoiceString = "_Choice";
+
+    // 2D 텍스쳐를 사용할지 여부
+    [SerializeField]
+    protected bool m_isUse2DTexture;
+
     protected bool m_isOnRenderer;
     /// <summary>오브젝트의 렌더러가 활성화 되어 있을 경우 true를 반환</summary>
     public bool IsOnRenderer { get { return m_isOnRenderer; } }

@@ -16,14 +16,9 @@ public class TerrainMaker : MonoBehaviour
     [SerializeField]
     private int m_selectSnowGrassNumber;
 
-    private void Awake()
-    {
-        ChangeMaterial();
-    }
-
     private void ChangeMaterial()
     {
-        GetComponentInChildren<MeshRenderer>().material = GameLibrary.Material_MainMaterial3D;
+        GetComponentInChildren<MeshRenderer>().material = GameLibrary.Material_Default;
     }
 
     private void InitSnowGrass()
@@ -46,6 +41,7 @@ public class TerrainMaker : MonoBehaviour
     private void ChangeTerrain()
     {
         InitSnowGrass();
+        ChangeMaterial();
         GetComponentInChildren<MeshFilter>().mesh = m_snowGrass[m_selectSnowGrassNumber];
     }
 }

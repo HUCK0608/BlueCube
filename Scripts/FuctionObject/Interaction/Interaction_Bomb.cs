@@ -39,7 +39,7 @@ public sealed class Interaction_Bomb : MonoBehaviour
         // 오브젝트가 충돌할 때 까지 기다림
         yield return new WaitUntil(() => m_rigidbody.isKinematic);
 
-        m_meshRenderer.material = GameLibrary.Material_Red;
+        m_meshRenderer.material = GameLibrary.Material_Block;
 
         // 폭탄 타이머를 기다림
         yield return StartCoroutine(BombTimer());

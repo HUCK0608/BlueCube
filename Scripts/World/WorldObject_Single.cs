@@ -27,6 +27,9 @@ public sealed class WorldObject_Single : WorldObject
             SetCollider2DEnable(false);
             m_isIncludeChangeViewRect = false;
             SetMaterial(E_MaterialType.Default);
+
+            if (m_isUse2DTexture)
+                m_renderer.material.SetFloat(Shader_ChoiceString, 0);
         }
         // 2D전환상자에 포함되어 있지 않았을 경우 렌더러가 비활성화 된 오브젝트의 렌더러를 킨다
         else
@@ -44,6 +47,9 @@ public sealed class WorldObject_Single : WorldObject
         {
             SetCollider2DEnable(true);
             SetMaterial(E_MaterialType.Default);
+
+            if (m_isUse2DTexture)
+                m_renderer.material.SetFloat(Shader_ChoiceString, 1);
         }
         // 2D전환상자에 포함되어 있지 않을 경우 렌더러를 끈다
         else

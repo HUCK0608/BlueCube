@@ -9,6 +9,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
     public override void InitState()
     {
         base.InitState();
+        m_subController.DustEffect.Play();
     }
 
     private void Update()
@@ -93,5 +94,6 @@ public sealed class PlayerState3D_Move : PlayerState3D
     public override void EndState()
     {
         base.EndState();
+        m_subController.DustEffect.Stop();
     }
 }

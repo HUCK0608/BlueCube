@@ -110,7 +110,7 @@ public abstract class Interaction_Put : MonoBehaviour
         Color newColor;
 
         if (m_isCanPut)
-            newColor = Color.black;
+            newColor = Color.white;
         else
             newColor = Color.red;
 

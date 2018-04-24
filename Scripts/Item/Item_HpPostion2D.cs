@@ -15,6 +15,7 @@ public sealed class Item_HpPostion2D : MonoBehaviour
     {
         if(other.tag.Equals(GameLibrary.String_Player))
         {
+            EffectManager.Instance.CreateEffect(Effect_Type.Heal, PlayerManager.Instance.Player2D_Object.transform.position);
             m_hpPostion.PlayerHpIncrease();
         }
     }
