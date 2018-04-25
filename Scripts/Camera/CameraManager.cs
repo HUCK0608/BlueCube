@@ -19,6 +19,8 @@ public sealed class CameraManager : MonoBehaviour
         m_instance = this;
 
         m_animator = GetComponent<Animator>();
+
+        Debug.Log(transform.Find("CenterPoint").forward);
     }
 
     private void LateUpdate()
@@ -103,5 +105,11 @@ public sealed class CameraManager : MonoBehaviour
     public void CompleteMovingWork()
     {
         m_isOnMovingWork = false;
+    }
+
+    /// <summary>플레이어를 2D상태로 변경(애니메이션에서 사용)</summary>
+    public void ChangePlayer2D()
+    {
+        PlayerManager.Instance.PlayerChange2D();
     }
 }

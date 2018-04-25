@@ -9,7 +9,9 @@ public sealed class PlayerState3D_PickMove : PlayerState3D
     public override void InitState()
     {
         base.InitState();
-        m_subController.DustEffect.Play();
+
+        // 먼지 이펙트 실행
+        m_playerManager.DustEffectParticle.Play();
     }
 
     private void Update()
@@ -27,8 +29,13 @@ public sealed class PlayerState3D_PickMove : PlayerState3D
     // 상태 변경 모음
     private void ChangeStates()
     {
+        // 밑에 아무것도 없다면 PickFalling 상태로 변경
+        if (!m_mainController.IsGrounded)
+        {
+            m_mainController.ChangeState3D(E_PlayerState3D.PickFalling);
+        }
         // 수행 키를 누르고 해당 위치에 내려놓을 수 있을 때 PutInit 상태로 변경
-        if ((Input.GetKeyDown(m_playerManager.Stat.InteractionKey) || Input.GetKeyDown(m_playerManager.Stat.AcceptKey)) && m_playerManager.Hand.CurrentPickPutObject.IsCanPut)
+        else if ((Input.GetKeyDown(m_playerManager.Stat.InteractionKey) || Input.GetKeyDown(m_playerManager.Stat.AcceptKey)) && m_playerManager.Hand.CurrentPickPutObject.IsCanPut)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.PutInit);
         }
@@ -48,6 +55,8 @@ public sealed class PlayerState3D_PickMove : PlayerState3D
     public override void EndState()
     {
         base.EndState();
-        m_subController.DustEffect.Stop();
+
+        // 먼지 이펙트 정지
+        m_playerManager.DustEffectParticle.Stop();
     }
 }

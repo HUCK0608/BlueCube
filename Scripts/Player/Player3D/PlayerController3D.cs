@@ -27,10 +27,6 @@ public sealed class PlayerController3D : MonoBehaviour
     /// <summary>3D플레이어의 정면 방향을 반환</summary>
     public Vector3 Forward { get { return transform.forward; } }
 
-    // 먼지 이펙트
-    private ParticleSystem m_dustEffect;
-    public ParticleSystem DustEffect { get { return m_dustEffect; } }
-
     private void Awake()
     {
         m_playerManager = GetComponentInParent<PlayerManager>();
@@ -40,8 +36,6 @@ public sealed class PlayerController3D : MonoBehaviour
         m_checkLadder = GetComponent<CheckLadder>();
 
         m_rigidbody = GetComponent<Rigidbody>();
-
-        m_dustEffect = GetComponentInChildren<ParticleSystem>();
     }
 
     private void LateUpdate()
@@ -52,7 +46,7 @@ public sealed class PlayerController3D : MonoBehaviour
     /// <summary>중력 적용</summary>
     public void ApplyGravity()
     {
-        if (m_playerManager.IsViewChange || m_playerManager.IsViewChangeReady)
+        if (m_playerManager.IsViewChange || m_playerManager.IsViewChangeReady || m_mainController.CurrentState3D.Equals(E_PlayerState3D.Hold))
         {
             MoveStopAll();
             return;

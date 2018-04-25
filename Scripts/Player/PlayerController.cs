@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-public enum E_PlayerState3D { Idle, Move, JumpUp, Falling, Landing, LadderInit, LadderIdle, LadderMove, PickInit, PickIdle, PickMove, PickJumpUp, PickJumpDown, PutInit, PutDefault, PutThrow, PushInit, PushIdle, PushMove }
+public enum E_PlayerState3D { Idle, Move, JumpUp, Falling, Landing, LadderInit, LadderIdle, LadderMove, PickInit, PickIdle, PickMove, PickJumpUp, PickFalling, PutInit, PutDefault, PutThrow, PushInit, PushIdle, PushMove, PickLanding, Hold }
 public enum E_PlayerState2D { Idle, Move, JumpUp, Falling, Landing }
 
 public sealed class PlayerController : MonoBehaviour
@@ -18,7 +18,7 @@ public sealed class PlayerController : MonoBehaviour
     private E_PlayerState2D m_currentState2D;
     public E_PlayerState3D CurrentState3D { get { return m_currentState3D; } }
     public E_PlayerState2D CurrentState2D { get { return m_currentState2D; } }
-
+    
     private bool m_isGrounded;
     /// <summary>캐릭터가 땅에 있을경우 true를 반환</summary>
     public bool IsGrounded { get { return m_isGrounded; } set { m_isGrounded = value; } }

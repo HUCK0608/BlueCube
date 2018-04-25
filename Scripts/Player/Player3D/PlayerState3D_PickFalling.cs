@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class PlayerState3D_PickJumpDown : PlayerState3D
+public sealed class PlayerState3D_PickFalling : PlayerState3D
 {
     public override void InitState()
     {
@@ -27,7 +27,7 @@ public sealed class PlayerState3D_PickJumpDown : PlayerState3D
         // 플레이어가 땅에 닿으면 PickIdle 상태로 변경
         if (m_mainController.IsGrounded)
         {
-            m_mainController.ChangeState3D(E_PlayerState3D.PickIdle);
+            m_mainController.ChangeState3D(E_PlayerState3D.PickLanding);
         }
     }
 

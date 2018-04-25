@@ -30,7 +30,7 @@ public sealed class PlayerState3D_PickJumpUp : PlayerState3D
         // 캐릭터가 최대높이까지 뛰었을 경우 PickJumpDown 상태로 변경
         if(m_subController.Rigidbody.velocity.y <= 0f)
         {
-            m_mainController.ChangeState3D(E_PlayerState3D.PickJumpDown);
+            m_mainController.ChangeState3D(E_PlayerState3D.PickFalling);
         }
     }
 

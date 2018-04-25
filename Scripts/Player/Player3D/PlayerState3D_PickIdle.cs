@@ -26,8 +26,13 @@ public sealed class PlayerState3D_PickIdle : PlayerState3D
     {
         Vector3 moveDirection = m_subController.GetMoveDirection();
 
+        // 밑에 아무것도 없다면 PickFalling 상태로 변경
+        if(!m_mainController.IsGrounded)
+        {
+            m_mainController.ChangeState3D(E_PlayerState3D.PickFalling);
+        }
         // 수행 키를 누르고 해당 위치에 내려놓을 수 있을 때 PutInit 상태로 변경
-        if((Input.GetKeyDown(m_playerManager.Stat.InteractionKey) || Input.GetKeyDown(m_playerManager.Stat.AcceptKey)) && m_playerManager.Hand.CurrentPickPutObject.IsCanPut)
+        else if((Input.GetKeyDown(m_playerManager.Stat.InteractionKey) || Input.GetKeyDown(m_playerManager.Stat.AcceptKey)) && m_playerManager.Hand.CurrentPickPutObject.IsCanPut)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.PutInit);
         }

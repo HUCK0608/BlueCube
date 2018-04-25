@@ -43,6 +43,17 @@ public sealed class PlayerManager : MonoBehaviour
     /// <summary>플레이어2D 오브젝트를 반환</summary>
     public GameObject Player2D_Object { get { return m_player2D_Object; } }
 
+    // 먼지 이펙트
+    [SerializeField]
+    private Transform m_dustEffect;
+    private ParticleSystem m_dustEffectParticle;
+    /// <summary>먼지 이펙트 파티클</summary>
+    public ParticleSystem DustEffectParticle { get { return m_dustEffectParticle; } }
+
+    // 먼지 이펙트 위치
+    [SerializeField]
+    private Transform m_dustEffectPosition3D, m_dustEffectPosition2D;
+
     // 다른곳에서 플레이어 관련 속성을 편하게 가져가기 위해 만든 변수
     // 시점변환 관련
     /// <summary>현재 시점을 반환 (View2D, View3D)</summary>
@@ -69,6 +80,8 @@ public sealed class PlayerManager : MonoBehaviour
 
         m_player3D_Object = transform.Find("Player3D").gameObject;
         m_player2D_Object = transform.Find("Player2D").gameObject;
+
+        m_dustEffectParticle = m_dustEffect.GetComponentInChildren<ParticleSystem>();
     }
 
     private void Start()
@@ -79,6 +92,10 @@ public sealed class PlayerManager : MonoBehaviour
     /// <summary>플레이어를 3D로 변경함</summary>
     public void PlayerChange3D()
     {
+        // 먼지 이펙트 위치 잡기
+        m_dustEffect.parent = m_dustEffectPosition3D;
+        m_dustEffect.localPosition = Vector3.zero;
+
         // 2D플레이어 비활성화
         m_player2D_Object.SetActive(false);
         // 3D플레이어의 부모를 그룹의 루트로 변경
@@ -87,11 +104,17 @@ public sealed class PlayerManager : MonoBehaviour
         m_player2D_Object.transform.parent = m_player3D_Object.transform;
         // 3D플레이어 활성화
         m_player3D_Object.SetActive(true);
+
+        m_dustEffectParticle.Stop();
     }
 
     /// <summary>플레이어를 2D로 변경함</summary>
     public void PlayerChange2D()
     {
+        // 먼지 이펙트 위치 잡기
+        m_dustEffect.parent = m_dustEffectPosition2D;
+        m_dustEffect.localPosition = Vector3.zero;
+
         // 3D플레이어 비활성화
         m_player3D_Object.SetActive(false);
         // 2D플레이어의 부모를 그룹의 루트로 변경
@@ -102,6 +125,8 @@ public sealed class PlayerManager : MonoBehaviour
         m_player3D_Object.transform.parent = m_player2D_Object.transform;
         // 2D플레이어 활성화
         m_player2D_Object.SetActive(true);
+
+        m_dustEffectParticle.Stop();
     }
 
     // 체력감소 부분

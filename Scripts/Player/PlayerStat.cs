@@ -71,4 +71,8 @@ public sealed class PlayerStat : MonoBehaviour
     [SerializeField]
     private float m_objectPickSpeed;
     public float ObjectPickSpeed { get { return m_objectPickSpeed; } }
+
+    [SerializeField]
+    private float m_maxHoldTime;
+    public float MaxHoldTime { get { return m_maxHoldTime; } }
 }

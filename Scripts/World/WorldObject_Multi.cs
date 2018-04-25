@@ -25,8 +25,10 @@ public sealed class WorldObject_Multi : WorldObject
         m_rendererCount = m_renderers.Count;
         m_collider2DCount = m_collider2D.Count;
 
-        for(int i = 0; i < m_rendererCount; i++)
+        for (int i = 0; i < m_rendererCount; i++)
+        {
             m_defaultMaterials.Add(m_renderers[i].material);
+        }
     }
 
     /// <summary>멀티 오브젝트를 3D 상태로 변경</summary>

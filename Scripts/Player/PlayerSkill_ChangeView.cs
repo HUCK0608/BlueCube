@@ -139,9 +139,6 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             // 쿼터뷰에서 사이드뷰로 카메라가 이동함
             yield return StartCoroutine(CameraManager.Instance.StartMovingWork());
 
-            // 플레이어 2D로 변경
-            PlayerManager.Instance.PlayerChange2D();
-
             // 2D외벽 활성화
             m_changeViewRect.SetOutWallEnable(true);
         }
@@ -198,6 +195,10 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
         // 상자 크기 감소
         yield return StartCoroutine(m_changeViewRect.SetDecreaseSize());
+
+        // 땅이 아니라면 Hold 상태로 변경
+        if(!PlayerManager.Instance.SubController3D.CheckGround.Check())
+            PlayerManager.Instance.MainController.ChangeState3D(E_PlayerState3D.Hold);
 
         m_isViewChange = false;
     }

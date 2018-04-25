@@ -8,6 +8,7 @@ public sealed class WorldObject_Single : WorldObject
     private MeshRenderer m_renderer;
     private Material m_defaultMaterial;
     private Collider2D m_collider2D;
+    private int m_defaultLightMapIndex;
 
     protected override void Awake()
     {
@@ -16,6 +17,7 @@ public sealed class WorldObject_Single : WorldObject
         m_renderer = GetComponentInChildren<MeshRenderer>();
         m_defaultMaterial = m_renderer.material;
         m_collider2D = GetComponentInChildren<Collider2D>();
+        m_defaultLightMapIndex = m_renderer.lightmapIndex;
     }
 
     /// <summary>싱글 오브젝트를 3D 상태로 변경</summary>
@@ -30,6 +32,8 @@ public sealed class WorldObject_Single : WorldObject
 
             if (m_isUse2DTexture)
                 m_renderer.material.SetFloat(Shader_ChoiceString, 0);
+
+            m_renderer.lightmapIndex = m_defaultLightMapIndex;
         }
         // 2D전환상자에 포함되어 있지 않았을 경우 렌더러가 비활성화 된 오브젝트의 렌더러를 킨다
         else
@@ -50,6 +54,8 @@ public sealed class WorldObject_Single : WorldObject
 
             if (m_isUse2DTexture)
                 m_renderer.material.SetFloat(Shader_ChoiceString, 1);
+
+            m_renderer.lightmapIndex = -1;
         }
         // 2D전환상자에 포함되어 있지 않을 경우 렌더러를 끈다
         else
