@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0069764135, g: 0.12065037, b: 0.24560487, a: 1}
+  m_IndirectSpecularColor: {r: 0.006992393, g: 0.1206536, b: 0.24559988, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2591,6 +2591,43 @@ Prefab:
     - target: {fileID: 4500149624226924, guid: 1af512735560ef9428636043ab56ff37, type: 2}
       propertyPath: m_LocalRotation.w
       value: -0.0002946604
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868979245876420, guid: 1af512735560ef9428636043ab56ff37, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212912282606641772, guid: 1af512735560ef9428636043ab56ff37,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c74b7fc7b3a49234b90bc02e3b6e3abd,
+        type: 3}
+    - target: {fileID: 212912282606641772, guid: 1af512735560ef9428636043ab56ff37,
+        type: 2}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323500513169606, guid: 1af512735560ef9428636043ab56ff37, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 212912282606641772, guid: 1af512735560ef9428636043ab56ff37,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 3.8823528
+      objectReference: {fileID: 0}
+    - target: {fileID: 212912282606641772, guid: 1af512735560ef9428636043ab56ff37,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 5.647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510111662923850, guid: 1af512735560ef9428636043ab56ff37, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510111662923850, guid: 1af512735560ef9428636043ab56ff37, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.353
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1af512735560ef9428636043ab56ff37, type: 2}
@@ -41185,16 +41222,16 @@ Prefab:
       propertyPath: m_Name
       value: Terrain_Grass_Floor (40)
       objectReference: {fileID: 0}
-    - target: {fileID: 23686340121007184, guid: d1805a805b53e7e49a776f028884cdb5,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 9315f89faed2a374595dc18d99e33608, type: 2}
     - target: {fileID: 33605995844815018, guid: d1805a805b53e7e49a776f028884cdb5,
         type: 2}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: d700ad22785aa9b4dafcf963889273fc, type: 3}
+    - target: {fileID: 114503370691805638, guid: d1805a805b53e7e49a776f028884cdb5,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d1805a805b53e7e49a776f028884cdb5, type: 2}
   m_IsPrefabParent: 0

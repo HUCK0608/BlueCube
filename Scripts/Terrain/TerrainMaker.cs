@@ -5,24 +5,31 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class TerrainMaker : MonoBehaviour
 {
+    // 월드 오브젝트 메테리얼
+    private static Material m_worldObject_Material;
+
     // 눈 지형 모음 및 필요변수
-    [SerializeField]
     private static List<Mesh> m_snowGrass;
     private static string m_snowGrassPath = "Model/Terrains/Snow/Terrain_SnowGrass-";
-    [SerializeField]
     private static int m_snowGrassCount = 26;
 
     // 선택한 눈 지형 번호
     [SerializeField]
     private int m_selectSnowGrassNumber;
 
-    [SerializeField]
-    private Material m_material;
-
     private void Update()
     {
-        transform.GetComponentInChildren<Renderer>().material = m_material;
-        ChangeTerrain();
+        InitMaterial();
+        InitSnowGrass();
+    }
+
+    private void InitMaterial()
+    {
+        if (m_worldObject_Material == null)
+            m_worldObject_Material = Resources.Load("Materials/WorldObject/WorldObject_Material") as Material;
+
+        // 메테리얼 설정
+        GetComponentInChildren<MeshRenderer>().material = m_worldObject_Material;
     }
 
     private void InitSnowGrass()
@@ -31,15 +38,10 @@ public class TerrainMaker : MonoBehaviour
         {
             m_snowGrass = new List<Mesh>();
             for (int i = 0; i < m_snowGrassCount; i++)
-            {
                 m_snowGrass.Add((Resources.Load(m_snowGrassPath + i.ToString()) as GameObject).GetComponentInChildren<MeshFilter>().sharedMesh);
-            }
         }
-    }
 
-    private void ChangeTerrain()
-    {
-        InitSnowGrass();
+        // 메쉬 설정
         GetComponentInChildren<MeshFilter>().mesh = m_snowGrass[m_selectSnowGrassNumber];
     }
 }
