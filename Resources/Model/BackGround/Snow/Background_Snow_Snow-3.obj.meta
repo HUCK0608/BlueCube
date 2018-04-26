@@ -1,18 +1,18 @@
 fileFormatVersion: 2
-guid: 49ba2118bf699164eb482ed53e79d1c8
-timeCreated: 1523174678
+guid: 8d3d788b51136a947834d7b8d9117dd8
+timeCreated: 1524746793
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Background_Snow_Snow-3
+    100000: BackGround_Snow_Snow-3
     100002: //RootNode
-    400000: Background_Snow_Snow-3
+    400000: BackGround_Snow_Snow-3
     400002: //RootNode
-    2100000: Background_Snow_Snow-3Mat
-    2300000: Background_Snow_Snow-3
-    3300000: Background_Snow_Snow-3
-    4300000: Background_Snow_Snow-3
+    2100000: BackGround_Snow_Snow-3Mat
+    2300000: BackGround_Snow_Snow-3
+    3300000: BackGround_Snow_Snow-3
+    4300000: BackGround_Snow_Snow-3
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -48,10 +48,10 @@ ModelImporter:
     addColliders: 0
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -68,7 +68,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

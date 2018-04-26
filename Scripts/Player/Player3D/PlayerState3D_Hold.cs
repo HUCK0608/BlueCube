@@ -25,20 +25,15 @@ public sealed class PlayerState3D_Hold : PlayerState3D
 
     private void ChangeStates()
     {
-        // 최대로 홀딩 될 수 있는 시간이 지나면 Idle 상태로 변경
-        if(m_addTime >= m_playerManager.Stat.MaxHoldTime)
+        // 최대로 홀딩될 수 있는 시간이 지나거나 이동입력이 있으면 Falling 상태로 변경
+        if(m_addTime >= m_playerManager.Stat.MaxHoldTime || !m_subController.GetMoveDirection().Equals(Vector3.zero))
         {
-            m_mainController.ChangeState3D(E_PlayerState3D.Idle);
+            m_mainController.ChangeState3D(E_PlayerState3D.Falling);
         }
         // 시점변환 키를 눌렀을 때 시점변환 실행
         else if(Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
         {
             m_playerManager.Skill.ChangeView();
-        }
-        // 이동 입력이 있으면 Move 상태로 변경
-        else if(!m_subController.GetMoveDirection().Equals(Vector3.zero))
-        {
-            m_mainController.ChangeState3D(E_PlayerState3D.Move);
         }
     }
     

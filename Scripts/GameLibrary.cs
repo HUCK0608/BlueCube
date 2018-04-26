@@ -5,20 +5,8 @@ using UnityEngine;
 public static class GameLibrary
 {
     // Material 부분
-    private static Material m_material_Default = Resources.Load("Materials/WorldObject/WorldObject_Default_Material") as Material;
-    public static Material Material_Default { get { return m_material_Default; } }
-
-    private static Material m_material_CanChange = Resources.Load("Materials/WorldObject/WorldObject_CanChange_Material") as Material;
-    public static Material Material_CanChange { get { return m_material_CanChange; } }
-
-    private static Material m_material_Blue = Resources.Load("Materials/Dumy3") as Material;
-    public static Material Material_Blue { get { return m_material_Blue; } }
-
     private static Material m_material_Red = Resources.Load("Materials/Dumy2") as Material;
     public static Material Material_Red { get { return m_material_Red; } }
-
-    private static Material m_material_Block = Resources.Load("Materials/WorldObject/WorldObject_Block_Material") as Material;
-    public static Material Material_Block { get { return m_material_Block; } }
 
     // layerMask 부분
 
@@ -39,6 +27,9 @@ public static class GameLibrary
 
     private static int m_layerMask_CanPushWay = LayerMask.NameToLayer("CanPushWay");
     public static int LayerMask_CanPushWay { get { return m_layerMask_CanPushWay.Shift(); } }
+
+    private static int m_layerMask_InteractionHint = LayerMask.NameToLayer("Interaction Hint");
+    public static int LayerMask_InteractionHint { get { return m_layerMask_InteractionHint.Shift(); } }
 
     private static int m_layerMask_InteractionPush = LayerMask.NameToLayer("Interaction Push");
     public static int LayerMask_InteractionPush { get { return m_layerMask_InteractionPush.Shift(); } }

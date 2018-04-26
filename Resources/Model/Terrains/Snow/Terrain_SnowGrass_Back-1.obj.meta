@@ -1,23 +1,23 @@
 fileFormatVersion: 2
-guid: fe905800305ceda468189ac6ca19648d
-timeCreated: 1516705477
+guid: b847db01d1fc6304e97d10676f1426ab
+timeCreated: 1524746223
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: tilemap_0_
-    400000: //RootNode
-    400002: tilemap_0_
-    2100000: tilemap_0_Mat
-    2300000: tilemap_0_
-    3300000: tilemap_0_
-    4300000: tilemap_0_
+    100000: Terrain_SnowGrass_Back-1
+    100002: //RootNode
+    400000: Terrain_SnowGrass_Back-1
+    400002: //RootNode
+    2100000: Terrain_SnowGrass_Back-1Mat
+    2300000: Terrain_SnowGrass_Back-1
+    3300000: Terrain_SnowGrass_Back-1
+    4300000: Terrain_SnowGrass_Back-1
   externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 0
+    materialSearch: 1
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
@@ -43,11 +43,11 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.2
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
-    importBlendShapes: 0
+    importBlendShapes: 1
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
@@ -64,11 +64,11 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 0
-    normalImportMode: 1
+    normalSmoothAngle: 60
+    normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

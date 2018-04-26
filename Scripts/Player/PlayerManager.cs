@@ -84,11 +84,6 @@ public sealed class PlayerManager : MonoBehaviour
         m_dustEffectParticle = m_dustEffect.GetComponentInChildren<ParticleSystem>();
     }
 
-    private void Start()
-    {
-        PlayerChange3D();
-    }
-
     /// <summary>플레이어를 3D로 변경함</summary>
     public void PlayerChange3D()
     {

@@ -16,6 +16,11 @@ public sealed class PlayerController3D : MonoBehaviour
     private CheckLadder m_checkLadder;
     public CheckLadder CheckLadder { get { return m_checkLadder; } }
 
+    [SerializeField]
+    private List<Transform> m_itemCheckPoints;
+    /// <summary>아이템 체크 위치모음</summary>
+    public List<Transform> ItemCheckPoints { get { return m_itemCheckPoints; } }
+
     // 리지드바디
     private Rigidbody m_rigidbody;
     public Rigidbody Rigidbody { get { return m_rigidbody; } }

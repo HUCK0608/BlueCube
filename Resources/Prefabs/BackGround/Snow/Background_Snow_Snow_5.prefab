@@ -112,7 +112,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1750220222369324}
-  m_Mesh: {fileID: 4300000, guid: 1fc1ca9afb8e44241b0f58664520895b, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 8b1610401daf9fe4aa9407ce741da1d1, type: 3}
 --- !u!65 &65537285645299632
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -136,3 +136,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isUse2DTexture: 0
+  m_isUseShiningSpecular: 0

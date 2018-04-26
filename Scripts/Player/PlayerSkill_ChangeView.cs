@@ -72,6 +72,20 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         return true;
     }
 
+    /// <summary>2D 상태로 시작</summary>
+    public void StartView2D()
+    {
+        GameManager.Instance.SetCursorEnable(false);
+
+        m_currentView = E_ViewType.View2D;
+        BlueCubeManager.Instance.ChangeCube();
+        LightManager.Instance.ShadowEnable(false);
+        m_changeViewRect.StartView2D();
+        CameraManager.Instance.StartView2D();
+        PlayerManager.Instance.PlayerChange2D();
+        WorldManager.Instance.StartView2D();
+    }
+    
     // 시점변환을 허용할 건지 체크하는 코루틴
     private IEnumerator CheckKey()
     {
@@ -202,4 +216,5 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
         m_isViewChange = false;
     }
+
 }

@@ -43,32 +43,44 @@ public sealed class PlayerState3D_Move : PlayerState3D
         // 상호작용 키를 눌렀을 때
         else if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey))
         {
-            Vector3 rayOrigin = transform.position + Vector3.up;
+            List<Transform> itemCheckPoints = m_subController.ItemCheckPoints;
+            int itemCheckPointCount = itemCheckPoints.Count;
+            float itemCheckDistance = m_playerManager.Stat.ItemCheckDistance;
             RaycastHit hit;
-            int hintItemLayerMask = (1 << 13);
 
-            if (GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, GameLibrary.LayerMask_InteractionPickPut))
+            // 들기 아이템
+            for (int i = 0; i < itemCheckPointCount; i++)
             {
-                // 들고놓기 오브젝트 저장
-                m_playerManager.Hand.CurrentPickPutObject = hit.transform.GetComponentInParent<Interaction_PickPut>();
+                if (GameLibrary.Raycast3D(itemCheckPoints[i].position, itemCheckPoints[i].forward, out hit, itemCheckDistance, GameLibrary.LayerMask_InteractionPickPut))
+                {
+                    m_playerManager.Hand.CurrentPickPutObject = hit.transform.GetComponentInParent<Interaction_PickPut>();
 
-                // PickInit 상태로 변경
-                m_mainController.ChangeState3D(E_PlayerState3D.PickInit);
+                    m_mainController.ChangeState3D(E_PlayerState3D.PickInit);
+
+                    return;
+                }
             }
-            // 바라보는 방향에 밀 수 있는 아이템이 있으면 PushInit 상태로 변경
-            else if(GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, GameLibrary.LayerMask_InteractionPush))
+            // 밀기 아이템
+            for (int i = 0; i < itemCheckPointCount; i++)
             {
-                // 아이템 스크립트를 저장
-                m_playerManager.Hand.CurrentPushItem = hit.transform.GetComponentInParent<Interaction_Push>();
+                if (GameLibrary.Raycast3D(itemCheckPoints[i].position, itemCheckPoints[i].forward, out hit, itemCheckDistance, GameLibrary.LayerMask_InteractionPush))
+                {
+                    m_playerManager.Hand.CurrentPushItem = hit.transform.GetComponentInParent<Interaction_Push>();
 
-                // 상태 변경
-                m_mainController.ChangeState3D(E_PlayerState3D.PushInit);
+                    m_mainController.ChangeState3D(E_PlayerState3D.PushInit);
+
+                    return;
+                }
             }
-            // 바라보는 방향에 힌트 아이템이 있을경우 힌트를 표시
-            else if (GameLibrary.Raycast3D(rayOrigin, m_subController.Forward, out hit, m_playerManager.Stat.ItemCheckDistance, hintItemLayerMask))
+            // 힌트 아이템
+            for (int i = 0; i < itemCheckPointCount; i++)
             {
-                // 힌트를 표시
-                hit.transform.GetComponent<Item_HintObject>().ShowHint();
+                if (GameLibrary.Raycast3D(itemCheckPoints[i].position, itemCheckPoints[i].forward, out hit, itemCheckDistance, GameLibrary.LayerMask_InteractionHint))
+                {
+                    hit.transform.GetComponent<Item_HintObject>().ShowHint();
+
+                    return;
+                }
             }
         }
         // 이동방향에 사다리가 있으면 LadderInit 상태로 변경

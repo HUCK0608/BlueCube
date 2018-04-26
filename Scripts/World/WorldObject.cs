@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_MaterialType { Default, Change, Block }
+public enum E_WorldObject_ShaderType { Default3D, Default2D, CanChange, Block}
 
 [SelectionBase]
 public class WorldObject : MonoBehaviour
 {
-    protected static string Shader_ChoiceString = "_Choice";
+    protected static string m_shader_ChoiceString = "_Choice";
 
     // 2D 텍스쳐를 사용할지 여부
     [SerializeField]
     protected bool m_isUse2DTexture;
+    // 샤이닝 스펙트럼을 사용할지 여부
+    [SerializeField]
+    protected bool m_isUseShiningSpecular;
 
     protected bool m_isOnRenderer;
     /// <summary>오브젝트의 렌더러가 활성화 되어 있을 경우 true를 반환</summary>
@@ -29,14 +32,21 @@ public class WorldObject : MonoBehaviour
         m_isOnRenderer = true;
     }
 
+    /// <summary>2D 상태로 시작</summary>
+    public void StartView2D()
+    {
+        m_isIncludeChangeViewRect = true;
+        Change2D();
+    }
+
     /// <summary>오브젝트를 2D상태로 변경</summary>
     public virtual void Change2D() { }
     /// <summary>오브젝트를 3D상태로 변경</summary>
     public virtual void Change3D() { }
     /// <summary>오브젝트의 렌더러 활성화 여부를 설정</summary>
     public virtual void SetRendererEnable(bool value) { }
-    /// <summary>오브젝트의 메테리얼을 변경</summary>
-    public virtual void SetMaterial(E_MaterialType materialType) { }
+    /// <summary>오브젝트의 쉐이더를 변경</summary>
+    public virtual void SetMaterial(E_WorldObject_ShaderType ShaderType) { }
 
     /// <summary>끼인 오브젝트가 무엇인지 보여준다</summary>
     public void ShowBlock()
@@ -70,12 +80,12 @@ public class WorldObject : MonoBehaviour
                 // 상태에 따라 메테리얼 변경
                 if(isShowBlock)
                 {
-                    SetMaterial(E_MaterialType.Block);
+                    SetMaterial(E_WorldObject_ShaderType.Block);
                     isShowBlock = false;
                 }
                 else
                 {
-                    SetMaterial(E_MaterialType.Change);
+                    SetMaterial(E_WorldObject_ShaderType.Default3D);
                     isShowBlock = true;
 
                     currentCycle++;
@@ -94,9 +104,9 @@ public class WorldObject : MonoBehaviour
 
         // 현재 오브젝트 상태에 따라 메테리얼 재설정
         if (isIncludeChangeViewRect)
-            SetMaterial(E_MaterialType.Change);
+            SetMaterial(E_WorldObject_ShaderType.CanChange);
         else
-            SetMaterial(E_MaterialType.Default);
+            SetMaterial(E_WorldObject_ShaderType.Default3D);
 
         m_isShowBlock = false;
     }

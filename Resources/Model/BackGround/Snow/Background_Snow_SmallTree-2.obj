@@ -1,10 +1,10 @@
 # MagicaVoxel @ Ephtracy
 
 # group
-g Background_Snow_SmallTree-2
+g BackGround_Snow_SmallTree-2
 
 # material
-mtllib Background_Snow_SmallTree-2.mtl
+mtllib BackGround_Snow_SmallTree-2.mtl
 usemtl palette
 
 # normals
@@ -16,8 +16,8 @@ vn 0 -1 0
 vn 0 1 0
 
 # texcoords
-vt 0.0488281 0.5
-vt 0.150391 0.5
+vt 0.0175781 0.5
+vt 0.123047 0.5
 
 # verts
 v -3.5 2.5 3.5

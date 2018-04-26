@@ -1,10 +1,10 @@
 # MagicaVoxel @ Ephtracy
 
 # group
-g Background_Snow_Grass-1
+g BackGround_Snow_Grass-1
 
 # material
-mtllib Background_Snow_Grass-1.mtl
+mtllib BackGround_Snow_Grass-1.mtl
 usemtl palette
 
 # normals

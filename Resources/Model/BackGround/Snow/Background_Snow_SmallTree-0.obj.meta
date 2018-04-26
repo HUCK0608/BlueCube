@@ -1,18 +1,18 @@
 fileFormatVersion: 2
-guid: b5588a175b67de644a658f8fbe9c9158
-timeCreated: 1523248500
+guid: 144ec092b8c73094aa7c7942278aa9f3
+timeCreated: 1524746916
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Background_Snow_SmallTree-0
+    100000: BackGround_Snow_SmallTree-0
     100002: //RootNode
-    400000: Background_Snow_SmallTree-0
+    400000: BackGround_Snow_SmallTree-0
     400002: //RootNode
-    2100000: Background_Snow_SmallTree-0Mat
-    2300000: Background_Snow_SmallTree-0
-    3300000: Background_Snow_SmallTree-0
-    4300000: Background_Snow_SmallTree-0
+    2100000: BackGround_Snow_SmallTree-0Mat
+    2300000: BackGround_Snow_SmallTree-0
+    3300000: BackGround_Snow_SmallTree-0
+    4300000: BackGround_Snow_SmallTree-0
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -48,10 +48,10 @@ ModelImporter:
     addColliders: 0
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -68,7 +68,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

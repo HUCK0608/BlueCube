@@ -16,32 +16,30 @@ public class TerrainMaker : MonoBehaviour
     [SerializeField]
     private int m_selectSnowGrassNumber;
 
-    private void ChangeMaterial()
+    [SerializeField]
+    private Material m_material;
+
+    private void Update()
     {
-        GetComponentInChildren<MeshRenderer>().material = GameLibrary.Material_Default;
+        transform.GetComponentInChildren<Renderer>().material = m_material;
+        ChangeTerrain();
     }
 
     private void InitSnowGrass()
     {
-        if(m_snowGrass == null)
+        if (m_snowGrass == null)
         {
             m_snowGrass = new List<Mesh>();
-            for(int i = 0; i < m_snowGrassCount; i++)
+            for (int i = 0; i < m_snowGrassCount; i++)
             {
                 m_snowGrass.Add((Resources.Load(m_snowGrassPath + i.ToString()) as GameObject).GetComponentInChildren<MeshFilter>().sharedMesh);
             }
         }
     }
 
-    private void Update()
-    {
-        ChangeTerrain();
-    }
-
     private void ChangeTerrain()
     {
         InitSnowGrass();
-        ChangeMaterial();
         GetComponentInChildren<MeshFilter>().mesh = m_snowGrass[m_selectSnowGrassNumber];
     }
 }

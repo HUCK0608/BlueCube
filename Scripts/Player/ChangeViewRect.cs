@@ -60,6 +60,13 @@ public sealed class ChangeViewRect : MonoBehaviour
         m_outWallGroup.SetActive(false);
     }
 
+    /// <summary>2D상태로 시작</summary>
+    public void StartView2D()
+    {
+        m_outWallGroup.transform.localScale = m_increaseMaxSize;
+        m_outWallGroup.SetActive(true);
+    }
+
     /// <summary>상자의 x, y 크기가 커짐. 최대 크기까지 커질 경우 종료</summary>
     public IEnumerator SetIncreaseSizeXY()
     {
@@ -198,7 +205,7 @@ public sealed class ChangeViewRect : MonoBehaviour
             // 스크립트가 있을 경우에 메테리얼을 변경
             if (worldObject != null)
             {
-                worldObject.SetMaterial(E_MaterialType.Change);
+                worldObject.SetMaterial(E_WorldObject_ShaderType.CanChange);
                 // 상자에 포함되어있다고 알리기
                 worldObject.isIncludeChangeViewRect = true;
             }
@@ -216,7 +223,7 @@ public sealed class ChangeViewRect : MonoBehaviour
             // 스크립트가 있을 경우에 메테리얼을 변경
             if (worldObject != null)
             {
-                worldObject.SetMaterial(E_MaterialType.Default);
+                worldObject.SetMaterial(E_WorldObject_ShaderType.Default3D);
                 // 상자에 포함되지않았다고 알리기
                 worldObject.isIncludeChangeViewRect = false;
             }

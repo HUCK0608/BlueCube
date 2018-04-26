@@ -30,6 +30,13 @@ public sealed class WorldManager : MonoBehaviour
         m_worldObjectCount = m_worldObjects.Count;
     }
 
+    /// <summary>월드의 오브젝트를 2D상태로 시작</summary>
+    public void StartView2D()
+    {
+        for (int i = 0; i < m_worldObjectCount; i++)
+            m_worldObjects[i].StartView2D();
+    }
+
     /// <summary>월드의 오브젝트를 2D상태에 맞게 변경한다.</summary>
     public void Change2D()
     {

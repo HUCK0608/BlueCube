@@ -18,6 +18,10 @@ public sealed class WorldObject_Single : WorldObject
         m_defaultMaterial = m_renderer.material;
         m_collider2D = GetComponentInChildren<Collider2D>();
         m_defaultLightMapIndex = m_renderer.lightmapIndex;
+
+        // 스페큘러를 사용할 경우 스페큘러를 켜줌
+        if (m_isUseShiningSpecular)
+            m_renderer.material.SetFloat("_Specular", 1f);
     }
 
     /// <summary>싱글 오브젝트를 3D 상태로 변경</summary>
@@ -28,10 +32,8 @@ public sealed class WorldObject_Single : WorldObject
         {
             SetCollider2DEnable(false);
             m_isIncludeChangeViewRect = false;
-            SetMaterial(E_MaterialType.Default);
 
-            if (m_isUse2DTexture)
-                m_renderer.material.SetFloat(Shader_ChoiceString, 0);
+            SetMaterial(E_WorldObject_ShaderType.Default3D);
 
             m_renderer.lightmapIndex = m_defaultLightMapIndex;
         }
@@ -50,10 +52,11 @@ public sealed class WorldObject_Single : WorldObject
         if(m_isIncludeChangeViewRect)
         {
             SetCollider2DEnable(true);
-            SetMaterial(E_MaterialType.Default);
 
             if (m_isUse2DTexture)
-                m_renderer.material.SetFloat(Shader_ChoiceString, 1);
+                SetMaterial(E_WorldObject_ShaderType.Default2D);
+            else
+                SetMaterial(E_WorldObject_ShaderType.Default3D);
 
             m_renderer.lightmapIndex = -1;
         }
@@ -78,20 +81,16 @@ public sealed class WorldObject_Single : WorldObject
             m_collider2D.enabled = value;
     }
 
-    /// <summary>싱글 오브젝트의 메테리얼을 설정</summary>
-    public override void SetMaterial(E_MaterialType materialType)
+    /// <summary>싱글 오브젝트의 쉐이더를 설정</summary>
+    public override void SetMaterial(E_WorldObject_ShaderType shaderType)
     {
-        if (materialType.Equals(E_MaterialType.Default))
-        {
-            m_renderer.material = m_defaultMaterial;
-        }
-        else if (materialType.Equals(E_MaterialType.Change))
-        {
-            m_renderer.material = GameLibrary.Material_CanChange;
-        }
-        else if (materialType.Equals(E_MaterialType.Block))
-        {
-            m_renderer.material = GameLibrary.Material_Block;
-        }
+        if (shaderType.Equals(E_WorldObject_ShaderType.Default3D))
+            m_renderer.material.SetFloat(m_shader_ChoiceString, 0f);
+        else if (shaderType.Equals(E_WorldObject_ShaderType.Default2D))
+            m_renderer.material.SetFloat(m_shader_ChoiceString, 1f);
+        else if (shaderType.Equals(E_WorldObject_ShaderType.CanChange))
+            m_renderer.material.SetFloat(m_shader_ChoiceString, 2f);
+        else if(shaderType.Equals(E_WorldObject_ShaderType.Block))
+            m_renderer.material.SetFloat(m_shader_ChoiceString, 3f);
     }
 }

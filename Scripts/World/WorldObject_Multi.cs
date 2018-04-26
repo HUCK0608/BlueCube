@@ -6,6 +6,7 @@ public sealed class WorldObject_Multi : WorldObject
 {
     private List<MeshRenderer> m_renderers;
     private List<Material> m_defaultMaterials;
+    private List<int> m_defaultLightMapIndex;
     private int m_rendererCount;
 
     private List<Collider2D> m_collider2D;
@@ -17,6 +18,7 @@ public sealed class WorldObject_Multi : WorldObject
 
         m_renderers = new List<MeshRenderer>();
         m_defaultMaterials = new List<Material>();
+        m_defaultLightMapIndex = new List<int>();
         m_collider2D = new List<Collider2D>();
 
         m_renderers.AddRange(GetComponentsInChildren<MeshRenderer>());
@@ -28,6 +30,11 @@ public sealed class WorldObject_Multi : WorldObject
         for (int i = 0; i < m_rendererCount; i++)
         {
             m_defaultMaterials.Add(m_renderers[i].material);
+            m_defaultLightMapIndex.Add(m_renderers[i].lightmapIndex);
+
+            // 스페큘러를 사용할 경우 스페큘러를 켜줌
+            if (m_isUseShiningSpecular)
+                m_renderers[i].material.SetFloat("_Specular", 1f);
         }
     }
 
@@ -39,7 +46,11 @@ public sealed class WorldObject_Multi : WorldObject
         {
             SetCollider2DEnable(false);
             m_isIncludeChangeViewRect = false;
-            SetMaterial(E_MaterialType.Default);
+
+            SetMaterial(E_WorldObject_ShaderType.Default3D);
+
+            for (int i = 0; i < m_rendererCount; i++)
+                m_renderers[i].lightmapIndex = m_defaultLightMapIndex[i];
         }
         // 2D전환상자에 포함되어 있지 않았을 경우 렌더러가 비활성화 된 오브젝트의 렌더러를 킨다
         else
@@ -56,7 +67,14 @@ public sealed class WorldObject_Multi : WorldObject
         if (m_isIncludeChangeViewRect)
         {
             SetCollider2DEnable(true);
-            SetMaterial(E_MaterialType.Default);
+
+            if (m_isUse2DTexture)
+                SetMaterial(E_WorldObject_ShaderType.Default2D);
+            else
+                SetMaterial(E_WorldObject_ShaderType.Default3D);
+
+            for (int i = 0; i < m_rendererCount; i++)
+                m_renderers[i].lightmapIndex = -1;
         }
         // 2D전환상자에 포함되어 있지 않을 경우 렌더러를 끈다
         else
@@ -84,22 +102,27 @@ public sealed class WorldObject_Multi : WorldObject
     }
 
     /// <summary>멀티 오브젝트의 메테리얼을 설정</summary>
-    public override void SetMaterial(E_MaterialType materialType)
+    public override void SetMaterial(E_WorldObject_ShaderType materialType)
     {
-        if (materialType.Equals(E_MaterialType.Default))
+        if (materialType.Equals(E_WorldObject_ShaderType.Default3D))
         {
             for (int i = 0; i < m_rendererCount; i++)
-                m_renderers[i].material = m_defaultMaterials[i];
+                m_renderers[i].material.SetFloat(m_shader_ChoiceString, 0f);
         }
-        else if (materialType.Equals(E_MaterialType.Change))
+        else if (materialType.Equals(E_WorldObject_ShaderType.Default2D))
         {
             for (int i = 0; i < m_rendererCount; i++)
-                m_renderers[i].material = GameLibrary.Material_CanChange;
+                m_renderers[i].material.SetFloat(m_shader_ChoiceString, 1f);
         }
-        else if (materialType.Equals(E_MaterialType.Block))
+        else if (materialType.Equals(E_WorldObject_ShaderType.CanChange))
         {
             for (int i = 0; i < m_rendererCount; i++)
-                m_renderers[i].material = GameLibrary.Material_Block;
+                m_renderers[i].material.SetFloat(m_shader_ChoiceString, 2f);
+        }
+        else if (materialType.Equals(E_WorldObject_ShaderType.Block))
+        {
+            for (int i = 0; i < m_rendererCount; i++)
+                m_renderers[i].material.SetFloat(m_shader_ChoiceString, 3f);
         }
     }
 }

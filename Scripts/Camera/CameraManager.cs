@@ -19,8 +19,14 @@ public sealed class CameraManager : MonoBehaviour
         m_instance = this;
 
         m_animator = GetComponent<Animator>();
+    }
 
-        Debug.Log(transform.Find("CenterPoint").forward);
+    /// <summary>2D 상태로 시작</summary>
+    public void StartView2D()
+    {
+        transform.position = PlayerManager.Instance.Player2D_Object.transform.position;
+        m_animator.Play("View2D_Idle", -1, 0f);
+        m_animator.SetInteger(m_animatorParameterName, 1);
     }
 
     private void LateUpdate()

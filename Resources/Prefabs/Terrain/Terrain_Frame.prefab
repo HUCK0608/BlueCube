@@ -194,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isUse2DTexture: 0
+  m_isUseShiningSpecular: 0
 --- !u!114 &114503370691805638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -206,6 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_selectSnowGrassNumber: 0
+  m_material: {fileID: 2100000, guid: 9315f89faed2a374595dc18d99e33608, type: 2}
 --- !u!114 &114773479611646582
 MonoBehaviour:
   m_ObjectHideFlags: 1
