@@ -28,8 +28,8 @@ public class TerrainMaker : MonoBehaviour
         if (m_worldObject_Material == null)
             m_worldObject_Material = Resources.Load("Materials/WorldObject/WorldObject_Material") as Material;
 
-        // 메테리얼 설정
-        GetComponentInChildren<MeshRenderer>().material = m_worldObject_Material;
+            // 메테리얼 설정
+            GetComponentInChildren<MeshRenderer>().material = m_worldObject_Material;
     }
 
     private void InitSnowGrass()
