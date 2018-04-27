@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Effect_Type { FBExplosion, Boom, ChangeView, Heal }
+public enum Effect_Type { FBExplosion, Boom, CharacterBoom, Heal }
 
 public sealed class EffectManager : MonoBehaviour
 {

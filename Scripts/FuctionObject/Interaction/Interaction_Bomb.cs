@@ -47,8 +47,8 @@ public sealed class Interaction_Bomb : MonoBehaviour
         // 현재 위치에 폭발 이펙트 생성
         EffectManager.Instance.CreateEffect(Effect_Type.Boom, m_model.position);
 
-        // 초기 메테리얼로 변경
-        m_meshRenderer.material = m_defaultMaterial;
+        // 텍스쳐 원래상태로 변경
+        m_worldObject.SetMaterial(E_WorldObject_ShaderType.Default3D);
 
         // 위치 초기화
         m_model.localPosition = Vector3.zero;

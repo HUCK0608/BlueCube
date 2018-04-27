@@ -10,6 +10,9 @@ public sealed class ChangeViewRect : MonoBehaviour
     // 2D 외벽 콜라이더
     private GameObject m_outWallGroup;
 
+    [SerializeField]
+    private GameObject m_changeViewEffect;
+
     // 콜라이더
     private Collider m_collider;
 
@@ -70,8 +73,15 @@ public sealed class ChangeViewRect : MonoBehaviour
     /// <summary>상자의 x, y 크기가 커짐. 최대 크기까지 커질 경우 종료</summary>
     public IEnumerator SetIncreaseSizeXY()
     {
-        transform.localScale = Vector3.zero;
+        // 이펙트 켜기
+        m_changeViewEffect.SetActive(true);
+
+        Vector3 startScale = Vector3.zero;
+        startScale.z = 0.01f;
+
+        transform.localScale = startScale;
         transform.position = BlueCubeManager.Instance.BlueCube3D.transform.position;
+
         // 상자의 충돌체크 켜기
         SetColliderEnable(true);
         // 상자 활성화
@@ -124,6 +134,8 @@ public sealed class ChangeViewRect : MonoBehaviour
             yield return null;
         }
 
+        m_changeViewEffect.SetActive(false);
+
         // 충돌체크 끄기
         SetColliderEnable(false);
     }
@@ -131,6 +143,10 @@ public sealed class ChangeViewRect : MonoBehaviour
     /// <summary>상자 작아지게 만들기</summary>
     public IEnumerator SetDecreaseSize()
     {
+        // 이펙트가 켜져있다면 이펙트를 끔
+        if (m_changeViewEffect.activeSelf)
+            m_changeViewEffect.SetActive(false);
+
         // 활성화가 되어있지 않을경우 활성화
         if (!gameObject.activeSelf)
             gameObject.SetActive(true);

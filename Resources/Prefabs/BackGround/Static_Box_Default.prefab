@@ -36,6 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4831367137208444}
   - component: {fileID: 114827124242483958}
+  - component: {fileID: 114773208380411278}
   m_Layer: 0
   m_Name: Static_Box_Default
   m_TagString: Untagged
@@ -94,7 +95,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1617490488663162}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.7461176, y: 2, z: -4.929427}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4168043590627312}
@@ -116,7 +117,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: e55b3c11295c1d44faf4666e5968a12f, type: 2}
+  - {fileID: 2100000, guid: 9315f89faed2a374595dc18d99e33608, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -142,7 +143,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1789310832723858}
-  m_Mesh: {fileID: 4300000, guid: 7608a69ff48e41c4e9ca35f4c4b731fc, type: 3}
+  m_Mesh: {fileID: 4300000, guid: fde8f977ec3592240853bb2e7646269f, type: 3}
 --- !u!61 &61467952673588262
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -180,6 +181,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114773208380411278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1617490488663162}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffc2086b0f65de84997dcc75e4195fd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_selectSnowBoxNumber: -1
 --- !u!114 &114827124242483958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -191,3 +204,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isUse2DTexture: 0
+  m_isUseShiningSpecular: 0

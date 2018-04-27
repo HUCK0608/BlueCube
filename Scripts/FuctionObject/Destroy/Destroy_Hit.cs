@@ -15,7 +15,7 @@ public sealed class Destroy_Hit : MonoBehaviour
         // 받은 피격타입과 부셔질 피격타입이 같으면 오브젝트를 부심
         if(hitType.Equals(m_destroyHitType))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
