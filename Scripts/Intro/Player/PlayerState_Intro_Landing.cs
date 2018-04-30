@@ -4,14 +4,41 @@ using UnityEngine;
 
 public sealed class PlayerState_Intro_Landing : PlayerState_Intro
 {
+    // 착지 모션이 끝났는지 여부
+    private bool m_isEndLandingMotion;
+
     public override void InitState()
     {
         base.InitState();
+
+        m_isEndLandingMotion = false;
+        m_isEndLandingMotion = true;
     }
 
     private void Update()
     {
+        // 이동방향 가져오기
+        Vector2 moveDirection = m_controller.GetMoveDirection();
 
+        // 이동 및 회전
+        m_controller.JumpMoveAndRotate(moveDirection);
+
+        ChangeStates();
+    }
+
+    // 상태 변경 모음
+    private void ChangeStates()
+    {
+        // 점프 키를 누를 경우 JumpUp 상태로 변경
+        if (Input.GetKeyDown(m_controller.Stat.JumpKey))
+        {
+            m_controller.ChangeState(E_PlayerState2D.JumpUp);
+        }
+        // 착지 모션이 끝날 경우 Idle 상태로 변경
+        else if (m_isEndLandingMotion)
+        {
+            m_controller.ChangeState(E_PlayerState2D.Idle);
+        }
     }
 
     public override void EndState()

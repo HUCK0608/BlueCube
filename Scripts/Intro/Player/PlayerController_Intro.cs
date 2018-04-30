@@ -4,6 +4,9 @@ using UnityEngine;
 
 public sealed class PlayerController_Intro : MonoBehaviour
 {
+    private static PlayerController_Intro m_instance;
+    public static PlayerController_Intro Instance { get { return m_instance; } }
+
     // 플레이어
     private Transform m_player;
 
@@ -17,10 +20,11 @@ public sealed class PlayerController_Intro : MonoBehaviour
     private E_PlayerState2D m_currentState;
 
     // 땅 체크 스크립트
-    private CheckGround2D m_checkGround;
+    private CheckGround_Intro m_checkGround;
 
     // 리지드바디
     private Rigidbody2D m_rigidbody;
+    public Rigidbody2D Rigidbody { get { return m_rigidbody; } }
 
     private bool m_isGrounded;
     /// <summary>땅일경우 true를 반환</summary>
@@ -30,11 +34,13 @@ public sealed class PlayerController_Intro : MonoBehaviour
 
     private void Awake()
     {
+        m_instance = this;
+
         m_player = transform.Find("Player");
 
         m_stat = GetComponent<PlayerStat_Intro>();
 
-        m_checkGround = GetComponentInChildren<CheckGround2D>();
+        m_checkGround = GetComponentInChildren<CheckGround_Intro>();
 
         m_rigidbody = GetComponentInChildren<Rigidbody2D>();
 
@@ -156,8 +162,8 @@ public sealed class PlayerController_Intro : MonoBehaviour
 
         // 스케일 변경으로 회전
         // 만약 스케일 값이 같지 않다면 스케일 변경
-        if (!transform.localScale.x.Equals(scale.x))
-            transform.localScale = scale;
+        if (!m_player.localScale.x.Equals(scale.x))
+            m_player.localScale = scale;
     }
 
     /// <summary>Jump상태에서 direction방향으로 이동 및 회전을 함</summary>
@@ -179,8 +185,8 @@ public sealed class PlayerController_Intro : MonoBehaviour
 
         // 스케일 변경으로 회전
         // 만약 스케일 값이 같지 않다면 스케일 변경
-        if (!transform.localScale.x.Equals(scale.x))
-            transform.localScale = scale;
+        if (!m_player.localScale.x.Equals(scale.x))
+            m_player.localScale = scale;
     }
 
     /// <summary>스탯에 있는 jumpSpeed로 Rigidbody에 힘을 가함</summary>
