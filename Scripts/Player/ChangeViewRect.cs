@@ -36,6 +36,9 @@ public sealed class ChangeViewRect : MonoBehaviour
     /// <summary>상자의 z크기를 반환</summary>
     public float SizeZ { get { return transform.localScale.z; } }
 
+    [SerializeField]
+    private ChangeViewRectZ m_changeViewRectZ;
+
     private void Awake()
     {
         m_skill = GetComponentInParent<PlayerSkill_ChangeView>();
@@ -86,6 +89,8 @@ public sealed class ChangeViewRect : MonoBehaviour
         SetColliderEnable(true);
         // 상자 활성화
         gameObject.SetActive(true);
+
+        m_changeViewRectZ.SetColliderEnable(true);
 
         while(true)
         {
@@ -138,6 +143,8 @@ public sealed class ChangeViewRect : MonoBehaviour
 
         // 충돌체크 끄기
         SetColliderEnable(false);
+
+        m_changeViewRectZ.SetColliderEnable(false);
     }
 
     /// <summary>상자 작아지게 만들기</summary>
@@ -223,7 +230,7 @@ public sealed class ChangeViewRect : MonoBehaviour
             {
                 worldObject.SetMaterial(E_WorldObject_ShaderType.CanChange);
                 // 상자에 포함되어있다고 알리기
-                worldObject.isIncludeChangeViewRect = true;
+                worldObject.IsIncludeChangeViewRect = true;
             }
         }
     }
@@ -241,7 +248,7 @@ public sealed class ChangeViewRect : MonoBehaviour
             {
                 worldObject.SetMaterial(E_WorldObject_ShaderType.Default3D);
                 // 상자에 포함되지않았다고 알리기
-                worldObject.isIncludeChangeViewRect = false;
+                worldObject.IsIncludeChangeViewRect = false;
             }
         }
     }

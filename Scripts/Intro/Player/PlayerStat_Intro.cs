@@ -8,6 +8,10 @@ public sealed class PlayerStat_Intro : MonoBehaviour
     private float m_hp;
 
     [SerializeField]
+    private KeyCode m_jumpKey;
+    public KeyCode JumpKey { get { return m_jumpKey; } }
+
+    [SerializeField]
     private float m_moveSpeed;
     /// <summary>이동속도</summary>
     public float MoveSpeed { get { return m_moveSpeed; } }
@@ -31,4 +35,9 @@ public sealed class PlayerStat_Intro : MonoBehaviour
     private float m_skinWidth;
     /// <summary>피부 크기</summary>
     public float SkinWidth { get { return m_skinWidth; } }
+
+    [SerializeField]
+    private float m_groundCheckDistance;
+    /// <summary>땅 체크 거리</summary>
+    public float GroundCheckDistance { get { return m_groundCheckDistance; } }
 }

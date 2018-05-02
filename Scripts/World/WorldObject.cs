@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_WorldObject_ShaderType { Default3D, Default2D, CanChange, Block}
+public enum E_WorldObject_ShaderType { Default3D, Default2D, CanChange, Block, BackGround }
 
 [SelectionBase]
 public class WorldObject : MonoBehaviour
@@ -22,7 +22,10 @@ public class WorldObject : MonoBehaviour
 
     protected bool m_isIncludeChangeViewRect;
     /// <summary>시점변환 상자에 포함되어 있으면 true를 반환</summary>
-    public bool isIncludeChangeViewRect { get { return m_isIncludeChangeViewRect; } set { m_isIncludeChangeViewRect = value; } }
+    public bool IsIncludeChangeViewRect { get { return m_isIncludeChangeViewRect; } set { m_isIncludeChangeViewRect = value; } }
+
+    protected bool m_isIncludeChangeViewRectZ;
+    public bool IsIncludeChangeVeiwRectZ { get { return m_isIncludeChangeViewRectZ; } set { m_isIncludeChangeViewRectZ = value; } }
 
     /// <summary>끼임 오브젝트를 표시하는 중이면 true를 반환</summary>
     protected bool m_isShowBlock;
@@ -69,7 +72,7 @@ public class WorldObject : MonoBehaviour
         bool isShowBlock = true;
 
         // 시점변환 준비중이고 시점변환 상자에 포함되어 있을 경우에만 실행
-        while(PlayerManager.Instance.IsViewChangeReady && isIncludeChangeViewRect)
+        while(PlayerManager.Instance.IsViewChangeReady && IsIncludeChangeViewRect)
         {
             // 시간 누적
             addTime += Time.deltaTime;
@@ -103,7 +106,7 @@ public class WorldObject : MonoBehaviour
         }
 
         // 현재 오브젝트 상태에 따라 메테리얼 재설정
-        if (isIncludeChangeViewRect)
+        if (IsIncludeChangeViewRect)
             SetMaterial(E_WorldObject_ShaderType.CanChange);
         else
             SetMaterial(E_WorldObject_ShaderType.Default3D);
