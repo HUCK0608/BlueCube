@@ -4,6 +4,7 @@
 		_Color2 ("BlockColor", Color) = (1,1,1,1)
 		_MainTex ("3D_Texture", 2D) = "white" {}
 		_MainTex4 ("2D_Texture2", 2D) = "white" {}
+		_MainTex5("BackgroundTexture", 2D) = "white" {}
 		_MainTex2("Emission_Texture", 2D) = "white" {}
 		_MainTex3("Spectrum", 2D) = "white" {}
 		_Emission("Emission_Power", float) = 1
@@ -35,12 +36,14 @@
 		sampler2D _MainTex2;
 		sampler2D _MainTex3;
 		sampler2D _MainTex4;
+		sampler2D _MainTex5;
 
 		struct Input {
 			float2 uv_MainTex;
 			float2 uv_MainTex2;
 			float2 uv_MainTex3;
 			float2 uv_MainTex4;
+			float2 uv_MainTex5;
 			float3 worldPos;
 			float3 worldNormal;
 		};
@@ -60,6 +63,7 @@
 			float4 e = tex2D(_MainTex4, IN.uv_MainTex4);
 			float4 d = tex2D(_MainTex3, float2(_Time.y * _Speed, 0.5));
 			float4 g = tex2D(_MainTex3, float2(_Time.y * _Speed2, 0.5));
+			float4 h = tex2D(_MainTex5, IN.uv_MainTex5);
 						
 			float2 topUV = float2(IN.worldPos.x, IN.worldPos.z);
 			float2 frontUV = float2(IN.worldPos.x, IN.worldPos.y);
@@ -89,6 +93,11 @@
 				o.Albedo = c.rgb;
 				o.Emission = f.rgb * _Emission;
 				o.Emission = (o.Emission + _Color2) * _Emission2 * g.r;
+			}
+			else if (_Choice == 4)
+			{
+				o.Albedo = h.rgb;
+				o.Emission = f.rgb * _Emission;
 			}
 		}
 		ENDCG

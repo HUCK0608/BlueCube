@@ -38,10 +38,16 @@ public sealed class WorldObject_Single : WorldObject
             m_renderer.lightmapIndex = m_defaultLightMapIndex;
         }
         // 2D전환상자에 포함되어 있지 않았을 경우 렌더러가 비활성화 된 오브젝트의 렌더러를 킨다
-        else
+        else if(!m_isIncludeChangeViewRectZ)
         {
             if (!m_isOnRenderer)
                 SetRendererEnable(true);
+        }
+
+        if (m_isIncludeChangeViewRectZ)
+        {
+            m_isIncludeChangeViewRectZ = false;
+            SetMaterial(E_WorldObject_ShaderType.Default3D);
         }
     }
 
@@ -49,7 +55,7 @@ public sealed class WorldObject_Single : WorldObject
     public override void Change2D()
     {
         // 2D전환상자에 포함되어 있을 경우 2D콜라이더를 활성화 시킨다
-        if(m_isIncludeChangeViewRect)
+        if (m_isIncludeChangeViewRect)
         {
             SetCollider2DEnable(true);
 
@@ -61,9 +67,13 @@ public sealed class WorldObject_Single : WorldObject
             m_renderer.lightmapIndex = -1;
         }
         // 2D전환상자에 포함되어 있지 않을 경우 렌더러를 끈다
-        else
+        else if (!m_isIncludeChangeViewRectZ)
         {
             SetRendererEnable(false);
+        }
+        else
+        {
+            SetMaterial(E_WorldObject_ShaderType.BackGround);
         }
     }
 
@@ -90,7 +100,9 @@ public sealed class WorldObject_Single : WorldObject
             m_renderer.material.SetFloat(m_shader_ChoiceString, 1f);
         else if (shaderType.Equals(E_WorldObject_ShaderType.CanChange))
             m_renderer.material.SetFloat(m_shader_ChoiceString, 2f);
-        else if(shaderType.Equals(E_WorldObject_ShaderType.Block))
+        else if (shaderType.Equals(E_WorldObject_ShaderType.Block))
             m_renderer.material.SetFloat(m_shader_ChoiceString, 3f);
+        else if (shaderType.Equals(E_WorldObject_ShaderType.BackGround))
+            m_renderer.material.SetFloat(m_shader_ChoiceString, 4f);
     }
 }

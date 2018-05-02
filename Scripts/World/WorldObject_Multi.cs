@@ -53,10 +53,16 @@ public sealed class WorldObject_Multi : WorldObject
                 m_renderers[i].lightmapIndex = m_defaultLightMapIndex[i];
         }
         // 2D전환상자에 포함되어 있지 않았을 경우 렌더러가 비활성화 된 오브젝트의 렌더러를 킨다
-        else
+        else if(!m_isIncludeChangeViewRectZ)
         {
             if (!m_isOnRenderer)
                 SetRendererEnable(true);
+        }
+
+        if (m_isIncludeChangeViewRectZ)
+        {
+            m_isIncludeChangeViewRectZ = false;
+            SetMaterial(E_WorldObject_ShaderType.Default3D);
         }
     }
 
@@ -77,9 +83,13 @@ public sealed class WorldObject_Multi : WorldObject
                 m_renderers[i].lightmapIndex = -1;
         }
         // 2D전환상자에 포함되어 있지 않을 경우 렌더러를 끈다
-        else
+        else if(!m_isIncludeChangeViewRectZ)
         {
             SetRendererEnable(false);
+        }
+        else
+        {
+            SetMaterial(E_WorldObject_ShaderType.BackGround);
         }
     }
 
@@ -102,27 +112,32 @@ public sealed class WorldObject_Multi : WorldObject
     }
 
     /// <summary>멀티 오브젝트의 메테리얼을 설정</summary>
-    public override void SetMaterial(E_WorldObject_ShaderType materialType)
+    public override void SetMaterial(E_WorldObject_ShaderType shaderType)
     {
-        if (materialType.Equals(E_WorldObject_ShaderType.Default3D))
+        if (shaderType.Equals(E_WorldObject_ShaderType.Default3D))
         {
             for (int i = 0; i < m_rendererCount; i++)
                 m_renderers[i].material.SetFloat(m_shader_ChoiceString, 0f);
         }
-        else if (materialType.Equals(E_WorldObject_ShaderType.Default2D))
+        else if (shaderType.Equals(E_WorldObject_ShaderType.Default2D))
         {
             for (int i = 0; i < m_rendererCount; i++)
                 m_renderers[i].material.SetFloat(m_shader_ChoiceString, 1f);
         }
-        else if (materialType.Equals(E_WorldObject_ShaderType.CanChange))
+        else if (shaderType.Equals(E_WorldObject_ShaderType.CanChange))
         {
             for (int i = 0; i < m_rendererCount; i++)
                 m_renderers[i].material.SetFloat(m_shader_ChoiceString, 2f);
         }
-        else if (materialType.Equals(E_WorldObject_ShaderType.Block))
+        else if (shaderType.Equals(E_WorldObject_ShaderType.Block))
         {
             for (int i = 0; i < m_rendererCount; i++)
                 m_renderers[i].material.SetFloat(m_shader_ChoiceString, 3f);
+        }
+        else if (shaderType.Equals(E_WorldObject_ShaderType.BackGround))
+        {
+            for (int i = 0; i < m_rendererCount; i++)
+                m_renderers[i].material.SetFloat(m_shader_ChoiceString, 4f);
         }
     }
 }
