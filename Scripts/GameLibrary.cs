@@ -37,6 +37,12 @@ public static class GameLibrary
     private static int m_layerMask_InteractionPickPut = LayerMask.NameToLayer("Interaction PickPut");
     public static int LayerMask_InteractionPickPut { get { return m_layerMask_InteractionPickPut.Shift(); } }
 
+    private static int m_layerMask_PanIntro = LayerMask.NameToLayer("Pan Intro");
+    public static int LayerMask_PanIntro { get { return m_layerMask_PanIntro; } }
+
+    private static int m_layerMask_CorgiIntro = LayerMask.NameToLayer("Corgi Intro");
+    public static int LayerMask_CorgiIntro { get { return m_layerMask_CorgiIntro; } }
+
     // string 부분
 
     private static string m_string_Player = "Player";
@@ -99,24 +105,6 @@ public static class GameLibrary
             return true;
 
         return false;
-    }
-
-    // Function 부분
-    public static IEnumerator Timer(float limitTime)
-    {
-        float addTime = 0f;
-
-        while(true)
-        {
-            // 게임시간이 멈추지 않았을 경우 실행
-            if (!Bool_IsGameStop_Old)
-            {
-                addTime += Time.deltaTime;
-                if (addTime >= limitTime)
-                    break;
-            }
-            yield return null;
-        }
     }
 
     /// <summary>position위치의 피벗을 반환</summary>

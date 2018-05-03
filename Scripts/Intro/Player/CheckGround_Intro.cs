@@ -21,17 +21,15 @@ public sealed class CheckGround_Intro : MonoBehaviour
     }
 
     /// <summary>무언가 충돌하면 true를 반환</summary>
-    public bool Check()
+    public bool Check(float checkDistance)
     {
         RaycastHit2D hit;
 
         // 무시할 레이어 마스크
-        int layerMask = (-1) - (GameLibrary.LayerMask_Player |
-                                     GameLibrary.LayerMask_Bullet |
-                                     GameLibrary.LayerMask_IgnoreRaycast |
-                                     GameLibrary.LayerMask_BackgroundTrigger);
+        int layerMask = (-1) - (GameLibrary.LayerMask_PanIntro.Shift() |
+                                     GameLibrary.LayerMask_CorgiIntro.Shift());
 
-        float groundCheckDistance = PlayerController_Intro.Instance.Stat.GroundCheckDistance;
+        float groundCheckDistance = checkDistance;
 
         for (int i = 0; i < m_checkPointCount; i++)
         {

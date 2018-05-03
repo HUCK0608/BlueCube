@@ -7,6 +7,9 @@ public sealed class MovePanel : MonoBehaviour
     // 액티브 스크립트
     private Activate m_activate;
 
+    // 월드 오브젝트
+    private WorldObject m_worldObject;
+
     // 경로 스크립트
     [SerializeField]
     private MovePath m_path;
@@ -28,6 +31,8 @@ public sealed class MovePanel : MonoBehaviour
     private void Awake()
     {
         m_activate = GetComponent<Activate>();
+
+        m_worldObject = GetComponent<WorldObject>();
 
         m_moveGroup = transform.Find("MoveGroup");
 
@@ -53,10 +58,14 @@ public sealed class MovePanel : MonoBehaviour
     // 패널 이동
     private IEnumerator Move()
     {
+        bool isMoveCompelete = false;
+
+        float addTime = 0f;
+
         while(true)
         {
-            // 시점변환중이 아니고 탐지모드가 아니고 2D가 아닐경우 실행
-            if (!GameLibrary.Bool_IsGameStop_Old)
+            // 이동이 완료되지 않고 시간이 멈춰있지 않다면 실행
+            if (!isMoveCompelete && !GameLibrary.Bool_IsGameStop(m_worldObject))
             {
 
                 m_moveGroup.position = Vector3.MoveTowards(m_moveGroup.position, m_path.PathPosition(m_currentPath), m_moveSpeed * Time.deltaTime);
@@ -71,9 +80,22 @@ public sealed class MovePanel : MonoBehaviour
                     else
                         m_currentPath++;
 
-                    yield return new WaitForSeconds(m_waitTime);
+                    isMoveCompelete = true;
                 }
             }
+
+            // 이동이 완료되고 시간이 멈춰있지 않다면 실행
+            if(isMoveCompelete && !GameLibrary.Bool_IsGameStop(m_worldObject))
+            {
+                addTime += Time.deltaTime;
+
+                if(addTime >= m_waitTime)
+                {
+                    addTime = 0f;
+                    isMoveCompelete = false;
+                }
+            }
+
             yield return null;
         }
     }
