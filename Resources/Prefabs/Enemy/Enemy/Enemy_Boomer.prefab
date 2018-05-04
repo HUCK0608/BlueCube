@@ -259,10 +259,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa9efde8e3e934468e6f329a3537de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_hp: 5
+  m_hp: 1
   m_rotationSpeed: 10
   m_shootPosition: {fileID: 4268695578352512}
-  m_shootDelay: 0.3
+  m_shootDelay: 3
 --- !u!114 &114613371822057522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,3 +286,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isUse2DTexture: 0
+  m_isUseShiningSpecular: 0

@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9784f707cf1090e409357f1b36019cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bombTimer: 0
+  m_bombTimer: 5
 --- !u!114 &114539338421139176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -315,6 +315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isUse2DTexture: 0
+  m_isUseShiningSpecular: 0
 --- !u!114 &114713894864315200
 MonoBehaviour:
   m_ObjectHideFlags: 1
