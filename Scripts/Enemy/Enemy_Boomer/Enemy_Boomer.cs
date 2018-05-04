@@ -49,6 +49,9 @@ public sealed class Enemy_Boomer : MonoBehaviour
 
         float addTime = 0f;
 
+        bool isInit = true;
+        float startShootRandomTime = Random.Range(m_stat.StartShootMinDelay, m_stat.StartShootMaxDelay);
+
         while(true)
         {
             if (!GameLibrary.Bool_IsGameStop(m_worldObject))
@@ -57,10 +60,16 @@ public sealed class Enemy_Boomer : MonoBehaviour
 
                 addTime += Time.deltaTime;
 
-                if (addTime >= m_stat.ShootDelay)
+                if (addTime >= m_stat.ShootDelay && !isInit)
                 {
                     EnemyProjectileManager.Instance.UseProjectile(E_EnemyProjectile.Bomb, m_stat.ShootPosition.position, player.position);
                     addTime = 0f;
+                }
+                else if(isInit && addTime >= startShootRandomTime)
+                {
+                    EnemyProjectileManager.Instance.UseProjectile(E_EnemyProjectile.Bomb, m_stat.ShootPosition.position, player.position);
+                    addTime = 0f;
+                    isInit = false;
                 }
 
                 if (!m_detectionArea.CheckDetected(player.position))
