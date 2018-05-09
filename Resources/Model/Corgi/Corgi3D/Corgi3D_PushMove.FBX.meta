@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 27d4541e0e03b9c47bc69ee055ade4e4
-timeCreated: 1524541642
+guid: 663188ceffb296144b12eee5560a6626
+timeCreated: 1525847016
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -33,16 +33,15 @@ ModelImporter:
     100050: Bip001 Spine
     100052: Bip001 Spine1
     100054: Bip001 tail
-    100056: Bone001
-    100058: //RootNode
-    100060: eye_bone_L1
-    100062: eye_bone_L2
-    100064: eye_bone_R1
-    100066: eye_bone_R2
-    100068: scarf_bone1
-    100070: scarf_bone2
-    100072: scarf_bone3
-    100074: scarf_bone4
+    100056: //RootNode
+    100058: eye_bone_L1
+    100060: eye_bone_L2
+    100062: eye_bone_R1
+    100064: eye_bone_R2
+    100066: scarf_bone1
+    100068: scarf_bone2
+    100070: scarf_bone3
+    100072: scarf_bone4
     400000: Bip001
     400002: Bip001 ear_L
     400004: Bip001 ear_L02
@@ -71,17 +70,16 @@ ModelImporter:
     400050: Bip001 Spine
     400052: Bip001 Spine1
     400054: Bip001 tail
-    400056: Bone001
-    400058: //RootNode
-    400060: eye_bone_L1
-    400062: eye_bone_L2
-    400064: eye_bone_R1
-    400066: eye_bone_R2
-    400068: scarf_bone1
-    400070: scarf_bone2
-    400072: scarf_bone3
-    400074: scarf_bone4
-    7400000: Corgi3D_PickInit
+    400056: //RootNode
+    400058: eye_bone_L1
+    400060: eye_bone_L2
+    400062: eye_bone_R1
+    400064: eye_bone_R2
+    400066: scarf_bone1
+    400068: scarf_bone2
+    400070: scarf_bone3
+    400072: scarf_bone4
+    7400000: Corgi3D_PushMove
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -111,10 +109,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Corgi3D_PickInit
+      name: Corgi3D_PushMove
       takeName: Take 001
-      firstFrame: 4
-      lastFrame: 95
+      firstFrame: 0
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -133,15 +131,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.26550388
-        functionName: CompletePickInitMotion
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: e38a6c71fb4a72542a6c10a90631e096,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -175,7 +165,7 @@ ModelImporter:
     tangentImportMode: 3
     normalCalculationMode: 4
   importAnimation: 1
-  copyAvatar: 1
+  copyAvatar: 0
   humanDescription:
     serializedVersion: 2
     human: []
@@ -192,8 +182,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 7d09e3ccf41043346851cc22310bb1f7,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   humanoidOversampling: 1
   additionalBone: 0

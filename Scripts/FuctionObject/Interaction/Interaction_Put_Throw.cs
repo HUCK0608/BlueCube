@@ -48,7 +48,7 @@ public sealed class Interaction_Put_Throw : Interaction_Put
                                      GameLibrary.LayerMask_IgnoreRaycast |
                                      GameLibrary.LayerMask_BackgroundTrigger);
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (GameLibrary.Raycast3D(ray.origin, ray.direction, out hit, Mathf.Infinity, layermask))
         {
             Vector3 newPutPosition = hit.point + hit.normal;
 

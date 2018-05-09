@@ -75,6 +75,7 @@ public sealed class Interaction_Push : MonoBehaviour
         while(true)
         {
             E_PlayerState3D currentPlayerState = PlayerManager.Instance.MainController.CurrentState3D;
+
             // 플레이어 상태가 PushIdle 상태일 때
             if (currentPlayerState.Equals(E_PlayerState3D.PushIdle))
             {
@@ -112,7 +113,7 @@ public sealed class Interaction_Push : MonoBehaviour
         m_isPush = true;
 
         // 위쪽에 있는 다른 아이템을 같이 이동시키기 위해 자식으로 포함
-        int layerMask = GameLibrary.LayerMask_InteractionPickPut;
+        int layerMask = GameLibrary.LayerMask_InteractionPickPut | GameLibrary.LayerMask_Enemy;
         RaycastHit[] anotherItems = Physics.RaycastAll(transform.position, Vector3.up, Mathf.Infinity, layerMask);
         int anotherItemCount = anotherItems.Length;
         for (int i = 0; i < anotherItemCount; i++)

@@ -37,6 +37,12 @@ public static class GameLibrary
     private static int m_layerMask_InteractionPickPut = LayerMask.NameToLayer("Interaction PickPut");
     public static int LayerMask_InteractionPickPut { get { return m_layerMask_InteractionPickPut.Shift(); } }
 
+    private static int m_layerMask_Switch = LayerMask.NameToLayer("Switch");
+    public static int LayerMask_Switch { get { return m_layerMask_Switch.Shift(); } }
+
+    private static int m_layerMask_Enemy = LayerMask.NameToLayer("Enemy");
+    public static int LayerMask_Enemy { get { return m_layerMask_Enemy.Shift(); } }
+
     private static int m_layerMask_PanIntro = LayerMask.NameToLayer("Pan Intro");
     public static int LayerMask_PanIntro { get { return m_layerMask_PanIntro; } }
 

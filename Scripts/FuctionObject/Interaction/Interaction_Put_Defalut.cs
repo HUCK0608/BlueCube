@@ -27,7 +27,7 @@ public sealed class Interaction_Put_Defalut : Interaction_Put
                                      GameLibrary.LayerMask_IgnoreRaycast |
                                      GameLibrary.LayerMask_BackgroundTrigger);
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (GameLibrary.Raycast3D(ray.origin, ray.direction, out hit, Mathf.Infinity, layermask))
         {
             // 히트 피벗 구하기
             Vector3 hitPivot = hit.point.GetGamePivot();
