@@ -113,7 +113,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Corgi3D_PickInit
       takeName: Take 001
-      firstFrame: 9
+      firstFrame: 4
       lastFrame: 95
       wrapMode: 0
       orientationOffsetY: 0

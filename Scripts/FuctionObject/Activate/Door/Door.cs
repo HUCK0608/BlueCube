@@ -9,6 +9,9 @@ public sealed class Door : MonoBehaviour
     // 액티브 스크립트
     private Activate m_activate;
 
+    // 월드 오브젝트
+    private WorldObject m_worldObject;
+
     // 열리는 위치
     [SerializeField]
     private E_OpenDir m_openDir;
@@ -30,6 +33,8 @@ public sealed class Door : MonoBehaviour
     private void Awake()
     {
         m_activate = GetComponentInParent<Activate>();
+
+        m_worldObject = GetComponentInParent<WorldObject>();
 
         InitDoor();
 
@@ -69,7 +74,7 @@ public sealed class Door : MonoBehaviour
         while(true)
         {
             // 시점변환중이 아니고 탐지모드가 아니고 2D가 아닐경우 실행
-            if (!GameLibrary.Bool_IsGameStop_Old)
+            if (!GameLibrary.Bool_IsGameStop(m_worldObject))
             {
                 transform.position = Vector3.MoveTowards(transform.position, m_openPos, m_moveSpeed * Time.deltaTime);
 

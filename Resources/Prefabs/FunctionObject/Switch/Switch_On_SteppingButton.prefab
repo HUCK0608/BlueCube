@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4550436431667634}
   - component: {fileID: 61781694541923038}
   - component: {fileID: 114688257786910066}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: Collider2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 54155106329221620}
   - component: {fileID: 65243109823817380}
   - component: {fileID: 114954414642579442}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: ModelAndCollider3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 4773905528974950}
   - component: {fileID: 33611657827662826}
   - component: {fileID: 23805273424274470}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 4729856119426880}
   - component: {fileID: 114607498568139586}
   - component: {fileID: 114694004316737874}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: Switch_On_SteppingButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4852247883695030}
   - component: {fileID: 33396271293229564}
   - component: {fileID: 23535871324517900}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}

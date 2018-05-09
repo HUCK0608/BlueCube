@@ -9,6 +9,7 @@ public sealed class PlayerController_Intro : MonoBehaviour
 
     // 플레이어
     private Transform m_player;
+    public Transform Player { get { return m_player; } }
 
     private PlayerStat_Intro m_stat;
     /// <summary>스탯</summary>
@@ -103,7 +104,7 @@ public sealed class PlayerController_Intro : MonoBehaviour
     private void ApplyGravity()
     {
         // 밑이 땅인지 체크
-        m_isGrounded = m_checkGround.Check();
+        m_isGrounded = m_checkGround.Check(m_stat.GroundCheckDistance);
 
         Vector2 newVelocity = m_rigidbody.velocity;
 
@@ -189,7 +190,7 @@ public sealed class PlayerController_Intro : MonoBehaviour
             m_player.localScale = scale;
     }
 
-    /// <summary>스탯에 있는 jumpSpeed로 Rigidbody에 힘을 가함</summary>
+    /// <summary>JumpSpeed로 Rigidbody에 힘을 가함</summary>
     public void Jump()
     {
         Vector2 newVelocity = m_rigidbody.velocity;
@@ -200,15 +201,9 @@ public sealed class PlayerController_Intro : MonoBehaviour
     /// <summary>x 속도를 멈춤</summary>
     public void MoveStopX()
     {
-        Vector2 newVelocity = Vector3.zero;
+        Vector2 newVelocity = Vector2.zero;
         newVelocity.y = m_rigidbody.velocity.y;
 
         m_rigidbody.velocity = newVelocity;
-    }
-
-    /// <summary>모든 속도를 멈춤</summary>
-    public void MoveStopAll()
-    {
-        m_rigidbody.velocity = Vector2.zero;
     }
 }

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23275876518691978}
   - component: {fileID: 54017835160022410}
   - component: {fileID: 65672745046355030}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: ModelAndCollider3D
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4268695578352512}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: ShootPosition
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 114764729423363402}
   - component: {fileID: 114003859242703038}
   - component: {fileID: 114613371822057522}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: Enemy_Boomer
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 4617863987589318}
   - component: {fileID: 50492834171348714}
   - component: {fileID: 61428992820490822}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: Collider2D
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1886426556672980}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: 2, z: 10}
+  m_LocalPosition: {x: -4, y: 2, z: 30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4256707729258372}
@@ -262,7 +262,13 @@ MonoBehaviour:
   m_hp: 1
   m_rotationSpeed: 10
   m_shootPosition: {fileID: 4268695578352512}
+<<<<<<< HEAD
   m_shootDelay: 3
+=======
+  m_shootDelay: 1
+  m_startShootMinDelay: 0
+  m_startShootMaxDelay: 1
+>>>>>>> Programmer
 --- !u!114 &114613371822057522
 MonoBehaviour:
   m_ObjectHideFlags: 1

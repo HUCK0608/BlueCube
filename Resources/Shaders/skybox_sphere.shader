@@ -1,4 +1,4 @@
-﻿Shader "Custom/skybox_sphere" {
+﻿Shader "BlueCube/SkyBox" {
 	Properties{
 		_Tint("Tint Color", Color) = (.5, .5, .5, .5)
 		[Gamma] _Exposure("Exposure", Range(0, 8)) = 1.0
