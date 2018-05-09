@@ -262,13 +262,9 @@ MonoBehaviour:
   m_hp: 1
   m_rotationSpeed: 10
   m_shootPosition: {fileID: 4268695578352512}
-<<<<<<< HEAD
   m_shootDelay: 3
-=======
-  m_shootDelay: 1
   m_startShootMinDelay: 0
   m_startShootMaxDelay: 1
->>>>>>> Programmer
 --- !u!114 &114613371822057522
 MonoBehaviour:
   m_ObjectHideFlags: 1
