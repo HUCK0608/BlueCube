@@ -27,4 +27,8 @@ public sealed class CorgiStat_Intro : MonoBehaviour
     [SerializeField]
     private float m_maxDistanceToPlayer;
     public float MaxDistanceToPlayer { get { return m_maxDistanceToPlayer; } }
+
+    [SerializeField]
+    private float m_obstacleCheckDistance;
+    public float ObstacleCheckDistance { get { return m_obstacleCheckDistance; } }
 }

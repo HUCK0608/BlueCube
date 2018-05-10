@@ -4,6 +4,9 @@ using UnityEngine;
 
 public sealed class CorgiController_Intro : MonoBehaviour
 {
+    private static CorgiController_Intro m_instance;
+    public static CorgiController_Intro Instance { get { return m_instance; } }
+
     [SerializeField]
     private Transform m_corgi;
 
@@ -19,8 +22,13 @@ public sealed class CorgiController_Intro : MonoBehaviour
     // 땅 체크 스크립트
     private CheckGround_Intro m_checkGround;
 
+    // 장애물 체크 스크립트
+    private CheckObstacle_Intro m_checkObstacle;
+    public CheckObstacle_Intro CheckObstacle { get { return m_checkObstacle; } }
+
     // 리지드바디
     private Rigidbody2D m_rigidbody;
+    public Rigidbody2D Rigidbody { get { return m_rigidbody; } }
 
     private bool m_isGrounded;
     /// <summary>땅일 경우 true를 반환</summary>
@@ -30,11 +38,14 @@ public sealed class CorgiController_Intro : MonoBehaviour
 
     private void Awake()
     {
+        m_instance = this;
+
         m_rigidbody = m_corgi.GetComponent<Rigidbody2D>();
 
         m_stat = GetComponent<CorgiStat_Intro>();
 
         m_checkGround = m_corgi.GetComponent<CheckGround_Intro>();
+        m_checkObstacle = m_corgi.GetComponent<CheckObstacle_Intro>();
 
         InitStates();
     }

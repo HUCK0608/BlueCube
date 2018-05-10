@@ -11,7 +11,18 @@ public sealed class CorgiState_Intro_Falling : CorgiState_Intro
 
     private void Update()
     {
+        MoveToPlayer();
+
         ChangeStates();
+    }
+
+    // 플레이어 방향으로 이동
+    private void MoveToPlayer()
+    {
+        Vector2 directionToPlayer = PlayerController_Intro.Instance.Player.position - transform.position;
+        directionToPlayer.y = 0f;
+
+        m_controller.MoveAndRotate(directionToPlayer.normalized);
     }
 
     // 상태변경 모음
