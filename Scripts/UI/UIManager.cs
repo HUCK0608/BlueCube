@@ -9,6 +9,12 @@ public sealed class UIManager : MonoBehaviour
     private static UIManager m_instance;
     public static UIManager Instance { get { return m_instance; } }
 
+    [Header("Story UI")]
+    [SerializeField]
+    private KeyCode m_storyUIEnableKey;
+    [SerializeField]
+    private GameObject m_storyUI;
+
     [Header("Player Hp")]
     [SerializeField]
     private Text m_playerHpText;
@@ -32,6 +38,21 @@ public sealed class UIManager : MonoBehaviour
     private void InitUI()
     {
         SetPlayerHpText(PlayerManager.Instance.Stat.Hp);
+
+        // 스토리UI 비활성화
+        m_storyUI.SetActive(false);
+    }
+
+    private void Update()
+    {
+        SetStoryUIEnable();
+    }
+
+    /// <summary>스토리UI 활성화 설정</summary>
+    private void SetStoryUIEnable()
+    {
+        if (Input.GetKeyDown(m_storyUIEnableKey))
+            m_storyUI.SetActive(!m_storyUI.activeSelf);
     }
 
     /// <summary>플레이어 체력 텍스트를 변경</summary>
