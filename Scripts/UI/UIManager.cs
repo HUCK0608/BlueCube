@@ -40,7 +40,8 @@ public sealed class UIManager : MonoBehaviour
         SetPlayerHpText(PlayerManager.Instance.Stat.Hp);
 
         // 스토리UI 비활성화
-        m_storyUI.SetActive(false);
+        if (m_storyUI.activeSelf)
+            m_storyUI.SetActive(false);
     }
 
     private void Update()
