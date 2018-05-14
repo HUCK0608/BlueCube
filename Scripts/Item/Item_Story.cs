@@ -9,10 +9,14 @@ public sealed class Item_Story : MonoBehaviour
     private string m_titleName;
     public string TitleName { get { return m_titleName; } }
 
-    [TextArea(5, 5)]
+    [TextArea(4, 4)]
     [SerializeField]
     private string m_contents;
     public string Contents { get { return m_contents; } }
+
+    [SerializeField]
+    private int m_stroyNumber;
+    public int StoryNumber { get { return m_stroyNumber; } }
 
     /// <summary>스토리 획득</summary>
     public void GetStory()

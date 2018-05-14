@@ -85,21 +85,23 @@ public static class GameLibrary
         }
     }
 
-    /// <summary>시점변환중이거나 랜더러가 꺼져있을경우 true를 반환</summary>
+    /// <summary>시점변환중이거나 랜더러가 꺼져있거나 UI가 켜져있을 경우 true를 반환</summary>
     public static bool Bool_IsGameStop(WorldObject worldObject)
     {
         return PlayerManager.Instance.IsViewChange ||
-                 !worldObject.IsOnRenderer
+                 !worldObject.IsOnRenderer ||
+                 UIManager.Instance.IsOnUI
                  ? true : false;
     }
 
-    /// <summary>시점변환중이거나 시점변환 준비중이면 true를 반환</summary>
+    /// <summary>시점변환중이거나 시점변환 준비중이거나 UI가 켜져있으면 true를 반환</summary>
     public static bool Bool_IsPlayerStop
     {
         get
         {
             return PlayerManager.Instance.IsViewChange ||
-                     PlayerManager.Instance.IsViewChangeReady
+                     PlayerManager.Instance.IsViewChangeReady ||
+                     UIManager.Instance.IsOnUI
                      ? true : false;
         }
     }

@@ -9,6 +9,10 @@ public sealed class UIManager : MonoBehaviour
     private static UIManager m_instance;
     public static UIManager Instance { get { return m_instance; } }
 
+    private bool m_isOnUI;
+    /// <summary>UI가 켜졌을 경우 true를 반환</summary>
+    public bool IsOnUI { get { return m_isOnUI; } }
+
     [Header("Story UI")]
     [SerializeField]
     private KeyCode m_storyUIEnableKey;
@@ -53,7 +57,10 @@ public sealed class UIManager : MonoBehaviour
     private void SetStoryUIEnable()
     {
         if (Input.GetKeyDown(m_storyUIEnableKey))
+        {
+            m_isOnUI = !m_storyUI.activeSelf;
             m_storyUI.SetActive(!m_storyUI.activeSelf);
+        }
     }
 
     /// <summary>플레이어 체력 텍스트를 변경</summary>
