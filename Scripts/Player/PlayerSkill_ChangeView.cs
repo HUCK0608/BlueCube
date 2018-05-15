@@ -95,18 +95,21 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 모든 키가 안눌렸을 경우 반복
         while(!m_isDoChange && !m_isNotChange)
         {
-            // 수행 키를 누를 경우
-            if(Input.GetKeyDown(m_playerManager.Stat.AcceptKey))
+            if (!UIManager.Instance.IsOnUI)
             {
-                // 끼일 오브젝트가 있다면 시각적인 이벤트 실행
-                // 끼일 오브젝트가 없다면 시점변환 실행
-                if (!m_checkBlock.IsBlock())
-                    m_isDoChange = true;
-            }
-            // 취소 키를 누를 경우
-            else if(Input.GetKeyDown(m_playerManager.Stat.CancelKey))
-            {
-                m_isNotChange = true;
+                // 수행 키를 누를 경우
+                if (Input.GetKeyDown(m_playerManager.Stat.AcceptKey))
+                {
+                    // 끼일 오브젝트가 있다면 시각적인 이벤트 실행
+                    // 끼일 오브젝트가 없다면 시점변환 실행
+                    if (!m_checkBlock.IsBlock())
+                        m_isDoChange = true;
+                }
+                // 취소 키를 누를 경우
+                else if (Input.GetKeyDown(m_playerManager.Stat.CancelKey))
+                {
+                    m_isNotChange = true;
+                }
             }
 
             yield return null;

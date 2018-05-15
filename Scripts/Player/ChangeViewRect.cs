@@ -94,13 +94,15 @@ public sealed class ChangeViewRect : MonoBehaviour
 
         while(true)
         {
-            // 상자의 x, y 크기를 키움
-            transform.localScale += m_increaseSizeValueXY * Time.deltaTime;
+            if (!UIManager.Instance.IsOnUI)
+            {
+                // 상자의 x, y 크기를 키움
+                transform.localScale += m_increaseSizeValueXY * Time.deltaTime;
 
-            // 최대 크기만큼 커졌을 경우 반복문 종료
-            if (transform.localScale.x >= m_increaseMaxSize.x)
-                break;
-
+                // 최대 크기만큼 커졌을 경우 반복문 종료
+                if (transform.localScale.x >= m_increaseMaxSize.x)
+                    break;
+            }
             yield return null;
         }
     }
@@ -117,25 +119,27 @@ public sealed class ChangeViewRect : MonoBehaviour
 
         while(true)
         {
-            Vector3 hitPoint = CameraManager.Instance.GetMouseHitPointToPivot(player3DPosition);
+            if (!UIManager.Instance.IsOnUI)
+            {
+                Vector3 hitPoint = CameraManager.Instance.GetMouseHitPointToPivot(player3DPosition);
 
-            // 충돌된 z좌표를 가져와서 새로운 크기 계산을 함
-            float hitPositionZ = hitPoint.z;
-            newRectSize.z = hitPositionZ - BlueCubeManager.Instance.BlueCube3D.transform.position.z;
-            newRectSize.z = Mathf.Clamp(newRectSize.z, 0f, m_increaseMaxSize.z);
+                // 충돌된 z좌표를 가져와서 새로운 크기 계산을 함
+                float hitPositionZ = hitPoint.z;
+                newRectSize.z = hitPositionZ - BlueCubeManager.Instance.BlueCube3D.transform.position.z;
+                newRectSize.z = Mathf.Clamp(newRectSize.z, 0f, m_increaseMaxSize.z);
 
-            transform.localScale = Vector3.Lerp(transform.localScale, newRectSize, lerpT);
+                transform.localScale = Vector3.Lerp(transform.localScale, newRectSize, lerpT);
 
-            // 계산된 z 좌표를 가져옴
-            Vector3 newPosition = transform.position;
-            newPosition.z = CalcPositionZ();
+                // 계산된 z 좌표를 가져옴
+                Vector3 newPosition = transform.position;
+                newPosition.z = CalcPositionZ();
 
-            // 이동
-            transform.position = newPosition;
+                // 이동
+                transform.position = newPosition;
 
-            if (m_skill.IsDoChange || m_skill.IsNotChange)
-                break;
-
+                if (m_skill.IsDoChange || m_skill.IsNotChange)
+                    break;
+            }
             yield return null;
         }
 

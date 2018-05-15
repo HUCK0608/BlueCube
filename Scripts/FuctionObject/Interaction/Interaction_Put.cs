@@ -67,21 +67,24 @@ public abstract class Interaction_Put : MonoBehaviour
             if (playerMainController.CurrentState3D.Equals(E_PlayerState3D.PutInit))
                 break;
 
-            // 놓을 위치를 가져옴
-            Vector3 putPosition = GetPutPosition();
-            
-            // 놓을 위치가 놓을 수 있는 위치일 경우 저장
-            if (!putPosition.Equals(Vector3.one))
+            if (!UIManager.Instance.IsOnUI)
             {
-                m_putPosition = putPosition;
+                // 놓을 위치를 가져옴
+                Vector3 putPosition = GetPutPosition();
 
-                // 놓을 수 있는 위치인데 반투명 오브젝트가 비활성화 되어있다면 활성화 시켜줌
-                if (!m_fadeObject.activeSelf)
-                    m_fadeObject.SetActive(true);
+                // 놓을 위치가 놓을 수 있는 위치일 경우 저장
+                if (!putPosition.Equals(Vector3.one))
+                {
+                    m_putPosition = putPosition;
+
+                    // 놓을 수 있는 위치인데 반투명 오브젝트가 비활성화 되어있다면 활성화 시켜줌
+                    if (!m_fadeObject.activeSelf)
+                        m_fadeObject.SetActive(true);
+                }
+
+                CheckCanPut();
+                DrawFadeObject();
             }
-
-            CheckCanPut();
-            DrawFadeObject();
 
             yield return null;
         }

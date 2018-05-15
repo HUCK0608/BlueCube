@@ -17,19 +17,19 @@ public sealed class TitleGroup : MonoBehaviour
     /// <summary>스토리가 잠겨있을 경우 true를 반환</summary>
     public bool IsLock { get { return m_isLock; } }
 
-    EventTrigger trigger;
-
     private void Awake()
     {
-        trigger = GetComponentInChildren<EventTrigger>();
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerClick;
-        entry.callback.AddListener((data) => Test((PointerEventData)data));
-        trigger.triggers.Add(entry);
+        AddPointerClickEvent();
     }
 
-    public void Test(PointerEventData data)
+    /// <summary>마우스 클릭 이벤트 추가</summary>
+    private void AddPointerClickEvent()
     {
+        EventTrigger trigger = GetComponentInChildren<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerClick;
+        entry.callback.AddListener((data) => UIManager.Instance.StoryUI.SelectStory(this));
+        trigger.triggers.Add(entry);
     }
 
     /// <summary>잠금 해제</summary>
@@ -49,10 +49,5 @@ public sealed class TitleGroup : MonoBehaviour
     public void SetTextColor(Color color)
     {
         m_titleText.color = color;
-    }
-
-    public void OnPointerClick(PointerEventData dd)
-    {
-        Debug.Log("call");
     }
 }

@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Corgi3D_Material
-  m_Shader: {fileID: 4800000, guid: 5c9f865469f26cb4da23daefabead4cc, type: 3}
+  m_Shader: {fileID: 4800000, guid: a8bb7b2330d78fa49bbadf805b409475, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -67,6 +67,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _ShadowColor: 0
     - _ShadowCtrl: 0.541
     - _SmoothnessTextureChannel: 0
     - _SpecularCtrl: 1

@@ -74,29 +74,32 @@ public sealed class Interaction_Push : MonoBehaviour
     {
         while(true)
         {
-            E_PlayerState3D currentPlayerState = PlayerManager.Instance.MainController.CurrentState3D;
+            if (!UIManager.Instance.IsOnUI)
+            {
+                E_PlayerState3D currentPlayerState = PlayerManager.Instance.MainController.CurrentState3D;
 
-            // 플레이어 상태가 PushIdle 상태일 때
-            if (currentPlayerState.Equals(E_PlayerState3D.PushIdle))
-            {
-                // 이동할 위치를 계산하여 구함
-                Vector3 pushPosition = CalcPushPosition();
-                // pushPosition 위치로 밀 수 있는지 체크
-                m_isCanPush = CheckCanPush(pushPosition);
-                // pushPosition을 시각화
-                DrawFadeBox(pushPosition);
-            }
-            // 플레이어 상태가 PushMove 상태일 때
-            else if(currentPlayerState.Equals(E_PlayerState3D.PushMove))
-            {
-                // 이동 코루틴 실행
-                StartCoroutine(MovePushPosition(m_fadeBox.position));
-                break;
-            }
-            // 플레이어 상태가 Idle 상태일 때
-            else if(currentPlayerState.Equals(E_PlayerState3D.Idle))
-            {
-                break;
+                // 플레이어 상태가 PushIdle 상태일 때
+                if (currentPlayerState.Equals(E_PlayerState3D.PushIdle))
+                {
+                    // 이동할 위치를 계산하여 구함
+                    Vector3 pushPosition = CalcPushPosition();
+                    // pushPosition 위치로 밀 수 있는지 체크
+                    m_isCanPush = CheckCanPush(pushPosition);
+                    // pushPosition을 시각화
+                    DrawFadeBox(pushPosition);
+                }
+                // 플레이어 상태가 PushMove 상태일 때
+                else if (currentPlayerState.Equals(E_PlayerState3D.PushMove))
+                {
+                    // 이동 코루틴 실행
+                    StartCoroutine(MovePushPosition(m_fadeBox.position));
+                    break;
+                }
+                // 플레이어 상태가 Idle 상태일 때
+                else if (currentPlayerState.Equals(E_PlayerState3D.Idle))
+                {
+                    break;
+                }
             }
 
             yield return null;

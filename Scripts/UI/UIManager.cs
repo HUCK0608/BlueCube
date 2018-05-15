@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
+using UnityEditor;
 
 public sealed class UIManager : MonoBehaviour
 {
@@ -13,21 +14,21 @@ public sealed class UIManager : MonoBehaviour
     /// <summary>UI가 켜졌을 경우 true를 반환</summary>
     public bool IsOnUI { get { return m_isOnUI; } }
 
-    [Header("Story UI")]
+    [Header("Can Change")]
+    /// <summary>UI 활성화 키</summary>
     [SerializeField]
-    private KeyCode m_storyUIEnableKey;
-    [SerializeField]
-    private GameObject m_storyUI;
+    private KeyCode m_UIEnableKey;
 
-    [Header("Player Hp")]
+    [Header("Don't Touch")]
+    public PlayerHpUI m_playerHpUI;
+    /// <summary>플레이어 체력 UI 스크립트</summary>
+    public PlayerHpUI PlayerHpUI { get { return m_playerHpUI; } }
+
     [SerializeField]
-    private Text m_playerHpText;
-    [SerializeField]
-    private Color m_playerHpChangeColor;
-    [SerializeField]
-    private float m_playerHpChangeColorDurationTime;
-    private Coroutine m_playerHpTextColorChangeCor;
-    
+    private StoryUI m_storyUI;
+    /// <summary>스토리 UI 스크립트</summary>
+    public StoryUI StoryUI { get { return m_storyUI; } }
+
     private void Awake()
     {
         m_instance = this;
@@ -41,57 +42,24 @@ public sealed class UIManager : MonoBehaviour
     /// <summary>UI 초기화</summary>
     private void InitUI()
     {
-        SetPlayerHpText(PlayerManager.Instance.Stat.Hp);
+        m_playerHpUI.SetPlayerHpText(PlayerManager.Instance.Stat.Hp);
 
-        // 스토리UI 비활성화
-        if (m_storyUI.activeSelf)
-            m_storyUI.SetActive(false);
+        m_storyUI.SetEnabled(m_isOnUI);
     }
 
     private void Update()
     {
         SetStoryUIEnable();
+        m_storyUI.SetStoryListScroll();
     }
 
     /// <summary>스토리UI 활성화 설정</summary>
     private void SetStoryUIEnable()
     {
-        if (Input.GetKeyDown(m_storyUIEnableKey))
+        if (Input.GetKeyDown(m_UIEnableKey))
         {
-            m_isOnUI = !m_storyUI.activeSelf;
-            m_storyUI.SetActive(!m_storyUI.activeSelf);
+            m_isOnUI = !m_isOnUI;
+            m_storyUI.SetEnabled(m_isOnUI);
         }
-    }
-
-    /// <summary>플레이어 체력 텍스트를 변경</summary>
-    public void SetPlayerHpText(int hp)
-    {
-        m_playerHpText.text = hp.ToString();
-
-        if(m_playerHpTextColorChangeCor != null)
-            StopCoroutine(m_playerHpTextColorChangeCor);
-        m_playerHpTextColorChangeCor = StartCoroutine(PlayerHpTextColorChange());
-    }
-
-    /// <summary>플레이어 체력 텍스트의 색을 변경</summary>
-    private IEnumerator PlayerHpTextColorChange()
-    {
-        m_playerHpText.color = m_playerHpChangeColor;
-
-        float addTime = 0f;
-
-        while(true)
-        {
-            addTime += Time.deltaTime;
-
-            if (addTime >= m_playerHpChangeColorDurationTime)
-                break;
-
-            yield return null;
-        }
-
-        m_playerHpText.color = Color.white;
-
-        m_playerHpTextColorChangeCor = null;
     }
 }

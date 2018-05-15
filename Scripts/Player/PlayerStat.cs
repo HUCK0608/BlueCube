@@ -29,8 +29,8 @@ public sealed class PlayerStat : MonoBehaviour
     [SerializeField]
     private int m_hp;
     public int Hp { get { return m_hp; } }
-    public void IncreaseHp(int value) { m_hp += value; UIManager.Instance.SetPlayerHpText(m_hp); }
-    public void DecreaseHp(int value) { m_hp -= value; UIManager.Instance.SetPlayerHpText(m_hp); }
+    public void IncreaseHp(int value) { m_hp += value; UIManager.Instance.PlayerHpUI.SetPlayerHpText(m_hp); }
+    public void DecreaseHp(int value) { m_hp -= value; UIManager.Instance.PlayerHpUI.SetPlayerHpText(m_hp); }
 
     [SerializeField]
     private float m_moveSpeed;

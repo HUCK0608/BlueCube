@@ -15,7 +15,7 @@ public sealed class Item_Story2D : MonoBehaviour
     {
         if(other.tag.Equals(GameLibrary.String_Player))
         {
-            m_stroy.GetStory();
+            m_stroy.UnlcokStory();
         }
     }
 }

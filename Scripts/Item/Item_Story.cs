@@ -18,10 +18,10 @@ public sealed class Item_Story : MonoBehaviour
     private int m_stroyNumber;
     public int StoryNumber { get { return m_stroyNumber; } }
 
-    /// <summary>스토리 획득</summary>
-    public void GetStory()
+    /// <summary>스토리 언락</summary>
+    public void UnlcokStory()
     {
-        StoryManager.Instance.AddStory(this);
+        UIManager.Instance.StoryUI.UnlcokStory(this);
 
         gameObject.SetActive(false);
     }
