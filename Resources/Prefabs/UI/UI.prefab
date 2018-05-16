@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445228afa4370324faa83fa630023684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_allStoryCount: 0
+  m_allStoryCount: 2
   m_textDefaultColor: {r: 0.6544118, g: 0.6544118, b: 0.6544118, a: 1}
   m_textSelectColor: {r: 1, g: 0.9724138, b: 0, a: 1}
   m_drawLetterDelay: 0.02
@@ -715,6 +715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UIEnableKey: 9
+  m_returnTitleKey: 27
   m_playerHpUI: {fileID: 114955810184285818}
   m_storyUI: {fileID: 114016853687925402}
 --- !u!114 &114745446592806422
@@ -1185,6 +1186,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.000027808865, y: 0}
+  m_AnchoredPosition: {x: 0.000027808865, y: -0.000020585954}
   m_SizeDelta: {x: 771, y: 69}
   m_Pivot: {x: 0, y: 1}

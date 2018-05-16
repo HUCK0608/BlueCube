@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Text;
-using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public sealed class UIManager : MonoBehaviour
 {
     private static UIManager m_instance;
     public static UIManager Instance { get { return m_instance; } }
+
+    private string m_titleScenePath = "Title";
 
     private bool m_isOnUI;
     /// <summary>UI가 켜졌을 경우 true를 반환</summary>
@@ -18,6 +18,8 @@ public sealed class UIManager : MonoBehaviour
     /// <summary>UI 활성화 키</summary>
     [SerializeField]
     private KeyCode m_UIEnableKey;
+    [SerializeField]
+    private KeyCode m_returnTitleKey;
 
     [Header("Don't Touch")]
     public PlayerHpUI m_playerHpUI;
@@ -51,6 +53,7 @@ public sealed class UIManager : MonoBehaviour
     {
         SetStoryUIEnable();
         m_storyUI.SetStoryListScroll();
+        ReturnToTitle();
     }
 
     /// <summary>스토리UI 활성화 설정</summary>
@@ -60,6 +63,16 @@ public sealed class UIManager : MonoBehaviour
         {
             m_isOnUI = !m_isOnUI;
             m_storyUI.SetEnabled(m_isOnUI);
+        }
+    }
+
+    /// <summary>타이틀 화면으로 돌아간다</summary>
+    private void ReturnToTitle()
+    {
+        if(m_isOnUI)
+        {
+            if(Input.GetKeyDown(m_returnTitleKey))
+                SceneManager.LoadScene(m_titleScenePath);
         }
     }
 }

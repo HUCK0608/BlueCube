@@ -44,4 +44,10 @@ public sealed class Title_SelectMenuUI : MonoBehaviour
     {
         SceneManager.LoadScene(m_newGameScenePath);
     }
+
+    /// <summary>종료 이벤트</summary>
+    public void OnClickExitEvent()
+    {
+        Application.Quit();
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class GameLibrary
@@ -115,6 +116,20 @@ public static class GameLibrary
         return false;
     }
 
+    // Function 부분
+
+    /// <summary>Vector3형 array를 같은 value로 length 길이만큼 초기화</summary>
+    public static Vector3[] InitaillizeSameValue(Vector3[] array, int length, Vector3 value)
+    {
+        array = new Vector3[length];
+
+        for (int i = 0; i < length; i++)
+            array[i] = value;
+        Debug.Log(array);
+        
+        return array;
+    }
+
     /// <summary>position위치의 피벗을 반환</summary>
     public static Vector3 GetGamePivot(this Vector3 position)
     {
@@ -141,12 +156,14 @@ public static class GameLibrary
     }
 
     // 확장 메서드 부분
+
     public static int Shift(this int value)
     {
         return (1 << value);
     }
 
-    // 레이
+    // 레이 부분
+
     private static Ray m_ray = new Ray();
 
     /// <summary>파라미터 속성으로 3D레이를 쏴서 무언가 충돌하면 true를 반환</summary>

@@ -37,17 +37,9 @@ public sealed class WorldObject_Single : WorldObject
 
             m_renderer.lightmapIndex = m_defaultLightMapIndex;
         }
-        // 2D전환상자에 포함되어 있지 않았을 경우 렌더러가 비활성화 된 오브젝트의 렌더러를 킨다
-        else if(!m_isIncludeChangeViewRectZ)
+        else
         {
-            if (!m_isOnRenderer)
-                SetRendererEnable(true);
-        }
-
-        if (m_isIncludeChangeViewRectZ)
-        {
-            m_isIncludeChangeViewRectZ = false;
-            SetMaterial(E_WorldObject_ShaderType.Default3D);
+            SetRendererEnable(true);
         }
     }
 
@@ -66,14 +58,9 @@ public sealed class WorldObject_Single : WorldObject
 
             m_renderer.lightmapIndex = -1;
         }
-        // 2D전환상자에 포함되어 있지 않을 경우 렌더러를 끈다
-        else if (!m_isIncludeChangeViewRectZ)
-        {
-            SetRendererEnable(false);
-        }
         else
         {
-            SetMaterial(E_WorldObject_ShaderType.BackGround);
+            SetRendererEnable(false);
         }
     }
 

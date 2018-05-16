@@ -24,9 +24,6 @@ public class WorldObject : MonoBehaviour
     /// <summary>시점변환 상자에 포함되어 있으면 true를 반환</summary>
     public bool IsIncludeChangeViewRect { get { return m_isIncludeChangeViewRect; } set { m_isIncludeChangeViewRect = value; } }
 
-    protected bool m_isIncludeChangeViewRectZ;
-    public bool IsIncludeChangeVeiwRectZ { get { return m_isIncludeChangeViewRectZ; } set { m_isIncludeChangeViewRectZ = value; } }
-
     /// <summary>끼임 오브젝트를 표시하는 중이면 true를 반환</summary>
     protected bool m_isShowBlock;
 
