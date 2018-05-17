@@ -18,7 +18,7 @@ public sealed class PlayerState3D_PushMove : PlayerState3D
     private void ChangeStates()
     {
         // 이동을 완료했을 경우 Idle 상태로 변경
-        if (!m_playerManager.Hand.CurrentPushItem.IsPush)
+        if (!m_playerManager.Hand.CurrentPushItem.IsMove)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.Idle);
         }

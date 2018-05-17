@@ -118,16 +118,13 @@ public static class GameLibrary
 
     // Function 부분
 
-    /// <summary>Vector3형 array를 같은 value로 length 길이만큼 초기화</summary>
-    public static Vector3[] InitaillizeSameValue(Vector3[] array, int length, Vector3 value)
+    /// <summary>array에 값을 value로 모두 설정</summary>
+    public static void SetSameValue(ref Vector3[] array, Vector3 value)
     {
-        array = new Vector3[length];
+        int arrayLength = array.Length;
 
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < arrayLength; i++)
             array[i] = value;
-        Debug.Log(array);
-        
-        return array;
     }
 
     /// <summary>position위치의 피벗을 반환</summary>
