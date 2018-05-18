@@ -7,17 +7,11 @@ public class Interaction_Push_FirePillar : Interaction_Push
     [Space(20f)]
     [Header("* FirePillar Settings")]
     [Space(-5f)]
-    [Header("Can Change")]
-
-    /// <summary>불이 켜졌는지 꺼졌는지 여부</summary>
-    [SerializeField]
-    private bool m_isOnFire;
-
     [Header("Don't touch")]
 
-    /// <summary>불 오브젝트</summary>
+    /// <summary>불</summary>
     [SerializeField]
-    private GameObject m_fire;
+    private Special_FirePillar_Fire m_fire;
 
     protected override void Awake()
     {
@@ -36,7 +30,11 @@ public class Interaction_Push_FirePillar : Interaction_Push
         // 기존에 계산된 것에 밀 수 있다면 아래 계산을 더 계산함
         else
         {
-            return true;
+            // 불이 켜져있을 경우 밀 수 있다고 설정
+            if (!m_fire.CurrentFireType.Equals(E_FirePillar_FireType.None))
+                return true;
+
+            return false;
         }
     }
 }

@@ -2,40 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Switch_On : Switch
+public abstract class Switch_On : Switch
 {
-    protected override void Awake()
-    {
-        base.Awake();
-    }
+    [Header("[Switch On]")]
+    [Space(-5f)]
+    [Header("- Don't Touch")]
+    /// <summary>바꿀 메쉬</summary>
+    [SerializeField]
+    protected MeshFilter m_changeMesh;
+
+    /// <summary>스위치가 켜졌을 때 메쉬</summary>
+    [SerializeField]
+    protected Mesh m_onMesh;
+
+    /// <summary>스위치가 켜지는 로직이 실행중일경우 true를 반환</summary>
+    protected bool m_isOnLogic;
 
     /// <summary>스위치를 킨다</summary>
-    public virtual void SwitchOn()
+    public void SwitchOn()
     {
-        if (!m_isButtonMove && !m_isOn)
-            StartCoroutine(MoveButton());
+        // 이미 스위치가 켜져있거나 로직이 실행중일 경우 리턴
+        if (m_isOn || m_isOnLogic)
+            return;
+
+        StartCoroutine(SwitchOnLogic());
     }
 
-    // 버튼 이동
-    private IEnumerator MoveButton()
+    /// <summary>스위치 로직(반드시 자식에서 구현)</summary>
+    protected abstract IEnumerator SwitchOnLogic();
+
+    /// <summary>현재 메쉬를 켜졌을 때 메쉬로 바꿈</summary>
+    protected void ChangeOnMesh()
     {
-        m_isButtonMove = true;
-
-        while(true)
-        {
-            if(!GameLibrary.Bool_IsGameStop(m_worldObject))
-            {
-                m_button.localPosition = Vector3.MoveTowards(m_button.localPosition, m_buttonOnPosition, m_buttonMoveSpeed * Time.deltaTime);
-
-                if (m_button.localPosition.Equals(m_buttonOnPosition))
-                    break;
-            }
-
-            yield return null;
-        }
-
-        m_isButtonMove = false;
-        m_isOn = true;
-        m_buttonMeshFilter.mesh = m_buttonOnMesh;
+        m_changeMesh.mesh = m_onMesh;
     }
 }

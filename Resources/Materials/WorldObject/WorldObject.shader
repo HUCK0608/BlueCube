@@ -1,4 +1,4 @@
-﻿Shader "BlueCube/WorldObject" {
+﻿Shader "BlueCube/WorldObject2" {
 	Properties {
 		_Color ("CanChangeColor", Color) = (1,1,1,1)
 		_Color2 ("BlockColor", Color) = (1,1,1,1)
@@ -14,6 +14,13 @@
 		_Choice("Choice", float) = 0
 		[Space][Space][Space][Space]
 		
+		[Header(Outline_Setting)]
+		[Toggle]_OutlineCheck("Outline_Check", float) = 0
+		_OutlineColor("OutLine_Color", color) = (0,0,0,0)
+		_OutlineSize("OutLine_Size", Range(0,0.9)) = 0
+		_Stencil("Stencil ID", float) = 1
+		[Space][Space][Space][Space]
+
 		[Header(Specular_Setting)]
 		[Toggle]_Specular("Specular_Check", float) = 0
 		[Space]
@@ -23,10 +30,16 @@
 		_SpecularRange("Specular_range", Range(0,10)) = 7
 		_EmissionPower("Speculer_Emission_Power", float) = 2
 	}
+
 	SubShader {
 		Tags { "RenderType"="Opaque"}
 		LOD 200
-
+		
+		Stencil {
+        Ref [_Stencil]
+        Pass Replace
+      }
+		
 		CGPROGRAM
 		#pragma surface surf Standard
 
@@ -102,6 +115,61 @@
 		}
 		ENDCG
 
+		
+		//Outline_Pass
+
+		Stencil {
+        Ref [_Stencil]
+        Comp NotEqual
+      }
+
+		cull front
+				
+		CGPROGRAM
+		#pragma surface surf OLine vertex:vert noshadow noambient
+
+		#pragma target 3.0
+
+		float4 _OutlineColor;
+		float _OutlineSize;
+		float _OutlineCheck;
+		
+		void vert(inout appdata_full v)
+		{
+			if (_OutlineCheck == 1)
+				//v.vertex.xyz += v.vertex.xyz * _OutlineSize;
+				v.vertex.xzy += v.normal * _OutlineSize;
+		}
+
+		struct Input {
+			float3 color:COLOR;
+		};
+
+		void surf (Input IN, inout SurfaceOutput o) {
+			o.Albedo = _OutlineColor.rgb;
+			o.Alpha = _OutlineColor.a;
+		}
+	
+		float4 LightingOLine(SurfaceOutput s, float3 lightDir, float atten)
+		{
+			float4 final;
+			if (_OutlineCheck == 0)
+				final = 0;
+			else
+				final = float4(s.Albedo,s.Alpha);
+			return final;
+		}
+		ENDCG
+
+		//Specular_Pass
+		
+		Stencil {
+		Ref[_Stencil]
+        Pass Replace
+      }
+
+	  cull back
+
 		CGPROGRAM
 		#pragma surface surf SPC alpha:fade
 
@@ -148,6 +216,8 @@
 			return final_return;
 		}
 		ENDCG
+		
+
 	}
 	FallBack "Diffuse"
 }

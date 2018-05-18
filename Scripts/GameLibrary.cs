@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>이동할 때 어느 피벗으로 이동할 지 여부</summary>
+public enum E_MovePivot { World, Local }
 public static class GameLibrary
 {
     // Material 부분
@@ -185,6 +187,17 @@ public static class GameLibrary
             return true;
 
         return false;
+    }
+
+    /// <summary>파라미터 속성으로 3D레이를 쏴서 충돌된 모든 오브젝트의 정보를 반환</summary>
+    public static RaycastHit[] RaycastAll3D(Vector3 origin, Vector3 direction, float maxDistance)
+    {
+        m_ray.origin = origin;
+        m_ray.direction = direction;
+
+        RaycastHit[] collisionObjects = Physics.RaycastAll(m_ray, maxDistance);
+
+        return collisionObjects;
     }
 
     private static RaycastHit2D m_hit2D;
