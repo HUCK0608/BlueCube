@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 06548d11779376044837cb73a5a54d18, type: 3}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.018838668, g: 0.060329393, b: 0.24225773, a: 1}
+  m_IndirectSpecularColor: {r: 0.0189268, g: 0.06024707, b: 0.24354045, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -11219,7 +11219,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &431605457
 Prefab:
@@ -33795,7 +33795,7 @@ GameObject:
   - component: {fileID: 1300243907}
   - component: {fileID: 1300243906}
   m_Layer: 0
-  m_Name: asdfasdfdsf
+  m_Name: 123235455
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33812,9 +33812,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e9689f46fe157641a531b4419263016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  a: 0
-  b: 0
-  c: 0
+  dddd: 123123123
 --- !u!4 &1300243907
 Transform:
   m_ObjectHideFlags: 0
@@ -33822,11 +33820,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1300243905}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.956394, y: 11.957617, z: 17.54841}
+  m_LocalPosition: {x: 10.956394, y: 11.957617, z: 10.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1301455384
 Prefab:
@@ -47931,7 +47929,7 @@ MonoBehaviour:
   m_moveSpeed: 10
   m_fadeObject: {fileID: 1483111967}
   m_modelCollider: {fileID: 1002523124}
-  m_fire: {fileID: 730026294}
+  m_fire: {fileID: 0}
 --- !u!1001 &1861791167
 Prefab:
   m_ObjectHideFlags: 0

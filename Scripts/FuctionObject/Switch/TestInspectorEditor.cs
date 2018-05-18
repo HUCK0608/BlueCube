@@ -5,45 +5,41 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(TestInspector))]
-public class TestInspectorEditor : Editor
+public sealed class TestInspectorEditor : Editor
 {
-    string ss;
+    private TestInspector targetScript;
+
+    private void Awake()
+    {
+        targetScript = target as TestInspector;
+    }
 
     public override void OnInspectorGUI()
     {
-        PropertyInfo[] propertyInfo = typeof(TestInspector).GetProperties();
-
-        int num = 0;
-
         GameObject[] selectionObjects = Selection.gameObjects;
-
-        TestInspector selectObjectInComponent = null;
-
         for (int i = 0; i < selectionObjects.Length; i++)
-            selectObjectInComponent = selectionObjects[i].GetComponent<TestInspector>();
+            targetScript = selectionObjects[i].GetComponent<TestInspector>();
+
+        PropertyInfo[] propertyInfo = targetScript.GetType().GetProperties();
 
         for (int i = 0; i < propertyInfo.Length; i++)
         {
             if (propertyInfo[i].ReflectedType.Equals(typeof(TestInspector)))
             {
-                if (propertyInfo[i].PropertyType.Equals(typeof(System.String)))
+                if (propertyInfo[i].PropertyType.Equals(typeof(System.String)) && (propertyInfo[i].Name == ("name") || propertyInfo[i].Name == ("tag") ? false : true))
                 {
-                    ss = EditorGUILayout.TextField(propertyInfo[i].Name, ss);
-                    propertyInfo[i].SetValue(selectObjectInComponent, ss, null);
-                    EditorGUILayout.TextField(this.ToString());
-                    EditorGUILayout.TextField("DeclaringType : " + propertyInfo[i].DeclaringType);
-                    EditorGUILayout.TextField("MemberType : " + propertyInfo[i].MemberType);
-                    EditorGUILayout.TextField("PropertyType : " + propertyInfo[i].PropertyType);
-                    EditorGUILayout.TextField("ReflectedType : " + propertyInfo[i].ReflectedType);
+                    string value = EditorGUILayout.TextField(propertyInfo[i].Name, propertyInfo[i].GetValue(targetScript, null) as string);
+                    propertyInfo[i].SetValue(targetScript, value, null);
+                    EditorGUILayout.TextField(value);
+                    EditorGUILayout.TextField(propertyInfo[i].ReflectedType.ToString());
+                    EditorGUILayout.TextField(propertyInfo[i].MemberType.ToString());
+                    EditorGUILayout.TextField(propertyInfo[i].PropertyType.ToString());
+                    EditorGUILayout.TextField(propertyInfo[i].ReflectedType.ToString());
                 }
             }
         }
 
-        //PropertyInfo propertyInfo1 = typeof(TestInspector).GetProperty("D");
-
-        //EditorGUILayout.TextField("DeclaringType : " + propertyInfo1.DeclaringType);
-        //EditorGUILayout.TextField("MemberType : " + propertyInfo1.MemberType);
-        //EditorGUILayout.TextField("PropertyType : " + propertyInfo1.PropertyType);
-        //EditorGUILayout.TextField("ReflectedType : " + propertyInfo1.ReflectedType);
+        if (GUI.changed)
+            EditorUtility.SetDirty(targetScript);
     }
 }
