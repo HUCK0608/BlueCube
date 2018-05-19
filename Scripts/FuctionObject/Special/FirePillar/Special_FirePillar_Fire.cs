@@ -2,20 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_FirePillar_FireType { None = 0, Red, Blue }
+public enum E_FirePilalr_ColorType { None = 0, Red, Blue }
 public class Special_FirePillar_Fire : MonoBehaviour
 {
     private static string m_collisionTag = "Special_FirePillar_Fire";
 
-    [Header("Can Change")]
+    [Header("[Fire Settings]")]
+    [Space(-5f)]
+    [Header("- Can Change")]
 
     /// <summary>시작 불 타입</summary>
     [SerializeField]
-    private E_FirePillar_FireType m_startFireType;
+    private E_FirePilalr_ColorType m_startFireType;
 
     /// <summary>시작 불을 유지시킬 것인지 여부</summary>
     [SerializeField]
     private bool m_isKeepStartFire;
+
+    [Header("- Don't Change")]
+    /// <summary>불 오브젝트</summary>
+    [SerializeField]
+    private GameObject m_fireObject;
 
     /// <summary>월드 오브젝트</summary>
     private WorldObject m_worldObject;
@@ -26,18 +33,19 @@ public class Special_FirePillar_Fire : MonoBehaviour
     /// <summary>콜라이더</summary>
     private Collider m_collider;
 
-    private E_FirePillar_FireType m_currentFireType;
+    private E_FirePilalr_ColorType m_currentFireColorType;
     /// <summary>현재 불 타입</summary>
-    public E_FirePillar_FireType CurrentFireType { get { return m_currentFireType; } }
+    public E_FirePilalr_ColorType CurrentFireColorType { get { return m_currentFireColorType; } }
 
     /// <summary>충돌했었던 불 모음</summary>
     private Dictionary<Transform, Special_FirePillar_Fire> m_collisionFires;
 
     private void Awake()
     {
-        m_worldObject = transform.parent.GetComponent<WorldObject>();
-        m_meshRenderer = GetComponent<MeshRenderer>();
+        m_worldObject = GetComponent<WorldObject>();
+        m_meshRenderer = m_fireObject.GetComponent<MeshRenderer>();
         m_material = m_meshRenderer.material;
+        m_collider = m_fireObject.GetComponent<Collider>();
 
         m_collisionFires = new Dictionary<Transform, Special_FirePillar_Fire>();
 
@@ -48,20 +56,19 @@ public class Special_FirePillar_Fire : MonoBehaviour
     private void InitFire()
     {
         // 각 타입에 맞춰 불을 초기화
-        if (m_startFireType.Equals(E_FirePillar_FireType.None))
+        if (m_startFireType.Equals(E_FirePilalr_ColorType.None))
             m_meshRenderer.enabled = false;
-        else if (m_startFireType.Equals(E_FirePillar_FireType.Red))
+        else if (m_startFireType.Equals(E_FirePilalr_ColorType.Red))
             m_material.color = Color.red;
-        else if (m_startFireType.Equals(E_FirePillar_FireType.Blue))
+        else if (m_startFireType.Equals(E_FirePilalr_ColorType.Blue))
             m_material.color = Color.blue;
 
         // 저장
-        m_currentFireType = m_startFireType;
+        m_currentFireColorType = m_startFireType;
     }
 
     private void Start()
     {
-        m_collider = GetComponent<Collider>();
 
         StartCoroutine(SetCollider());
         StartCoroutine(SetRendererEnable());
@@ -91,8 +98,8 @@ public class Special_FirePillar_Fire : MonoBehaviour
                 // 한 프레임을 기다림
                 yield return null;
 
-                // z음의 방향에 불 체크를 하고 없을 경우 양의 방향도 체크한다.
-                if (!CheckAnotherFire_BackDirection())
+                // z음의 방향에 불 체크를 하고 없을 경우 현재 불이 없을 경우에만 양의 방향도 체크한다.
+                if (!CheckAnotherFire_BackDirection() && CurrentFireColorType.Equals(E_FirePilalr_ColorType.None))
                     CheckAnotherFire_FrontDirection();
             }
 
@@ -103,7 +110,7 @@ public class Special_FirePillar_Fire : MonoBehaviour
     /// <summary>시점에 따른 랜더러 설정</summary>
     private IEnumerator SetRendererEnable()
     {
-        WaitUntil m_isView3DWaitUntil = new WaitUntil(() => PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D) && !m_meshRenderer.enabled && !CurrentFireType.Equals(E_FirePillar_FireType.None));
+        WaitUntil m_isView3DWaitUntil = new WaitUntil(() => PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D) && !m_meshRenderer.enabled && !CurrentFireColorType.Equals(E_FirePilalr_ColorType.None));
         WaitUntil m_isView2DWaitUntil = new WaitUntil(() => PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D) && !m_worldObject.IsOnRenderer && m_meshRenderer.enabled);
 
         while (true)
@@ -122,7 +129,7 @@ public class Special_FirePillar_Fire : MonoBehaviour
         if (m_isKeepStartFire)
             return true;
 
-        RaycastHit[] collisionObjects = GameLibrary.RaycastAll3D(transform.position, Vector3.back, Mathf.Infinity);
+        RaycastHit[] collisionObjects = GameLibrary.RaycastAll3D(m_fireObject.transform.position, Vector3.back, Mathf.Infinity);
         int collisionObjectsLength = collisionObjects.Length;
 
         // 충돌된 오브젝트가 하나라도 있을 경우 실행
@@ -138,12 +145,12 @@ public class Special_FirePillar_Fire : MonoBehaviour
                 {
                     // 이 불이 충돌되었던 불 리스트에 존재하지 않으면 리스트에 추가
                     if (!m_collisionFires.ContainsKey(collisionObjects[i].transform))
-                        m_collisionFires.Add(collisionObjects[i].transform, collisionObjects[i].transform.GetComponent<Special_FirePillar_Fire>());
+                        m_collisionFires.Add(collisionObjects[i].transform, collisionObjects[i].transform.GetComponentInParent<Special_FirePillar_Fire>());
 
                     // 충돌 불 리스트에서 지금 이 불을 찾아 불이 꺼져있지 않은 경우에만 거리를 체크하여 저장
-                    if (!m_collisionFires[collisionObjects[i].transform].CurrentFireType.Equals(E_FirePillar_FireType.None))
+                    if (!m_collisionFires[collisionObjects[i].transform].CurrentFireColorType.Equals(E_FirePilalr_ColorType.None))
                     {
-                        float distance = Vector3.Distance(transform.position, collisionObjects[i].transform.position);
+                        float distance = Vector3.Distance(m_fireObject.transform.position, collisionObjects[i].transform.position);
 
                         // 이 불까지의 거리가 기존 불의 거리보다 멀 경우
                         if (distance > farDistance)
@@ -158,7 +165,7 @@ public class Special_FirePillar_Fire : MonoBehaviour
             // 먼 쪽의 불의 인덱스가 있을 경우에만 나의 불을 z음의 방향으로 제일 먼 불로 변경
             if (!farIndex.Equals(-1))
             {
-                SetChangeFire(m_collisionFires[collisionObjects[farIndex].transform].CurrentFireType);
+                SetChangeFire(m_collisionFires[collisionObjects[farIndex].transform].CurrentFireColorType);
                 return true;
             }
         }
@@ -169,7 +176,7 @@ public class Special_FirePillar_Fire : MonoBehaviour
     /// <summary>z양의 방향으로 다른 불이 있는지 체크 후 불 타입 변경</summary>
     private void CheckAnotherFire_FrontDirection()
     {
-        RaycastHit[] collisionObjects = GameLibrary.RaycastAll3D(transform.position, Vector3.forward, Mathf.Infinity);
+        RaycastHit[] collisionObjects = GameLibrary.RaycastAll3D(m_fireObject.transform.position, Vector3.forward, Mathf.Infinity);
         int collisionObjectsLength = collisionObjects.Length;
 
         // 충돌된 오브젝트가 하나라도 있을 경우 실행
@@ -184,12 +191,12 @@ public class Special_FirePillar_Fire : MonoBehaviour
                 {
                     // 이 불이 충돌되었던 불 리스트에 존재하지 않으면 리스트에 추가
                     if (!m_collisionFires.ContainsKey(collisionObjects[i].transform))
-                        m_collisionFires.Add(collisionObjects[i].transform, collisionObjects[i].transform.GetComponent<Special_FirePillar_Fire>());
+                        m_collisionFires.Add(collisionObjects[i].transform, collisionObjects[i].transform.GetComponentInParent<Special_FirePillar_Fire>());
 
                     // 충돌 불 리스트에서 지금 이 불을 찾아 불이 꺼져있지 않은 경우에만 거리를 체크하여 저장
-                    if (!m_collisionFires[collisionObjects[i].transform].CurrentFireType.Equals(E_FirePillar_FireType.None))
+                    if (!m_collisionFires[collisionObjects[i].transform].CurrentFireColorType.Equals(E_FirePilalr_ColorType.None))
                     {
-                        float distance = Vector3.Distance(transform.position, collisionObjects[i].transform.position);
+                        float distance = Vector3.Distance(m_fireObject.transform.position, collisionObjects[i].transform.position);
 
                         // 이 불까지의 거리가 기존 불의 거리보다 가까울 경우
                         if (distance < nearDistance)
@@ -202,15 +209,15 @@ public class Special_FirePillar_Fire : MonoBehaviour
             }
 
             if (!nearIndex.Equals(-1))
-                SetChangeFire(m_collisionFires[collisionObjects[nearIndex].transform].CurrentFireType);
+                SetChangeFire(m_collisionFires[collisionObjects[nearIndex].transform].CurrentFireColorType);
         }
     }
 
     /// <summary>fireType불로 바꿈</summary>
-    private void SetChangeFire(E_FirePillar_FireType fireType)
+    private void SetChangeFire(E_FirePilalr_ColorType fireColorType)
     {
         // fireType과 currentFireType이 같을 경우 리턴
-        if (fireType.Equals(m_currentFireType))
+        if (fireColorType.Equals(m_currentFireColorType))
             return;
 
         // 랜더러가 꺼져있다면 활성화
@@ -218,12 +225,12 @@ public class Special_FirePillar_Fire : MonoBehaviour
             m_meshRenderer.enabled = true;
 
         // 각 타입에 맞춰 불 색 결정
-        if (fireType.Equals(E_FirePillar_FireType.Red))
+        if (fireColorType.Equals(E_FirePilalr_ColorType.Red))
             m_material.color = Color.red;
-        else if (fireType.Equals(E_FirePillar_FireType.Blue))
+        else if (fireColorType.Equals(E_FirePilalr_ColorType.Blue))
             m_material.color = Color.blue;
 
         // 저장
-        m_currentFireType = fireType;
+        m_currentFireColorType = fireColorType;
     }
 }

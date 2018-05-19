@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class Interaction_Push_FirePillar : Interaction_Push
 {
-    [Space(20f)]
-    [Header("* FirePillar Settings")]
+    [Header("[FirePillar Settings]")]
     [Space(-5f)]
-    [Header("Don't touch")]
+    [Header("- Can Change")]
+    [SerializeField]
+
+    private E_FirePilalr_ColorType m_firePillarColorType;
+    /// <summary>현재 불기둥의 색 타입을 반환</summary>
+    public E_FirePilalr_ColorType FirePillarColorType { get { return m_firePillarColorType; } }
 
     /// <summary>불</summary>
-    [SerializeField]
     private Special_FirePillar_Fire m_fire;
 
     protected override void Awake()
     {
         base.Awake();
+
+        m_fire = GetComponent<Special_FirePillar_Fire>();
     }
 
     /// <summary>pushPosition으로 밀 수 있을경우 true를 반환(FirePillar 방식)</summary>
@@ -31,7 +36,7 @@ public class Interaction_Push_FirePillar : Interaction_Push
         else
         {
             // 불이 켜져있을 경우 밀 수 있다고 설정
-            if (!m_fire.CurrentFireType.Equals(E_FirePillar_FireType.None))
+            if (!m_fire.CurrentFireColorType.Equals(E_FirePilalr_ColorType.None))
                 return true;
 
             return false;

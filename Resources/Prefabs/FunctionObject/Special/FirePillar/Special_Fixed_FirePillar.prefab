@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33716178779201718}
   - component: {fileID: 23480817015280480}
   - component: {fileID: 65488455757471000}
-  m_Layer: 28
+  m_Layer: 0
   m_Name: ModelAndCollider3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4675685810510784}
   - component: {fileID: 61228037895786092}
-  m_Layer: 28
+  m_Layer: 0
   m_Name: Collider2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,6 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4034601866335736}
   - component: {fileID: 114290635057455304}
+  - component: {fileID: 114279607020667274}
   m_Layer: 0
   m_Name: Special_Fixed_FirePillar
   m_TagString: Untagged
@@ -73,7 +74,6 @@ GameObject:
   - component: {fileID: 23458615071341390}
   - component: {fileID: 54404699643958358}
   - component: {fileID: 65688982640576532}
-  - component: {fileID: 114709402102321574}
   m_Layer: 0
   m_Name: Fire
   m_TagString: Special_FirePillar_Fire
@@ -88,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1418170565249746}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: -6}
+  m_LocalPosition: {x: -8, y: 5, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4211107650964858}
@@ -282,6 +282,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114279607020667274
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1418170565249746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25735670c0a8e044990be2b04afbe796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_startFireType: 0
+  m_isKeepStartFire: 0
+  m_fireObject: {fileID: 1788498891210150}
 --- !u!114 &114290635057455304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -295,16 +309,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isUse2DTexture: 0
   m_isUseShiningSpecular: 0
---- !u!114 &114709402102321574
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1788498891210150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25735670c0a8e044990be2b04afbe796, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_startFireType: 1
-  m_isKeepStartFire: 1

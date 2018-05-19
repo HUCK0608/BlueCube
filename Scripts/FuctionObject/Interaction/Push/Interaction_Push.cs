@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Interaction_Push : MonoBehaviour
 {
-    [Header("* Push Settings")]
+    [Header("[Push Settings]")]
     [Space(-5f)]
-    [Header("Can Change")]
+    [Header("- Can Change")]
     /// <summary>현재위치에서 고정될 위치까지의 거리</summary>
     [SerializeField]
     private float m_hangDistanceToThis = 1.75f;
@@ -14,7 +14,7 @@ public class Interaction_Push : MonoBehaviour
     [SerializeField]
     private float m_moveSpeed = 10f;
 
-    [Header("Don't touch")]
+    [Header("- Don't touch")]
     /// <summary>반투명 오브젝트</summary>
     [SerializeField]
     private GameObject m_fadeObject;
