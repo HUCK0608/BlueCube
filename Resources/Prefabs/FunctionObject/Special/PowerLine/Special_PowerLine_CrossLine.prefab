@@ -69,13 +69,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1170474377731010}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4847166541300168}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4847166541300168
 Transform:
   m_ObjectHideFlags: 1
@@ -144,7 +144,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1170474377731010}
-  m_Mesh: {fileID: 4300000, guid: bc29e7158b36a3f48b90a8bd25aa2eae, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 2fcff29b320b96a4ea96798baa07034a, type: 3}
 --- !u!61 &61760186222518808
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -193,9 +193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d27b9928c949d4bb6c3535b0771ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_checkDistance: 0.05
   m_model: {fileID: 4385652417435016}
-  m_isOn: 0
+  m_isConnectedPower: 0
 --- !u!114 &114616749533146408
 MonoBehaviour:
   m_ObjectHideFlags: 1

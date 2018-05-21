@@ -44,13 +44,13 @@ public sealed class Special_PowerLine_LineDirectionEditor : Editor
             bool newDownValue = false;
 
             if (m_isUpProp.boolValue)
-                newLeftValue = true;
-            if (m_isRightProp.boolValue)
-                newUpValue = true;
-            if (m_isLeftProp.boolValue)
-                newDownValue = true;
-            if (m_isDownProp.boolValue)
                 newRightValue = true;
+            if (m_isRightProp.boolValue)
+                newDownValue = true;
+            if (m_isLeftProp.boolValue)
+                newUpValue = true;
+            if (m_isDownProp.boolValue)
+                newLeftValue = true;
 
             m_isUpProp.boolValue = newUpValue;
             m_isRightProp.boolValue = newRightValue;
