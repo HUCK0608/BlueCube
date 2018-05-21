@@ -166,6 +166,18 @@ public static class GameLibrary
     private static Ray m_ray = new Ray();
 
     /// <summary>파라미터 속성으로 3D레이를 쏴서 무언가 충돌하면 true를 반환</summary>
+    public static bool Raycast3D(Vector3 origin, Vector3 direction, out RaycastHit hit, float maxDistance)
+    {
+        m_ray.origin = origin;
+        m_ray.direction = direction;
+
+        if (Physics.Raycast(m_ray, out hit, maxDistance))
+            return true;
+
+        return false;
+    }
+
+    /// <summary>파라미터 속성으로 3D레이를 쏴서 무언가 충돌하면 true를 반환</summary>
     public static bool Raycast3D(Vector3 origin, Vector3 direction, out RaycastHit hit, float maxDistance, int layerMask)
     {
         m_ray.origin = origin;
@@ -202,12 +214,22 @@ public static class GameLibrary
 
     private static RaycastHit2D m_hit2D;
 
-    /// <summary>파라미터 속성으로 2D레이를 쏴서 무언가 충돌하면 true를 반환</summary>
     public static bool Raycast2D(Vector2 origin, Vector2 direction, float maxDistance, int layerMask)
     {
         m_hit2D = Physics2D.Raycast(origin, direction, maxDistance, layerMask);
 
         if (m_hit2D.collider != null)
+            return true;
+
+        return false;
+    }
+
+    /// <summary>파라미터 속성으로 2D레이를 쏴서 무언가 충돌하면 true를 반환</summary>
+    public static bool Raycast2D(Vector2 origin, Vector2 direction, out RaycastHit2D hit, float maxDistance)
+    {
+        hit = Physics2D.Raycast(origin, direction, maxDistance);
+
+        if (hit.collider != null)
             return true;
 
         return false;
