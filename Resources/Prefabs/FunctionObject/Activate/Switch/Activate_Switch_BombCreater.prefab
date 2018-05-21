@@ -424,8 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d3b6b4382bb66499821d7bcbf738ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_switches:
-  - {fileID: 0}
+  m_switches: []
 --- !u!114 &114655732682271480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -437,6 +436,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd8994e6a18bd04889ae2a1962b554f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isUse2DTexture: 0
+  m_isUseShiningSpecular: 0
 --- !u!114 &114705539336082784
 MonoBehaviour:
   m_ObjectHideFlags: 1
