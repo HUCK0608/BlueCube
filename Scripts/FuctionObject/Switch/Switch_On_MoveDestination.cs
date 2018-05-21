@@ -52,9 +52,8 @@ public sealed class Switch_On_MoveDestination : Switch_On
                     if (m_moveObject.position.Equals(m_destination))
                         break;
                 }
-
-                yield return null;
             }
+            yield return null;
         }
 
         m_isOnLogic = false;
