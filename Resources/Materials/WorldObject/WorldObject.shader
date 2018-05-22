@@ -118,52 +118,52 @@
 		
 		//Outline_Pass
 
-		Stencil {
-        Ref [_Stencil]
-        Comp NotEqual
-      }
+		//Stencil {
+  //      Ref [_Stencil]
+  //      Comp NotEqual
+  //    }
 
-		cull front
-				
-		CGPROGRAM
-		#pragma surface surf OLine vertex:vert noshadow noambient
+		//cull front
+		//		
+		//CGPROGRAM
+		//#pragma surface surf OLine vertex:vert noshadow noambient
 
-		#pragma target 3.0
+		//#pragma target 3.0
 
-		float4 _OutlineColor;
-		float _OutlineSize;
-		float _OutlineCheck;
-		
-		void vert(inout appdata_full v)
-		{
-			if (_OutlineCheck == 1)
-				//v.vertex.xyz += v.vertex.xyz * _OutlineSize;
-				v.vertex.xzy += v.normal * _OutlineSize;
-		}
+		//float4 _OutlineColor;
+		//float _OutlineSize;
+		//float _OutlineCheck;
+		//
+		//void vert(inout appdata_full v)
+		//{
+		//	if (_OutlineCheck == 1)
+		//		//v.vertex.xyz += v.vertex.xyz * _OutlineSize;
+		//		v.vertex.xzy += v.normal * _OutlineSize;
+		//}
 
-		struct Input {
-			float3 color:COLOR;
-		};
+		//struct Input {
+		//	float3 color:COLOR;
+		//};
 
-		void surf (Input IN, inout SurfaceOutput o) {
-			o.Albedo = _OutlineColor.rgb;
-			o.Alpha = _OutlineColor.a;
-		}
+		//void surf (Input IN, inout SurfaceOutput o) {
+		//	o.Albedo = _OutlineColor.rgb;
+		//	o.Alpha = _OutlineColor.a;
+		//}
 	
-		float4 LightingOLine(SurfaceOutput s, float3 lightDir, float atten)
-		{
-			float4 final;
-			if (_OutlineCheck == 0)
-				final = 0;
-			else
-				final = float4(s.Albedo,s.Alpha);
-			return final;
-		}
-		ENDCG
+		//float4 LightingOLine(SurfaceOutput s, float3 lightDir, float atten)
+		//{
+		//	float4 final;
+		//	if (_OutlineCheck == 0)
+		//		final = 0;
+		//	else
+		//		final = float4(s.Albedo,s.Alpha);
+		//	return final;
+		//}
+		//ENDCG
 
 		//Specular_Pass
 		
-		Stencil {
+		/*Stencil {
 		Ref[_Stencil]
         Pass Replace
       }
@@ -215,7 +215,7 @@
 
 			return final_return;
 		}
-		ENDCG
+		ENDCG*/
 		
 
 	}
