@@ -15,7 +15,16 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
     [Header("Don't Touch")]
     [SerializeField]
     private Transform m_model;
+    /// <summary>모델 오브젝트</summary>
     public Transform Model { get { return m_model; } }
+
+    /// <summary>켜졌을 때 메쉬</summary>
+    [SerializeField]
+    private Mesh m_onMesh;
+
+    /// <summary>꺼졌을 때 메쉬</summary>
+    [SerializeField]
+    private Mesh m_offMesh;
 
     /// <summary>월드 오브젝트</summary>
     private WorldObject m_worldObject;
@@ -32,10 +41,12 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
     /// <summary>파워가 연결된 방향들 개수</summary>
     private int m_connectedPowerDirectionsCount;
 
-    [SerializeField]
     private bool m_isConnectedPower;
     /// <summary>전원과 연결되어 있을 경우 true를 반환</summary>
     public bool IsConnectedPower { get { return m_isConnectedPower; } }
+
+    /// <summary>메쉬 랜더러</summary>
+    private MeshFilter m_meshFilter;
 
     private void Awake()
     {
@@ -43,6 +54,8 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
         m_lineDirection = GetComponent<Special_PowerLine_LineDirection>();
         m_checkedLines = new Dictionary<Transform, Special_PowerLine_Line>();
         m_connectedPowerDirections = new List<Vector3>();
+
+        m_meshFilter = m_model.GetComponent<MeshFilter>();
     }
 
     /// <summary>파워 전송(연결된 방향)</summary>
@@ -60,6 +73,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
     private IEnumerator TransmitPowerLogic()
     {
         m_isConnectedPower = true;
+        m_meshFilter.mesh = m_onMesh;
 
         // 렌더러가 활성화 되어있는 경우에만 실행
         while(m_worldObject.IsOnRenderer)
@@ -94,6 +108,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
 
         ClearConnectedPowerDirection();
 
+        m_meshFilter.mesh = m_offMesh;
         m_isConnectedPower = false;
     }
 

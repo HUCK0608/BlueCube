@@ -83,7 +83,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1470887028614950}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 14, z: -18}
+  m_LocalPosition: {x: 0, y: 10, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4666370887029628}
@@ -151,7 +151,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1679644838983308}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: a7c6eb2c2e1cdfc458b5f88a0fa6fc82, type: 2}
   m_IsTrigger: 0
@@ -194,7 +194,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_model: {fileID: 4666370887029628}
-  m_isConnectedPower: 0
+  m_onMesh: {fileID: 4300000, guid: db64e211e567eb64ebb3f3f95e292a08, type: 3}
+  m_offMesh: {fileID: 4300000, guid: daff1149feaebef4594da3e2cfef6c80, type: 3}
 --- !u!114 &114387854587034260
 MonoBehaviour:
   m_ObjectHideFlags: 1

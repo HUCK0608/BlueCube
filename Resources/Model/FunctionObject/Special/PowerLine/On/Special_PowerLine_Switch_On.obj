@@ -1,10 +1,10 @@
 # MagicaVoxel @ Ephtracy
 
 # group
-g Special_PowerLine_Power
+g Special_PowerLine_Switch_On
 
 # material
-mtllib Special_PowerLine_Power.mtl
+mtllib Special_PowerLine_Switch_On.mtl
 usemtl palette
 
 # normals

@@ -1,18 +1,18 @@
 fileFormatVersion: 2
-guid: 2639fa66c53a270439f7527cd6fc699c
-timeCreated: 1526977899
+guid: bbd5e76bf06df04449968305436d6f83
+timeCreated: 1526977397
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Special_PowerLine_Power
+    100000: Special_PowerLine_Switch_On
     100002: //RootNode
-    400000: Special_PowerLine_Power
+    400000: Special_PowerLine_Switch_On
     400002: //RootNode
-    2100000: Special_PowerLine_PowerMat
-    2300000: Special_PowerLine_Power
-    3300000: Special_PowerLine_Power
-    4300000: Special_PowerLine_Power
+    2100000: Special_PowerLine_Switch_OnMat
+    2300000: Special_PowerLine_Switch_On
+    3300000: Special_PowerLine_Switch_On
+    4300000: Special_PowerLine_Switch_On
   externalObjects: {}
   materials:
     importMaterials: 1

@@ -1,18 +1,18 @@
 fileFormatVersion: 2
-guid: 2639fa66c53a270439f7527cd6fc699c
-timeCreated: 1526977899
+guid: e36e9bb6f957fe04db00149c54731c83
+timeCreated: 1526981554
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Special_PowerLine_Power
+    100000: Activate_Teleport_On
     100002: //RootNode
-    400000: Special_PowerLine_Power
+    400000: Activate_Teleport_On
     400002: //RootNode
-    2100000: Special_PowerLine_PowerMat
-    2300000: Special_PowerLine_Power
-    3300000: Special_PowerLine_Power
-    4300000: Special_PowerLine_Power
+    2100000: Activate_Teleport_OnMat
+    2300000: Activate_Teleport_On
+    3300000: Activate_Teleport_On
+    4300000: Activate_Teleport_On
   externalObjects: {}
   materials:
     importMaterials: 1

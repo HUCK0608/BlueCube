@@ -1,10 +1,10 @@
 # MagicaVoxel @ Ephtracy
 
 # group
-g Special_PowerLine_Power
+g Special_PowerLine_Switch
 
 # material
-mtllib Special_PowerLine_Power.mtl
+mtllib Special_PowerLine_Switch.mtl
 usemtl palette
 
 # normals
@@ -18,7 +18,7 @@ vn 0 1 0
 # texcoords
 vt 0.146484 0.5
 vt 0.345703 0.5
-vt 0.400391 0.5
+vt 0.361328 0.5
 
 # verts
 v -5 -5 5

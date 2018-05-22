@@ -228,7 +228,7 @@ public static class GameLibrary
     public static bool Raycast2D(Vector2 origin, Vector2 direction, out RaycastHit2D hit, float maxDistance)
     {
         hit = Physics2D.Raycast(origin, direction, maxDistance);
-
+        
         if (hit.collider != null)
             return true;
 
