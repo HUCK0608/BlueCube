@@ -69,7 +69,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1661214894268502}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0.00000028088027}
+  m_LocalRotation: {x: -0.00000008742278, y: -1, z: -2.7443449e-14, w: -0.00000031391647}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -95,8 +95,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1685020285210702}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 10, z: -18}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12, y: 39, z: -148}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4030946473403282}
@@ -194,7 +194,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_model: {fileID: 4030946473403282}
-  m_isConnectedPower: 0
+  m_onMesh: {fileID: 4300000, guid: 1b7b5e07969763d4ea8b875f25440419, type: 3}
+  m_offMesh: {fileID: 4300000, guid: 3ddcfaa138b68b24abae06283bec2403, type: 3}
 --- !u!114 &114783170580064900
 MonoBehaviour:
   m_ObjectHideFlags: 1
