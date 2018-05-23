@@ -20,12 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4756730716978572}
   - component: {fileID: 114547526121273192}
-  - component: {fileID: 114833930755012514}
-  - component: {fileID: 114991626483799174}
-  - component: {fileID: 114005549206980942}
+  - component: {fileID: 114145257514991082}
   m_Layer: 0
   m_Name: Special_PowerLine_Switch
-  m_TagString: Special_PowerLine_Line
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,7 +39,7 @@ GameObject:
   - component: {fileID: 61647000604655004}
   m_Layer: 0
   m_Name: Collider2D
-  m_TagString: Special_PowerLine_Line
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,7 +57,7 @@ GameObject:
   - component: {fileID: 65928266709091554}
   m_Layer: 0
   m_Name: ModelAndCollider3D
-  m_TagString: Special_PowerLine_Line
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,7 +143,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1953359629546318}
-  m_Mesh: {fileID: 4300000, guid: 02265b8ea22454f41933923c434b884c, type: 3}
+  m_Mesh: {fileID: 4300000, guid: c1e8e211e6df08a4786501ba3ed9f28b, type: 3}
 --- !u!61 &61647000604655004
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -183,7 +181,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114005549206980942
+--- !u!114 &114145257514991082
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -191,13 +189,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1625622839998924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdcf6d8294b1ea040ac0ac57183757ef, type: 3}
+  m_Script: {fileID: 11500000, guid: c9a83bc5849a0634f887d4607bf7126e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isUp: 1
-  m_isRight: 1
-  m_isLeft: 1
-  m_isDown: 1
+  m_changeMesh: {fileID: 33941983816846024}
+  m_onMesh: {fileID: 4300000, guid: 9a5814ad25089a44794ec1f8e90b5f48, type: 3}
 --- !u!114 &114547526121273192
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,31 +207,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isUse2DTexture: 0
   m_isUseShiningSpecular: 0
---- !u!114 &114833930755012514
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1625622839998924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc53d3f988f23f541b6f56a199dd6e5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_changeMesh: {fileID: 0}
-  m_onMesh: {fileID: 0}
-  m_offMesh: {fileID: 0}
---- !u!114 &114991626483799174
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1625622839998924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d27b9928c949d4bb6c3535b0771ea0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_model: {fileID: 4443507987881604}
-  m_onMesh: {fileID: 4300000, guid: bbd5e76bf06df04449968305436d6f83, type: 3}
-  m_offMesh: {fileID: 4300000, guid: 02265b8ea22454f41933923c434b884c, type: 3}

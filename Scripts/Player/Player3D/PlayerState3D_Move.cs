@@ -38,7 +38,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
         else if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
         {
             if (m_playerManager.Skill.ChangeView())
-                m_mainController.ChangeState3D(E_PlayerState3D.Idle);
+                m_mainController.ChangeState3D(E_PlayerState3D.ChangeView);
         }
         // 상호작용 키를 눌렀을 때
         else if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey))

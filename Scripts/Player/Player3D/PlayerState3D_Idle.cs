@@ -31,7 +31,7 @@ public sealed class PlayerState3D_Idle : PlayerState3D
         {
             m_mainController.ChangeState3D(E_PlayerState3D.Falling);
         }
-        // 시점변환 키를 눌렀을 때 시점변환 실행
+        // 시점변환 키를 눌렀을 때 ChangeView 상태로 변경
         else if(Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
         {
             m_playerManager.Skill.ChangeView();

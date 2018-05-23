@@ -98,11 +98,11 @@ public abstract class Interaction_Put : MonoBehaviour
         E_PlayerState3D currentState = PlayerManager.Instance.MainController.CurrentState3D;
 
         // 공중에 있는 상태일 경우 놓을 수 없다고 설정
-        if (currentState.Equals(E_PlayerState3D.PickJumpUp) || currentState.Equals(E_PlayerState3D.PickFalling) || currentState.Equals(E_PlayerState3D.PickLanding))
-        {
-            m_isCanPut = false;
-            return;
-        }
+        //if (currentState.Equals(E_PlayerState3D.PickJumpUp) || currentState.Equals(E_PlayerState3D.PickFalling) || currentState.Equals(E_PlayerState3D.PickLanding))
+        //{
+        //    m_isCanPut = false;
+        //    return;
+        //}
 
         Vector3 playerPositionXZ = PlayerManager.Instance.Player3D_Object.transform.position;
         playerPositionXZ.y = m_putPosition.y;

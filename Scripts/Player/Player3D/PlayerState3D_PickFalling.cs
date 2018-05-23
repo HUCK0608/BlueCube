@@ -27,7 +27,7 @@ public sealed class PlayerState3D_PickFalling : PlayerState3D
         // 플레이어가 땅에 닿으면 PickIdle 상태로 변경
         if (m_mainController.IsGrounded)
         {
-            m_mainController.ChangeState3D(E_PlayerState3D.PickLanding);
+            //m_mainController.ChangeState3D(E_PlayerState3D.PickLanding);
         }
     }
 

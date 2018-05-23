@@ -10,9 +10,10 @@ public class TerrainMaker : MonoBehaviour
 
     // 눈 지형 모음 및 필요변수
     private static List<Mesh> m_snowGrass;
-    private static string m_snowGrassPath = "Model/Terrains/Snow/Terrain_SnowGrass-";
-    private static int m_snowGrassCount = 26;
+    private static string m_snowGrassPath = "Model/Terrains/Snow/Tile/Terrain_Snow_Tile-";
+    private static int m_snowGrassCount = 45;
 
+    [Header("Mesh Number (0 ~ 44)")]
     // 선택한 눈 지형 번호
     [SerializeField]
     private int m_selectSnowGrassNumber;
@@ -28,8 +29,8 @@ public class TerrainMaker : MonoBehaviour
         if (m_worldObject_Material == null)
             m_worldObject_Material = Resources.Load("Materials/WorldObject/WorldObject_Material") as Material;
 
-            // 메테리얼 설정
-            GetComponentInChildren<MeshRenderer>().material = m_worldObject_Material;
+        // 메테리얼 설정
+        GetComponentInChildren<MeshRenderer>().material = m_worldObject_Material;
     }
 
     private void InitSnowGrass()

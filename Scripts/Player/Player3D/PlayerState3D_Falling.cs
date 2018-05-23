@@ -4,6 +4,8 @@ using UnityEngine;
 
 public sealed class PlayerState3D_Falling : PlayerState3D
 {
+    private Vector3 m_moveDirection;
+
     public override void InitState()
     {
         base.InitState();
@@ -12,10 +14,10 @@ public sealed class PlayerState3D_Falling : PlayerState3D
     private void Update()
     {
         // 이동방향 가져오기
-        Vector3 moveDirection = m_subController.GetMoveDirection();
+        m_moveDirection = m_subController.GetMoveDirection();
 
         // 이동 및 회전
-        m_subController.JumpMoveAndRotate(moveDirection);
+        m_subController.JumpMoveAndRotate(m_moveDirection);
 
         ChangeStates();
     }
@@ -23,10 +25,19 @@ public sealed class PlayerState3D_Falling : PlayerState3D
     // 상태 변경 모음
     private void ChangeStates()
     {
-        // 땅에 착지할경우 Landing 상태로 변경
+        // 땅에 착지했을 때 상태 변경
         if(m_mainController.IsGrounded)
         {
-            m_mainController.ChangeState3D(E_PlayerState3D.Landing);
+            // 이동중이 아니라면 Idle 상태로 변경
+            if(m_moveDirection.Equals(Vector3.zero))
+            {
+                m_mainController.ChangeState3D(E_PlayerState3D.Idle);
+            }
+            // 이동중이라면 Move 상태로 변경
+            else
+            {
+                m_mainController.ChangeState3D(E_PlayerState3D.Move);
+            }
         }
     }
 

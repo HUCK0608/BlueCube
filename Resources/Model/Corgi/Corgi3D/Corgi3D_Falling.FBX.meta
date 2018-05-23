@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 731b93705f66b4c4bac31854bfa45c16
-timeCreated: 1523865256
+guid: e2dfea3c521e6fc4fb2cc8dc3dfb19bf
+timeCreated: 1527072108
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -38,11 +38,10 @@ ModelImporter:
     100060: eye_bone_L1
     100062: eye_bone_L2
     100064: eye_bone_R1
-    100066: eye_bone_R2
-    100068: scarf_bone1
-    100070: scarf_bone2
-    100072: scarf_bone3
-    100074: scarf_bone4
+    100066: scarf_bone1
+    100068: scarf_bone2
+    100070: scarf_bone3
+    100072: scarf_bone4
     400000: Bip001
     400002: Bip001 ear_L
     400004: Bip001 ear_L02
@@ -76,11 +75,10 @@ ModelImporter:
     400060: eye_bone_L1
     400062: eye_bone_L2
     400064: eye_bone_R1
-    400066: eye_bone_R2
-    400068: scarf_bone1
-    400070: scarf_bone2
-    400072: scarf_bone3
-    400074: scarf_bone4
+    400066: scarf_bone1
+    400068: scarf_bone2
+    400070: scarf_bone3
+    400072: scarf_bone4
     7400000: Corgi3D_Falling
     9500000: //RootNode
   externalObjects: {}

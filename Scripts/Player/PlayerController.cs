@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-public enum E_PlayerState3D { Idle, Move, JumpUp, Falling, Landing, LadderInit, LadderIdle, LadderMove, PickInit, PickIdle, PickMove, PickJumpUp, PickFalling, PutInit, PutDefault, PutThrow, PushInit, PushIdle, PushMove, PickLanding, Hold }
+//public enum E_PlayerState3D { Idle, Move, JumpUp, Falling, ViewChange, LadderInit, LadderIdle, LadderMove, PickInit, PickIdle, PickMove, PickJumpUp, PickFalling, PutInit, PutDefault, PutThrow, PushInit, PushIdle, Pushing, PickLanding, Hold }
+public enum E_PlayerState3D { Idle, Move, JumpUp, Falling, PickInit, PickIdle, PickMove, PickJumpUp, PickFalling, PutInit, PutDefault, PutThrow, PushInit, PushIdle, Pushing, LadderInit, LadderIdle, LadderMove, ChangeView, Hold }
 public enum E_PlayerState2D { Idle, Move, JumpUp, Falling, Landing }
 
 public sealed class PlayerController : MonoBehaviour

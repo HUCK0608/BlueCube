@@ -109,7 +109,7 @@ public class Interaction_Push : MonoBehaviour
                 E_PlayerState3D currentPlayerState = PlayerManager.Instance.MainController.CurrentState3D;
 
                 // 플레이어의 상태가 PushMove 상태일 경우 반복문 종료 후 PushMoveLogic 실행
-                if (currentPlayerState.Equals(E_PlayerState3D.PushMove))
+                if (currentPlayerState.Equals(E_PlayerState3D.Pushing))
                 {
                     StartCoroutine(PushMoveLogic(pushPosition));
                     break;

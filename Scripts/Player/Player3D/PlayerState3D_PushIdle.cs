@@ -25,7 +25,7 @@ public sealed class PlayerState3D_PushIdle : PlayerState3D
         // 수행하는 키를 누르고 해당 위치에 밀 수 있을 경우 PushMove 상태로 변경
         else if (Input.GetKeyDown(m_playerManager.Stat.AcceptKey) && m_playerManager.Hand.CurrentPushItem.IsCanPush)
         {
-            m_mainController.ChangeState3D(E_PlayerState3D.PushMove);
+            m_mainController.ChangeState3D(E_PlayerState3D.Pushing);
         }
 
     }   

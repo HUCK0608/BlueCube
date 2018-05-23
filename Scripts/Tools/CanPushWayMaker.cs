@@ -10,7 +10,7 @@ public sealed class CanPushWayMaker : MonoBehaviour
 
     // 눈 밀기가능 지형 모음 및 필요변수
     private static List<Mesh> m_snowCanPushWay;
-    private static string m_snowCanPushWayPath = "Model/Terrains/Snow/Terrain_Snow_CanPushWay-";
+    private static string m_snowCanPushWayPath = "Model/Terrains/Snow/CanPushWay/Terrain_Snow_CanPushWay-";
     private static int m_snowCanPushWayCount = 4;
 
     // 선택한 눈 밀기가능 지형

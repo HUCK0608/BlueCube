@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 7cc33f9016ebc5b4bb881281c27649a9
-timeCreated: 1523865257
+guid: 765cf5a364afad04b8c30ba62b11f3c9
+timeCreated: 1527072107
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -8,142 +8,79 @@ ModelImporter:
     100000: Bip001
     100002: Bip001 ear_L
     100004: Bip001 ear_L02
-    100006: Bip001 ear_LNub
-    100008: Bip001 ear_R
-    100010: Bip001 ear_R02
-    100012: Bip001 ear_RNub
-    100014: Bip001 Footsteps
-    100016: Bip001 Head
-    100018: Bip001 HeadNub
-    100020: Bip001 L Calf
-    100022: Bip001 L Clavicle
-    100024: Bip001 L Foot
-    100026: Bip001 L Forearm
-    100028: Bip001 L Hand
-    100030: Bip001 L Thigh
-    100032: Bip001 L Toe0
-    100034: Bip001 L Toe0Nub
-    100036: Bip001 L UpperArm
-    100038: Bip001 Neck
-    100040: Bip001 nose
-    100042: Bip001 noseNub
-    100044: Bip001 Pelvis
-    100046: Bip001 R Calf
-    100048: Bip001 R Clavicle
-    100050: Bip001 R Foot
-    100052: Bip001 R Forearm
-    100054: Bip001 R Hand
-    100056: Bip001 R Thigh
-    100058: Bip001 R Toe0
-    100060: Bip001 R Toe0Nub
-    100062: Bip001 R UpperArm
-    100064: Bip001 Spine
-    100066: Bip001 Spine1
-    100068: Bip001 tail
-    100070: Bip001 tailNub
-    100072: Bone001
-    100074: charactor
-    100076: //RootNode
-    100078: cube
-    100080: eye_bone_L1
-    100082: eye_bone_L2
-    100084: eye_bone_R1
-    100086: eye_bone_R2
-    100088: Particle View 001
-    100090: Particle View 001 1
-    100092: PhysCamera001
-    100094: PhysCamera001.Target
-    100096: PhysCamera002
-    100098: PhysCamera002.Target
-    100100: scarf_bone1
-    100102: scarf_bone2
-    100104: scarf_bone3
-    100106: scarf_bone4
-    100108: snap1
-    100110: snap2
-    100112: traj
-    100114: wand
+    100006: Bip001 ear_R
+    100008: Bip001 ear_R02
+    100010: Bip001 Head
+    100012: Bip001 L Calf
+    100014: Bip001 L Clavicle
+    100016: Bip001 L Foot
+    100018: Bip001 L Forearm
+    100020: Bip001 L Hand
+    100022: Bip001 L Thigh
+    100024: Bip001 L Toe0
+    100026: Bip001 L UpperArm
+    100028: Bip001 Neck
+    100030: Bip001 nose
+    100032: Bip001 Pelvis
+    100034: Bip001 R Calf
+    100036: Bip001 R Clavicle
+    100038: Bip001 R Foot
+    100040: Bip001 R Forearm
+    100042: Bip001 R Hand
+    100044: Bip001 R Thigh
+    100046: Bip001 R Toe0
+    100048: Bip001 R UpperArm
+    100050: Bip001 Spine
+    100052: Bip001 Spine1
+    100054: Bip001 tail
+    100056: Bone001
+    100058: //RootNode
+    100060: eye_bone_L1
+    100062: eye_bone_L2
+    100064: eye_bone_R1
+    100066: scarf_bone1
+    100068: scarf_bone2
+    100070: scarf_bone3
+    100072: scarf_bone4
     400000: Bip001
     400002: Bip001 ear_L
     400004: Bip001 ear_L02
-    400006: Bip001 ear_LNub
-    400008: Bip001 ear_R
-    400010: Bip001 ear_R02
-    400012: Bip001 ear_RNub
-    400014: Bip001 Footsteps
-    400016: Bip001 Head
-    400018: Bip001 HeadNub
-    400020: Bip001 L Calf
-    400022: Bip001 L Clavicle
-    400024: Bip001 L Foot
-    400026: Bip001 L Forearm
-    400028: Bip001 L Hand
-    400030: Bip001 L Thigh
-    400032: Bip001 L Toe0
-    400034: Bip001 L Toe0Nub
-    400036: Bip001 L UpperArm
-    400038: Bip001 Neck
-    400040: Bip001 nose
-    400042: Bip001 noseNub
-    400044: Bip001 Pelvis
-    400046: Bip001 R Calf
-    400048: Bip001 R Clavicle
-    400050: Bip001 R Foot
-    400052: Bip001 R Forearm
-    400054: Bip001 R Hand
-    400056: Bip001 R Thigh
-    400058: Bip001 R Toe0
-    400060: Bip001 R Toe0Nub
-    400062: Bip001 R UpperArm
-    400064: Bip001 Spine
-    400066: Bip001 Spine1
-    400068: Bip001 tail
-    400070: Bip001 tailNub
-    400072: Bone001
-    400074: charactor
-    400076: //RootNode
-    400078: cube
-    400080: eye_bone_L1
-    400082: eye_bone_L2
-    400084: eye_bone_R1
-    400086: eye_bone_R2
-    400088: Particle View 001
-    400090: Particle View 001 1
-    400092: PhysCamera001
-    400094: PhysCamera001.Target
-    400096: PhysCamera002
-    400098: PhysCamera002.Target
-    400100: scarf_bone1
-    400102: scarf_bone2
-    400104: scarf_bone3
-    400106: scarf_bone4
-    400108: snap1
-    400110: snap2
-    400112: traj
-    400114: wand
-    2100000: 'Material #69'
-    2100002: 'Material #44'
-    2100004: No Name
-    2100006: _Item_Box_Push_Modelpalette
-    2300000: cube
-    2300002: snap1
-    2300004: snap2
-    2300006: traj
-    2300008: wand
-    3300000: cube
-    3300002: snap1
-    3300004: snap2
-    3300006: traj
-    3300008: wand
-    4300000: charactor
-    4300002: wand
-    4300004: traj
-    4300006: snap1
-    4300008: snap2
-    4300010: cube
+    400006: Bip001 ear_R
+    400008: Bip001 ear_R02
+    400010: Bip001 Head
+    400012: Bip001 L Calf
+    400014: Bip001 L Clavicle
+    400016: Bip001 L Foot
+    400018: Bip001 L Forearm
+    400020: Bip001 L Hand
+    400022: Bip001 L Thigh
+    400024: Bip001 L Toe0
+    400026: Bip001 L UpperArm
+    400028: Bip001 Neck
+    400030: Bip001 nose
+    400032: Bip001 Pelvis
+    400034: Bip001 R Calf
+    400036: Bip001 R Clavicle
+    400038: Bip001 R Foot
+    400040: Bip001 R Forearm
+    400042: Bip001 R Hand
+    400044: Bip001 R Thigh
+    400046: Bip001 R Toe0
+    400048: Bip001 R UpperArm
+    400050: Bip001 Spine
+    400052: Bip001 Spine1
+    400054: Bip001 tail
+    400056: Bone001
+    400058: //RootNode
+    400060: eye_bone_L1
+    400062: eye_bone_L2
+    400064: eye_bone_R1
+    400066: scarf_bone1
+    400068: scarf_bone2
+    400070: scarf_bone3
+    400072: scarf_bone4
     7400000: Corgi3D_JumpUp
     9500000: //RootNode
-    13700000: charactor
   externalObjects: {}
   materials:
     importMaterials: 1
