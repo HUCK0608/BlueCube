@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,12 @@ public sealed class PlayerState3D_LadderInit : PlayerState3D
 
         // LadderIdle 상태로 변경
         m_mainController.ChangeState3D(E_PlayerState3D.LadderIdle);
+    }
+
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
+    {
+        throw new NotImplementedException();
     }
 
     public override void EndState()

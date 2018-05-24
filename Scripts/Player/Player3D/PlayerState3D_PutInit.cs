@@ -28,7 +28,8 @@ public sealed class PlayerState3D_PutInit : PlayerState3D
         ChangeStates();
     }
 
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         // 아이템 방향으로의 회전이 어느정도 완료되었다면 던지기 방식에 따라 상태 변경
         if(Vector3.Angle(m_subController.Forward, directonToPutPosition) < 5f)

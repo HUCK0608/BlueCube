@@ -14,8 +14,8 @@ public sealed class PlayerState3D_PushIdle : PlayerState3D
         ChangeStates();
     }
 
-    // 상태 변경 모음
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         // 취소 키 또는 상호작용 키를 눌렀을 경우 Idle 상태로 변경
         if (Input.GetKeyDown(m_playerManager.Stat.CancelKey) || Input.GetKeyDown(m_playerManager.Stat.InteractionKey))

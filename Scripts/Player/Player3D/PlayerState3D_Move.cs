@@ -26,19 +26,18 @@ public sealed class PlayerState3D_Move : PlayerState3D
         ChangeStates();
     }
 
-    // 상태 변경 모음
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         // 밑에 아무것도 없다면 Falling 상태로 변경
         if (!m_mainController.IsGrounded)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.Falling);
         }
-        // 시점변환 키를 눌렀을 때 시점변환이 가능하면 Idle 상태로 변경
+        // 시점변환 키를 눌렀을 때 ChangeViewInit 상태로 변경
         else if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
         {
-            if (m_playerManager.Skill.ChangeView())
-                m_mainController.ChangeState3D(E_PlayerState3D.ChangeView);
+            m_mainController.ChangeState3D(E_PlayerState3D.ChangeViewInit);
         }
         // 상호작용 키를 눌렀을 때
         else if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey))
@@ -67,7 +66,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
                 {
                     m_playerManager.Hand.CurrentPushItem = hit.transform.GetComponentInParent<Interaction_Push>();
 
-                    m_mainController.ChangeState3D(E_PlayerState3D.PushInit);
+                    m_mainController.ChangeState3D(E_PlayerState3D.PushChase);
 
                     return;
                 }

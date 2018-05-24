@@ -37,7 +37,7 @@ public sealed class PlayerState2D_Move : PlayerState2D
         // 시점변환 키를 눌렀을 때 시점변환이 가능하면 Idle 상태로 변경
         else if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey) || Input.GetKeyDown(m_playerManager.Stat.CancelKey))
         {
-            if (m_playerManager.Skill.ChangeView())
+            if (!m_playerManager.IsViewChange && !m_playerManager.IsViewChangeReady)
                 m_mainController.ChangeState2D(E_PlayerState2D.Idle);
         }
         // 점프키를 눌렀을 때 땅에 있으면 JumpUp 상태로 변경

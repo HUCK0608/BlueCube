@@ -15,9 +15,6 @@ public sealed class PlayerState3D_PickInit : PlayerState3D
 
         // 모든 속도를 멈춤
         m_subController.MoveStopAll();
-
-        // 오브젝트 들기
-        m_playerManager.Hand.CurrentPickPutObject.PickObject();
     }
 
     private void Update()
@@ -26,8 +23,8 @@ public sealed class PlayerState3D_PickInit : PlayerState3D
         ChangeStates();
     }
 
-    // 상태 변경 모음
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         // 들기 애니메이션이 끝나고 오브젝트 들기가 완료됬을 경우 PickIdle 상태로 변경
         if (m_isEndPickInitMotion && m_playerManager.Hand.CurrentPickPutObject.IsPick)
@@ -39,6 +36,13 @@ public sealed class PlayerState3D_PickInit : PlayerState3D
         base.EndState();
     }
 
+    /// <summary>오브젝트 들기</summary>
+    public void PickObject()
+    {
+        m_playerManager.Hand.CurrentPickPutObject.PickObject();
+    }
+
+    /// <summary>모션이 끝났다고 설정 (애니메이션 이벤트에서 호출)</summary>
     public void CompletePickInitMotion()
     {
         m_isEndPickInitMotion = true;

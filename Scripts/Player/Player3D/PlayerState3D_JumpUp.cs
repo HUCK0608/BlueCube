@@ -26,8 +26,8 @@ public sealed class PlayerState3D_JumpUp : PlayerState3D
         ChangeStates();
     }
 
-    // 상태 변경 모음
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         // 이동방향에 사다리가 있으면 LadderInit 상태로 변경
         if (m_subController.CheckLadder.IsOnLadder(m_moveDirection))

@@ -22,8 +22,8 @@ public sealed class PlayerState3D_Falling : PlayerState3D
         ChangeStates();
     }
 
-    // 상태 변경 모음
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         // 땅에 착지했을 때 상태 변경
         if(m_mainController.IsGrounded)

@@ -20,8 +20,8 @@ public sealed class PlayerState3D_Idle : PlayerState3D
         ChangeStates();
     }
 
-    // 상태 변경 모음
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         // 키 입력에 따른 이동 방향 벡터를 가져옴
         Vector3 moveDirection = m_subController.GetMoveDirection();
@@ -31,10 +31,10 @@ public sealed class PlayerState3D_Idle : PlayerState3D
         {
             m_mainController.ChangeState3D(E_PlayerState3D.Falling);
         }
-        // 시점변환 키를 눌렀을 때 ChangeView 상태로 변경
+        // 시점변환 키를 눌렀을 때 ChangeViewInit 상태로 변경
         else if(Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
         {
-            m_playerManager.Skill.ChangeView();
+            m_mainController.ChangeState3D(E_PlayerState3D.ChangeViewInit);
         }
         // 상호작용 키를 눌렀을 때
         else if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey))
@@ -63,7 +63,7 @@ public sealed class PlayerState3D_Idle : PlayerState3D
                 {
                     m_playerManager.Hand.CurrentPushItem = hit.transform.GetComponentInParent<Interaction_Push>();
 
-                    m_mainController.ChangeState3D(E_PlayerState3D.PushInit);
+                    m_mainController.ChangeState3D(E_PlayerState3D.PushChase);
 
                     return;
                 }

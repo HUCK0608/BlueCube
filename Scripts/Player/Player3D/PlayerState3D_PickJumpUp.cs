@@ -24,8 +24,8 @@ public sealed class PlayerState3D_PickJumpUp : PlayerState3D
         ChangeStates();
     }
 
-    // 상태 변경 모음
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         // 캐릭터가 최대높이까지 뛰었을 경우 PickJumpDown 상태로 변경
         if(m_subController.Rigidbody.velocity.y <= 0f)

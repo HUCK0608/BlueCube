@@ -41,8 +41,8 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
                 m_subController.LadderMove(Vector3.down);
     }
 
-    // 상태 변경 모음
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         // 사다리의 제일 아래이거나 맨 위일경우 Move 상태로 변경
         if ((m_subController.CheckLadder.IsLadderDown() && m_angle > 135f) || (!m_subController.CheckLadder.IsOnLadder(m_subController.Forward) && m_angle <= 45f))

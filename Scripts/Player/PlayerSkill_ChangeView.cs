@@ -51,13 +51,9 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_changeViewRect.SetActive(false);
     }
 
-    /// <summary>시점변환이 진행되면 true를 반환</summary>
-    public bool ChangeView()
+    /// <summary>시점변환 실행</summary>
+    public void ChangeView()
     {
-        // 이미 시점변환 중이거나 시점변환 준비중이면 리턴
-        if (m_playerManager.IsViewChange || m_playerManager.IsViewChangeReady)
-            return false;
-
         // 현재 시점이 3D일 때 2D로 변경
         if (m_currentView.Equals(E_ViewType.View3D))
         {
@@ -68,8 +64,6 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         {
             StartCoroutine(ChangeView3D());
         }
-
-        return true;
     }
 
     /// <summary>2D 상태로 시작</summary>

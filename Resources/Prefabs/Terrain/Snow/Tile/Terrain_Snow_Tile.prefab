@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114437461828142298}
   - component: {fileID: 114773479611646582}
   - component: {fileID: 114503370691805638}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Terrain_Snow_Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33605995844815018}
   - component: {fileID: 23686340121007184}
   - component: {fileID: 65607572482311138}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: ModelAndCollider3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4537378025909212}
   - component: {fileID: 61107999139241242}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Collider2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}

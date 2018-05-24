@@ -17,12 +17,11 @@ public sealed class PlayerState3D_PickIdle : PlayerState3D
         if (GameLibrary.Bool_IsPlayerStop)
             return;
 
-        // 상태 변경
         ChangeStates();
     }
 
-    // 상태 변경 모음
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         Vector3 moveDirection = m_subController.GetMoveDirection();
 

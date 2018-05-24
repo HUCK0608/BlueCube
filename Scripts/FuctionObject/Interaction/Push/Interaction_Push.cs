@@ -108,17 +108,9 @@ public class Interaction_Push : MonoBehaviour
             {
                 E_PlayerState3D currentPlayerState = PlayerManager.Instance.MainController.CurrentState3D;
 
-                // 플레이어의 상태가 PushMove 상태일 경우 반복문 종료 후 PushMoveLogic 실행
-                if (currentPlayerState.Equals(E_PlayerState3D.Pushing))
-                {
-                    StartCoroutine(PushMoveLogic(pushPosition));
+                // 플레이어 상태가 Pushing 또는 Idle 상태일 경우 반복문 종료
+                if (currentPlayerState.Equals(E_PlayerState3D.Pushing) || currentPlayerState.Equals(E_PlayerState3D.Idle))
                     break;
-                }
-                // 플레이어의 상태가 Idle 상태일 경우 반복문 종료
-                else if(currentPlayerState.Equals(E_PlayerState3D.Idle))
-                {
-                    break;
-                }
 
                 pushPosition = GetPushPosition();
                 m_isCanPush = CheckCanPush(pushPosition);
@@ -274,9 +266,17 @@ public class Interaction_Push : MonoBehaviour
             m_fadeObjectMaterial.color = Color.red;
     }
 
-    /// <summary>밀기 로직</summary>
-    private IEnumerator PushMoveLogic(Vector3 pushPosition)
+    /// <summary>오브젝트 밀기</summary>
+    public void PushObject()
     {
+        StartCoroutine(PushObjectLogic());
+    }
+
+    /// <summary>밀기 로직</summary>
+    private IEnumerator PushObjectLogic()
+    {
+        Vector3 pushPosition = m_fadeObject.transform.position;
+
         m_isMove = true;
 
         // 위쪽에 있는 다른 아이템을 같이 이동시키기 위해 자식으로 포함

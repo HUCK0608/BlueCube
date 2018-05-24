@@ -4,9 +4,14 @@ using UnityEngine;
 
 public sealed class PlayerState3D_Pushing : PlayerState3D
 {
+    /// <summary>Pushing 모션이 끝났을 경우 true를 반환</summary>
+    bool m_isEndPushingMotion;
+
     public override void InitState()
     {
         base.InitState();
+
+        m_isEndPushingMotion = false;
     }
 
     private void Update()
@@ -14,14 +19,26 @@ public sealed class PlayerState3D_Pushing : PlayerState3D
         ChangeStates();
     }
 
-    // 상태 변경 모음
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
-        // 이동을 완료했을 경우 Idle 상태로 변경
-        if (!m_playerManager.Hand.CurrentPushItem.IsMove)
+        // 이동 및 모션이 끝났을 경우 Idle 상태로 변경
+        if (m_isEndPushingMotion && !m_playerManager.Hand.CurrentPushItem.IsMove)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.Idle);
         }
+    }
+
+    /// <summary>오브젝트를 민다 (애니메이션 이벤트에서 호출)</summary>
+    public void PushObject()
+    {
+        m_playerManager.Hand.CurrentPushItem.PushObject();
+    }
+
+    /// <summary>모션이 끝났다고 설정 (애니메이션 이벤트에서 호출)</summary>
+    public void CompletePushingMotion()
+    {
+        m_isEndPushingMotion = true;
     }
 
     public override void EndState()

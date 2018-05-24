@@ -52,6 +52,9 @@ public static class GameLibrary
     private static int m_layerMask_CorgiIntro = LayerMask.NameToLayer("Corgi Intro");
     public static int LayerMask_CorgiIntro { get { return m_layerMask_CorgiIntro; } }
 
+    private static int m_layerMask_Tile = LayerMask.NameToLayer("Tile");
+    public static int LayerMask_Tile { get { return m_layerMask_Tile.Shift(); } }
+
     // string 부분
 
     private static string m_string_Player = "Player";

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 7d09e3ccf41043346851cc22310bb1f7
-timeCreated: 1524713876
+guid: b6a41b350322d624ca81b64294a537ca
+timeCreated: 1527121577
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -85,12 +85,12 @@ ModelImporter:
     400074: scarf_bone3
     400076: scarf_bone4
     400078: wand
-    2100000: 'Material #44'
-    2100002: 07 - Default
+    2100000: 'Material #74'
+    2100002: 03 - Default
     2300000: wand
     3300000: wand
-    4300000: wand
-    4300002: charactor
+    4300000: charactor
+    4300002: wand
     9500000: //RootNode
     13700000: charactor
   externalObjects: {}

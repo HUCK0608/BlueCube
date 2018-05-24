@@ -23,7 +23,8 @@ public sealed class PlayerState3D_Hold : PlayerState3D
         ChangeStates();
     }
 
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         // 최대로 홀딩될 수 있는 시간이 지나거나 이동입력이 있으면 Falling 상태로 변경
         if(m_addTime >= m_playerManager.Stat.MaxHoldTime || !m_subController.GetMoveDirection().Equals(Vector3.zero))

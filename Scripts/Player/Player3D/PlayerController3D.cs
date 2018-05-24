@@ -123,6 +123,19 @@ public sealed class PlayerController3D : MonoBehaviour
         LerpRotation(direction);
     }
 
+    /// <summary>position으로 이동 및 회전을 함</summary>
+    public void MoveAndRotateTowards(Vector3 position)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, position, m_playerManager.Stat.MoveSpeed * Time.deltaTime);
+
+        Vector3 direction = position - transform.position;
+        direction.y = 0f;
+        direction = direction.normalized;
+
+        if(!direction.Equals(Vector3.zero))
+            LerpRotation(direction.normalized);
+    }
+
     /// <summary>Jump상태에서 direction방향으로 이동 및 회전을 함</summary>
     public void JumpMoveAndRotate(Vector3 direction)
     {
@@ -158,7 +171,6 @@ public sealed class PlayerController3D : MonoBehaviour
 
     /// <summary>플레이어가 lerp로 direction 방향을 바라보게 함</summary>
     public void LerpRotation(Vector3 direction)
-
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), m_playerManager.Stat.RotationSpeed * Time.deltaTime);
     }

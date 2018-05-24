@@ -18,7 +18,8 @@ public sealed class PlayerState3D_LadderIdle : PlayerState3D
         ChangeStates();
     }
 
-    private void ChangeStates()
+    /// <summary>상태 변경 모음</summary>
+    protected override void ChangeStates()
     {
         // 이동 입력 가져오기
         Vector3 moveDirection = m_subController.GetMoveDirection();

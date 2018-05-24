@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class TerrainMaker : MonoBehaviour
+public class TileMaker : MonoBehaviour
 {
     // 월드 오브젝트 메테리얼
     private static Material m_worldObject_Material;
@@ -24,7 +24,7 @@ public class TerrainMaker : MonoBehaviour
         InitSnowGrass();
     }
 
-    private void InitMaterial()
+    public void InitMaterial()
     {
         if (m_worldObject_Material == null)
             m_worldObject_Material = Resources.Load("Materials/WorldObject/WorldObject_Material") as Material;
@@ -33,7 +33,7 @@ public class TerrainMaker : MonoBehaviour
         GetComponentInChildren<MeshRenderer>().material = m_worldObject_Material;
     }
 
-    private void InitSnowGrass()
+    public void InitSnowGrass()
     {
         if (m_snowGrass == null)
         {
