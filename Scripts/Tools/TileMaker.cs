@@ -11,6 +11,7 @@ public class TileMaker : MonoBehaviour
     public static int SnowGrassCount { get { return m_snowGrassCount; } }
 
     // 선택한 눈 지형 번호
+    [HideInInspector]
     [SerializeField]
     private int m_selectSnowGrassNumber;
 
