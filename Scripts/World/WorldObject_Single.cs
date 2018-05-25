@@ -10,6 +10,9 @@ public sealed class WorldObject_Single : WorldObject
     private Collider2D m_collider2D;
     private int m_defaultLightMapIndex;
 
+    // 시작 시 랜더러가 꺼져있는지 여부
+    private bool m_isOnStartRendererEnable;
+
     protected override void Awake()
     {
         base.Awake();
@@ -18,6 +21,8 @@ public sealed class WorldObject_Single : WorldObject
         m_defaultMaterial = m_renderer.material;
         m_collider2D = GetComponentInChildren<Collider2D>();
         m_defaultLightMapIndex = m_renderer.lightmapIndex;
+
+        m_isOnStartRendererEnable = m_renderer.enabled;
 
         // 스페큘러를 사용할 경우 스페큘러를 켜줌
         if (m_isUseShiningSpecular)
@@ -36,10 +41,15 @@ public sealed class WorldObject_Single : WorldObject
             SetMaterial(E_WorldObject_ShaderType.Default3D);
 
             m_renderer.lightmapIndex = m_defaultLightMapIndex;
+
+            if (!m_isOnStartRendererEnable)
+                m_renderer.enabled = false;
         }
         else
         {
-            SetRendererEnable(true);
+            // 시작 랜더가 켜져있었을 경우에만 랜더를 킨다.
+            if(m_isOnStartRendererEnable)
+                SetRendererEnable(true);
         }
     }
 
@@ -57,6 +67,9 @@ public sealed class WorldObject_Single : WorldObject
                 SetMaterial(E_WorldObject_ShaderType.Default3D);
 
             m_renderer.lightmapIndex = -1;
+
+            if (!m_isOnStartRendererEnable)
+                m_renderer.enabled = true;
         }
         else
         {
@@ -67,7 +80,9 @@ public sealed class WorldObject_Single : WorldObject
     /// <summary>싱글 오브젝트의 렌더러의 활성화여부를 설정</summary>
     public override void SetRendererEnable(bool value)
     {
-        m_renderer.enabled = value;
+        if(!m_renderer.enabled.Equals(value))
+            m_renderer.enabled = value;
+
         m_isOnRenderer = value;
     }
 
