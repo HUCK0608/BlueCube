@@ -67,7 +67,7 @@ public abstract class Interaction_Put : MonoBehaviour
             if (playerMainController.CurrentState3D.Equals(E_PlayerState3D.PutInit))
                 break;
 
-            if (!UIManager.Instance.IsOnUI)
+            if (!UIManager.Instance.IsOnTabUI)
             {
                 // 놓을 위치를 가져옴
                 Vector3 putPosition = GetPutPosition();

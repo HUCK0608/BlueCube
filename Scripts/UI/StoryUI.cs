@@ -35,6 +35,9 @@ public sealed class StoryUI : MonoBehaviour
     /// <summary>스토리 리스트 스크롤 바</summary>
     [SerializeField]
     private Scrollbar m_storyListScrollBar;
+    /// <summary>스토리 알림 스크립트</summary>
+    [SerializeField]
+    private InformStoryUI m_informStoryUI;
 
     /// <summary>타이틀 그룹모음</summary>
     private List<TitleGroup> m_titleGroups;
@@ -86,27 +89,34 @@ public sealed class StoryUI : MonoBehaviour
             DrawContentsText();
     }
 
-    /// <summary>활성화 설정</summary>
-    public void SetEnabled(bool value)
+    private void Update()
     {
-        gameObject.SetActive(value);
+        SetStoryListScroll();
+        ReturnToTitle();
     }
 
     /// <summary>스토리 리스트 스크롤</summary>
-    public void SetStoryListScroll()
+    private void SetStoryListScroll()
     {
-        if (!UIManager.Instance.IsOnUI)
-            return;
-
         if (Input.GetAxis(m_mouseWheelString) > 0)
             m_storyListScrollBar.value = Mathf.Clamp(m_storyListScrollBar.value + m_storyListScrollSensitivity * Time.deltaTime, 0, 1);
         else if (Input.GetAxis(m_mouseWheelString) < 0)
             m_storyListScrollBar.value = Mathf.Clamp(m_storyListScrollBar.value - m_storyListScrollSensitivity * Time.deltaTime, 0, 1);
     }
 
+    /// <summary>타이틀 화면으로 돌아감</summary>
+    private void ReturnToTitle()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            UIManager.Instance.ReturnToTitle();
+    }
+
     /// <summary>스토리 언락</summary>
     public void UnlcokStory(Item_Story story)
     {
+        // 스토리 알림
+        m_informStoryUI.InformStory(story.Contents);
+
         m_unLockStories.Add(story.StoryNumber, story);
         m_unLockStoryCount++;
 

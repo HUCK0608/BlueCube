@@ -89,7 +89,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 모든 키가 안눌렸을 경우 반복
         while(!m_isDoChange && !m_isNotChange)
         {
-            if (!UIManager.Instance.IsOnUI)
+            if (!UIManager.Instance.IsOnTabUI)
             {
                 // 수행 키를 누를 경우
                 if (Input.GetKeyDown(m_playerManager.Stat.AcceptKey))

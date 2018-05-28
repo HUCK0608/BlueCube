@@ -104,7 +104,7 @@ public class Interaction_Push : MonoBehaviour
 
         while(true)
         {
-            if (!UIManager.Instance.IsOnUI)
+            if (!UIManager.Instance.IsOnTabUI)
             {
                 E_PlayerState3D currentPlayerState = PlayerManager.Instance.MainController.CurrentState3D;
 

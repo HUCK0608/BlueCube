@@ -2,86 +2,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_OpenDir { Left, Right }
-
 public sealed class Door : MonoBehaviour
 {
-    // 액티브 스크립트
-    private Activate m_activate;
+    [Header("Don't Change")]
 
-    // 월드 오브젝트
-    private WorldObject m_worldObject;
-
-    // 열리는 위치
+    /// <summary>문</summary>
     [SerializeField]
-    private E_OpenDir m_openDir;
+    private Transform m_door;
 
-    // 문이 열리는 속도
+    /// <summary>문의 도착지</summary>
+    [SerializeField]
+    private Vector3 m_destination;
+
+    /// <summary>콜라이더 2D (Vertical에서만 사용)</summary>
+    [SerializeField]
+    private GameObject m_collider2D;
+
+    [Header("Can Change")]
+
+    /// <summary>문이 열리는 속도</summary>
     [SerializeField]
     private float m_moveSpeed;
 
-    // 문 열리기전 딜레이
-    [SerializeField]
-    private float m_delayTime;
-
-    // 이동할 위치
-    private Vector3 m_openPos;
-
-    // 모델의 x 크기
-    private float m_width;
+    /// <summary>월드 오브젝트</summary>
+    private WorldObject m_worldObject;
+    /// <summary>활성화 스크립트</summary>
+    private Activate m_activate;
 
     private void Awake()
     {
-        m_activate = GetComponentInParent<Activate>();
-
-        m_worldObject = GetComponentInParent<WorldObject>();
-
-        InitDoor();
+        m_worldObject = GetComponent<WorldObject>();
+        m_activate = GetComponent<Activate>();
 
         StartCoroutine(CheckActivate());
     }
 
-    // 문 초기화
-    private void InitDoor()
+    /// <summary>활성화 되었는지 체크</summary>
+    private IEnumerator CheckActivate()
     {
-        m_width = GetComponentInChildren<BoxCollider>().bounds.extents.x * 2f;
+        yield return new WaitUntil(() => m_activate.IsActivate);
 
-        if (m_openDir == E_OpenDir.Left)
-            m_openPos = new Vector3(transform.position.x - m_width, transform.position.y, transform.position.z);
-        else if (m_openDir == E_OpenDir.Right)
-            m_openPos = new Vector3(transform.position.x + m_width, transform.position.y, transform.position.z);
+        StartCoroutine(DoorOpenLogic());
     }
 
-    // 활성화 체크
-    private IEnumerator CheckActivate()
+    /// <summary>문이 열리는 로직</summary>
+    private IEnumerator DoorOpenLogic()
     {
         while(true)
         {
-            if (m_activate.IsActivate)
+            if(!GameLibrary.Bool_IsGameStop(m_worldObject))
+                m_door.localPosition = Vector3.MoveTowards(m_door.localPosition, m_destination, m_moveSpeed * Time.deltaTime);
+
+            if (m_door.localPosition.Equals(m_destination))
                 break;
 
             yield return null;
         }
 
-        StartCoroutine(Open());
-    }
+        if (m_collider2D != null)
+            m_collider2D.SetActive(false);
 
-    // 문 열기
-    private IEnumerator Open()
-    {
-        yield return new WaitForSeconds(m_delayTime);
-
-        while(true)
-        {
-            // 시점변환중이 아니고 탐지모드가 아니고 2D가 아닐경우 실행
-            if (!GameLibrary.Bool_IsGameStop(m_worldObject))
-            {
-                transform.position = Vector3.MoveTowards(transform.position, m_openPos, m_moveSpeed * Time.deltaTime);
-
-                if (transform.position == m_openPos)
-                    break;
-            }
-            yield return null;
-        }
+        m_door.gameObject.SetActive(false);
     }
 }

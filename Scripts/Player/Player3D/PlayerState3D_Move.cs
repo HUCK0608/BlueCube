@@ -29,8 +29,13 @@ public sealed class PlayerState3D_Move : PlayerState3D
     /// <summary>상태 변경 모음</summary>
     protected override void ChangeStates()
     {
+        // 체력이 다 닳았을 경우 Dead 상태로 변경
+        if (m_playerManager.Stat.Hp <= 0)
+        {
+            m_mainController.ChangeState3D(E_PlayerState3D.Dead);
+        }
         // 밑에 아무것도 없다면 Falling 상태로 변경
-        if (!m_mainController.IsGrounded)
+        else if (!m_mainController.IsGrounded)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.Falling);
         }

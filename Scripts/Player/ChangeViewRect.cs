@@ -89,7 +89,7 @@ public sealed class ChangeViewRect : MonoBehaviour
 
         while(true)
         {
-            if (!UIManager.Instance.IsOnUI)
+            if (!UIManager.Instance.IsOnTabUI)
             {
                 // 상자의 x, y 크기를 키움
                 transform.localScale += m_increaseSizeValueXY * Time.deltaTime;
@@ -114,7 +114,7 @@ public sealed class ChangeViewRect : MonoBehaviour
 
         while(true)
         {
-            if (!UIManager.Instance.IsOnUI)
+            if (!UIManager.Instance.IsOnTabUI)
             {
                 Vector3 hitPoint = CameraManager.Instance.GetMouseHitPointToPivot(player3DPosition);
 

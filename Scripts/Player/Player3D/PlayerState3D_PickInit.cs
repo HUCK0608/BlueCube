@@ -36,7 +36,7 @@ public sealed class PlayerState3D_PickInit : PlayerState3D
         base.EndState();
     }
 
-    /// <summary>오브젝트 들기</summary>
+    /// <summary>오브젝트 들기 (애니메이션 이벤트에서 호출)</summary>
     public void PickObject()
     {
         m_playerManager.Hand.CurrentPickPutObject.PickObject();

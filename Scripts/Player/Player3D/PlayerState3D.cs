@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PlayerState3D : PlayerState
+public class PlayerState3D : PlayerState
 {
     private Animator m_animator;
     private static string m_animatorParametersName = "CurrentState";
@@ -26,8 +26,8 @@ public abstract class PlayerState3D : PlayerState
         //Debug.Log("3D 상태 진입 : " + this.GetType());
     }
 
-    /// <summary>상태 변경 모음 (자식에서 반드시 구현)</summary>
-    protected abstract void ChangeStates();
+    /// <summary>상태 변경 모음</summary>
+    protected virtual void ChangeStates() { }
 
     /// <summary>상태 종료시 실행</summary>
     public override void EndState()

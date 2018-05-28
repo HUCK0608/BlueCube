@@ -8,7 +8,7 @@ public sealed class DefaultBoxMaker : MonoBehaviour
     private static Material m_worldObject_Material;
 
     private static List<Mesh> m_snowBox;
-    private static string m_snowBoxPath = "Model/BackGround/Snow/BackGround_Snow_Box-";
+    private static string m_snowBoxPath = "Model/BackGround/Snow/Box/BackGround_Snow_Box-";
     private static int m_snowBoxCount = 7;
 
     [Header("-1 랜덤, 0~6 모델")]

@@ -8,21 +8,19 @@ public sealed class UIManager : MonoBehaviour
     private static UIManager m_instance;
     public static UIManager Instance { get { return m_instance; } }
 
-    private string m_titleScenePath = "Title";
-
-    private bool m_isOnUI;
-    /// <summary>UI가 켜졌을 경우 true를 반환</summary>
-    public bool IsOnUI { get { return m_isOnUI; } }
-
     [Header("Can Change")]
-    /// <summary>UI 활성화 키</summary>
+    /// <summary>TabUI 활성화 키</summary>
     [SerializeField]
-    private KeyCode m_UIEnableKey;
+    private KeyCode m_TabUIEnableKey;
     [SerializeField]
     private KeyCode m_returnTitleKey;
 
     [Header("Don't Touch")]
-    public PlayerHpUI m_playerHpUI;
+    [SerializeField]
+    private GameObject m_tabUI;
+
+    [SerializeField]
+    private PlayerHpUI m_playerHpUI;
     /// <summary>플레이어 체력 UI 스크립트</summary>
     public PlayerHpUI PlayerHpUI { get { return m_playerHpUI; } }
 
@@ -30,6 +28,24 @@ public sealed class UIManager : MonoBehaviour
     private StoryUI m_storyUI;
     /// <summary>스토리 UI 스크립트</summary>
     public StoryUI StoryUI { get { return m_storyUI; } }
+
+    [SerializeField]
+    private DeadUI m_deadUI;
+    ///<summary>죽음 UI 스크립트</summary>
+    public DeadUI DeadUI { get { return m_deadUI; } }
+
+    [SerializeField]
+    private InformKeyUI m_informKeyUI;
+    /// <summary>키 알리기 UI 스크립트</summary>
+    public InformKeyUI InformKeyUI { get { return m_informKeyUI; } }
+
+    private string m_titleScenePath = "Title";
+
+    /// <summary>Tab UI가 켜졌을 경우 true를 반환</summary>
+    public bool IsOnTabUI { get { return m_tabUI.activeSelf; } }
+
+    /// <summary>Dead UI가 켜졌을 경우 true를 반환</summary>
+    public bool IsOnDeadUI { get { return m_deadUI.ActiveSelf; } }
 
     private void Awake()
     {
@@ -46,33 +62,25 @@ public sealed class UIManager : MonoBehaviour
     {
         m_playerHpUI.SetPlayerHpText(PlayerManager.Instance.Stat.Hp);
 
-        m_storyUI.SetEnabled(m_isOnUI);
+        m_tabUI.SetActive(false);
+        m_deadUI.SetActive(false);
     }
 
     private void Update()
     {
-        SetStoryUIEnable();
-        m_storyUI.SetStoryListScroll();
-        ReturnToTitle();
+        SetTabUIEnable();
     }
 
-    /// <summary>스토리UI 활성화 설정</summary>
-    private void SetStoryUIEnable()
+    /// <summary>TabUI 활성화 설정</summary>
+    private void SetTabUIEnable()
     {
-        if (Input.GetKeyDown(m_UIEnableKey))
-        {
-            m_isOnUI = !m_isOnUI;
-            m_storyUI.SetEnabled(m_isOnUI);
-        }
+        if (Input.GetKeyDown(m_TabUIEnableKey) && !m_deadUI.ActiveSelf)
+            m_tabUI.SetActive(!m_tabUI.activeSelf);
     }
 
-    /// <summary>타이틀 화면으로 돌아간다</summary>
-    private void ReturnToTitle()
+    /// <summary>타이틀 화면으로 돌아감</summary>
+    public void ReturnToTitle()
     {
-        if(m_isOnUI)
-        {
-            if(Input.GetKeyDown(m_returnTitleKey))
-                SceneManager.LoadScene(m_titleScenePath);
-        }
+        SceneManager.LoadScene(m_titleScenePath);
     }
 }
