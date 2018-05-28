@@ -54,6 +54,10 @@ public sealed class PlayerManager : MonoBehaviour
     [SerializeField]
     private Transform m_dustEffectPosition3D, m_dustEffectPosition2D;
 
+    private AudioPlayer m_audioPlayer;
+    /// <summary>오디오 플레이어</summary>
+    public AudioPlayer AudioPlayer { get { return m_audioPlayer; } }
+
     // 다른곳에서 플레이어 관련 속성을 편하게 가져가기 위해 만든 변수
     // 시점변환 관련
     /// <summary>현재 시점을 반환 (View2D, View3D)</summary>
@@ -82,6 +86,8 @@ public sealed class PlayerManager : MonoBehaviour
         m_player2D_Object = transform.Find("Player2D").gameObject;
 
         m_dustEffectParticle = m_dustEffect.GetComponentInChildren<ParticleSystem>();
+
+        m_audioPlayer = GetComponent<AudioPlayer>();
     }
 
     /// <summary>플레이어를 3D로 변경함</summary>

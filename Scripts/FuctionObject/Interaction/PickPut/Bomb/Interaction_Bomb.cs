@@ -45,7 +45,7 @@ public sealed class Interaction_Bomb : MonoBehaviour
         yield return StartCoroutine(BombTimer());
 
         // 현재 위치에 폭발 이펙트 생성
-        EffectManager.Instance.CreateEffect(Effect_Type.Boom, m_model.position);
+        EffectManager.Instance.CreateEffect(Effect_Type.Player_Boom, m_model.position);
 
         // 텍스쳐 원래상태로 변경
         m_worldObject.SetMaterial(E_WorldObject_ShaderType.Default3D);

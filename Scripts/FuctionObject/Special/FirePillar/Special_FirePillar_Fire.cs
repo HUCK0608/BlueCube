@@ -24,12 +24,15 @@ public class Special_FirePillar_Fire : MonoBehaviour
     [SerializeField]
     private GameObject m_fireObject;
 
+    /// <summary>빨간색 불</summary>
+    [SerializeField]
+    private GameObject m_redFire;
+    /// <summary>파란색 불</summary>
+    [SerializeField]
+    private GameObject m_blueFire;
+
     /// <summary>월드 오브젝트</summary>
     private WorldObject m_worldObject;
-    /// <summary>불 메쉬 렌더러</summary>
-    private MeshRenderer m_meshRenderer;
-    /// <summary>불 메테리얼</summary>
-    private Material m_material;
     /// <summary>콜라이더</summary>
     private Collider m_collider;
 
@@ -43,8 +46,6 @@ public class Special_FirePillar_Fire : MonoBehaviour
     private void Awake()
     {
         m_worldObject = GetComponent<WorldObject>();
-        m_meshRenderer = m_fireObject.GetComponent<MeshRenderer>();
-        m_material = m_meshRenderer.material;
         m_collider = m_fireObject.GetComponent<Collider>();
 
         m_collisionFires = new Dictionary<Transform, Special_FirePillar_Fire>();
@@ -55,13 +56,13 @@ public class Special_FirePillar_Fire : MonoBehaviour
     /// <summary>불을 초기화 함</summary>
     private void InitFire()
     {
-        // 각 타입에 맞춰 불을 초기화
-        if (m_startFireType.Equals(E_FirePilalr_ColorType.None))
-            m_meshRenderer.enabled = false;
-        else if (m_startFireType.Equals(E_FirePilalr_ColorType.Red))
-            m_material.color = Color.red;
+        m_redFire.SetActive(false);
+        m_blueFire.SetActive(false);
+
+        if (m_startFireType.Equals(E_FirePilalr_ColorType.Red))
+            m_redFire.SetActive(true);
         else if (m_startFireType.Equals(E_FirePilalr_ColorType.Blue))
-            m_material.color = Color.blue;
+            m_blueFire.SetActive(true);
 
         // 저장
         m_currentFireColorType = m_startFireType;
@@ -69,12 +70,10 @@ public class Special_FirePillar_Fire : MonoBehaviour
 
     private void Start()
     {
-
         StartCoroutine(SetCollider());
-        StartCoroutine(SetRendererEnable());
     }
 
-    /// <summary>시점에 따른 콜라이더 2D 설정</summary>
+    /// <summary>시점에 따른 콜라이더 설정</summary>
     private IEnumerator SetCollider()
     {
         if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
@@ -104,21 +103,6 @@ public class Special_FirePillar_Fire : MonoBehaviour
             }
 
             yield return null;
-        }
-    }
-
-    /// <summary>시점에 따른 랜더러 설정</summary>
-    private IEnumerator SetRendererEnable()
-    {
-        WaitUntil m_isView3DWaitUntil = new WaitUntil(() => PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D) && !m_meshRenderer.enabled && !CurrentFireColorType.Equals(E_FirePilalr_ColorType.None));
-        WaitUntil m_isView2DWaitUntil = new WaitUntil(() => PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D) && !m_worldObject.IsOnRenderer && m_meshRenderer.enabled);
-
-        while (true)
-        {
-            yield return m_isView2DWaitUntil;
-            m_meshRenderer.enabled = false;
-            yield return m_isView3DWaitUntil;
-            m_meshRenderer.enabled = true;
         }
     }
 
@@ -220,15 +204,17 @@ public class Special_FirePillar_Fire : MonoBehaviour
         if (fireColorType.Equals(m_currentFireColorType))
             return;
 
-        // 랜더러가 꺼져있다면 활성화
-        if (!m_meshRenderer.enabled)
-            m_meshRenderer.enabled = true;
-
         // 각 타입에 맞춰 불 색 결정
         if (fireColorType.Equals(E_FirePilalr_ColorType.Red))
-            m_material.color = Color.red;
+        {
+            m_redFire.SetActive(true);
+            m_blueFire.SetActive(false);
+        }
         else if (fireColorType.Equals(E_FirePilalr_ColorType.Blue))
-            m_material.color = Color.blue;
+        {
+            m_blueFire.SetActive(true);
+            m_redFire.SetActive(false);
+        }
 
         // 저장
         m_currentFireColorType = fireColorType;

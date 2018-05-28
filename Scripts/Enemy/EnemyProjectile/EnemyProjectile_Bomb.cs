@@ -130,7 +130,7 @@ public sealed class EnemyProjectile_Bomb : EnemyProjectile
 
         yield return new WaitForSeconds(m_bombTimer);
 
-        EffectManager.Instance.CreateEffect(Effect_Type.Boom, m_rigidbody.transform.position);
+        EffectManager.Instance.CreateEffect(Effect_Type.Enemy_Boom, m_rigidbody.transform.position);
 
         m_meshRenderer.material = m_startMaterial;
     }

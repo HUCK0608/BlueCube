@@ -34,11 +34,16 @@ public class Interaction_Push : MonoBehaviour
     /// <summary>오브젝트가 움직이는 중일 경우 true를 반환</summary>
     public bool IsMove { get { return m_isMove; } }
 
+    /// <summary>오디오 소스</summary>
+    private AudioSource m_audioSource;
+
     protected virtual void Awake()
     {
         m_fadeObjectMaterial = m_fadeObject.GetComponent<MeshRenderer>().material;
 
         m_hangPositions = new Vector3[4];
+
+        m_audioSource = GetComponent<AudioSource>();
     }
 
     /// <summary>플레이어 위치에서 제일 가까운 고정 위치를 반환</summary>
@@ -289,6 +294,9 @@ public class Interaction_Push : MonoBehaviour
         for (int i = 0; i < anotherObjectCount; i++)
             anotherObjects[i].transform.parent.parent = transform;
 
+        // 질질 끄는 오디오 재생
+        m_audioSource.Play();
+
         while (true)
         {
             // 이동
@@ -306,5 +314,8 @@ public class Interaction_Push : MonoBehaviour
             anotherObjects[i].transform.parent.parent = transform.parent;
 
         m_isMove = false;
+
+        // 질질 끄는 오디오 정지
+        m_audioSource.Stop();
     }
 }

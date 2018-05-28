@@ -196,4 +196,9 @@ public sealed class PlayerController3D : MonoBehaviour
         m_rigidbody.velocity = Vector3.zero;
     }
 
+    /// <summary>오디오 플레이</summary>
+    public void AudioPlay(string playName)
+    {
+        m_playerManager.AudioPlayer.Play(playName);
+    }
 }

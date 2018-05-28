@@ -19,7 +19,17 @@ public sealed class TitleGroup : MonoBehaviour
 
     private void Awake()
     {
+        AddPointerEnterEvent();
         AddPointerClickEvent();
+    }
+
+    private void AddPointerEnterEvent()
+    {
+        EventTrigger trigger = GetComponentInChildren<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerEnter;
+        entry.callback.AddListener((data) => UIManager.Instance.GetComponent<AudioPlayer>().Play("MouseEnter"));
+        trigger.triggers.Add(entry);
     }
 
     /// <summary>마우스 클릭 이벤트 추가</summary>
@@ -29,6 +39,7 @@ public sealed class TitleGroup : MonoBehaviour
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerClick;
         entry.callback.AddListener((data) => UIManager.Instance.StoryUI.SelectStory(this));
+        entry.callback.AddListener((data) => UIManager.Instance.GetComponent<AudioPlayer>().Play("MouseClick"));
         trigger.triggers.Add(entry);
     }
 

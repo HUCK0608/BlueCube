@@ -162,4 +162,9 @@ public sealed class PlayerController2D : MonoBehaviour
     {
         m_rigidbody.velocity = Vector2.zero;
     }
+
+    public void AudioPlay(string playName)
+    {
+        m_playerManager.AudioPlayer.Play(playName);
+    }
 }

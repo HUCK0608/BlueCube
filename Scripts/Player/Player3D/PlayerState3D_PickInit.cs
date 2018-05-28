@@ -4,6 +4,10 @@ using UnityEngine;
 
 public sealed class PlayerState3D_PickInit : PlayerState3D
 {
+    /// <summary>들기 이펙트</summary>
+    [SerializeField]
+    private GameObject m_pickEffect;
+
     // 들기 애니메이션이 끝났는지 체크하는 변수
     private bool m_isEndPickInitMotion;
 
@@ -15,6 +19,9 @@ public sealed class PlayerState3D_PickInit : PlayerState3D
 
         // 모든 속도를 멈춤
         m_subController.MoveStopAll();
+
+        // 들기 이펙트 활성화
+        m_pickEffect.SetActive(true);
     }
 
     private void Update()
@@ -34,6 +41,9 @@ public sealed class PlayerState3D_PickInit : PlayerState3D
     public override void EndState()
     {
         base.EndState();
+
+        // 들기 이펙트 비활성화
+        m_pickEffect.SetActive(false);
     }
 
     /// <summary>오브젝트 들기 (애니메이션 이벤트에서 호출)</summary>

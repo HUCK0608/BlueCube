@@ -5,12 +5,18 @@ using UnityEngine;
 
 public class PlayerState3D_ChangeViewInit : PlayerState3D
 {
+    [SerializeField]
+    private GameObject m_staffEffect;
+
     public override void InitState()
     {
         base.InitState();
 
         // 시점변환 실행
         m_playerManager.Skill.ChangeView();
+
+        // 지팡이 이펙트 활성화
+        m_staffEffect.SetActive(true);
     }
 
     private void Update()
@@ -31,5 +37,8 @@ public class PlayerState3D_ChangeViewInit : PlayerState3D
     public override void EndState()
     {
         base.EndState();
+
+        // 지팡이 이펙트 활성화
+        m_staffEffect.SetActive(false);
     }
 }
