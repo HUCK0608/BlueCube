@@ -22,7 +22,10 @@ public sealed class Switch_On_PowerLine : Switch_On
         base.Awake();
 
         m_checkedLine = new Dictionary<Transform, Special_PowerLine_Line>();
+    }
 
+    private void Start()
+    {
         StartCoroutine(SwitchOnLogic());
     }
 

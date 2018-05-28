@@ -1127,6 +1127,7 @@ GameObject:
   - component: {fileID: 114168316380745084}
   - component: {fileID: 114880859049581568}
   - component: {fileID: 114365777259786022}
+  - component: {fileID: 114673554525710928}
   m_Layer: 11
   m_Name: Player3D
   m_TagString: Player
@@ -1377,7 +1378,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1328681400167124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14, y: 3, z: -24}
+  m_LocalPosition: {x: -16, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4030233400580912}
@@ -3201,6 +3202,17 @@ MonoBehaviour:
   m_changeViewEffect: {fileID: 1555310427526484}
   m_increaseMaxSize: {x: 44, y: 20, z: 20}
   m_increaseSizePerXY: 200
+--- !u!114 &114673554525710928
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1868979245876420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71cf060fd9ceaca4aa7f189c94e5eab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114693026080926346
 MonoBehaviour:
   m_ObjectHideFlags: 1
