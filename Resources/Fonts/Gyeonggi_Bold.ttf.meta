@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 5f30d051e0609364fa2457d56aaf42bc
+timeCreated: 1527608726
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: GyeonggiTitle
+  fontNames:
+  - GyeonggiTitle
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

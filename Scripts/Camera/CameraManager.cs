@@ -14,6 +14,8 @@ public sealed class CameraManager : MonoBehaviour
     // 무빙워크중이면 true를 반환
     private bool m_isOnMovingWork;
 
+    private bool m_isGanzi;
+
     private void Awake()
     {
         m_instance = this;
@@ -31,7 +33,18 @@ public sealed class CameraManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        FollowPlayer3D();
+        if(!m_isGanzi)
+            FollowPlayer3D();
+        PlayGanziCam();
+    }
+
+    private void PlayGanziCam()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            m_animator.Play("GanziCam", -1);
+            m_isGanzi = true;
+        }
     }
 
     // 3D 플레이어를 따라가는 카메라
