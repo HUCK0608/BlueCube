@@ -38,7 +38,7 @@ public sealed class PlayerState2D_Move : PlayerState2D
         else if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey) || Input.GetKeyDown(m_playerManager.Stat.CancelKey))
         {
             if (!m_playerManager.IsViewChange && !m_playerManager.IsViewChangeReady)
-                m_mainController.ChangeState2D(E_PlayerState2D.Idle);
+                m_playerManager.Skill.ChangeView();
         }
         // 점프키를 눌렀을 때 땅에 있으면 JumpUp 상태로 변경
         else if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))

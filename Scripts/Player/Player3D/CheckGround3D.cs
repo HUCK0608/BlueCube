@@ -30,7 +30,6 @@ public sealed class CheckGround3D : MonoBehaviour
                                      GameLibrary.LayerMask_Bullet |
                                      GameLibrary.LayerMask_IgnoreRaycast |
                                      GameLibrary.LayerMask_BackgroundTrigger);
-
         float groundCheckDistance = PlayerManager.Instance.Stat.GroundCheckDistance;
 
         for (int i = 0; i < m_checkPointCount; i++)
