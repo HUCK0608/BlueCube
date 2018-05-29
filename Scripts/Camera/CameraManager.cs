@@ -32,6 +32,13 @@ public sealed class CameraManager : MonoBehaviour
     private void LateUpdate()
     {
         FollowPlayer3D();
+        PlayGanziCam();
+    }
+
+    private void PlayGanziCam()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+            m_animator.Play("GanziCam", -1);
     }
 
     // 3D 플레이어를 따라가는 카메라
