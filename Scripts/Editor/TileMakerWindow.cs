@@ -243,7 +243,7 @@ public class TileMakerWindow : EditorWindow
 
                 for (int j = 0; j < m_cullingCheckDirectionCount; j++)
                 {
-                    if (GameLibrary.Raycast3D(m_tileMakers[i].transform.position, m_cullingCheckDirection[j], out hit, m_cullingCheckDistance, GameLibrary.LayerMask_Tile))
+					if (GameLibrary.Raycast3D(m_tileMakers[i].transform.position, m_cullingCheckDirection[j], out hit, m_cullingCheckDistance, GameLibrary.LayerMask_Tile))
                     {
                         count++;
                     }
