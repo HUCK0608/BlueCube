@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: a061089920301b64e96f1ca7bd73a8b6
-timeCreated: 1526013199
+guid: 5f30d051e0609364fa2457d56aaf42bc
+timeCreated: 1527608726
 licenseType: Free
 TrueTypeFontImporter:
   externalObjects: {}
@@ -10,11 +10,10 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: NEXON Football Gothic
+  fontName: GyeonggiTitle
   fontNames:
-  - NEXON Football Gothic
-  fallbackFontReferences:
-  - {fileID: 12800000, guid: 1aae140fb49a4734686189fceaa15328, type: 3}
+  - GyeonggiTitle
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
