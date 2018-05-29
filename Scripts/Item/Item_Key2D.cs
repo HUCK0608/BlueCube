@@ -15,6 +15,7 @@ public sealed class Item_Key2D : MonoBehaviour
     {
         if(other.tag.Equals(GameLibrary.String_Player))
         {
+            EffectManager.Instance.CreateEffect(Effect_Type.Player_Key, PlayerManager.Instance.Player2D_Object.transform.position);
             m_key.GiveKeyToPlayer();
         }
     }

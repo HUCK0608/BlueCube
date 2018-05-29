@@ -14,10 +14,25 @@ public sealed class Enemy_Boomer : MonoBehaviour
     // 스탯
     private EnemyStat_Boomer m_stat;
 
+    /// <summary>애니메이터</summary>
+    private Animator m_animator;
+
+    /// <summary>임시 숲 스크립트</summary>
+    private SoopTemp m_soopTemp;
+
+    /// <summary>발사 준비중일경우 true를 반환 (애니메이션 변수)</summary>
+    private bool m_isShootInit;
+
+    /// <summary>발사중일경우 true를 반환 (애니메이션 변수)</summary>
+    private bool m_isShoot;
+
     private void Awake()
     {
         m_worldObject = GetComponent<WorldObject>();
         m_stat = GetComponent<EnemyStat_Boomer>();
+
+        m_animator = GetComponentInChildren<Animator>();
+        m_soopTemp = GetComponentInChildren<SoopTemp>();
     }
 
     private void Start()
@@ -30,20 +45,18 @@ public sealed class Enemy_Boomer : MonoBehaviour
     {
         while(true)
         {
-            if (!GameLibrary.Bool_IsGameStop(m_worldObject))
-            {
-                // 플레이어가 탐지 될 경우 반복문을 종료하고 폭탄 발사 코루틴 실행
-                if (m_detectionArea.CheckDetected(PlayerManager.Instance.Player3D_Object.transform.position))
-                    break;
-            }
+            // 플레이어가 탐지 될 경우 반복문을 종료하고 폭탄 발사 코루틴 실행
+            if (m_detectionArea.CheckDetected(PlayerManager.Instance.Player3D_Object.transform.position))
+                break;
+
             yield return null;
         }
 
-        StartCoroutine(ShootBomb());
+        StartCoroutine(ShootBombLogic());
     }
 
-    // 폭탄 발사
-    private IEnumerator ShootBomb()
+    /// <summary>폭탄 발사 로직</summary>
+    private IEnumerator ShootBombLogic()
     {
         Transform player = PlayerManager.Instance.Player3D_Object.transform;
 
@@ -52,31 +65,55 @@ public sealed class Enemy_Boomer : MonoBehaviour
         bool isInit = true;
         float startShootRandomTime = Random.Range(m_stat.StartShootMinDelay, m_stat.StartShootMaxDelay);
 
+        m_isShootInit = true;
+
+        string isShootInitPath = "IsShootInit";
+        string isShootPath = "IsShoot";
+
         while(true)
         {
-            if (!GameLibrary.Bool_IsGameStop(m_worldObject))
-            {
-                RotateToPlayer();
+            m_animator.SetBool(isShootInitPath, m_isShootInit);
+            m_animator.SetBool(isShootPath, m_isShoot);
 
+            RotateToPlayer();
+
+            if(m_soopTemp.IsEndShootMotion)
+            {
+                m_isShoot = false;
+                m_soopTemp.IsEndShootMotion = false;
+            }
+
+            if (m_soopTemp.IsEndShootInitMotion)
                 addTime += Time.deltaTime;
 
-                if (addTime >= m_stat.ShootDelay && !isInit)
-                {
-                    EnemyProjectileManager.Instance.UseProjectile(E_EnemyProjectile.Bomb, m_stat.ShootPosition.position, player.position);
-                    addTime = 0f;
-                }
-                else if(isInit && addTime >= startShootRandomTime)
-                {
-                    EnemyProjectileManager.Instance.UseProjectile(E_EnemyProjectile.Bomb, m_stat.ShootPosition.position, player.position);
-                    addTime = 0f;
-                    isInit = false;
-                }
+            if (addTime >= m_stat.ShootDelay)
+            {
+                m_soopTemp.IsEndShootInitMotion = false;
+                m_isShoot = true;
 
-                if (!m_detectionArea.CheckDetected(player.position))
-                    break;
+                EnemyProjectileManager.Instance.UseProjectile(E_EnemyProjectile.Bomb, m_stat.ShootPosition.position, player.position);
+                addTime = 0f;
             }
+            //else if(isInit && addTime >= startShootRandomTime)
+            //{
+            //    EnemyProjectileManager.Instance.UseProjectile(E_EnemyProjectile.Bomb, m_stat.ShootPosition.position, player.position);
+            //    addTime = 0f;
+            //    isInit = false;
+            //}
+
+            if (!m_detectionArea.CheckDetected(player.position))
+                break;
+
             yield return null;
         }
+
+        m_isShootInit = false;
+        m_isShoot = false;
+        m_soopTemp.IsEndShootInitMotion = false;
+        m_soopTemp.IsEndShootMotion = false;
+
+        m_animator.SetBool(isShootInitPath, m_isShootInit);
+        m_animator.SetBool(isShootPath, m_isShoot);
 
         // 플레이어 탐지 코루틴 실행
         StartCoroutine(CheckDetectionPlayer());

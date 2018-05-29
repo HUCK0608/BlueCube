@@ -71,6 +71,7 @@ public class Special_FirePillar_Fire : MonoBehaviour
     private void Start()
     {
         StartCoroutine(SetCollider());
+        StartCoroutine(SetRenderer());
     }
 
     /// <summary>시점에 따른 콜라이더 설정</summary>
@@ -79,19 +80,19 @@ public class Special_FirePillar_Fire : MonoBehaviour
         if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
             m_collider.enabled = false;
 
-        WaitUntil m_isView3DWaitUntil = new WaitUntil(() => PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D));
-        WaitUntil m_isView2DWaitUntil = new WaitUntil(() => PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D) && !PlayerManager.Instance.IsViewChange && m_worldObject.IsOnRenderer);
+        WaitUntil isView3DWaitUntil = new WaitUntil(() => PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D));
+        WaitUntil isView2DWaitUntil = new WaitUntil(() => PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D) && !PlayerManager.Instance.IsViewChange && m_worldObject.IsOnRenderer);
 
         while (true)
         {
             if (m_collider.enabled)
             {
-                yield return m_isView3DWaitUntil;
+                yield return isView3DWaitUntil;
                 m_collider.enabled = false;
             }
             else
             {
-                yield return m_isView2DWaitUntil;
+                yield return isView2DWaitUntil;
                 m_collider.enabled = true;
 
                 // 한 프레임을 기다림
@@ -103,6 +104,21 @@ public class Special_FirePillar_Fire : MonoBehaviour
             }
 
             yield return null;
+        }
+    }
+
+    /// <summary>시점에 따른 렌더 설정</summary>
+    private IEnumerator SetRenderer()
+    {
+        WaitUntil isView3DWaitUntil = new WaitUntil(() => PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D));
+        WaitUntil isView2DWaitUntil = new WaitUntil(() => PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D) && !m_worldObject.IsOnRenderer);
+
+        while(true)
+        {
+            yield return isView2DWaitUntil;
+            m_fireObject.SetActive(false);
+            yield return isView3DWaitUntil;
+            m_fireObject.SetActive(true);
         }
     }
 

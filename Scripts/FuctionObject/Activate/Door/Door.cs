@@ -14,10 +14,6 @@ public sealed class Door : MonoBehaviour
     [SerializeField]
     private Vector3 m_destination;
 
-    /// <summary>콜라이더 2D (Vertical에서만 사용)</summary>
-    [SerializeField]
-    private GameObject m_collider2D;
-
     [Header("Can Change")]
 
     /// <summary>문이 열리는 속도</summary>
@@ -58,9 +54,6 @@ public sealed class Door : MonoBehaviour
 
             yield return null;
         }
-
-        if (m_collider2D != null)
-            m_collider2D.SetActive(false);
 
         m_door.gameObject.SetActive(false);
     }

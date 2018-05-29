@@ -24,6 +24,10 @@ public sealed class EnemyProjectile_Bomb : EnemyProjectile
     [SerializeField]
     private float m_bombTimer;
 
+    /// <summary>착지위치 오브젝트</summary>
+    [SerializeField]
+    private GameObject m_landingPosition;
+
     protected override void Awake()
     {
         base.Awake();
@@ -38,6 +42,9 @@ public sealed class EnemyProjectile_Bomb : EnemyProjectile
         base.UseProjectile(origin, destination);
 
         StartCoroutine(StartProjectileLogic(origin, destination));
+
+        m_landingPosition.transform.position = destination;
+        m_landingPosition.SetActive(true);
     }
 
     /// <summary>투사체 로직 실행</summary>
@@ -133,5 +140,7 @@ public sealed class EnemyProjectile_Bomb : EnemyProjectile
         EffectManager.Instance.CreateEffect(Effect_Type.Enemy_Boom, m_rigidbody.transform.position);
 
         m_meshRenderer.material = m_startMaterial;
+
+        m_landingPosition.SetActive(false);
     }
 }

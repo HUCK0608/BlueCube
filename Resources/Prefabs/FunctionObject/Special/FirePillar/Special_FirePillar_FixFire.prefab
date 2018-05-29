@@ -194,7 +194,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1418170565249746}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8, y: 5, z: -17}
+  m_LocalPosition: {x: -8, y: 5, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4211107650964858}
@@ -455,7 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25735670c0a8e044990be2b04afbe796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_startFireType: 2
+  m_startFireType: 1
   m_isKeepStartFire: 1
   m_fireObject: {fileID: 1788498891210150}
   m_redFire: {fileID: 1576654633400010}
