@@ -201,9 +201,4 @@ public sealed class PlayerController3D : MonoBehaviour
     {
         m_playerManager.AudioPlayer.Play(playName);
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision, collision.transform.gameObject);
-    }
 }
