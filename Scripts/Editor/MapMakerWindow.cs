@@ -28,7 +28,7 @@ public class MapMakerWindow : EditorWindow
     private static float m_thumbnailSize_SceneView = 50f;
 
     /// <summary>메뉴를 클릭할 때 실행</summary>
-    [MenuItem("BlueCube/MapMaker")]
+    //[MenuItem("BlueCube/MapMaker")]
     public static void ShowWindow()
     {
         GetWindow<MapMakerWindow>("MapMaker");

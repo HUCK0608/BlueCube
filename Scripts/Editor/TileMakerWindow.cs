@@ -59,6 +59,15 @@ public class TileMakerWindow : EditorWindow
         GetSelectTilesInfo();
 
         m_tilePrefab = Resources.Load("Prefabs/Terrain/Snow/Tile/Terrain_Snow_Tile") as GameObject;
+
+        SceneView.onSceneGUIDelegate += this.OnSceneGUI;
+    }
+
+    private void OnDisable()
+    {
+        SceneView.onSceneGUIDelegate -= this.OnSceneGUI;
+
+        SetEditorMode();
     }
 
     private void OnSelectionChange()
@@ -369,5 +378,146 @@ public class TileMakerWindow : EditorWindow
         }
 
         Selection.objects = (Object[])newTiles.ToArray();
+    }
+
+    ///////////////////////////////////////////// SceneView GUI /////////////////////////////////////////////
+
+    /// <summary>생성할 수 없는 위치</summary>
+    private static Vector3 m_notCreatePosition = new Vector3(9999f, 9999f, 9999f);
+
+    /// <summary>생성될 위치가 그려지는 타일</summary>
+    private GameObject m_drawTile;
+    /// <summary>생성 모드 활성화 여부</summary>
+    private bool m_isOnCreateMode;
+
+    /// <summary>처음에 생성된 위치</summary>
+    private Vector3 m_firstCreatePosition;
+
+    /// <summary>씬 뷰에 그려질 GUI</summary>
+    private void OnSceneGUI(SceneView sceneView)
+    {
+        Handles.BeginGUI();
+        DrawCreateModeButton();
+        DrawCreatePosition();
+        Handles.EndGUI();
+
+        RunEvent();
+        RemoveSelection();
+    }
+
+    /// <summary>생성 모드 및 에디터 모드 그리기</summary>
+    private void DrawCreateModeButton()
+    {
+        if(!m_isOnCreateMode)
+        {
+            if (GUILayout.Button("타일 생성 모드 시작", GUILayout.Width(130f), GUILayout.Height(30f)))
+                SetCreateMode();
+        }
+        else
+        {
+            if (GUILayout.Button("타일 생성 모드 종료", GUILayout.Width(130f), GUILayout.Height(30f)))
+                SetEditorMode();
+        }
+    }
+
+    /// <summary>생성 모드로 설정</summary>
+    private void SetCreateMode()
+    {
+        m_isOnCreateMode = true;
+
+        m_drawTile = Instantiate(m_tilePrefab) as GameObject;
+        m_drawTile.GetComponentInChildren<Collider>().enabled = false;
+    }
+
+    /// <summary>에디터 모드로 설정</summary>
+    private void SetEditorMode()
+    {
+        m_isOnCreateMode = false;
+
+        DestroyImmediate(m_drawTile);
+    }
+
+    /// <summary>생성 위치를 그려줌</summary>
+    private void DrawCreatePosition()
+    {
+        // 생성 모드가 아닐경우 리턴
+        if (!m_isOnCreateMode)
+            return;
+
+        Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            m_drawTile.transform.position = hit.point.GetGamePivot();
+        else
+            m_drawTile.transform.position = m_notCreatePosition;
+    }
+
+    /// <summary>이벤트 실행</summary>
+    private void RunEvent()
+    {
+        Event currentEvent = Event.current;
+
+        if (currentEvent.isKey)
+        {
+            if (currentEvent.keyCode == (KeyCode.Escape))
+                m_isOnCreateMode = false;
+        }
+        else if(currentEvent.isMouse && currentEvent.button.Equals(0) && m_isOnCreateMode)
+        {
+            int controlID = GUIUtility.GetControlID(FocusType.Passive);
+
+            switch(currentEvent.GetTypeForControl(controlID))
+            {
+                case EventType.MouseDown:
+                    Debug.Log("MouseDown");
+                    GUIUtility.hotControl = controlID;
+                    currentEvent.Use();
+
+                    Event_LeftMouseDown();
+                    break;
+                case EventType.MouseUp:
+                    Debug.Log("MouseUp");
+                    GUIUtility.hotControl = 0;
+                    currentEvent.Use();
+
+                    Event_LeftMouseUp();
+                    break;
+                case EventType.MouseDrag:
+                    Debug.Log("MouseDrag");
+                    GUIUtility.hotControl = controlID;
+                    currentEvent.Use();
+                    break;
+            }
+        }
+    }
+
+    /// <summary>Left MouseDown 이벤트</summary>
+    private void Event_LeftMouseDown()
+    {
+        // 놓을 수 없는 위치일 경우 리턴
+        if (m_drawTile.transform.position.Equals(m_notCreatePosition))
+            return;
+
+        GameObject newTile = Instantiate(m_tilePrefab) as GameObject;
+        newTile.transform.position = m_firstCreatePosition;
+        newTile.transform.parent = GameObject.Find("World").transform;
+        m_firstCreatePosition = m_drawTile.transform.position;
+
+
+        m_drawTile.SetActive(false);
+    }
+
+    /// <summary>Left MouseUp 이벤트</summary>
+    private void Event_LeftMouseUp()
+    {
+        m_drawTile.SetActive(true);
+    }
+
+    /// <summary>선택 항목을 없앰</summary>
+    private void RemoveSelection()
+    {
+        if (m_isOnCreateMode)
+            Selection.activeTransform = null;
     }
 }
