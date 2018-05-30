@@ -392,6 +392,13 @@ public class TileMakerWindow : EditorWindow
 
     /// <summary>처음에 생성된 위치</summary>
     private Vector3 m_firstCreatePosition;
+    /// <summary>처음에 생성된 노말</summary>
+    private Vector3 m_firstCreateNormal;
+    /// <summary>처음에 생성된 노말과 위치를 다 가지고 있는 플레인</summary>
+    private Plane m_firstCreatePlane;
+
+    /// <summary>임시 생성 노말</summary>
+    private Vector3 m_tempCreateNormal;
 
     /// <summary>씬 뷰에 그려질 GUI</summary>
     private void OnSceneGUI(SceneView sceneView)
@@ -440,15 +447,18 @@ public class TileMakerWindow : EditorWindow
     /// <summary>생성 위치를 그려줌</summary>
     private void DrawCreatePosition()
     {
-        // 생성 모드가 아닐경우 리턴
-        if (!m_isOnCreateMode)
+        // 생성 모드가 아니거나 DrawTile이 비활성화 되어있다면 리턴
+        if (!m_isOnCreateMode || !m_drawTile.activeSelf)
             return;
 
         Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
             m_drawTile.transform.position = hit.point.GetGamePivot();
+            m_tempCreateNormal = hit.normal;
+        }
         else
             m_drawTile.transform.position = m_notCreatePosition;
     }
@@ -470,23 +480,22 @@ public class TileMakerWindow : EditorWindow
             switch(currentEvent.GetTypeForControl(controlID))
             {
                 case EventType.MouseDown:
-                    Debug.Log("MouseDown");
                     GUIUtility.hotControl = controlID;
                     currentEvent.Use();
 
                     Event_LeftMouseDown();
                     break;
                 case EventType.MouseUp:
-                    Debug.Log("MouseUp");
                     GUIUtility.hotControl = 0;
                     currentEvent.Use();
 
                     Event_LeftMouseUp();
                     break;
                 case EventType.MouseDrag:
-                    Debug.Log("MouseDrag");
                     GUIUtility.hotControl = controlID;
                     currentEvent.Use();
+
+                    Event_LeftMouseDrag();
                     break;
             }
         }
@@ -499,11 +508,16 @@ public class TileMakerWindow : EditorWindow
         if (m_drawTile.transform.position.Equals(m_notCreatePosition))
             return;
 
+        // 타일 생성
         GameObject newTile = Instantiate(m_tilePrefab) as GameObject;
-        newTile.transform.position = m_firstCreatePosition;
+        newTile.transform.position = m_drawTile.transform.position;
         newTile.transform.parent = GameObject.Find("World").transform;
-        m_firstCreatePosition = m_drawTile.transform.position;
+        Undo.RegisterCreatedObjectUndo(newTile, "Object Create");
 
+        // 처음 생성 위치와 노말 저장
+        m_firstCreatePosition = m_drawTile.transform.position;
+        m_firstCreateNormal = m_tempCreateNormal;
+        m_firstCreatePlane = new Plane(m_firstCreateNormal, m_firstCreatePosition);
 
         m_drawTile.SetActive(false);
     }
@@ -512,6 +526,49 @@ public class TileMakerWindow : EditorWindow
     private void Event_LeftMouseUp()
     {
         m_drawTile.SetActive(true);
+    }
+
+    /// <summary>Left MouseDrag 이벤트</summary>
+    private void Event_LeftMouseDrag()
+    {
+        // 위쪽에 처음 설치했을 경우
+        if (m_firstCreateNormal.normalized.Equals(Vector3.up))
+        {
+            Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+            float enter;
+            m_firstCreatePlane.Raycast(ray, out enter);
+
+            Vector3 hitPoint = ray.GetPoint(enter).GetGamePivot();
+            int pivotCountX = Mathf.Abs(Mathf.RoundToInt(m_firstCreatePosition.x) - Mathf.RoundToInt(hitPoint.x)) / 2;
+            int pivotCountZ = Mathf.Abs(Mathf.RoundToInt(m_firstCreatePosition.z) - Mathf.RoundToInt(hitPoint.z)) / 2;
+
+            Vector3 direction = hitPoint - m_firstCreatePosition;
+            Vector3 directionX = new Vector3(direction.x, 0f, 0f).normalized;
+            Vector3 directionZ = new Vector3(0f, 0f, direction.z).normalized;
+
+            RaycastHit hit;
+
+            for (int i = 0; i <= pivotCountX; i++)
+            {
+                for (int j = 0; j <= pivotCountZ; j++)
+                {
+                    if (!(i.Equals(0) && j.Equals(0)))
+                    {
+                        Vector3 origin = m_firstCreatePosition + directionX * 2f * i + directionZ * 2f * j;
+                        if (Physics.Raycast(origin, -m_firstCreateNormal, out hit))
+                        {
+                            Vector3 temp = hit.point.GetGamePivot();
+                            GameObject newTile = Instantiate(m_tilePrefab) as GameObject;
+                            newTile.transform.position = temp;
+                            newTile.transform.parent = GameObject.Find("World").transform;
+
+                            Undo.RegisterCreatedObjectUndo(newTile, "Create Object");
+                        }
+                    }
+                }
+            }
+
+        }
     }
 
     /// <summary>선택 항목을 없앰</summary>
