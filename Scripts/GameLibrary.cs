@@ -133,11 +133,23 @@ public static class GameLibrary
             array[i] = value;
     }
 
-    /// <summary>position위치의 피벗을 반환</summary>
+    // 확장 메서드 부분
+
+    public static int Shift(this int value)
+    {
+        return (1 << value);
+    }
+
+    public static Texture2D GetThumbnail(this GameObject gameobject)
+    {
+        return AssetPreview.GetAssetPreview(gameobject);
+    }
+
+    /// <summary>게임 피벗을 반환</summary>
     public static Vector3 GetGamePivot(this Vector3 position)
     {
         Vector3 normalizedPosition = position;
-        
+
         // 각 좌표 내림
         normalizedPosition.x = Mathf.Floor(normalizedPosition.x);
         normalizedPosition.y = Mathf.Floor(normalizedPosition.y);
@@ -156,18 +168,6 @@ public static class GameLibrary
             normalizedPosition.z += one;
 
         return normalizedPosition;
-    }
-
-    // 확장 메서드 부분
-
-    public static int Shift(this int value)
-    {
-        return (1 << value);
-    }
-
-    public static Texture2D GetThumbnail(this GameObject gameobject)
-    {
-        return AssetPreview.GetAssetPreview(gameobject);
     }
 
     // 레이 부분

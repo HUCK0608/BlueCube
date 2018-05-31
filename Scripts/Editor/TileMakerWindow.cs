@@ -92,18 +92,18 @@ public class TileMakerWindow : EditorWindow
         MeshRenderer[] allMeshRenderes = (MeshRenderer[])FindObjectsOfType(typeof(MeshRenderer));
         int allMeshRendererCount = allMeshRenderes.Length;
 
-        for(int i = 0; i < allMeshRendererCount; i++)
+        for (int i = 0; i < allMeshRendererCount; i++)
         {
             // 자식으로 타일인지 찾음
             TileMaker tileMaker = allMeshRenderes[i].GetComponentInChildren<TileMaker>();
 
             // 부모로 타일인지 찾음
-            if(tileMaker == null)
+            if (tileMaker == null)
             {
                 tileMaker = allMeshRenderes[i].GetComponentInParent<TileMaker>();
 
                 // 자식 부모 모두 타일이 아니면 저장
-                if(tileMaker == null)
+                if (tileMaker == null)
                 {
                     m_noTileMeshRenderers.Add(allMeshRenderes[i]);
                 }
@@ -121,7 +121,7 @@ public class TileMakerWindow : EditorWindow
         int selectObjectCount = selectObjects.Length;
 
         // 선택된 오브젝트가 1개 이상일 경우에만 실행
-        if(!selectObjectCount.Equals(0))
+        if (!selectObjectCount.Equals(0))
         {
             // 각 리스트 초기화
             m_selectTileMakers = new List<TileMaker>();
@@ -129,12 +129,12 @@ public class TileMakerWindow : EditorWindow
             m_selectTileNumberProp = new List<SerializedProperty>();
 
             // 선택된 모든 오브젝트를 돌면서 체크
-            for(int i = 0; i < selectObjectCount; i++)
+            for (int i = 0; i < selectObjectCount; i++)
             {
                 TileMaker selectTileMaker = selectObjects[i].GetComponent<TileMaker>();
 
                 // 선택된 오브젝트에 타일 메이커 컴포넌트가 있을 경우에만 실행
-                if(selectTileMaker != null)
+                if (selectTileMaker != null)
                 {
                     // 정적 오브젝트 및 변수를 생성 및 가져옴
                     SerializedObject selectTileMakerSerializedObj = new SerializedObject(selectTileMaker);
@@ -151,7 +151,7 @@ public class TileMakerWindow : EditorWindow
             m_selectTileMakerCount = m_selectTileMakers.Count;
 
             // 하나라도 선택된 타일 메이커가 있을 경우 실행
-            if(!m_selectTileMakerCount.Equals(0))
+            if (!m_selectTileMakerCount.Equals(0))
             {
                 // 첫 번째에 있는 타일 넘버를 기존 타일 넘버라고 저장
                 m_oldTilesNumber = m_selectTileNumberProp[0].intValue;
@@ -243,7 +243,7 @@ public class TileMakerWindow : EditorWindow
         if (GUILayout.Button("모든 타일 오브젝트 컬링"))
         {
             RaycastHit hit;
-            
+
             int count = 0;
 
             for (int i = 0; i < m_tileMakersCount; i++)
@@ -252,7 +252,7 @@ public class TileMakerWindow : EditorWindow
 
                 for (int j = 0; j < m_cullingCheckDirectionCount; j++)
                 {
-					if (GameLibrary.Raycast3D(m_tileMakers[i].transform.position, m_cullingCheckDirection[j], out hit, m_cullingCheckDistance, GameLibrary.LayerMask_Tile))
+                    if (GameLibrary.Raycast3D(m_tileMakers[i].transform.position, m_cullingCheckDirection[j], out hit, m_cullingCheckDistance, GameLibrary.LayerMask_Tile))
                     {
                         count++;
                     }
@@ -292,7 +292,7 @@ public class TileMakerWindow : EditorWindow
     private void SelectTileMeshChange()
     {
         // 하나라도 선택된 타일 메이커가 있을 경우에만 실행
-        if(!m_selectTileMakerCount.Equals(0))
+        if (!m_selectTileMakerCount.Equals(0))
         {
             GUILayout.Space(10f);
             EditorGUILayout.LabelField("선택한 타일 설정 (0 ~ " + (TileMaker.SnowGrassCount - 1).ToString() + ")", EditorStyles.boldLabel);
@@ -324,7 +324,7 @@ public class TileMakerWindow : EditorWindow
     private void CreateTileLayout()
     {
         // 선택된 타일 메이커가 하나라도 있을 경우에만 실행
-        if(!m_selectTileMakerCount.Equals(0))
+        if (!m_selectTileMakerCount.Equals(0))
         {
             GUILayout.Space(10f);
             GUILayout.Label("타일 생성");
@@ -333,8 +333,8 @@ public class TileMakerWindow : EditorWindow
 
             GUIStyle windowCenterButtonStyle = new GUIStyle(GUI.skin.button);
             windowCenterButtonStyle.margin = new RectOffset(screenWidth / 4, screenWidth / 4, 10, 10);
-            
-            if(GUILayout.Button("Forward", windowCenterButtonStyle))
+
+            if (GUILayout.Button("Forward", windowCenterButtonStyle))
                 CreateTile(Vector3.forward);
 
             if (GUILayout.Button("Up", windowCenterButtonStyle))
@@ -367,7 +367,7 @@ public class TileMakerWindow : EditorWindow
 
         List<GameObject> newTiles = new List<GameObject>();
 
-        for(int i = 0; i < m_selectTileMakerCount; i++)
+        for (int i = 0; i < m_selectTileMakerCount; i++)
         {
             GameObject newTile = Instantiate(m_tilePrefab);
             newTile.transform.parent = world;
@@ -389,74 +389,181 @@ public class TileMakerWindow : EditorWindow
     private GameObject m_drawTile;
     /// <summary>생성 모드 활성화 여부</summary>
     private bool m_isOnCreateMode;
-
-    /// <summary>처음에 생성된 위치</summary>
-    private Vector3 m_firstCreatePosition;
-    /// <summary>처음에 생성된 노말</summary>
-    private Vector3 m_firstCreateNormal;
-    /// <summary>처음에 생성된 노말과 위치를 다 가지고 있는 플레인</summary>
-    private Plane m_firstCreatePlane;
+    /// <summary>선택 모드 활성화 여부</summary>
+    private bool m_isOnSelectMode;
 
     /// <summary>임시 생성 노말</summary>
     private Vector3 m_tempCreateNormal;
+    /// <summary>임시 생성 타일 모음</summary>
+    private List<GameObject> m_tempCreateTiles;
+
+    /// <summary>임시 선택 타일 모음</summary>
+    private List<GameObject> m_tempSelectTiles;
+
+    /// <summary>처음 위치</summary>
+    private Vector3 m_firstPosition;
+    /// <summary>처음 노말</summary>
+    private Vector3 m_firstNormal;
+    /// <summary>처음 플레인</summary>
+    private Plane m_firstPlane;
+
+    /// <summary>LeftMouse 드래그 중일경우 true를 반환</summary>
+    private bool m_isOnLeftMouseDrag;
 
     /// <summary>씬 뷰에 그려질 GUI</summary>
     private void OnSceneGUI(SceneView sceneView)
     {
         Handles.BeginGUI();
         DrawCreateModeButton();
-        DrawCreatePosition();
+        DrawDeleteModeButton();
         Handles.EndGUI();
 
+        CreateModeLogic();
+
         RunEvent();
-        RemoveSelection();
     }
 
-    /// <summary>생성 모드 및 에디터 모드 그리기</summary>
+    /// <summary>생성 모드 버튼 그리기</summary>
     private void DrawCreateModeButton()
     {
-        if(!m_isOnCreateMode)
+        if (!m_isOnCreateMode)
         {
-            if (GUILayout.Button("타일 생성 모드 시작", GUILayout.Width(130f), GUILayout.Height(30f)))
-                SetCreateMode();
+            if (GUILayout.Button("타일 생성 모드 시작 (F1)", GUILayout.Width(140f), GUILayout.Height(30f)))
+                OnCreateMode();
         }
         else
         {
-            if (GUILayout.Button("타일 생성 모드 종료", GUILayout.Width(130f), GUILayout.Height(30f)))
-                SetEditorMode();
+            Color oldColor = GUI.backgroundColor;
+            GUI.backgroundColor = Color.red;
+
+            if (GUILayout.Button("타일 생성 모드 종료 (F1)", GUILayout.Width(140f), GUILayout.Height(30f)))
+                OffCreateMode();
+
+            GUI.backgroundColor = oldColor;
         }
     }
 
-    /// <summary>생성 모드로 설정</summary>
-    private void SetCreateMode()
+    /// <summary>선택 모드 버튼 그리기</summary>
+    private void DrawDeleteModeButton()
     {
+        if (!m_isOnSelectMode)
+        {
+            if (GUILayout.Button("타일 선택 모드 시작 (F2)", GUILayout.Width(140f), GUILayout.Height(30f)))
+                OnSelectMode();
+        }
+        else
+        {
+            Color oldColor = GUI.backgroundColor;
+            GUI.backgroundColor = Color.red;
+
+            if (GUILayout.Button("타일 선택 모드 종료 (F2)", GUILayout.Width(140f), GUILayout.Height(30f)))
+                OffSelectMode();
+
+            GUI.backgroundColor = oldColor;
+        }
+    }
+
+    /// <summary>생성모드 켜기</summary>
+    private void OnCreateMode()
+    {
+        if (m_isOnSelectMode)
+            OffSelectMode();
+
         m_isOnCreateMode = true;
 
         m_drawTile = Instantiate(m_tilePrefab) as GameObject;
+        m_drawTile.name = "(TileMaker)TempTile";
         m_drawTile.GetComponentInChildren<Collider>().enabled = false;
+    }
+
+    /// <summary>생성모드 끄기</summary>
+    private void OffCreateMode()
+    {
+        m_isOnCreateMode = false;
+
+        DestroyImmediate(m_drawTile);
+
+        GameObject drawTile = GameObject.Find("(TileMaker)TempTile");
+        if (drawTile != null)
+            DestroyImmediate(drawTile);
+
+        if (m_isOnLeftMouseDrag)
+        {
+            int tempCreateTileCount = m_tempCreateTiles.Count;
+
+            for (int i = 0; i < tempCreateTileCount; i++)
+                DestroyImmediate(m_tempCreateTiles[i]);
+
+            m_tempCreateTiles.Clear();
+
+            m_isOnLeftMouseDrag = false;
+        }
+    }
+
+    /// <summary>선택모드 켜기</summary>
+    private void OnSelectMode()
+    {
+        if (m_isOnCreateMode)
+            OffCreateMode();
+
+        m_isOnSelectMode = true;
+    }
+
+    /// <summary>선택모드 끄기</summary>
+    private void OffSelectMode()
+    {
+        m_isOnSelectMode = false;
     }
 
     /// <summary>에디터 모드로 설정</summary>
     private void SetEditorMode()
     {
-        m_isOnCreateMode = false;
-
-        DestroyImmediate(m_drawTile);
+        if (m_isOnCreateMode)
+            OffCreateMode();
+        if (m_isOnSelectMode)
+            OffSelectMode();
     }
 
-    /// <summary>생성 위치를 그려줌</summary>
-    private void DrawCreatePosition()
+    /// <summary>생성모드 로직</summary>
+    private void CreateModeLogic()
     {
-        // 생성 모드가 아니거나 DrawTile이 비활성화 되어있다면 리턴
-        if (!m_isOnCreateMode || !m_drawTile.activeSelf)
+        RemoveSelection();
+        DrawCreatePointVisual();
+    }
+
+    /// <summary>아무런 선택도 안 되게 설정</summary>
+    private void RemoveSelection()
+    {
+        if (m_isOnCreateMode)
+            Selection.activeTransform = null;
+    }
+
+    /// <summary>생성될 위치를 시각화하여 그림</summary>
+    private void DrawCreatePointVisual()
+    {
+        // 생성 모드가 아닐경우 리턴
+        if (!m_isOnCreateMode)
             return;
+
+        // 마우스 드래그가 활성화 되었을 때 시각화를 끄고 리턴
+        if (m_isOnLeftMouseDrag)
+        {
+            if (m_drawTile.activeSelf)
+                m_drawTile.SetActive(false);
+            return;
+        }
+
+        // 시각화가 꺼져있다면 킴
+        if (!m_drawTile.activeSelf)
+            m_drawTile.SetActive(true);
 
         Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         RaycastHit hit;
+        int layermask = GameLibrary.LayerMask_Tile;
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layermask))
         {
-            m_drawTile.transform.position = hit.point.GetGamePivot();
+            m_drawTile.transform.position = hit.transform.position + hit.normal * 2f;
             m_tempCreateNormal = hit.normal;
         }
         else
@@ -470,111 +577,405 @@ public class TileMakerWindow : EditorWindow
 
         if (currentEvent.isKey)
         {
-            if (currentEvent.keyCode == (KeyCode.Escape))
-                m_isOnCreateMode = false;
-        }
-        else if(currentEvent.isMouse && currentEvent.button.Equals(0) && m_isOnCreateMode)
-        {
-            int controlID = GUIUtility.GetControlID(FocusType.Passive);
-
-            switch(currentEvent.GetTypeForControl(controlID))
+            if (currentEvent.type == EventType.KeyUp)
             {
-                case EventType.MouseDown:
-                    GUIUtility.hotControl = controlID;
-                    currentEvent.Use();
+                switch (currentEvent.keyCode)
+                {
+                    case KeyCode.F1:
+                        Event_F1KeyDown();
+                        break;
+                    case KeyCode.F2:
+                        Event_F2KeyDown();
+                        break;
+                    case KeyCode.Escape:
+                        Event_EscapeKeyDown();
+                        break;
+                }
+            }
+        }
+        else if (currentEvent.isMouse)
+        {
+            // 생성모드 또는 선택모드에서만 실행
+            if (m_isOnCreateMode || m_isOnSelectMode)
+            {
+                // 마우스 왼쪽 버튼일 경우에만 실행
+                if (currentEvent.button.Equals(0))
+                {
+                    int controlID = GUIUtility.GetControlID(FocusType.Passive);
 
-                    Event_LeftMouseDown();
-                    break;
-                case EventType.MouseUp:
-                    GUIUtility.hotControl = 0;
-                    currentEvent.Use();
+                    switch (currentEvent.GetTypeForControl(controlID))
+                    {
+                        case EventType.MouseDown:
+                            Event_LeftMouseDown();
 
-                    Event_LeftMouseUp();
-                    break;
-                case EventType.MouseDrag:
-                    GUIUtility.hotControl = controlID;
-                    currentEvent.Use();
+                            GUIUtility.hotControl = controlID;
+                            currentEvent.Use();
+                            break;
+                        case EventType.MouseDrag:
+                            Event_LeftMouseDrag();
 
-                    Event_LeftMouseDrag();
-                    break;
+                            GUIUtility.hotControl = controlID;
+                            currentEvent.Use();
+                            break;
+                        case EventType.MouseUp:
+                            Event_LeftMouseUp();
+
+                            GUIUtility.hotControl = 0;
+                            currentEvent.Use();
+                            break;
+                    }
+                }
             }
         }
     }
 
-    /// <summary>Left MouseDown 이벤트</summary>
+    /// <summary>C KeyDown 이벤트</summary>
+    private void Event_F1KeyDown()
+    {
+        if (m_isOnCreateMode)
+            OffCreateMode();
+        else
+            OnCreateMode();
+    }
+
+    /// <summary>S KeyDown 이벤트</summary>
+    private void Event_F2KeyDown()
+    {
+        if (m_isOnSelectMode)
+            OffSelectMode();
+        else
+            OnSelectMode();
+    }
+
+    /// <summary>Escape KeyDown 이벤트</summary>
+    private void Event_EscapeKeyDown()
+    {
+        SetEditorMode();
+    }
+
+    /// <summary>LeftMouseDown 이벤트</summary>
     private void Event_LeftMouseDown()
     {
+        Event_CreateMode_LeftMouseDown();
+        Event_SelectMode_LeftMouseDown();
+    }
+
+    /// <summary>LeftMouseDrag 이벤트</summary>
+    private void Event_LeftMouseDrag()
+    {
+        m_isOnLeftMouseDrag = true;
+
+        Event_CreateMode_LeftMouseDrag();
+        Event_SelectMode_LeftMouseDrag();
+    }
+
+    /// <summary>LeftMouseUp 이벤트</summary>
+    private void Event_LeftMouseUp()
+    {
+        if (m_isOnLeftMouseDrag)
+            m_isOnLeftMouseDrag = false;
+
+        Event_CreateMode_LeftMouseUp();
+    }
+
+    #region CreateMode Event 목록
+    /// <summary>생성모드 LeftMouseDown 이벤트</summary>
+    private void Event_CreateMode_LeftMouseDown()
+    {
+        if (!m_isOnCreateMode)
+            return;
+
         // 놓을 수 없는 위치일 경우 리턴
         if (m_drawTile.transform.position.Equals(m_notCreatePosition))
             return;
 
         // 타일 생성
-        GameObject newTile = Instantiate(m_tilePrefab) as GameObject;
+        GameObject newTile = PrefabUtility.InstantiatePrefab(m_tilePrefab) as GameObject;
         newTile.transform.position = m_drawTile.transform.position;
         newTile.transform.parent = GameObject.Find("World").transform;
         Undo.RegisterCreatedObjectUndo(newTile, "Object Create");
 
         // 처음 생성 위치와 노말 저장
-        m_firstCreatePosition = m_drawTile.transform.position;
-        m_firstCreateNormal = m_tempCreateNormal;
-        m_firstCreatePlane = new Plane(m_firstCreateNormal, m_firstCreatePosition);
+        m_firstPosition = m_drawTile.transform.position;
+        m_firstNormal = m_tempCreateNormal;
+        m_firstPlane = new Plane(m_firstNormal, m_firstPosition);
 
         m_drawTile.SetActive(false);
     }
 
-    /// <summary>Left MouseUp 이벤트</summary>
-    private void Event_LeftMouseUp()
+    /// <summary>생성모드 LeftMouseDrag 이벤트</summary>
+    private void Event_CreateMode_LeftMouseDrag()
     {
-        m_drawTile.SetActive(true);
-    }
+        if (!m_isOnCreateMode)
+            return;
 
-    /// <summary>Left MouseDrag 이벤트</summary>
-    private void Event_LeftMouseDrag()
-    {
-        // 위쪽에 처음 설치했을 경우
-        if (m_firstCreateNormal.normalized.Equals(Vector3.up))
+        if (m_tempCreateTiles == null)
+            m_tempCreateTiles = new List<GameObject>();
+        else
         {
-            Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-            float enter;
-            m_firstCreatePlane.Raycast(ray, out enter);
+            int tempCreateTileCount = m_tempCreateTiles.Count;
 
-            Vector3 hitPoint = ray.GetPoint(enter).GetGamePivot();
-            int pivotCountX = Mathf.Abs(Mathf.RoundToInt(m_firstCreatePosition.x) - Mathf.RoundToInt(hitPoint.x)) / 2;
-            int pivotCountZ = Mathf.Abs(Mathf.RoundToInt(m_firstCreatePosition.z) - Mathf.RoundToInt(hitPoint.z)) / 2;
+            for (int i = 0; i < tempCreateTileCount; i++)
+                DestroyImmediate(m_tempCreateTiles[i]);
 
-            Vector3 direction = hitPoint - m_firstCreatePosition;
-            Vector3 directionX = new Vector3(direction.x, 0f, 0f).normalized;
-            Vector3 directionZ = new Vector3(0f, 0f, direction.z).normalized;
+            m_tempCreateTiles.Clear();
+        }
 
-            RaycastHit hit;
+        Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+        float enter;
+        m_firstPlane.Raycast(ray, out enter);
 
-            for (int i = 0; i <= pivotCountX; i++)
+        Vector3 mouseRayHitPivot = ray.GetPoint(enter).GetGamePivot();
+
+        float roundFirstNormalX = Mathf.Round(m_firstNormal.x);
+        float roundFirstNormalY = Mathf.Round(m_firstNormal.y);
+        float roundFirstNormalZ = Mathf.Round(m_firstNormal.z);
+
+        float zero = 0f;
+        float one = 1f;
+        float two = 2f;
+        int intZero = 0;
+        int intOne = 1;
+        int intTwo = 2;
+
+        int pivotCount1 = 0;
+        int pivotCount2 = 0;
+
+        if (roundFirstNormalX.Equals(zero) && roundFirstNormalY.Equals(zero))
+        {
+            pivotCount1 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.x) - Mathf.RoundToInt(mouseRayHitPivot.x)) / intTwo;
+            pivotCount2 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.y) - Mathf.RoundToInt(mouseRayHitPivot.y)) / intTwo;
+        }
+        else if (roundFirstNormalX.Equals(zero) && roundFirstNormalZ.Equals(zero))
+        {
+            pivotCount1 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.x) - Mathf.RoundToInt(mouseRayHitPivot.x)) / intTwo;
+            pivotCount2 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.z) - Mathf.RoundToInt(mouseRayHitPivot.z)) / intTwo;
+        }
+        else
+        {
+            pivotCount1 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.y) - Mathf.RoundToInt(mouseRayHitPivot.y)) / intTwo;
+            pivotCount2 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.z) - Mathf.RoundToInt(mouseRayHitPivot.z)) / intTwo;
+        }
+
+        // 각 피벗의 개수가 0개 이상일 경우에만 실행
+        if (!(pivotCount1.Equals(zero) && pivotCount2.Equals(zero)))
+        {
+            Vector3 directionToMousePosition = mouseRayHitPivot - m_firstPosition;
+            Vector3 direction1 = Vector3.zero;
+            Vector3 direction2 = Vector3.zero;
+
+            if (roundFirstNormalX.Equals(zero) && roundFirstNormalY.Equals(zero))
             {
-                for (int j = 0; j <= pivotCountZ; j++)
+                direction1.x = directionToMousePosition.x;
+                direction2.y = directionToMousePosition.y;
+            }
+            else if (roundFirstNormalX.Equals(zero) && roundFirstNormalZ.Equals(zero))
+            {
+                direction1.x = directionToMousePosition.x;
+                direction2.z = directionToMousePosition.z;
+            }
+            else
+            {
+                direction1.y = directionToMousePosition.y;
+                direction2.z = directionToMousePosition.z;
+            }
+
+            direction1 = direction1.normalized;
+            direction2 = direction2.normalized;
+
+            Transform world = GameObject.Find("World").transform;
+            RaycastHit hit;
+            int layerMask = GameLibrary.LayerMask_Tile;
+
+            for (int i = 0; i <= pivotCount1; i++)
+            {
+                for (int j = 0; j <= pivotCount2; j++)
                 {
+                    // 처음 생성 위치를 제외하고 실행
                     if (!(i.Equals(0) && j.Equals(0)))
                     {
-                        Vector3 origin = m_firstCreatePosition + directionX * 2f * i + directionZ * 2f * j;
-                        if (Physics.Raycast(origin, -m_firstCreateNormal, out hit))
+                        Vector3 pivot = m_firstPosition + direction1 * two * i + direction2 * two * j;
+                        if (Physics.Raycast(pivot, -m_firstNormal, out hit, Mathf.Infinity, layerMask))
                         {
-                            Vector3 temp = hit.point.GetGamePivot();
-                            GameObject newTile = Instantiate(m_tilePrefab) as GameObject;
-                            newTile.transform.position = temp;
-                            newTile.transform.parent = GameObject.Find("World").transform;
+                            Vector3 hitPivot = hit.transform.position + hit.normal * two;
 
-                            Undo.RegisterCreatedObjectUndo(newTile, "Create Object");
+                            int pivotCount3 = intZero;
+
+                            if (roundFirstNormalX.Equals(one))
+                                pivotCount3 = Mathf.Abs(Mathf.RoundToInt(hitPivot.x) - Mathf.RoundToInt(pivot.x)) / 2;
+                            else if (roundFirstNormalY.Equals(one))
+                                pivotCount3 = Mathf.Abs(Mathf.RoundToInt(hitPivot.y) - Mathf.RoundToInt(pivot.y)) / 2;
+                            else
+                                pivotCount3 = Mathf.Abs(Mathf.RoundToInt(hitPivot.z) - Mathf.RoundToInt(pivot.z)) / 2;
+
+                            for (int k = 0; k <= pivotCount3; k++)
+                            {
+                                Vector3 createPivot = hitPivot - (-m_firstNormal) * k * two;
+                                Vector3 rayCheckOrigin = createPivot + m_firstNormal * (k + intOne) * two;
+
+                                // 해당 위치에 충돌하는 타일이 없을 경우에만 타일 생성
+                                if (!Physics.Raycast(rayCheckOrigin, -m_firstNormal, two, layerMask))
+                                {
+                                    GameObject newTile = PrefabUtility.InstantiatePrefab(m_tilePrefab) as GameObject;
+                                    newTile.transform.position = createPivot;
+                                    newTile.transform.parent = world;
+
+                                    m_tempCreateTiles.Add(newTile);
+                                }
+                            }
                         }
                     }
                 }
             }
-
         }
     }
 
-    /// <summary>선택 항목을 없앰</summary>
-    private void RemoveSelection()
+    /// <summary>생성모드 LeftMouseUp 이벤트</summary>
+    private void Event_CreateMode_LeftMouseUp()
     {
-        if (m_isOnCreateMode)
-            Selection.activeTransform = null;
+        if (!m_isOnCreateMode)
+            return;
+
+        int tempCreateTileCount = m_tempCreateTiles.Count;
+        for (int i = 0; i < tempCreateTileCount; i++)
+            Undo.RegisterCreatedObjectUndo(m_tempCreateTiles[i], "Create Tile");
+
+        m_tempCreateTiles.Clear();
+
+        m_drawTile.SetActive(true);
     }
+    #endregion
+
+    #region SelectMode Event 목록
+    /// <summary>선택모드 LeftMouseDown 이벤트</summary>
+    private void Event_SelectMode_LeftMouseDown()
+    {
+        if (!m_isOnSelectMode)
+            return;
+
+        Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+        RaycastHit hit;
+        int layermask = GameLibrary.LayerMask_Tile;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layermask))
+        {
+            if (m_tempSelectTiles == null)
+                m_tempSelectTiles = new List<GameObject>();
+            else
+                m_tempSelectTiles.Clear();
+
+            m_tempSelectTiles.Add(hit.transform.parent.gameObject);
+            m_firstPosition = hit.transform.position;
+            m_firstNormal = hit.normal;
+            m_firstPlane = new Plane(m_firstNormal, m_firstPosition);
+        }
+        else
+        {
+            if(m_tempSelectTiles != null)
+                m_tempSelectTiles.Clear();
+
+            Selection.activeTransform = null;
+        }
+    }
+
+    /// <summary>선택모드 LeftMouseDrag 이벤트</summary>
+    private void Event_SelectMode_LeftMouseDrag()
+    {
+        if (!m_isOnSelectMode)
+            return;
+
+        if (m_tempSelectTiles == null || m_tempSelectTiles.Count.Equals(0))
+            return;
+
+        m_tempSelectTiles.Clear();
+
+        Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+        float enter;
+        m_firstPlane.Raycast(ray, out enter);
+
+        Vector3 mouseRayHitPivot = ray.GetPoint(enter).GetGamePivot();
+
+        float roundFirstNormalX = Mathf.Round(m_firstNormal.x);
+        float roundFirstNormalY = Mathf.Round(m_firstNormal.y);
+        float roundFirstNormalZ = Mathf.Round(m_firstNormal.z);
+
+        float zero = 0f;
+        float two = 2f;
+        int intTwo = 2;
+
+        int pivotCount1 = 0;
+        int pivotCount2 = 0;
+        
+        if (roundFirstNormalX.Equals(zero) && roundFirstNormalY.Equals(zero))
+        {
+            pivotCount1 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.x) - Mathf.RoundToInt(mouseRayHitPivot.x)) / intTwo;
+            pivotCount2 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.y) - Mathf.RoundToInt(mouseRayHitPivot.y)) / intTwo;
+        }
+        else if (roundFirstNormalX.Equals(zero) && roundFirstNormalZ.Equals(zero))
+        {
+            pivotCount1 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.x) - Mathf.RoundToInt(mouseRayHitPivot.x)) / intTwo;
+            pivotCount2 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.z) - Mathf.RoundToInt(mouseRayHitPivot.z)) / intTwo;
+        }
+        else
+        {
+            pivotCount1 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.y) - Mathf.RoundToInt(mouseRayHitPivot.y)) / intTwo;
+            pivotCount2 = Mathf.Abs(Mathf.RoundToInt(m_firstPosition.z) - Mathf.RoundToInt(mouseRayHitPivot.z)) / intTwo;
+        }
+
+        Vector3 directionToMousePosition = mouseRayHitPivot - m_firstPosition;
+        Vector3 direction1 = Vector3.zero;
+        Vector3 direction2 = Vector3.zero;
+
+        if (roundFirstNormalX.Equals(zero) && roundFirstNormalY.Equals(zero))
+        {
+            direction1.x = directionToMousePosition.x;
+            direction2.y = directionToMousePosition.y;
+        }
+        else if (roundFirstNormalX.Equals(zero) && roundFirstNormalZ.Equals(zero))
+        {
+            direction1.x = directionToMousePosition.x;
+            direction2.z = directionToMousePosition.z;
+        }
+        else
+        {
+            direction1.y = directionToMousePosition.y;
+            direction2.z = directionToMousePosition.z;
+        }
+
+        direction1 = direction1.normalized;
+        direction2 = direction2.normalized;
+
+        RaycastHit hit;
+        int layerMask = GameLibrary.LayerMask_Tile;
+
+        for (int i = 0; i <= pivotCount1; i++)
+        {
+            for (int j = 0; j <= pivotCount2; j++)
+            {
+                Vector3 checkOrigin = m_firstPosition + direction1 * two * i + direction2 * two * j + m_firstNormal * two;
+                if (Physics.Raycast(checkOrigin, -m_firstNormal, out hit, Mathf.Infinity, layerMask))
+                {
+                    GameObject oldTile = hit.transform.parent.gameObject;
+                    checkOrigin = hit.transform.position;
+
+                    while(true)
+                    {
+                        if (Physics.Raycast(checkOrigin, m_firstNormal, out hit, Mathf.Infinity, layerMask))
+                        {
+                            oldTile = hit.transform.parent.gameObject;
+                            checkOrigin = hit.transform.position;
+                        }
+                        else
+                        {
+                            m_tempSelectTiles.Add(oldTile);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        Selection.objects = m_tempSelectTiles.ToArray();
+    }
+    #endregion
 }
