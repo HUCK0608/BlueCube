@@ -21,6 +21,9 @@ public sealed class PlayerController3D : MonoBehaviour
     /// <summary>아이템 체크 위치모음</summary>
     public List<Transform> ItemCheckPoints { get { return m_itemCheckPoints; } }
 
+    private Animator m_animator;
+    public Animator Animator { get { return m_animator; } }
+
     // 리지드바디
     private Rigidbody m_rigidbody;
     public Rigidbody Rigidbody { get { return m_rigidbody; } }
@@ -40,6 +43,7 @@ public sealed class PlayerController3D : MonoBehaviour
         m_checkGround = GetComponent<CheckGround3D>();
         m_checkLadder = GetComponent<CheckLadder>();
 
+        m_animator = GetComponent<Animator>();
         m_rigidbody = GetComponent<Rigidbody>();
     }
 

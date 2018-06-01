@@ -6,6 +6,7 @@ public enum E_FirePilalr_ColorType { None = 0, Red, Blue }
 public class Special_FirePillar_Fire : MonoBehaviour
 {
     private static string m_collisionTag = "Special_FirePillar_Fire";
+    private static string m_waterHeightPath = "_WaterHeight";
 
     [Header("[Fire Settings]")]
     [Space(-5f)]
@@ -19,7 +20,15 @@ public class Special_FirePillar_Fire : MonoBehaviour
     [SerializeField]
     private bool m_isKeepStartFire;
 
+    /// <summary>물 증가 수치</summary>
+    [SerializeField]
+    private float m_waterIncreaseValue;
+
     [Header("- Don't Change")]
+    /// <summary>불기둥</summary>
+    [SerializeField]
+    private Interaction_Push_FirePillar m_firePillar;
+
     /// <summary>불 오브젝트</summary>
     [SerializeField]
     private GameObject m_fireObject;
@@ -31,17 +40,24 @@ public class Special_FirePillar_Fire : MonoBehaviour
     [SerializeField]
     private GameObject m_blueFire;
 
+    [SerializeField]
+    /// <summary>물 렌더러</summary>
+    private MeshRenderer m_waterMeshRenderer;
+
     /// <summary>월드 오브젝트</summary>
     private WorldObject m_worldObject;
     /// <summary>콜라이더</summary>
     private Collider m_collider;
-
+   
     private E_FirePilalr_ColorType m_currentFireColorType;
     /// <summary>현재 불 타입</summary>
     public E_FirePilalr_ColorType CurrentFireColorType { get { return m_currentFireColorType; } }
 
     /// <summary>충돌했었던 불 모음</summary>
     private Dictionary<Transform, Special_FirePillar_Fire> m_collisionFires;
+
+    /// <summary>물 높이 설정 코루틴</summary>
+    private Coroutine m_setWaterHeightCor;
 
     private void Awake()
     {
@@ -234,5 +250,65 @@ public class Special_FirePillar_Fire : MonoBehaviour
 
         // 저장
         m_currentFireColorType = fireColorType;
+
+        if (m_setWaterHeightCor != null)
+            StopCoroutine(m_setWaterHeightCor);
+
+        // 불기둥의 색과 불의 색이 같을경우 물이 차오르게 하기
+        if (m_currentFireColorType.Equals(m_firePillar.FirePillarColorType))
+            m_setWaterHeightCor = StartCoroutine(IncreaseWaterHeight());
+        // 불기둥의 색과 불의 색이 다를경우 물이 감소하게 하기
+        else
+            m_setWaterHeightCor = StartCoroutine(DecreaseWaterHeight());
+    }
+    
+    /// <summary>물의 높이를 증가</summary>
+    private IEnumerator IncreaseWaterHeight()
+    {
+        float zero = 0f;
+        float one = 1f;
+        float value = m_waterMeshRenderer.material.GetFloat(m_waterHeightPath);
+
+        while(true)
+        {
+            if (!GameLibrary.Bool_IsGameStop(m_worldObject))
+            {
+                value += m_waterIncreaseValue;
+                value = Mathf.Clamp(value, zero, one);
+                m_waterMeshRenderer.material.SetFloat(m_waterHeightPath, value);
+
+                if (value.Equals(one))
+                    break;
+            }
+
+            yield return null;
+        }
+
+        m_setWaterHeightCor = null;
+    }
+
+    /// <summary>물의 높이를 감소</summary>
+    private IEnumerator DecreaseWaterHeight()
+    {
+        float zero = 0f;
+        float one = 1f;
+        float value = m_waterMeshRenderer.material.GetFloat(m_waterHeightPath);
+
+        while(true)
+        {
+            if (!GameLibrary.Bool_IsGameStop(m_worldObject))
+            {
+                value -= m_waterIncreaseValue;
+                value = Mathf.Clamp(value, zero, one);
+                m_waterMeshRenderer.material.SetFloat(m_waterHeightPath, value);
+
+                if (value.Equals(zero))
+                    break;
+            }
+
+            yield return null;
+        }
+
+        m_setWaterHeightCor = null;
     }
 }

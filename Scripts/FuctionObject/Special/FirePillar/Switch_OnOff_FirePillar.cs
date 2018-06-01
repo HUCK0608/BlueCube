@@ -22,7 +22,6 @@ public sealed class Switch_OnOff_FirePillar : Switch_OnOff
     {
         yield return new WaitUntil(() => m_firePillar.FirePillarColorType.Equals(m_fire.CurrentFireColorType));
         m_isOn = true;
-        ChangeOnMesh();
 
         StartCoroutine(SwitchOffLogic());
     }
@@ -31,7 +30,6 @@ public sealed class Switch_OnOff_FirePillar : Switch_OnOff
     {
         yield return new WaitUntil(() => !m_firePillar.FirePillarColorType.Equals(m_fire.CurrentFireColorType));
         m_isOn = false;
-        ChangeOffMesh();
 
         StartCoroutine(SwitchOnLogic());
     }

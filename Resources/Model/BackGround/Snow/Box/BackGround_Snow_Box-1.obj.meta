@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: fbeddff22f7ff2647bdf69a379beed16
-timeCreated: 1527516703
+guid: 6976c2188a38d344c9ca92f85fa4f836
+timeCreated: 1527866790
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -51,7 +51,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -68,7 +68,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

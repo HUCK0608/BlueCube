@@ -75,4 +75,13 @@ public sealed class PlayerStat : MonoBehaviour
     [SerializeField]
     private float m_maxHoldTime;
     public float MaxHoldTime { get { return m_maxHoldTime; } }
+
+    [SerializeField]
+    private float m_hitMotionTime;
+    /// <summary>피격 모션 시간</summary>
+    public float HitMotionTime { get { return m_hitMotionTime; } }
+
+    private bool m_isInvincibility;
+    /// <summary>무적</summary>
+    public bool IsInvincibility { get { return m_isInvincibility; } set { m_isInvincibility = value; } }
 }

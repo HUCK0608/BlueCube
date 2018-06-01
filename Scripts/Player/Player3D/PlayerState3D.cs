@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerState3D : PlayerState
 {
-    private Animator m_animator;
     private static string m_animatorParametersName = "CurrentState";
 
     /// <summary>3D 컨트롤러</summary>
@@ -14,15 +13,13 @@ public class PlayerState3D : PlayerState
     {
         base.Awake();
 
-        m_animator = GetComponent<Animator>();
-
         m_subController = GetComponent<PlayerController3D>();
     }
 
     /// <summary>상태 진입시 실행</summary>
     public override void InitState()
     {
-        m_animator.SetInteger(m_animatorParametersName, (int)m_mainController.CurrentState3D);
+        m_subController.Animator.SetInteger(m_animatorParametersName, (int)m_mainController.CurrentState3D);
         //Debug.Log("3D 상태 진입 : " + this.GetType());
     }
 

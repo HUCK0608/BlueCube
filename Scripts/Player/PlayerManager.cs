@@ -69,6 +69,9 @@ public sealed class PlayerManager : MonoBehaviour
     /// <summary>플레이어가 땅에 있을경우 true를 반환</summary>
     public bool IsGrounded { get { return m_mainController.IsGrounded; } }
 
+    private static string m_hitPath = "Hit";
+    private static float m_hitAniCrossFadeTime = 0.5f;
+
     private void Awake()
     {
         m_instance = this;
@@ -140,8 +143,25 @@ public sealed class PlayerManager : MonoBehaviour
     /// <summary>플레이어에게 데미지를 입힌다</summary>
     public void Hit(int damage)
     {
-        m_stat.DecreaseHp(damage);
+        // 무적이 아닐경우 체력을 깎음
+        if(!m_stat.IsInvincibility)
+            m_stat.DecreaseHp(damage);
+
+        if (CurrentView.Equals(E_ViewType.View3D))
+            StartCoroutine(HitLogic3D());
+
         Debug.Log("플레이어 데미지! 남은체력 : " + m_stat.Hp);
+    }
+    
+    /// <summary>3D 피격 로직</summary>
+    private IEnumerator HitLogic3D()
+    {
+        AnimatorStateInfo currentStateInfo = m_subController3D.Animator.GetCurrentAnimatorStateInfo(0);
+        int currentStateHash = currentStateInfo.shortNameHash;
+
+        m_subController3D.Animator.Play(m_hitPath);
+        yield return new WaitUntil(() => m_subController3D.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+        m_subController3D.Animator.CrossFade(currentStateHash, m_hitAniCrossFadeTime, -1, currentStateInfo.normalizedTime);
     }
 
     /// <summar>플레이어를 teleportPosition으로 이동시킨다</summar>
