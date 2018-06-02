@@ -69,13 +69,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1661214894268502}
-  m_LocalRotation: {x: -0.00000008742278, y: -1, z: -2.7443449e-14, w: -0.00000031391647}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4860796157187176}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 179.99998, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &4354441679101340
 Transform:
   m_ObjectHideFlags: 1
@@ -96,7 +96,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1685020285210702}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: 12, z: -14}
+  m_LocalPosition: {x: 2, y: 12, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4030946473403282}
@@ -144,7 +144,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1661214894268502}
-  m_Mesh: {fileID: 4300000, guid: 3ddcfaa138b68b24abae06283bec2403, type: 3}
+  m_Mesh: {fileID: 4300000, guid: add24ec977ff7724fa595cae474114ab, type: 3}
 --- !u!61 &61914950009877660
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -194,8 +194,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_model: {fileID: 4030946473403282}
-  m_onMesh: {fileID: 4300000, guid: 1b7b5e07969763d4ea8b875f25440419, type: 3}
-  m_offMesh: {fileID: 4300000, guid: 3ddcfaa138b68b24abae06283bec2403, type: 3}
+  m_onMesh: {fileID: 4300000, guid: 5daf71c0639f83b47a60df14a53fd49b, type: 3}
+  m_offMesh: {fileID: 4300000, guid: add24ec977ff7724fa595cae474114ab, type: 3}
 --- !u!114 &114783170580064900
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -208,8 +208,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isUp: 0
-  m_isRight: 0
-  m_isLeft: 1
+  m_isRight: 1
+  m_isLeft: 0
   m_isDown: 1
 --- !u!114 &114932809646105542
 MonoBehaviour:

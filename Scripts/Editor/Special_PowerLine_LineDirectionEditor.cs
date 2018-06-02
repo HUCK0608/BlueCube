@@ -29,9 +29,7 @@ public sealed class Special_PowerLine_LineDirectionEditor : Editor
         {
             Special_PowerLine_Line mainScript = (Selection.activeGameObject).GetComponent<Special_PowerLine_Line>();
 
-            Vector3 newEulerAngles = mainScript.Model.localEulerAngles;
-            newEulerAngles.z += 90f;
-            mainScript.Model.localEulerAngles = newEulerAngles;
+            mainScript.Model.Rotate(Vector3.right, 90f);
 
             bool oldUpValue = m_isUpProp.boolValue;
             bool oldRightValue = m_isRightProp.boolValue;
