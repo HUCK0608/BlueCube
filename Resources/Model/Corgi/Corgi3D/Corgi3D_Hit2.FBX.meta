@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c09e48d09a03a31469ed5f455c8e6939
-timeCreated: 1527866982
+guid: 526dbba38c882944a9352c536fc26440
+timeCreated: 1527964976
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -81,7 +81,7 @@ ModelImporter:
     400070: scarf_bone2
     400072: scarf_bone3
     400074: scarf_bone4
-    7400000: Take 001
+    7400000: Corgi3D_Hit2
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -111,10 +111,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Take 001
+      name: Corgi3D_Hit2
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 10
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyStat : MonoBehaviour
 {
     [SerializeField]
-    private float m_hp;
+    protected float m_hp;
 
     /// <summary>데미지를 입힌다.</summary>
     public void Hit(int damage)

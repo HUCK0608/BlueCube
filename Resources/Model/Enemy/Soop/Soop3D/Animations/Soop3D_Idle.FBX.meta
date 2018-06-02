@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e5f39af8caac80f47b6375f34e9d99db
-timeCreated: 1527556000
+guid: e7d02cb8400ab074bb6b273716957c5c
+timeCreated: 1527965516
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -92,7 +92,7 @@ ModelImporter:
       name: Soop3D_Idle
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 105
+      lastFrame: 185
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

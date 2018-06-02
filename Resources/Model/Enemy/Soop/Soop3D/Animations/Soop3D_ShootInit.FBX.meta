@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 8ac6353eba4b47449afd1540af4d3b28
-timeCreated: 1527554335
+guid: 13280b3dbef7c384f852800802078e38
+timeCreated: 1527965731
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -92,7 +92,7 @@ ModelImporter:
       name: Soop3D_ShootInit
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 60
+      lastFrame: 56
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -112,7 +112,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.46019417
+      - time: 0.58472997
         functionName: CompleteShootInitMotion
         data: 
         objectReferenceParameter: {instanceID: 0}

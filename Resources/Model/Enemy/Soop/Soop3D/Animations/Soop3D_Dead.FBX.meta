@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 2aaf462ad2c3232449acb9e99e8b5cf5
-timeCreated: 1527554337
+guid: 6590b6d787d742c4eaf28d8fff0f72f0
+timeCreated: 1527965973
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -59,7 +59,7 @@ ModelImporter:
     400048: hand R_2
     400050: hand R_3
     400052: //RootNode
-    7400000: Soop3D_Shoot
+    7400000: Soop3D_Dead
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -89,7 +89,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Soop3D_Shoot
+      name: Soop3D_Dead
       takeName: Take 001
       firstFrame: 0
       lastFrame: 60
@@ -111,14 +111,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.25825244
-        functionName: CompleteShootMotion
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -152,7 +145,7 @@ ModelImporter:
     tangentImportMode: 3
     normalCalculationMode: 4
   importAnimation: 1
-  copyAvatar: 1
+  copyAvatar: 0
   humanDescription:
     serializedVersion: 2
     human: []
@@ -169,8 +162,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: ff9a7bae4af0a3a42a4d4423388463ce,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
