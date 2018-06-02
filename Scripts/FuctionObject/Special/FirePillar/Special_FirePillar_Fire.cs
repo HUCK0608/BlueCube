@@ -72,6 +72,11 @@ public class Special_FirePillar_Fire : MonoBehaviour
     /// <summary>불을 초기화 함</summary>
     private void InitFire()
     {
+        m_currentFireColorType = m_startFireType;
+
+        if (m_isKeepStartFire)
+            return;
+
         m_redFire.SetActive(false);
         m_blueFire.SetActive(false);
 
@@ -79,9 +84,6 @@ public class Special_FirePillar_Fire : MonoBehaviour
             m_redFire.SetActive(true);
         else if (m_startFireType.Equals(E_FirePilalr_ColorType.Blue))
             m_blueFire.SetActive(true);
-
-        // 저장
-        m_currentFireColorType = m_startFireType;
     }
 
     private void Start()
@@ -250,6 +252,9 @@ public class Special_FirePillar_Fire : MonoBehaviour
 
         // 저장
         m_currentFireColorType = fireColorType;
+
+        if (m_waterMeshRenderer == null)
+            return;
 
         if (m_setWaterHeightCor != null)
             StopCoroutine(m_setWaterHeightCor);

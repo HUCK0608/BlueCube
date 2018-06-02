@@ -62,7 +62,6 @@ public sealed class Enemy_Boomer : MonoBehaviour
 
         float addTime = 0f;
 
-        bool isInit = true;
         float startShootRandomTime = Random.Range(m_stat.StartShootMinDelay, m_stat.StartShootMaxDelay);
 
         m_isShootInit = true;
@@ -92,14 +91,9 @@ public sealed class Enemy_Boomer : MonoBehaviour
                 m_isShoot = true;
 
                 EnemyProjectileManager.Instance.UseProjectile(E_EnemyProjectile.Bomb, m_stat.ShootPosition.position, player.position);
+                EffectManager.Instance.CreateEffect(Effect_Type.Enemy_Soop_Shoot, m_stat.ShootPosition.position);
                 addTime = 0f;
             }
-            //else if(isInit && addTime >= startShootRandomTime)
-            //{
-            //    EnemyProjectileManager.Instance.UseProjectile(E_EnemyProjectile.Bomb, m_stat.ShootPosition.position, player.position);
-            //    addTime = 0f;
-            //    isInit = false;
-            //}
 
             if (!m_detectionArea.CheckDetected(player.position))
                 break;
