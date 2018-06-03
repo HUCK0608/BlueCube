@@ -6,48 +6,78 @@ using UnityEngine.SceneManagement;
 
 public sealed class Title_SelectMenuUI : MonoBehaviour
 {
-    /// <summary>기본 텍스트 색상</summary>
+    [Header("Don't Touch")]
     [SerializeField]
-    private Color m_textDefaultColor;
+    private Image m_newGameImage;
+    [SerializeField]
+    private Sprite m_newGameDefaultSprite;
+    [SerializeField]
+    private Sprite m_newGameSelectSprite;
 
-    /// <summary>선택 텍스트 색상</summary>
+    [Space(10f)]
+
     [SerializeField]
-    private Color m_textSelectColor;
+    private Image m_loadGameImage;
+    [SerializeField]
+    private Sprite m_loadGameDefaultSprite;
+    [SerializeField]
+    private Sprite m_loadGameSelectSprite;
+
+    [Space(10f)]
+
+    [SerializeField]
+    private Image m_optionsImage;
+    [SerializeField]
+    private Sprite m_optionsDefaultSprite;
+    [SerializeField]
+    private Sprite m_optionsSelectSprite;
+
+    [Space(10f)]
+
+    [SerializeField]
+    private Image m_exitImage;
+    [SerializeField]
+    private Sprite m_exitDefaultSprite;
+    [SerializeField]
+    private Sprite m_exitSelectSprite;
+
+    [Space(10f)]
+
+    [SerializeField]
+    private RectTransform m_selectImage;
+
+    [Space(10f)]
 
     /// <summary>뉴 게임 씬</summary>
     [SerializeField]
     private string m_newGameScenePath;
 
-    /// <summary>선택 메뉴 텍스트 컴포넌트 모음</summary>
-    private List<Text> m_selectMenuTexts;
+    public void OnMouseEnterNewGame() { m_newGameImage.sprite = m_newGameSelectSprite; EnableSelectImage(m_newGameImage.rectTransform); }
+    public void OnMouseExitNewGame() { m_newGameImage.sprite = m_newGameDefaultSprite; DisableSelectImage(); }
+    public void OnMouseClickNewGame() { SceneManager.LoadScene(m_newGameScenePath); }
 
-    private void Awake()
+    public void OnMouseEnterLoadGame() { m_loadGameImage.sprite = m_loadGameSelectSprite; EnableSelectImage(m_loadGameImage.rectTransform); }
+    public void OnMouseExitLoadGame() { m_loadGameImage.sprite = m_loadGameDefaultSprite; DisableSelectImage(); }
+
+    public void OnMouseEnterOptions() { m_optionsImage.sprite = m_optionsSelectSprite; EnableSelectImage(m_optionsImage.rectTransform); }
+    public void OnMouseExitOptions() { m_optionsImage.sprite = m_optionsDefaultSprite; DisableSelectImage(); }
+
+    public void OnMouseEnterExit() { m_exitImage.sprite = m_exitSelectSprite; EnableSelectImage(m_exitImage.rectTransform); }
+    public void OnMouseExitExit() { m_exitImage.sprite = m_exitDefaultSprite; DisableSelectImage(); }
+    public void OnMouseClickExit() { Application.Quit(); }
+
+    private void EnableSelectImage(RectTransform target)
     {
-        m_selectMenuTexts = new List<Text>();
-        m_selectMenuTexts.AddRange(GetComponentsInChildren<Text>());
+        Vector2 newPosition = target.anchoredPosition;
+        newPosition.x = -target.sizeDelta.x * 0.5f - 30f;
+        newPosition.y = (-target.sizeDelta.y + m_selectImage.sizeDelta.y) * 0.5f + target.anchoredPosition.y;
+        m_selectImage.anchoredPosition = newPosition;
+
+        m_selectImage.gameObject.SetActive(true);
     }
 
-    /// <summary>마우스가 메뉴에 들어올 때 이벤트</summary>
-    public void OnMouseEnterEvent(Text menuText)
+    private void DisableSelectImage()
     {
-        menuText.color = m_textSelectColor;
-    }
-
-    /// <summary>마우스가 메뉴에서 나갈 때 이벤트</summary>
-    public void OnMouseExitEvent(Text menuText)
-    {
-        menuText.color = m_textDefaultColor;
-    }
-
-    /// <summary>새 게임 클릭 이벤트</summary>
-    public void OnClickNewGameMenuEvent()
-    {
-        SceneManager.LoadScene(m_newGameScenePath);
-    }
-
-    /// <summary>종료 이벤트</summary>
-    public void OnClickExitEvent()
-    {
-        Application.Quit();
+        m_selectImage.gameObject.SetActive(false);
     }
 }
