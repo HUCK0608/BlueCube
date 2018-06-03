@@ -29,8 +29,23 @@ public sealed class PlayerStat : MonoBehaviour
     [SerializeField]
     private int m_hp;
     public int Hp { get { return m_hp; } }
-    public void IncreaseHp(int value) { m_hp += value; UIManager.Instance.PlayerHpUI.SetPlayerHpText(m_hp); }
-    public void DecreaseHp(int value) { m_hp -= value; UIManager.Instance.PlayerHpUI.SetPlayerHpText(m_hp); }
+
+    public void IncreaseHp(int value)
+    {
+        m_hp += value;
+        UIManager.Instance.PlayerHpUI.SetPlayerHpText(m_hp);
+    }
+
+    public void DecreaseHp(int value)
+    {
+        if(m_hp > 0)
+            m_hp -= value;
+
+        UIManager.Instance.PlayerHpUI.SetPlayerHpText(m_hp);
+
+        if (m_hp.Equals(0))
+            PlayerManager.Instance.SubController3D.Animator.SetBool("IsDead", true);
+    }
 
     [SerializeField]
     private float m_moveSpeed;

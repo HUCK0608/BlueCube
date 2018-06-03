@@ -19,6 +19,9 @@ public sealed class EnemyDetectionArea : MonoBehaviour
 
     public bool IsDectected()
     {
+        if (PlayerManager.Instance.Stat.Hp.Equals(0))
+            return false;
+
         if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
             return CheckDetected3D();
         else

@@ -39,8 +39,11 @@ public sealed class EnemyState3D_Soop_ShootInit : EnemyState3D_Soop
     /// <summary>상태 변경 모음</summary>
     private void ChangeStates()
     {
+        // 체력이 다 달면 Dead 상태로 변경
+        if (m_mainController.Stat.Hp <= 0)
+            m_mainController.ChangeState3D(E_SoopState3D.Dead);
         // 플레이어가 탐지범위에서 벗어나면 Idle 상태로 변경
-        if (!m_mainController.Stat.DetectionArea.IsDectected())
+        else if (!m_mainController.Stat.DetectionArea.IsDectected())
             m_mainController.ChangeState3D(E_SoopState3D.Idle);
         // 딜레이가 끝나면 Shoot 상태로 변경
         else if (m_addTime >= m_shootDelay)

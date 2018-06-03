@@ -25,8 +25,11 @@ public sealed class EnemyState3D_Soop_Shoot : EnemyState3D_Soop
     /// <summary>상태 변경 모음</summary>
     private void ChangeStates()
     {
+        // 체력이 다 달면 Dead 상태로 변경
+        if (m_mainController.Stat.Hp <= 0)
+            m_mainController.ChangeState3D(E_SoopState3D.Dead);
         // 모션이 끝났을 경우 ShootInit 상태로 변경
-        if (m_isEndShootMotion)
+        else if (m_isEndShootMotion)
             m_mainController.ChangeState3D(E_SoopState3D.ShootInit);
     }
 

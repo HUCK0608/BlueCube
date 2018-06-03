@@ -8,20 +8,4 @@ public sealed class EnemyState3D_Soop_Dead : EnemyState3D_Soop
     {
         base.InitState();
     }
-
-    private void Update()
-    {
-        ChangeStates();
-    }
-
-    /// <summary>상태 변경 모음</summary>
-    private void ChangeStates()
-    {
-
-    }
-
-    public override void EndState()
-    {
-        base.EndState();
-    }
 }

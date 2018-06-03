@@ -133,13 +133,6 @@ public sealed class PlayerManager : MonoBehaviour
         m_dustEffectParticle.Stop();
     }
 
-    // 체력감소 부분
-    /// <summary>체력이 0이하일 경우 true를 반환</summary>
-    private bool DieCheck()
-    {
-        return m_stat.Hp <= 0 ? true : false;
-    }
-
     /// <summary>플레이어에게 데미지를 입힌다</summary>
     public void Hit(int damage)
     {
@@ -147,7 +140,7 @@ public sealed class PlayerManager : MonoBehaviour
         if(!m_stat.IsInvincibility)
             m_stat.DecreaseHp(damage);
 
-        if (CurrentView.Equals(E_ViewType.View3D))
+        if (CurrentView.Equals(E_ViewType.View3D) && !m_stat.Hp.Equals(0))
             StartCoroutine(HitLogic3D());
 
         Debug.Log("플레이어 데미지! 남은체력 : " + m_stat.Hp);

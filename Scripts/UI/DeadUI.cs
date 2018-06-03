@@ -133,12 +133,14 @@ public sealed class DeadUI : MonoBehaviour
     public void TitleOnMouseEnterEvent()
     {
         m_titleImage.sprite = m_titleSelectSprite;
+        m_titleImage.SetNativeSize();
     }
 
     /// <summary>타이틀 MouseExit 이벤트</summary>
     public void TitleOnMouseExitEvent()
     {
         m_titleImage.sprite = m_titleDefaultSprite;
+        m_titleImage.SetNativeSize();
     }
 
     /// <summary>타이틀 MouseClick 이벤트</summary>
@@ -151,12 +153,14 @@ public sealed class DeadUI : MonoBehaviour
     public void RetryOnMouseEnterEvent()
     {
         m_retryImage.sprite = m_retrySelectSprite;
+        m_retryImage.SetNativeSize();
     }
 
     /// <summary>재시작 MouseExit 이벤트</summary>
     public void RetryOnMouseExitEvent()
     {
         m_retryImage.sprite = m_retryDefaultSprite;
+        m_retryImage.SetNativeSize();
     }
 
     /// <summary>재시작 MouseClick 이벤트</summary>
