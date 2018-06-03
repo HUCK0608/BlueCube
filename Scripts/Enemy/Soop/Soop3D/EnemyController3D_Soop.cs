@@ -13,6 +13,8 @@ public sealed class EnemyController3D_Soop : MonoBehaviour
     private void Awake()
     {
         m_mainController = GetComponentInParent<EnemyController_Soop>();
+
+        m_animator = GetComponent<Animator>();
     }
 
     /// <summary>direction 방향으로 lerp회전을 함</summary>

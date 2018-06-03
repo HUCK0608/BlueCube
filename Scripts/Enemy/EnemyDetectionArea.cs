@@ -17,16 +17,18 @@ public sealed class EnemyDetectionArea : MonoBehaviour
         Gizmos.color = defaultColor;
     }
 
-    public bool CheckDetected(Vector3 target)
+    public bool IsDectected()
     {
         if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
-            return CheckDetected3D(target);
+            return CheckDetected3D();
         else
-            return CheckDetected2D(target);
+            return CheckDetected2D();
     }
 
-    private bool CheckDetected3D(Vector3 target)
+    private bool CheckDetected3D()
     {
+        Vector3 target = PlayerManager.Instance.Player3D_Object.transform.position;
+
         bool checkX = false;
         bool checkY = false;
         bool checkZ = false;
@@ -54,8 +56,10 @@ public sealed class EnemyDetectionArea : MonoBehaviour
         return false;
     }
 
-    private bool CheckDetected2D(Vector3 target)
+    private bool CheckDetected2D()
     {
+        Vector3 target = PlayerManager.Instance.Player2D_Object.transform.position;
+
         bool checkX = false;
         bool checkY = false;
 

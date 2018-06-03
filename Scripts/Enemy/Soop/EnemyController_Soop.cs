@@ -12,13 +12,16 @@ public sealed class EnemyController_Soop : EnemyController
     /// <summary>3D 상태 모음</summary>
     private Dictionary<E_SoopState3D, EnemyState> m_states3D;
 
-    /// <summary>3D 현재 상태</summary>
     private E_SoopState3D m_currentState3D;
+    /// <summary>3D 현재 상태</summary>
+    public E_SoopState3D CurrentState3D { get { return m_currentState3D; } }
 
     private bool m_isInit;
 
     private void Awake()
     {
+        m_stat = GetComponent<EnemyStat_Soop>();
+
         InitStates3D();
     }
 
