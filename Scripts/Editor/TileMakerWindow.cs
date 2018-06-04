@@ -16,7 +16,7 @@ public class TileMakerWindow : EditorWindow
 
     // 모든 타일 관련 변수
     /// <summary>모든 타일 메이커</summary>
-    private TileMaker[] m_tileMakers;
+    private List<TileMaker> m_tileMakers;
     /// <summary>모든 타일 메이커 개수</summary>
     private int m_tileMakersCount;
 
@@ -54,8 +54,6 @@ public class TileMakerWindow : EditorWindow
 
     private void OnEnable()
     {
-        InitTileMakers();
-        InitNoTileRenderers();
         GetSelectTilesInfo();
 
         m_tilePrefab = Resources.Load("Prefabs/Terrain/Snow/Tile/Terrain_Snow_Tile") as GameObject;
@@ -78,8 +76,9 @@ public class TileMakerWindow : EditorWindow
     /// <summary>타일 메이커 초기화</summary>
     private void InitTileMakers()
     {
-        m_tileMakers = (TileMaker[])FindObjectsOfType(typeof(TileMaker));
-        m_tileMakersCount = m_tileMakers.Length;
+        m_tileMakers = new List<TileMaker>();
+        m_tileMakers.AddRange((TileMaker[])FindObjectsOfType(typeof(TileMaker)));
+        m_tileMakersCount = m_tileMakers.Count;
     }
 
     /// <summary>타일이 아닌 랜더러 초기화</summary>
@@ -210,6 +209,8 @@ public class TileMakerWindow : EditorWindow
     {
         if (GUILayout.Button("모든 타일 오브젝트 모델 동기화"))
         {
+            InitTileMakers();
+
             for (int i = 0; i < m_tileMakersCount; i++)
             {
                 m_tileMakers[i].InitMesh();
@@ -222,6 +223,8 @@ public class TileMakerWindow : EditorWindow
     {
         if (GUILayout.Button("모든 타일 오브젝트 렌더러 켜기"))
         {
+            InitTileMakers();
+
             for (int i = 0; i < m_tileMakersCount; i++)
                 m_tileMakers[i].GetComponentInChildren<MeshRenderer>().enabled = true;
         }
@@ -232,6 +235,8 @@ public class TileMakerWindow : EditorWindow
     {
         if (GUILayout.Button("모든 타일 오브젝트 렌더러 끄기"))
         {
+            InitTileMakers();
+
             for (int i = 0; i < m_tileMakersCount; i++)
                 m_tileMakers[i].GetComponentInChildren<MeshRenderer>().enabled = false;
         }
@@ -242,6 +247,8 @@ public class TileMakerWindow : EditorWindow
     {
         if (GUILayout.Button("모든 타일 오브젝트 컬링"))
         {
+            InitTileMakers();
+
             RaycastHit hit;
 
             int count = 0;
@@ -269,6 +276,8 @@ public class TileMakerWindow : EditorWindow
     {
         if (GUILayout.Button("타일이 아닌 모든 오브젝트 렌더러 켜기"))
         {
+            InitNoTileRenderers();
+
             for (int i = 0; i < m_noTileMeshRendereCount; i++)
             {
                 m_noTileMeshRenderers[i].enabled = true;
@@ -281,6 +290,8 @@ public class TileMakerWindow : EditorWindow
     {
         if (GUILayout.Button("타일이 아닌 모든 오브젝트 렌더러 끄기"))
         {
+            InitNoTileRenderers();
+
             for (int i = 0; i < m_noTileMeshRendereCount; i++)
             {
                 m_noTileMeshRenderers[i].enabled = false;
@@ -679,6 +690,7 @@ public class TileMakerWindow : EditorWindow
     }
 
     #region CreateMode Event 목록
+
     /// <summary>생성모드 LeftMouseDown 이벤트</summary>
     private void Event_CreateMode_LeftMouseDown()
     {
