@@ -4,6 +4,9 @@ using UnityEngine;
 
 public sealed class PlayerState3D_Pushing : PlayerState3D
 {
+    [SerializeField]
+    private GameObject m_pushingEffect;
+
     /// <summary>Pushing 모션이 끝났을 경우 true를 반환</summary>
     bool m_isEndPushingMotion;
 
@@ -32,6 +35,7 @@ public sealed class PlayerState3D_Pushing : PlayerState3D
     /// <summary>오브젝트를 민다 (애니메이션 이벤트에서 호출)</summary>
     public void PushObject()
     {
+        m_pushingEffect.SetActive(true);
         m_playerManager.Hand.CurrentPushItem.PushObject();
     }
 
@@ -44,5 +48,7 @@ public sealed class PlayerState3D_Pushing : PlayerState3D
     public override void EndState()
     {
         base.EndState();
+
+        m_pushingEffect.SetActive(false);
     }
 }

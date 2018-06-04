@@ -5,7 +5,7 @@ using UnityEngine;
 
 public sealed class PlayerState3D_PushInit : PlayerState3D
 {
-    bool m_isEndPushInitMotion;
+    private bool m_isEndPushInitMotion;
 
     public override void InitState()
     {

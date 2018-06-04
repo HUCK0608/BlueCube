@@ -4,9 +4,14 @@ using UnityEngine;
 
 public sealed class PlayerState3D_PushIdle : PlayerState3D
 {
+    [SerializeField]
+    private GameObject m_pushIdleEffect;
+
     public override void InitState()
     {
         base.InitState();
+
+        m_pushIdleEffect.SetActive(true);
     }
     
     private void Update()
@@ -33,5 +38,7 @@ public sealed class PlayerState3D_PushIdle : PlayerState3D
     public override void EndState()
     {
         base.EndState();
+
+        m_pushIdleEffect.SetActive(false);
     }
 }

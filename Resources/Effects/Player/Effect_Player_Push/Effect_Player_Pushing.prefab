@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4143073017650232}
   m_Layer: 0
-  m_Name: Fx_cha_push final
+  m_Name: Effect_Player_Pushing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
