@@ -8,11 +8,12 @@ public sealed class PlayerState3D_Dead : PlayerState3D
     {
         base.InitState();
 
-        UIManager.Instance.DeadUI.SetActive(true);
+        m_subController.MoveStopXZ();
     }
 
-    private void Update()
+    /// <summary>모션이 끝났다고 설정 (애니메이션 이벤트에서 사용)</summary>
+    public void CompleteDeadMotion()
     {
-        m_subController.MoveStopXZ();
+        UIManager.Instance.DeadUI.SetActive(true);
     }
 }
