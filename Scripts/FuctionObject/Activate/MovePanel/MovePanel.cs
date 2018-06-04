@@ -28,6 +28,15 @@ public sealed class MovePanel : MonoBehaviour
     [SerializeField]
     private float m_waitTime;
 
+    // 임시로 발판이 꺼졌다 켜지는 느낌을 하게 할 변수들
+    private MeshRenderer m_meshRenderer;
+
+    [Header("임시")]
+    [SerializeField]
+    private Texture2D m_offEmissionTexture;
+    [SerializeField]
+    private Texture2D m_onEmissionTexture;
+
     private void Awake()
     {
         m_activate = GetComponent<Activate>();
@@ -36,6 +45,8 @@ public sealed class MovePanel : MonoBehaviour
 
         m_moveGroup = transform.Find("MoveGroup");
 
+        m_meshRenderer = GetComponentInChildren<MeshRenderer>();
+        m_meshRenderer.material.SetTexture("_MainTex2", m_offEmissionTexture);
         StartCoroutine(CheckActivate());
     }
 
@@ -47,6 +58,9 @@ public sealed class MovePanel : MonoBehaviour
             // 활성화가 되었다면 패널 이동 코루틴을 시작하고 현재 코루틴 종료
             if(m_activate.IsActivate)
             {
+                // 임시
+                m_meshRenderer.material.SetTexture("_MainTex2", m_onEmissionTexture);
+
                 StartCoroutine(Move());
                 break;
             }

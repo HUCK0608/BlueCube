@@ -26,6 +26,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1166044097438950
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4424598800435074}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1196840610369116
 GameObject:
   m_ObjectHideFlags: 1
@@ -137,7 +152,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4732153023368280}
+  - {fileID: 4424598800435074}
   m_Father: {fileID: 4837356973527934}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4424598800435074
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1166044097438950}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 13, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4336228688437088}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4455610415132736
@@ -188,7 +217,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1819499093146762}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.211807, y: 6.0622816, z: -3.8211064}
+  m_LocalPosition: {x: -2, y: 2, z: 17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4623875198427598}
@@ -331,7 +360,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d3b6b4382bb66499821d7bcbf738ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_switches: []
+  m_switches:
+  - {fileID: 0}
 --- !u!114 &114529763539130404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -346,6 +376,9 @@ MonoBehaviour:
   m_path: {fileID: 114830654926728466}
   m_moveSpeed: 5
   m_waitTime: 0
+  m_offEmissionTexture: {fileID: 2800000, guid: 58480077ef3263d44b03e26b3e585eb4,
+    type: 3}
+  m_onEmissionTexture: {fileID: 2800000, guid: b9b08fe4bfbf7f14e8b772eeb85ee269, type: 3}
 --- !u!114 &114740164296906462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -357,6 +390,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isUse2DTexture: 0
+  m_isUseShiningSpecular: 0
 --- !u!114 &114830654926728466
 MonoBehaviour:
   m_ObjectHideFlags: 1
