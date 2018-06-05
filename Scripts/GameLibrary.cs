@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 /// <summary>이동할 때 어느 피벗으로 이동할 지 여부</summary>
 public enum E_MovePivot { World, Local }
@@ -140,10 +140,10 @@ public static class GameLibrary
         return (1 << value);
     }
 
-    public static Texture2D GetThumbnail(this GameObject gameobject)
-    {
-        return AssetPreview.GetAssetPreview(gameobject);
-    }
+    //public static Texture2D GetThumbnail(this GameObject gameobject)
+    //{
+    //    return AssetPreview.GetAssetPreview(gameobject);
+    //}
 
     /// <summary>게임 피벗을 반환</summary>
     public static Vector3 GetGamePivot(this Vector3 position)
