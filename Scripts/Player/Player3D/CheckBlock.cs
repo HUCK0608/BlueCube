@@ -21,7 +21,8 @@ public sealed class CheckBlock : MonoBehaviour
                                      GameLibrary.LayerMask_BackgroundCollision |
                                      GameLibrary.LayerMask_IgnoreRaycast |
                                      GameLibrary.LayerMask_Player |
-                                     GameLibrary.LayerMask_Switch);
+                                     GameLibrary.LayerMask_Switch |
+                                     GameLibrary.LayerMask_Ladder);
 
         float distance = PlayerManager.Instance.Skill.ChangeViewRect.SizeZ;
 

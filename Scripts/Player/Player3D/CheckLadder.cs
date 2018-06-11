@@ -20,70 +20,48 @@ public sealed class CheckLadder : MonoBehaviour
     [SerializeField]
     private float m_downCheckDistance;
 
-    private Ray m_ray;
+    /// <summary>사다리 모음</summary>
+    private Dictionary<Transform, Ladder> m_ladders;
 
-    private int m_layerMask;
+    private Ladder m_latelyLadder;
+    /// <summary>제일 최근 사다리</summary>
+    public Ladder LatelyLadder { get { return m_latelyLadder; } }
 
     private void Awake()
     {
-        m_ray = new Ray();
-
-        // 사다리만 통과하는 레이어마스크
-        m_layerMask = (1 << 12);
-    }
-
-    /// <summary>Direction방향에 사다리를 반환함</summary>
-    public Ladder GetLadder(Vector3 directon)
-    {
-        Ladder ladder = null;
-
-        m_ray.origin = m_forwardPoint.position;
-        m_ray.direction = directon;
-
-        RaycastHit hit;
-        if(Physics.Raycast(m_ray, out hit, m_forwardCheckDistance, m_layerMask))
-        {
-            ladder = hit.transform.GetComponentInParent<Ladder>();
-        }
-
-        return ladder;
+        m_ladders = new Dictionary<Transform, Ladder>();
     }
 
     /// <summary>Direction방향에 사다리가 있으면 true를 반환</summary>
     public bool IsOnLadder(Vector3 direction)
     {
-        bool isLadder = false;
+        RaycastHit hit;
 
-        m_ray.origin = m_forwardPoint.position;
-        m_ray.direction = direction;
-
-        if (Physics.Raycast(m_ray, m_forwardCheckDistance, m_layerMask))
+        if (Physics.Raycast(m_forwardPoint.position, direction, out hit, m_forwardCheckDistance, GameLibrary.LayerMask_Ladder))
         {
-            isLadder = true;
+            if (!m_ladders.ContainsKey(hit.transform))
+                m_ladders.Add(hit.transform, hit.transform.GetComponentInParent<Ladder>());
+
+            m_latelyLadder = m_ladders[hit.transform];
+
+            return true;
         }
 
-        return isLadder;
+        return false;
     }
 
     /// <summary>사다리의 아래부분이면 true를 반환</summary>
     public bool IsLadderDown()
     {
-        bool isLadderDown = false;
-
-        m_ray.origin = m_downPoint.position;
-        m_ray.direction = Vector3.down;
-
         // 무시할 레이어 마스크
         int layerMask = (-1) - (GameLibrary.LayerMask_Player |
                                      GameLibrary.LayerMask_Bullet |
                                      GameLibrary.LayerMask_IgnoreRaycast |
                                      GameLibrary.LayerMask_BackgroundTrigger);
 
-        if (Physics.Raycast(m_ray, m_downCheckDistance, layerMask))
-        {
-            isLadderDown = true;
-        }
+        if (Physics.Raycast(m_downPoint.position, Vector3.down, m_downCheckDistance, layerMask))
+            return true;
 
-        return isLadderDown;
+        return false;
     }
 }

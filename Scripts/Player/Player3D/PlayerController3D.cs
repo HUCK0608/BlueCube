@@ -28,10 +28,6 @@ public sealed class PlayerController3D : MonoBehaviour
     private Rigidbody m_rigidbody;
     public Rigidbody Rigidbody { get { return m_rigidbody; } }
 
-    private Ladder m_currentLadder;
-    /// <summary>현재 사용중인 사다리</summary>
-    public Ladder CurrentLadder { get { return m_currentLadder; } set { m_currentLadder = value; } }
-
     /// <summary>3D플레이어의 정면 방향을 반환</summary>
     public Vector3 Forward { get { return transform.forward; } }
 
@@ -55,11 +51,17 @@ public sealed class PlayerController3D : MonoBehaviour
     /// <summary>중력 적용</summary>
     public void ApplyGravity()
     {
-        if (m_playerManager.IsViewChange || m_playerManager.IsViewChangeReady || m_mainController.CurrentState3D.Equals(E_PlayerState3D.Hold))
+        E_PlayerState3D currentState = m_mainController.CurrentState3D;
+
+        if (m_playerManager.IsViewChange || m_playerManager.IsViewChangeReady || currentState.Equals(E_PlayerState3D.Hold))
         {
             MoveStopAll();
             return;
         }
+
+        // 사다리일 경우 중력적용을 하지 않음
+        if (currentState.Equals(E_PlayerState3D.LadderIdle) || currentState.Equals(E_PlayerState3D.LadderMove))
+            return;
 
         // 땅인지 체크
         m_mainController.IsGrounded = m_checkGround.Check();

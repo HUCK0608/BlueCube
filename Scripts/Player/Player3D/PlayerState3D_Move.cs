@@ -90,11 +90,12 @@ public sealed class PlayerState3D_Move : PlayerState3D
         // 이동방향에 사다리가 있으면 LadderInit 상태로 변경
         else if (m_subController.CheckLadder.IsOnLadder(m_moveDirection))
         {
-            // 해당 이동 방향에 있는 곳에 레이를 쏴서 사다리 스크립트를 저장함
-            m_subController.CurrentLadder = m_subController.CheckLadder.GetLadder(m_moveDirection);
-
-            // LadderInit 상태로 변경
-            m_mainController.ChangeState3D(E_PlayerState3D.LadderInit);
+            // 사다리를 사용할 수 있을 경우에만 실행
+            if (m_subController.CheckLadder.LatelyLadder.IsCanUseLadder())
+            {
+                // LadderInit 상태로 변경
+                m_mainController.ChangeState3D(E_PlayerState3D.LadderChase);
+            }
         }
         // 점프키를 눌렀을 때 땅에 있으면 Jump 상태로 변경
         else if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))

@@ -41,6 +41,9 @@ public static class GameLibrary
     private static int m_layerMask_InteractionPickPut = LayerMask.NameToLayer("Interaction PickPut");
     public static int LayerMask_InteractionPickPut { get { return m_layerMask_InteractionPickPut.Shift(); } }
 
+    private static int m_layerMask_Ladder = LayerMask.NameToLayer("Ladder");
+    public static int LayerMask_Ladder { get { return m_layerMask_Ladder.Shift(); } }
+
     private static int m_layerMask_Switch = LayerMask.NameToLayer("Switch");
     public static int LayerMask_Switch { get { return m_layerMask_Switch.Shift(); } }
 

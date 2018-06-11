@@ -9,24 +9,9 @@ public sealed class PlayerState3D_LadderInit : PlayerState3D
     {
         base.InitState();
 
-        m_subController.MoveStopAll();
+        m_subController.LookRotation(m_subController.CheckLadder.LatelyLadder.Forward);
 
-        // 머리와 몸이 사다리를 바라보게 만듬
-        m_subController.LookRotation(m_subController.CurrentLadder.Forward);
-
-        // 매달릴 위치를 가져와서 적용, y는 현재 위치를 넣어줌
-        Vector3 hangPosition = m_subController.CurrentLadder.HangPosition;
-        hangPosition.y = transform.position.y;
-        transform.position = hangPosition;
-
-        // LadderIdle 상태로 변경
         m_mainController.ChangeState3D(E_PlayerState3D.LadderIdle);
-    }
-
-    /// <summary>상태 변경 모음</summary>
-    protected override void ChangeStates()
-    {
-        throw new NotImplementedException();
     }
 
     public override void EndState()

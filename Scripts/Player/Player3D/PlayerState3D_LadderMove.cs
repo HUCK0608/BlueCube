@@ -25,7 +25,7 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
     private void Move()
     {
         // 현재 사용중인 사다리
-        Ladder currentLadder = m_subController.CurrentLadder;
+        Ladder currentLadder = m_subController.CheckLadder.LatelyLadder;
 
         // 이동입력
         m_moveDirection = m_subController.GetMoveDirection();
@@ -38,7 +38,7 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
             m_subController.LadderMove(Vector3.up);
         // 아래로 이동
         else if (m_angle >= 135f)
-                m_subController.LadderMove(Vector3.down);
+            m_subController.LadderMove(Vector3.down);
     }
 
     /// <summary>상태 변경 모음</summary>
