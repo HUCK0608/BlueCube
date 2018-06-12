@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class EnemyState3D_Soop_ShootInit : EnemyState3D_Soop
+public sealed class EnemyState2D_Soop_ShootInit : EnemyState2D_Soop
 {
     /// <summary>ShootInit 모션이 끝났을 경우 true를 반환</summary>
     private bool m_isEndShootInitMotion;
@@ -23,11 +23,11 @@ public sealed class EnemyState3D_Soop_ShootInit : EnemyState3D_Soop
     private void Update()
     {
         // 플레이어로의 방향구하기
-        Vector3 directionToPlayer = PlayerManager.Instance.Player3D_Object.transform.position - transform.position;
+        Vector3 directionToPlayer = PlayerManager.Instance.Player2D_Object.transform.position - transform.position;
         directionToPlayer.y = 0f;
 
         // 회전
-        m_subController.RotateToDirection(directionToPlayer.normalized);
+        m_subController.LookRotate(directionToPlayer.normalized);
 
         // 장전 모션이 끝난 뒤에 딜레이 계산
         if (m_isEndShootInitMotion)
@@ -41,13 +41,13 @@ public sealed class EnemyState3D_Soop_ShootInit : EnemyState3D_Soop
     {
         // 체력이 다 달면 Dead 상태로 변경
         if (m_mainController.Stat.Hp <= 0)
-            m_mainController.ChangeState3D(E_SoopState.Dead);
+            m_mainController.ChangeState2D(E_SoopState.Dead);
         // 플레이어가 탐지범위에서 벗어나면 Idle 상태로 변경
         else if (!m_mainController.Stat.DetectionArea.IsDectected())
-            m_mainController.ChangeState3D(E_SoopState.Idle);
+            m_mainController.ChangeState2D(E_SoopState.Idle);
         // 딜레이가 끝나면 Shoot 상태로 변경
         else if (m_addTime >= m_shootDelay)
-            m_mainController.ChangeState3D(E_SoopState.Shoot);
+            m_mainController.ChangeState2D(E_SoopState.Shoot);
     }
 
     public override void EndState()

@@ -27,6 +27,11 @@ public sealed class EnemyStat_Soop : EnemyStat
     [Header("Don't Touch")]
     [SerializeField]
     private Transform m_shootPosition3D;
-    /// <summary>발사 위치</summary>
+    /// <summary>3D 발사 위치</summary>
     public Transform ShootPosition3D { get { return m_shootPosition3D; } }
+
+    [SerializeField]
+    private Transform m_shootPosition2D;
+    /// <summary>2D 발사 위치</summary>
+    public Transform ShootPosition2D { get { return m_shootPosition2D; } }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class EnemyState3D_Soop_Shoot : EnemyState3D_Soop
+public sealed class EnemyState2D_Soop_Shoot : EnemyState2D_Soop
 {
     /// <summary>Shoot 모션이 끝났을 경우 true를 반환</summary>
     private bool m_isEndShootMotion;
@@ -14,7 +14,7 @@ public sealed class EnemyState3D_Soop_Shoot : EnemyState3D_Soop
         m_isEndShootMotion = false;
 
         // 폭탄 발사
-        EnemyProjectileManager.Instance.UseProjectile(E_EnemyProjectile.Bomb, m_mainController.Stat.ShootPosition3D.position, PlayerManager.Instance.Player3D_Object.transform.position);
+        EnemyProjectileManager.Instance.UseProjectile(E_EnemyProjectile.Bomb, m_mainController.Stat.ShootPosition2D.position, PlayerManager.Instance.Player3D_Object.transform.position);
     }
 
     private void Update()
@@ -27,10 +27,10 @@ public sealed class EnemyState3D_Soop_Shoot : EnemyState3D_Soop
     {
         // 체력이 다 달면 Dead 상태로 변경
         if (m_mainController.Stat.Hp <= 0)
-            m_mainController.ChangeState3D(E_SoopState.Dead);
+            m_mainController.ChangeState2D(E_SoopState.Dead);
         // 모션이 끝났을 경우 ShootInit 상태로 변경
         else if (m_isEndShootMotion)
-            m_mainController.ChangeState3D(E_SoopState.ShootInit);
+            m_mainController.ChangeState2D(E_SoopState.ShootInit);
     }
 
     public override void EndState()
