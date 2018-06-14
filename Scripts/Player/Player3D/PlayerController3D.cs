@@ -60,7 +60,7 @@ public sealed class PlayerController3D : MonoBehaviour
         }
 
         // 사다리일 경우 중력적용을 하지 않음
-        if (currentState.Equals(E_PlayerState3D.LadderIdle) || currentState.Equals(E_PlayerState3D.LadderMove))
+        if (currentState.Equals(E_PlayerState3D.LadderIdle) || currentState.Equals(E_PlayerState3D.LadderMove) || currentState.Equals(E_PlayerState3D.LadderUp))
             return;
 
         // 땅인지 체크

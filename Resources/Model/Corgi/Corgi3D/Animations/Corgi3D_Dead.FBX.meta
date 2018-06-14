@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 7ab0457aa0c03c5469e03870465ea09f
-timeCreated: 1528023381
+guid: 4c9971b27a6df054fa066be613993fdc
+timeCreated: 1528943580
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -98,7 +98,8 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: Event CompleteDeadMotion has a time (2.120360) outside
+      the clip's valid range (0.000000..1.566667). It will never be fired
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -134,7 +135,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 1
+      - time: 0.97862774
         functionName: CompleteDeadMotion
         data: 
         objectReferenceParameter: {instanceID: 0}

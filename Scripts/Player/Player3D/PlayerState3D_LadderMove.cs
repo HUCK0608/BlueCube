@@ -4,6 +4,8 @@ using UnityEngine;
 
 public sealed class PlayerState3D_LadderMove : PlayerState3D
 {
+    private static string m_ladderMoveSpeed = "LadderMoveSpeed";
+
     private Vector3 m_moveDirection;
 
     private float m_angle;
@@ -11,6 +13,8 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
     public override void InitState()
     {
         base.InitState();
+
+        m_subController.Animator.speed = 1f;
     }
 
     private void Update()
@@ -35,19 +39,30 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
 
         // 각도 체크를 하여 위로 이동
         if (m_angle <= 45f)
+        {
             m_subController.LadderMove(Vector3.up);
+            m_subController.Animator.SetFloat(m_ladderMoveSpeed, 1f);
+        }
         // 아래로 이동
         else if (m_angle >= 135f)
+        {
             m_subController.LadderMove(Vector3.down);
+            m_subController.Animator.SetFloat(m_ladderMoveSpeed, -1f);
+        }
     }
 
     /// <summary>상태 변경 모음</summary>
     protected override void ChangeStates()
     {
-        // 사다리의 제일 아래이거나 맨 위일경우 Move 상태로 변경
-        if ((m_subController.CheckLadder.IsLadderDown() && m_angle > 135f) || (!m_subController.CheckLadder.IsOnLadder(m_subController.Forward) && m_angle <= 45f))
+        // 사다리의 제일 위쪽에 도달할 경우 Ladder Up 상태로 변경
+        if(!m_subController.CheckLadder.IsOnLadder(m_subController.Forward) && m_angle <= 45f)
         {
-            m_mainController.ChangeState3D(E_PlayerState3D.Move);
+            m_mainController.ChangeState3D(E_PlayerState3D.LadderUp);
+        }
+        // 사다리의 제일 아래이거나 맨 위일경우 Move 상태로 변경
+        else if ((m_subController.CheckLadder.IsLadderDown() && m_angle >= 135f))
+        {
+            m_mainController.ChangeState3D(E_PlayerState3D.LadderDown);
         }
         // 사다리에서 이동입력이 없을경우 LadderIdle 상태로 변경
         else if(m_moveDirection.Equals(Vector3.zero))
@@ -59,5 +74,7 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
     public override void EndState()
     {
         base.EndState();
+
+        m_subController.Animator.SetFloat(m_ladderMoveSpeed, 0f);
     }
 }

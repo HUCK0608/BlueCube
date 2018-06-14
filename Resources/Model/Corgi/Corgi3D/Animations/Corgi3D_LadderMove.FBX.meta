@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e100afb08a84d7f4fb290d2cd8e1294c
-timeCreated: 1528943701
+guid: aa97c4eb8003d274fb83efa3470b9f47
+timeCreated: 1528943841
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -81,7 +81,7 @@ ModelImporter:
     400070: scarf_bone2
     400072: scarf_bone3
     400074: scarf_bone4
-    7400000: Corgi3D_PickMove
+    7400000: Corgi3D_LadderMove
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -111,10 +111,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Corgi3D_PickMove
+      name: Corgi3D_LadderMove
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 24
+      lastFrame: 170
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
