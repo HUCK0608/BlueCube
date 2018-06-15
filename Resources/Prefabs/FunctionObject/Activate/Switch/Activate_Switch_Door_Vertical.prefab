@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 33830081339319132}
   - component: {fileID: 23060157766687604}
   m_Layer: 0
-  m_Name: Activate_Door_Pillar_1
+  m_Name: Activate_Door_Key_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 33459640033753312}
   - component: {fileID: 23585270541137254}
   m_Layer: 0
-  m_Name: Activate_Door_Pillar_3
+  m_Name: Activate_Door_Key_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 33377805975931554}
   - component: {fileID: 23488256804133660}
   m_Layer: 0
-  m_Name: Activate_Door_Pillar_2
+  m_Name: Activate_Door_Key_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 33510551201096640}
   - component: {fileID: 23597335121771952}
   m_Layer: 0
-  m_Name: Activate_Door_Pillar_4
+  m_Name: Activate_Door_Key_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -715,7 +715,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 9315f89faed2a374595dc18d99e33608, type: 2}
+  - {fileID: 2100000, guid: e9aa5aa9674ddad4a8548073bcc7c79b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
