@@ -8,8 +8,6 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
 
     private Vector3 m_moveDirection;
 
-    private float m_angle;
-
     public override void InitState()
     {
         base.InitState();
@@ -28,23 +26,15 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
 
     private void Move()
     {
-        // 현재 사용중인 사다리
-        Ladder currentLadder = m_subController.CheckLadder.LatelyLadder;
-
-        // 이동입력
         m_moveDirection = m_subController.GetMoveDirection();
 
-        // 사다리의 정면방향과 이동방향의 각도를 구함
-        m_angle = Vector3.Angle(currentLadder.Forward, m_moveDirection);
-
-        // 각도 체크를 하여 위로 이동
-        if (m_angle <= 45f)
+        if (Input.GetKey(KeyCode.W))
         {
             m_subController.LadderMove(Vector3.up);
             m_subController.Animator.SetFloat(m_ladderMoveSpeed, 1f);
         }
         // 아래로 이동
-        else if (m_angle >= 135f)
+        else if (Input.GetKey(KeyCode.S))
         {
             m_subController.LadderMove(Vector3.down);
             m_subController.Animator.SetFloat(m_ladderMoveSpeed, -1f);
@@ -55,12 +45,12 @@ public sealed class PlayerState3D_LadderMove : PlayerState3D
     protected override void ChangeStates()
     {
         // 사다리의 제일 위쪽에 도달할 경우 Ladder Up 상태로 변경
-        if(!m_subController.CheckLadder.IsOnLadder(m_subController.Forward) && m_angle <= 45f)
+        if(!m_subController.CheckLadder.IsOnLadder(m_subController.Forward) && Input.GetKey(KeyCode.W))
         {
             m_mainController.ChangeState3D(E_PlayerState3D.LadderUp);
         }
         // 사다리의 제일 아래이거나 맨 위일경우 Move 상태로 변경
-        else if ((m_subController.CheckLadder.IsLadderDown() && m_angle >= 135f))
+        else if (m_subController.CheckLadder.IsLadderDown() && Input.GetKey(KeyCode.S))
         {
             m_mainController.ChangeState3D(E_PlayerState3D.LadderDown);
         }

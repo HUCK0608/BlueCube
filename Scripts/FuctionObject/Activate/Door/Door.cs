@@ -4,6 +4,8 @@ using UnityEngine;
 
 public sealed class Door : MonoBehaviour
 {
+    private static string m_patternFillPath = "_PatternFill";
+
     [Header("Don't Change")]
 
     /// <summary>문</summary>
@@ -13,6 +15,10 @@ public sealed class Door : MonoBehaviour
     /// <summary>문의 도착지</summary>
     [SerializeField]
     private Vector3 m_destination;
+
+    /// <summary>패턴 메쉬 랜더러</summary>
+    [SerializeField]
+    private MeshRenderer m_patternMeshRenderer;
 
     [Header("Can Change")]
 
@@ -44,6 +50,8 @@ public sealed class Door : MonoBehaviour
     /// <summary>문이 열리는 로직</summary>
     private IEnumerator DoorOpenLogic()
     {
+        m_patternMeshRenderer.material.SetFloat(m_patternFillPath, 6.8f);
+
         while(true)
         {
             if(!GameLibrary.Bool_IsGameStop(m_worldObject))
