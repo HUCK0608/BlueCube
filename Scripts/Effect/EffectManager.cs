@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Effect_Type { Enemy_Boom, Player_Boom, Player_ChangeView_Capsule, Player_Heal, Player_Key, Enemy_Soop_Shoot }
+public enum Effect_Type { Enemy_Boom, Player_Boom, Player_ChangeView_Capsule, Player_Heal, Player_Key, Enemy_Soop_Shoot, Enemy_ChangeView }
 
 public sealed class EffectManager : MonoBehaviour
 {

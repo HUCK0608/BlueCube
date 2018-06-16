@@ -1,4 +1,4 @@
-﻿Shader "Custom/Fx_mon_screen" {
+﻿Shader "BlueCube/Effect_Enemy_ChangeView" {
 	Properties {
 		
 		_MainTex ("noise", 2D) = "white" {}

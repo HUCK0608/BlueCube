@@ -5,6 +5,8 @@ using UnityEngine;
 public enum E_SoopState { Idle = 0, ShootInit, Shoot, Dead }
 public sealed class EnemyController_Soop : EnemyController
 {
+    private static WaitForSeconds m_waitChangeViewEffect = new WaitForSeconds(0.5f);
+
     [Header("Don't Touch!")]
     /// <summary>3D 서브 컨트롤러</summary>
     [SerializeField]
@@ -45,7 +47,10 @@ public sealed class EnemyController_Soop : EnemyController
     {
         m_isInit = true;
         ChangeState3D(E_SoopState.Idle);
+        ChangeState2D(E_SoopState.Idle);
         m_isInit = false;
+
+        m_enemy2D.SetActive(false);
     }
 
     private void InitStates3D()
@@ -129,36 +134,42 @@ public sealed class EnemyController_Soop : EnemyController
     {
         if (m_worldObject.IsIncludeChangeViewRect)
         {
-            if (!m_enemy3D.activeSelf)
-            {
-                m_enemy2D.SetActive(false);
-
-                if (!m_isDead)
-                    ChangeState3D(E_SoopState.Idle);
-            }
+            m_enemy2D.SetActive(false);
 
             m_worldObject.IsIncludeChangeViewRect = false;
         }
 
-        m_enemy3D.SetActive(true);
-
         if (m_isDead)
             ChangeState3D(E_SoopState.Dead);
+        else
+            ChangeState3D(E_SoopState.Idle);
+
+        m_enemy3D.SetActive(true);
     }
 
     /// <summary>적을 2D 상태로 변경</summary>
     public override void ChangeEnemy2D()
     {
+        StartCoroutine(ChangeEnemy2DLogic());
+    }
+
+    /// <summary>2D 상태 변경 로직</summary>
+    private IEnumerator ChangeEnemy2DLogic()
+    {
+        EffectManager.Instance.CreateEffect(Effect_Type.Enemy_ChangeView, transform.position);
+
+        yield return m_waitChangeViewEffect;
+
         m_enemy3D.SetActive(false);
 
-        if (m_worldObject.IsIncludeChangeViewRect)
+        if(m_worldObject.IsIncludeChangeViewRect)
         {
-            m_enemy2D.SetActive(true);
-
-            if (!m_isDead)
-                ChangeState2D(E_SoopState.Idle);
-            else
+            if (m_isDead)
                 ChangeState2D(E_SoopState.Dead);
+            else
+                ChangeState2D(E_SoopState.Idle);
+
+            m_enemy2D.SetActive(true);
         }
     }
 
