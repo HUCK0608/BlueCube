@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 
 public enum E_PlayerState3D { Idle, Move, JumpUp, Falling, PickInit, PickIdle, PickMove, PickJumpUp, PickFalling, PutInit, PutDefault, PutThrow, PushChase, PushInit, PushIdle, Pushing, ChangeViewInit, Hold, LadderChase, LadderInit, LadderIdle, LadderMove, LadderUp, LadderDown, Dead }
-public enum E_PlayerState2D { Idle, Move, JumpUp, Falling, Landing }
+public enum E_PlayerState2D { Idle, Move, JumpUp, Falling, Landing, Dead }
 
 public sealed class PlayerController : MonoBehaviour
 {

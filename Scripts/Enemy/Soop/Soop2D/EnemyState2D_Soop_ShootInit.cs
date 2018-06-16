@@ -27,8 +27,6 @@ public sealed class EnemyState2D_Soop_ShootInit : EnemyState2D_Soop
         directionToPlayer.y = 0f;
         directionToPlayer.z = 0f;
 
-        Debug.Log(directionToPlayer.normalized);
-
         // 회전
         m_subController.LookRotate(directionToPlayer.normalized);
 

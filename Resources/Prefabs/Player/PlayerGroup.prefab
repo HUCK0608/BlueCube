@@ -1482,6 +1482,7 @@ GameObject:
   - component: {fileID: 114220707882878658}
   - component: {fileID: 114693026080926346}
   - component: {fileID: 114313291464646702}
+  - component: {fileID: 114745038427334578}
   m_Layer: 11
   m_Name: Player2D
   m_TagString: Player
@@ -3616,7 +3617,7 @@ MonoBehaviour:
   m_acceptKey: 323
   m_cancelKey: 324
   m_jumpKey: 32
-  m_hp: 5
+  m_hp: 1
   m_moveSpeed: 6.5
   m_moveSpeed_Ladder: 4.5
   m_moveSpeed_Jump: 5.2
@@ -3864,6 +3865,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c38dc26546804fa4da54801adda2962a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114745038427334578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1934780230904164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c993b096e441ec343b1836dbc5b6489c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114745330432964776

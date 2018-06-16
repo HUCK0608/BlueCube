@@ -11,11 +11,13 @@ public sealed class PlayerController2D : MonoBehaviour
     // 땅 체크 스크립트
     private CheckGround2D m_checkGround;
 
+    // 애니메이터
+    private Animator m_animator;
+    public Animator Animator { get { return m_animator; } }
+
     // 리지드바디
     private Rigidbody2D m_rigidbody;
     public Rigidbody2D Rigidbody { get { return m_rigidbody; } }
-
-    // 캐릭터 속성부분
 
     /// <summary>캐릭터의 정면 방향을 반환. (1, 0, 0) 또는 (-1, 0, 0)</summary>
     public Vector3 Forward
@@ -35,6 +37,7 @@ public sealed class PlayerController2D : MonoBehaviour
 
         m_checkGround = GetComponent<CheckGround2D>();
 
+        m_animator = GetComponent<Animator>();
         m_rigidbody = GetComponent<Rigidbody2D>();
     }
 

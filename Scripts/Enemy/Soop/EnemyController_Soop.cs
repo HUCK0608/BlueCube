@@ -124,6 +124,7 @@ public sealed class EnemyController_Soop : EnemyController
         m_states2D[m_currentState2D].enabled = true;
     }
 
+    /// <summary>적을 3D 상태로 변경</summary>
     public override void ChangeEnemy3D()
     {
         if (m_worldObject.IsIncludeChangeViewRect)
@@ -145,6 +146,7 @@ public sealed class EnemyController_Soop : EnemyController
             ChangeState3D(E_SoopState.Dead);
     }
 
+    /// <summary>적을 2D 상태로 변경</summary>
     public override void ChangeEnemy2D()
     {
         m_enemy3D.SetActive(false);

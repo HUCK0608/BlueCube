@@ -44,7 +44,18 @@ public sealed class PlayerStat : MonoBehaviour
         UIManager.Instance.PlayerHpUI.SetPlayerHpText(m_hp);
 
         if (m_hp.Equals(0))
-            PlayerManager.Instance.SubController3D.Animator.SetBool("IsDead", true);
+        {
+            if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
+            {
+                PlayerManager.Instance.SubController3D.Animator.SetBool("IsDead", true);
+                PlayerManager.Instance.MainController.ChangeState3D(E_PlayerState3D.Dead);
+            }
+            else
+            {
+                PlayerManager.Instance.SubController2D.Animator.SetBool("IsDead", true);
+                PlayerManager.Instance.MainController.ChangeState2D(E_PlayerState2D.Dead);
+            }
+        }
     }
 
     [SerializeField]
