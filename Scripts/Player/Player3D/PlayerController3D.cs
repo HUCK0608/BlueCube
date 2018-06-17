@@ -31,6 +31,11 @@ public sealed class PlayerController3D : MonoBehaviour
     /// <summary>3D플레이어의 정면 방향을 반환</summary>
     public Vector3 Forward { get { return transform.forward; } }
 
+    [SerializeField]
+    private Transform m_footPrintPoint_Left;
+    [SerializeField]
+    private Transform m_footPrintPoint_Right;
+
     private void Awake()
     {
         m_playerManager = GetComponentInParent<PlayerManager>();
@@ -206,5 +211,17 @@ public sealed class PlayerController3D : MonoBehaviour
     public void AudioPlay(string playName)
     {
         m_playerManager.AudioPlayer.Play(playName);
+    }
+
+    /// <summary>왼쪽 발에 발자국을 그림</summary>
+    public void DrawFootPrintLeft()
+    {
+        EffectManager.Instance.CreateEffect(Effect_Type.Player_FootPrint, m_footPrintPoint_Left.position);
+    }
+
+    /// <summary>오른쪽 발에 발자국을 그림</summary>
+    public void DrawFootPrintRight()
+    {
+        EffectManager.Instance.CreateEffect(Effect_Type.Player_FootPrint, m_footPrintPoint_Right.position);
     }
 }

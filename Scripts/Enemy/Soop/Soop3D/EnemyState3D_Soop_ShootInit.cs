@@ -39,6 +39,9 @@ public sealed class EnemyState3D_Soop_ShootInit : EnemyState3D_Soop
     /// <summary>상태 변경 모음</summary>
     private void ChangeStates()
     {
+        // 시점변환 중이면 Idle 상태로 변경
+        if (PlayerManager.Instance.IsViewChange)
+            m_mainController.ChangeState3D(E_SoopState.Idle);
         // 체력이 다 달면 Dead 상태로 변경
         if (m_mainController.Stat.Hp <= 0)
             m_mainController.ChangeState3D(E_SoopState.Dead);

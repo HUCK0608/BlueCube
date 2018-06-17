@@ -139,12 +139,15 @@ public sealed class EnemyController_Soop : EnemyController
             m_worldObject.IsIncludeChangeViewRect = false;
         }
 
-        if (m_isDead)
-            ChangeState3D(E_SoopState.Dead);
-        else
-            ChangeState3D(E_SoopState.Idle);
+        if (!m_enemy3D.activeSelf)
+        {
+            if (m_isDead)
+                ChangeState3D(E_SoopState.Dead);
+            else
+                ChangeState3D(E_SoopState.Idle);
 
-        m_enemy3D.SetActive(true);
+            m_enemy3D.SetActive(true);
+        }
     }
 
     /// <summary>적을 2D 상태로 변경</summary>
