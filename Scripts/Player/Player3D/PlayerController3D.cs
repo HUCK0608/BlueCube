@@ -63,6 +63,8 @@ public sealed class PlayerController3D : MonoBehaviour
         {
             m_animator.Play("Dance");
             m_staff.SetActive(false);
+            EffectManager.Instance.CreateEffect(Effect_Type.FireWorks, transform.position);
+            EffectManager.Instance.CreateEffect(Effect_Type.Soop, transform.position);
         }
     }
 
