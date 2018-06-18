@@ -141,12 +141,12 @@ public sealed class EnemyController_Soop : EnemyController
 
         if (!m_enemy3D.activeSelf)
         {
+            m_enemy3D.SetActive(true);
+
             if (m_isDead)
                 ChangeState3D(E_SoopState.Dead);
             else
                 ChangeState3D(E_SoopState.Idle);
-
-            m_enemy3D.SetActive(true);
         }
     }
 
@@ -159,33 +159,31 @@ public sealed class EnemyController_Soop : EnemyController
     /// <summary>2D 상태 변경 로직</summary>
     private IEnumerator ChangeEnemy2DLogic()
     {
-        EffectManager.Instance.CreateEffect(Effect_Type.Enemy_ChangeView, transform.position);
 
-        yield return m_waitChangeViewEffect;
 
-        m_enemy3D.SetActive(false);
 
         if(m_worldObject.IsIncludeChangeViewRect)
         {
+            EffectManager.Instance.CreateEffect(Effect_Type.Enemy_ChangeView, transform.position);
+
+            yield return m_waitChangeViewEffect;
+
+            m_enemy3D.SetActive(false);
+            m_enemy2D.SetActive(true);
+
             if (m_isDead)
                 ChangeState2D(E_SoopState.Dead);
             else
                 ChangeState2D(E_SoopState.Idle);
-
-            m_enemy2D.SetActive(true);
+        }
+        else
+        {
+            m_enemy3D.SetActive(false);
         }
     }
 
     public override void DeadLogic()
     {
-        if(m_isDead)
-        {
-            if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
-                m_subController3D.Animator.Play(m_deadAnimatorStatePath, -1, 1f);
-            else
-                m_subController2D.Animator.Play(m_deadAnimatorStatePath, -1, 1f);
-        }
-
         base.DeadLogic();
     }
 }
