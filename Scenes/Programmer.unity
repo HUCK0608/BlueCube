@@ -3113,6 +3113,11 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: -0.0002946604
       objectReference: {fileID: 0}
+    - target: {fileID: 114381664191573860, guid: 1af512735560ef9428636043ab56ff37,
+        type: 2}
+      propertyPath: m_itemCheckDistance
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1af512735560ef9428636043ab56ff37, type: 2}
   m_IsPrefabParent: 0
