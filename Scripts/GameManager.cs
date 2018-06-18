@@ -12,6 +12,8 @@ public sealed class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Physics.IgnoreLayerCollision(8, 23);
+        Physics2D.IgnoreLayerCollision(8, 23);
         m_instance = this;
     }
 

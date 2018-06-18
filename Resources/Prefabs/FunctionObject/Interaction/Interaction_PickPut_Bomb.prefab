@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4692759925346706}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Effect_Player_BoomLandingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4352051574530236}
   - component: {fileID: 198769266489349114}
   - component: {fileID: 199127912313273142}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4092697345950746}
   - component: {fileID: 198045060682180960}
   - component: {fileID: 199509089016844508}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4359799765637984}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Effect_PlayerBomb_IgnitionFire_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 4874766245762866}
   - component: {fileID: 198422614348059286}
   - component: {fileID: 199692010885899006}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 4958778499067312}
   - component: {fileID: 33626302655984204}
   - component: {fileID: 23370426325489352}
-  m_Layer: 29
+  m_Layer: 23
   m_Name: Interaction_Bomb_Fade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4868929505755464}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Effect_PlayerBomb_IgnitionFire_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 4950352073893660}
   - component: {fileID: 198869606134083322}
   - component: {fileID: 199939968290140206}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4085630463938312}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Effect_PlayerBomb_IgnitionFire_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4261846303104206}
-  m_Layer: 29
+  m_Layer: 23
   m_Name: Effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 4794888317151020}
   - component: {fileID: 198472275048123284}
   - component: {fileID: 199331788234752484}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 4453154044355728}
   - component: {fileID: 198447136614234274}
   - component: {fileID: 199644451154495596}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,9 +217,9 @@ GameObject:
   - component: {fileID: 114713894864315200}
   - component: {fileID: 114869957523122358}
   - component: {fileID: 114492438576252952}
-  m_Layer: 29
+  m_Layer: 23
   m_Name: Interaction_PickPut_Bomb
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 4605210825776662}
   - component: {fileID: 33058546940789430}
   - component: {fileID: 23783750401550068}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 4414144171137940}
   - component: {fileID: 198263589077433728}
   - component: {fileID: 199696071533165474}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: wave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,9 +268,9 @@ GameObject:
   - component: {fileID: 4791584760228936}
   - component: {fileID: 50813910232285620}
   - component: {fileID: 61729337804772276}
-  m_Layer: 29
+  m_Layer: 23
   m_Name: Collider2D
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 4800584380292744}
   - component: {fileID: 198462385852708508}
   - component: {fileID: 199601077193897378}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 4400690612610192}
   - component: {fileID: 198622591832666638}
   - component: {fileID: 199046825534677794}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +317,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4440039774453436}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Effect_PlayerBomb_IgnitionFire_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 4318441909545124}
   - component: {fileID: 33905317996457810}
   - component: {fileID: 23175960135125174}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: main 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,9 +353,9 @@ GameObject:
   - component: {fileID: 23313484315585254}
   - component: {fileID: 54705183956299750}
   - component: {fileID: 65375918998973870}
-  m_Layer: 29
+  m_Layer: 23
   m_Name: ModelAndCollider3D
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -395,7 +395,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1598504089801678}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.6513977, y: 1, z: -23.408278}
+  m_LocalPosition: {x: 0.9585185, y: 1.9000001, z: -15.756239}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4355305615191470}

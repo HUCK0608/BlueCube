@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114495938273400494}
   m_Layer: 8
   m_Name: EnemyProjectile_Bomb
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 135274492657657410}
   m_Layer: 8
   m_Name: ModelAndCollider3D
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,7 +120,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1078839556140680}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 102.5, y: 20.567669, z: 58.82835}
+  m_LocalPosition: {x: 2.464754, y: 1.5, z: -28.486666}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4943036788737146}

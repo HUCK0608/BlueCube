@@ -53,10 +53,11 @@ public sealed class PlayerState3D_Move : PlayerState3D
             float itemCheckDistance = m_playerManager.Stat.ItemCheckDistance;
             RaycastHit hit;
 
+            int pickLayerMask = GameLibrary.LayerMask_InteractionPickPut | GameLibrary.LayerMask_InteractionPickPut_Bomb;
             // 들기 아이템
             for (int i = 0; i < itemCheckPointCount; i++)
             {
-                if (GameLibrary.Raycast3D(itemCheckPoints[i].position, itemCheckPoints[i].forward, out hit, itemCheckDistance, GameLibrary.LayerMask_InteractionPickPut))
+                if (GameLibrary.Raycast3D(itemCheckPoints[i].position, itemCheckPoints[i].forward, out hit, itemCheckDistance, pickLayerMask))
                 {
                     m_playerManager.Hand.CurrentPickPutObject = hit.transform.GetComponentInParent<Interaction_PickPut>();
 

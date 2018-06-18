@@ -4,6 +4,8 @@ using UnityEngine;
 
 public sealed class Interaction_Put_Throw : Interaction_Put
 {
+    private static string m_ignoreTag = "Bomb";
+
     private Rigidbody m_rigidbody;
 
     // 거리에 비례한 시간 퍼센티지
@@ -72,6 +74,8 @@ public sealed class Interaction_Put_Throw : Interaction_Put
                                      GameLibrary.LayerMask_Bullet |
                                      GameLibrary.LayerMask_IgnoreRaycast);
 
+        RaycastHit hit;
+
         while(true)
         {
             m_velocity = m_rigidbody.velocity;
@@ -79,8 +83,11 @@ public sealed class Interaction_Put_Throw : Interaction_Put
             m_rigidbody.velocity = m_velocity;
 
             // 밑에 무언가 있다면 이동 코루틴 종료
-            if (GameLibrary.Raycast3D(m_model.position, Vector3.down, stopVelocityDistanceY, layerMask))
-                break;
+            if (GameLibrary.Raycast3D(m_model.position, Vector3.down, out hit, stopVelocityDistanceY, layerMask))
+            {
+                if(!hit.transform.tag.Equals(m_ignoreTag))
+                    break;
+            }
 
             yield return new WaitForFixedUpdate();
         }

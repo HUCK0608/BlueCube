@@ -5,6 +5,8 @@ using UnityEngine;
 
 public sealed class EnemyProjectile_Bomb : EnemyProjectile
 {
+    private static string m_bombTag = "Bomb";
+
     private Collider m_collider;
     private MeshRenderer m_meshRenderer;
     private Material m_startMaterial;
@@ -97,6 +99,9 @@ public sealed class EnemyProjectile_Bomb : EnemyProjectile
                                      GameLibrary.LayerMask_Bullet |
                                      GameLibrary.LayerMask_IgnoreRaycast);
 
+        RaycastHit hit3D;
+        RaycastHit2D hit2D;
+
         while(true)
         {
             if (!GameLibrary.Bool_IsGameStop(m_worldObject))
@@ -108,15 +113,17 @@ public sealed class EnemyProjectile_Bomb : EnemyProjectile
                 if (PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
                 {
                     // 3D레이로 밑에 무언가 있다면 이동 코루틴 종료
-                    if (GameLibrary.Raycast3D(m_rigidbody.transform.position, Vector3.down, stopDistanceY, layerMask))
-                        break;
+                    if (GameLibrary.Raycast3D(m_rigidbody.transform.position, Vector3.down, out hit3D, stopDistanceY, layerMask))
+                        if(!hit3D.transform.tag.Equals(m_bombTag))
+                            break;
                 }
                 // 2D일 경우
                 else
                 {
                     // 2D레이로 밑에 무언가 있다면 이동 코루틴 종료
-                    if (GameLibrary.Raycast2D(m_rigidbody.transform.position, Vector2.down, stopDistanceY, layerMask))
-                        break;
+                    if (GameLibrary.Raycast2D(m_rigidbody.transform.position, Vector2.down, out hit2D, stopDistanceY, layerMask))
+                        if(!hit2D.transform.tag.Equals(m_bombTag))
+                            break;
                 }
             }
             else
