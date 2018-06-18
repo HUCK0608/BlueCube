@@ -42,6 +42,7 @@
 		{
 			fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
 			o.Albedo = c.rgb;
+			//o.Emission = c.rgb;
 			o.Alpha = c.a;
 		}
 
@@ -86,10 +87,10 @@
 
 			if (ndotl < 1)
 			{
-				final_ndotl.rgb = ndotl * _Ramp.rgb * s.Albedo *atten;
+				final_ndotl.rgb = ndotl * _Ramp.rgb * s.Albedo*_LightColor0.rgb *atten;
 			}
 			else
-				final_ndotl.rgb = _Brightness * s.Albedo * _LightColor0.rgb *atten;
+				final_ndotl.rgb = _Brightness * s.Albedo *atten;
 
 			return final_ndotl;
 		}
