@@ -14,6 +14,18 @@ public sealed class CameraManager : MonoBehaviour
     // 무빙워크중이면 true를 반환
     private bool m_isOnMovingWork;
 
+    [SerializeField]
+    private Transform m_camera;
+
+    [SerializeField]
+    private float m_zoomMax;
+    [SerializeField]
+    private float m_zoomMin;
+    [SerializeField]
+    private float m_zoomSensitivity;
+
+    private float m_zoom = -85f;
+
     private bool m_isGanzi;
 
     private void Awake()
@@ -35,6 +47,30 @@ public sealed class CameraManager : MonoBehaviour
     {
         if(!m_isGanzi)
             FollowPlayer3D();
+
+        CameraZoom();
+    }
+
+    private void CameraZoom()
+    {
+        float mouseScrollWheel = Input.GetAxis("Mouse ScrollWheel");
+
+        if(mouseScrollWheel < 0f)
+        {
+            m_zoom -= m_zoomSensitivity * Time.deltaTime;
+        }
+        else if(mouseScrollWheel > 0f)
+        {
+            m_zoom += m_zoomSensitivity * Time.deltaTime;
+        }
+
+        if(!mouseScrollWheel.Equals(0f))
+        {
+            m_zoom = Mathf.Clamp(m_zoom, m_zoomMin, m_zoomMax);
+            Vector3 newLocalPosition = Vector3.zero;
+            newLocalPosition.z = m_zoom;
+            m_camera.localPosition = newLocalPosition;
+        }
     }
 
     public void PlayGanziCam()
@@ -51,34 +87,6 @@ public sealed class CameraManager : MonoBehaviour
     {
         if(PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
             transform.position = PlayerManager.Instance.Player3D_Object.transform.position;
-    }
-
-    /// <summary>pivot에서 마우스 위치의 방향을 구함</summary>
-    public Vector3 GetMouseDirectionToPivot(Vector3 pivot)
-    {
-        // 법선이 y양의 방향을 보고있고 pivot위치에 있는 평면을 생성
-        Plane plane = new Plane(Vector3.up, pivot);
-
-        // 마우스 위치의 광선 생성
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        // 충돌된 거리를 담을 변수
-        float rayDistance;
-
-        // 충돌 위치를 담을 변수
-        Vector3 hitPoint = Vector3.zero;
-
-        // 평면에서 광선 발사
-        if (plane.Raycast(ray, out rayDistance))
-        {
-            // 충돌 위치 구하기
-            hitPoint = ray.GetPoint(rayDistance);
-        }
-
-        Vector3 direction = hitPoint - pivot;
-
-        //위치 반환
-        return direction.normalized;
     }
 
     /// <summary>pivot높이를 중심으로 마우스의 충돌위치를 구함</summary>

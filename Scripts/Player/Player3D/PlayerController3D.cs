@@ -40,6 +40,9 @@ public sealed class PlayerController3D : MonoBehaviour
     /// <summary>자동이동이 켜져있을경우 true를 반환</summary>
     public bool IsOnAutoMove { get { return m_isOnAutoMove; } }
 
+    [SerializeField]
+    private GameObject m_staff;
+
     private void Awake()
     {
         m_playerManager = GetComponentInParent<PlayerManager>();
@@ -55,6 +58,12 @@ public sealed class PlayerController3D : MonoBehaviour
     private void LateUpdate()
     {
         ApplyGravity();
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            m_animator.Play("Dance");
+            m_staff.SetActive(false);
+        }
     }
 
     /// <summary>중력 적용</summary>
