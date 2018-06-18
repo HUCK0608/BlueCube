@@ -35,12 +35,11 @@ public sealed class CameraManager : MonoBehaviour
     {
         if(!m_isGanzi)
             FollowPlayer3D();
-        PlayGanziCam();
     }
 
-    private void PlayGanziCam()
+    public void PlayGanziCam()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (!m_isGanzi)
         {
             m_animator.Play("GanziCam", -1);
             m_isGanzi = true;

@@ -28,8 +28,8 @@ public sealed class PlayerState3D_Falling : PlayerState3D
         // 땅에 착지했을 때 상태 변경
         if(m_mainController.IsGrounded)
         {
-            // 이동중이 아니라면 Idle 상태로 변경
-            if(m_moveDirection.Equals(Vector3.zero))
+            // 이동중이 아니고 자동이동이 비활성화 되어있다면 Idle 상태로 변경
+            if(m_moveDirection.Equals(Vector3.zero) && !m_subController.IsOnAutoMove)
             {
                 m_mainController.ChangeState3D(E_PlayerState3D.Idle);
             }

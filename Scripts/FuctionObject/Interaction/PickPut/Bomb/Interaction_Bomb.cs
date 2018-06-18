@@ -9,10 +9,13 @@ public sealed class Interaction_Bomb : MonoBehaviour
     private Transform m_model;
     // 리지드바디
     private Rigidbody m_rigidbody;
-    // 메쉬렌더러
-    private MeshRenderer m_meshRenderer;
-    // 초기 메테리얼
-    private Material m_defaultMaterial;
+
+    [Header("Don't Touch !")]
+
+    [SerializeField]
+    private GameObject m_effects;
+
+    [Header("Can Change")]
 
     // 폭탄 타이머
     [SerializeField]
@@ -23,8 +26,6 @@ public sealed class Interaction_Bomb : MonoBehaviour
         m_worldObject = GetComponent<WorldObject>();
         m_model = transform.Find("ModelAndCollider3D");
         m_rigidbody = GetComponentInChildren<Rigidbody>();
-        m_meshRenderer = GetComponentInChildren<MeshRenderer>();
-        m_defaultMaterial = m_meshRenderer.material;
     }
 
     private void OnEnable()
@@ -39,7 +40,7 @@ public sealed class Interaction_Bomb : MonoBehaviour
         // 오브젝트가 충돌할 때 까지 기다림
         yield return new WaitUntil(() => m_rigidbody.isKinematic);
 
-        m_worldObject.SetMaterial(E_WorldObject_ShaderType.Block);
+        m_effects.SetActive(true);
 
         // 폭탄 타이머를 기다림
         yield return StartCoroutine(BombTimer());
@@ -47,8 +48,7 @@ public sealed class Interaction_Bomb : MonoBehaviour
         // 현재 위치에 폭발 이펙트 생성
         EffectManager.Instance.CreateEffect(Effect_Type.Player_Boom, m_model.position);
 
-        // 텍스쳐 원래상태로 변경
-        m_worldObject.SetMaterial(E_WorldObject_ShaderType.Default3D);
+        m_effects.SetActive(false);
 
         // 위치 초기화
         m_model.localPosition = Vector3.zero;

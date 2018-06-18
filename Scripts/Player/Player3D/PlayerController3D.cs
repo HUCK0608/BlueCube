@@ -36,6 +36,10 @@ public sealed class PlayerController3D : MonoBehaviour
     [SerializeField]
     private Transform m_footPrintPoint_Right;
 
+    private bool m_isOnAutoMove;
+    /// <summary>자동이동이 켜져있을경우 true를 반환</summary>
+    public bool IsOnAutoMove { get { return m_isOnAutoMove; } }
+
     private void Awake()
     {
         m_playerManager = GetComponentInParent<PlayerManager>();
@@ -205,6 +209,26 @@ public sealed class PlayerController3D : MonoBehaviour
     public void MoveStopAll()
     {
         m_rigidbody.velocity = Vector3.zero;
+    }
+
+    /// <summary>자동으로 direction 방향으로 이동하면서 회전함</summary>
+    public void AutoMoveAndRotate(Vector3 direction)
+    {
+        if(!m_isOnAutoMove)
+            StartCoroutine(AutoMoveAndRotateLogic(direction.normalized));
+    }
+
+    /// <summary>자동 이동 로직</summary>
+    private IEnumerator AutoMoveAndRotateLogic(Vector3 direction)
+    {
+        m_isOnAutoMove = true;
+
+        while(true)
+        {
+            MoveAndRotate(direction);
+
+            yield return null;
+        }
     }
 
     /// <summary>오디오 플레이</summary>

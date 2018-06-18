@@ -19,8 +19,9 @@ public sealed class PlayerState3D_Move : PlayerState3D
         // 방향키 입력 방향을 가져옴
         m_moveDirection = m_subController.GetMoveDirection();
 
-        // 이동 및 회전
-        m_subController.MoveAndRotate(m_moveDirection);
+        if(!m_subController.IsOnAutoMove)
+            // 이동 및 회전
+            m_subController.MoveAndRotate(m_moveDirection);
 
         // 상태 변경
         ChangeStates();
@@ -40,12 +41,12 @@ public sealed class PlayerState3D_Move : PlayerState3D
             m_mainController.ChangeState3D(E_PlayerState3D.Falling);
         }
         // 시점변환 키를 눌렀을 때 ChangeViewInit 상태로 변경
-        else if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey))
+        else if (Input.GetKeyDown(m_playerManager.Stat.ChangeViewKey) && !m_subController.IsOnAutoMove)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.ChangeViewInit);
         }
         // 상호작용 키를 눌렀을 때
-        else if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey))
+        else if (Input.GetKeyDown(m_playerManager.Stat.InteractionKey) && !m_subController.IsOnAutoMove)
         {
             List<Transform> itemCheckPoints = m_subController.ItemCheckPoints;
             int itemCheckPointCount = itemCheckPoints.Count;
@@ -88,7 +89,7 @@ public sealed class PlayerState3D_Move : PlayerState3D
             }
         }
         // 이동방향에 사다리가 있으면 LadderInit 상태로 변경
-        else if (m_subController.CheckLadder.IsOnLadder(m_moveDirection))
+        else if (m_subController.CheckLadder.IsOnLadder(m_moveDirection) && !m_subController.IsOnAutoMove)
         {
             // 사다리를 사용할 수 있을 경우에만 실행
             if (m_subController.CheckLadder.LatelyLadder.IsCanUseLadder())
@@ -98,13 +99,13 @@ public sealed class PlayerState3D_Move : PlayerState3D
             }
         }
         // 점프키를 눌렀을 때 땅에 있으면 Jump 상태로 변경
-        else if (Input.GetKeyDown(m_playerManager.Stat.JumpKey))
+        else if (Input.GetKeyDown(m_playerManager.Stat.JumpKey) && !m_subController.IsOnAutoMove)
         {
             if (m_mainController.IsGrounded)
                 m_mainController.ChangeState3D(E_PlayerState3D.JumpUp);
         }
         // 이동 입력이 없거나 플레이어가 멈춰야 하는 상황이면 Idle 상태로 변경
-        else if (m_moveDirection.Equals(Vector3.zero) || GameLibrary.Bool_IsPlayerStop)
+        else if ((m_moveDirection.Equals(Vector3.zero) && !m_subController.IsOnAutoMove) || GameLibrary.Bool_IsPlayerStop)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.Idle);
         }
