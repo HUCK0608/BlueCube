@@ -14,14 +14,14 @@ public sealed class EnemyController2D_Soop : MonoBehaviour
     }
 
     /// <summary>direction 방향을 바라봄</summary>
-    public void LookRotate(Vector3 direction)
+    public void LookRotate(Vector2 direction)
     {
         Vector2 direction2D = direction;
         direction2D = direction2D.normalized;
 
         if(!direction2D.x.Equals(transform.localScale.x))
         {
-            Vector3 newScale = Vector3.one;
+            Vector2 newScale = Vector2.one;
             newScale.x = direction2D.x;
 
             transform.localScale = newScale;

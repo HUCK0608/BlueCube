@@ -23,9 +23,8 @@ public sealed class EnemyState2D_Soop_ShootInit : EnemyState2D_Soop
     private void Update()
     {
         // 플레이어로의 방향구하기
-        Vector3 directionToPlayer = PlayerManager.Instance.Player2D_Object.transform.position - transform.position;
+        Vector2 directionToPlayer = PlayerManager.Instance.Player2D_Object.transform.position - transform.position;
         directionToPlayer.y = 0f;
-        directionToPlayer.z = 0f;
 
         // 회전
         m_subController.LookRotate(directionToPlayer.normalized);
