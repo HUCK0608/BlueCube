@@ -598,7 +598,6 @@ GameObject:
   - component: {fileID: 114946560595826798}
   - component: {fileID: 114526851428266930}
   - component: {fileID: 114203171113988910}
-  - component: {fileID: 114115825051875398}
   - component: {fileID: 114381664191573860}
   - component: {fileID: 114561672933432140}
   m_Layer: 11
@@ -3517,18 +3516,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c99addabf9681d42896b4f51becfffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114115825051875398
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1328681400167124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e581f847167c013478abed4b343f28a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_currentHaveKey: 0
 --- !u!114 &114138300409492074
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3684,7 +3671,7 @@ MonoBehaviour:
   m_gravity: -35
   m_skinWidth: 0.15
   m_groundCheckDistance: 0.2
-  m_itemCheckDistance: 1.5
+  m_itemCheckDistance: 2
   m_objectPickSpeed: 3
   m_maxHoldTime: 5
   m_hitMotionTime: 0

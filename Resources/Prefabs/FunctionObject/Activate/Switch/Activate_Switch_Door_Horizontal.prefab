@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4428323881759850}
   - component: {fileID: 114572668843647076}
   - component: {fileID: 114267080171428542}
-  - component: {fileID: 114056922810853178}
+  - component: {fileID: 114660633591588860}
   m_Layer: 0
   m_Name: Activate_Switch_Door_Horizontal
   m_TagString: Untagged
@@ -817,21 +817,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 12, y: 4, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114056922810853178
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1159588108566330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f6de6dfd2e40054087cf180a5383658, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_door: {fileID: 4429563259505490}
-  m_destination: {x: 0, y: -8, z: 0}
-  m_patternMeshRenderer: {fileID: 23822858655216424}
-  m_moveSpeed: 3
 --- !u!114 &114267080171428542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -858,3 +843,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isUse2DTexture: 0
   m_isUseShiningSpecular: 0
+--- !u!114 &114660633591588860
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1159588108566330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53df6b682d3202f40a523f4d663732b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_openGroup: {fileID: 4429563259505490}
+  m_openSpeed: 3

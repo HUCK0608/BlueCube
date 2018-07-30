@@ -59,13 +59,14 @@ public sealed class PlayerController3D : MonoBehaviour
     {
         ApplyGravity();
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            m_animator.Play("Dance");
-            m_staff.SetActive(false);
-            EffectManager.Instance.CreateEffect(Effect_Type.FireWorks, transform.position);
-            EffectManager.Instance.CreateEffect(Effect_Type.Soop, transform.position);
-        }
+        // 춤추기
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    m_animator.Play("Dance");
+        //    m_staff.SetActive(false);
+        //    EffectManager.Instance.CreateEffect(Effect_Type.FireWorks, transform.position);
+        //    EffectManager.Instance.CreateEffect(Effect_Type.Soop, transform.position);
+        //}
     }
 
     /// <summary>중력 적용</summary>

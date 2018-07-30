@@ -20,10 +20,6 @@ public sealed class PlayerManager : MonoBehaviour
     /// <summary>플레이어 손</summary>
     public PlayerHand Hand { get { return m_hand; } }
 
-    private PlayerInventory m_inventory;
-    /// <summary>인벤토리</summary>
-    public PlayerInventory Inventory { get { return m_inventory; } }
-
     // 컨트롤러
     private PlayerController m_mainController;
     private PlayerController3D m_subController3D;
@@ -79,7 +75,6 @@ public sealed class PlayerManager : MonoBehaviour
         m_stat = GetComponent<PlayerStat>();
         m_skill = GetComponent<PlayerSkill_ChangeView>();
         m_hand = GetComponent<PlayerHand>();
-        m_inventory = GetComponent<PlayerInventory>();
 
         m_mainController = GetComponent<PlayerController>();
         m_subController3D = GetComponentInChildren<PlayerController3D>();

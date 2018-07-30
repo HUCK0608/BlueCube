@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 4292170427127500}
   - component: {fileID: 114360597537895882}
   - component: {fileID: 114494528082153028}
-  - component: {fileID: 114328035478452478}
+  - component: {fileID: 114254817843192194}
   m_Layer: 0
   m_Name: Activate_Switch_Door_Vertical
   m_TagString: Untagged
@@ -872,7 +872,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 8, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114328035478452478
+--- !u!114 &114254817843192194
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -880,13 +880,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1395776187676096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f6de6dfd2e40054087cf180a5383658, type: 3}
+  m_Script: {fileID: 11500000, guid: 53df6b682d3202f40a523f4d663732b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_door: {fileID: 4267128644099682}
-  m_destination: {x: 0, y: -8, z: 0}
-  m_patternMeshRenderer: {fileID: 23635087104691908}
-  m_moveSpeed: 3
+  m_openGroup: {fileID: 4267128644099682}
+  m_openSpeed: 3
 --- !u!114 &114360597537895882
 MonoBehaviour:
   m_ObjectHideFlags: 1
