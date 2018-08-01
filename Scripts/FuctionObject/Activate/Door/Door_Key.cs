@@ -6,7 +6,7 @@ public sealed class Door_Key : Door
 {
     private static string m_shader_patternFillPath = "_PatternFill";
     private static float[] m_shader_patternFillValue = new float[4] { 1.0f, 1.56f, 2.03f, 6.8f };
-    private static float m_shader_patternFillTime = 3f;
+    private static float m_shader_patternFillTime = 1f;
 
     /// <summary>열쇠 이펙트 트랜스폼 모음</summary>
     [SerializeField]
@@ -22,9 +22,10 @@ public sealed class Door_Key : Door
 
     /// <summary>문과 연결된 열쇠 개수</summary>
     private int m_connectKeyAmount;
-
     /// <summary>문이 가지고 있는 열쇠 개수</summary>
     private int m_haveKeyAmount;
+    /// <summary>다음 착지 위치 인덱스</summary>
+    private int m_nextLandingPositionIndex;
 
     protected override void Start()
     {
@@ -40,6 +41,7 @@ public sealed class Door_Key : Door
             m_connectKeyAmount = m_connectKey.Length;
 
         m_haveKeyAmount = 4 - m_connectKeyAmount;
+        m_nextLandingPositionIndex = m_haveKeyAmount;
 
         if(!m_haveKeyAmount.Equals(4))
         {
@@ -84,7 +86,7 @@ public sealed class Door_Key : Door
     /// <summary>키의 착지 위치를 알려줌</summary>
     public Vector3 GetKeyLandingPosition()
     {
-        return m_keyEffectTransforms[m_haveKeyAmount++].position;
+        return m_keyEffectTransforms[m_nextLandingPositionIndex++].position;
     }
 
     /// <summary>열쇠가 착지했을 경우 실행</summary>
