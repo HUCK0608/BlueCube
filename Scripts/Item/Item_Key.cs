@@ -10,10 +10,10 @@ public sealed class Item_Key : MonoBehaviour
     [SerializeField]
     private Collider2D m_collider2D;
 
-    ///// <summary>연결된 문</summary>
-    //private Door m_connectDoor;
-    ///// <summary>연결된 문 설정</summary>
-    //public void SetConnectDoor(Door newDoor) { m_connectDoor = newDoor; }
+    /// <summary>연결된 문</summary>
+    private Door_Key m_connectDoor;
+    /// <summary>연결된 문 설정</summary>
+    public void SetConnectDoor(Door_Key newDoor) { m_connectDoor = newDoor; }
 
     /// <summary>착지하였는지 여부</summary>
     private bool m_isLanding;
