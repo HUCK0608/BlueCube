@@ -1114,3 +1114,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_openGroup: {fileID: 4001736458129044}
   m_openSpeed: 3
+  m_keyEffectTransforms:
+  - {fileID: 4527061927487040}
+  - {fileID: 4159221629556222}
+  - {fileID: 4297555387304208}
+  - {fileID: 4708980732279528}
+  m_patternMeshRenderer: {fileID: 23710121321393504}
+  m_connectKey:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

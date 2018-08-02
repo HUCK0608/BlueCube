@@ -34,11 +34,6 @@ public sealed class UIManager : MonoBehaviour
     ///<summary>죽음 UI 스크립트</summary>
     public DeadUI DeadUI { get { return m_deadUI; } }
 
-    [SerializeField]
-    private InformKeyUI m_informKeyUI;
-    /// <summary>키 알리기 UI 스크립트</summary>
-    public InformKeyUI InformKeyUI { get { return m_informKeyUI; } }
-
     private string m_titleScenePath = "Title";
 
     /// <summary>Tab UI가 켜졌을 경우 true를 반환</summary>
