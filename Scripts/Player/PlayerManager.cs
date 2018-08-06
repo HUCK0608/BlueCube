@@ -173,4 +173,28 @@ public sealed class PlayerManager : MonoBehaviour
         else
             m_player2D_Object.transform.position = teleportPosition;
     }
+
+    /// <summary>플레이어 초기화</summary>
+    public void ResetPlayer()
+    {
+        ResetPlayerPosition();
+        m_skill.ResetSkill_ChangeView();
+        m_mainController.ChangeState3D(E_PlayerState3D.Idle);
+        m_mainController.ChangeState2D(E_PlayerState2D.Idle);
+        m_subController3D.Animator.Play("Idle");
+        m_subController2D.Animator.Play("Idle");
+        if (m_hand.CurrentPickPutObject != null)
+            m_hand.CurrentPickPutObject.ResetPickPutObject();
+    }
+
+    /// <summary>플레이어 위치 초기화</summary>
+    private void ResetPlayerPosition()
+    {
+        Vector3 savePosition = CheckPointManager.Instance.GetCheckPoint().GetSavePosition;
+
+        if (CurrentView.Equals(E_ViewType.View3D))
+            m_player3D_Object.transform.position = savePosition;
+        else
+            m_player2D_Object.transform.position = savePosition;
+    }
 }

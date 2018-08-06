@@ -516,7 +516,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1129046785703180}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -21, y: 34, z: -160}
+  m_LocalPosition: {x: 4, y: 1, z: 28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4142419155594002}
@@ -1175,7 +1175,4 @@ MonoBehaviour:
   - {fileID: 4240896883581632}
   - {fileID: 4840831802567910}
   m_patternMeshRenderer: {fileID: 23371014618927634}
-  m_connectKey:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  m_connectKey: []

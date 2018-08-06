@@ -138,4 +138,11 @@ public sealed class CameraManager : MonoBehaviour
     {
         PlayerManager.Instance.PlayerChange2D();
     }
+
+    /// <summary>카메라를 리셋</summary>
+    public void ResetCamera()
+    {
+        m_animator.SetInteger(m_animatorParameterName, (int)E_ViewType.View3D);
+        m_animator.Play("View3D_Idle");
+    }
 }

@@ -116,6 +116,9 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 전환준비중 설정
         m_isViewChangeReady = true;
 
+        // 변경상자 활성화
+        m_changeViewRect.SetActive(true);
+
         // x, y 사이즈 커짐
         yield return StartCoroutine(m_changeViewRect.SetIncreaseSizeXY());
         // 키 체크 코루틴 활성화
@@ -160,7 +163,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             WorldManager.Instance.Change3D();
 
             // 상자 크기 줄이기
-            yield return StartCoroutine(m_changeViewRect.SetDecreaseSize());
+            //yield return StartCoroutine(m_changeViewRect.SetDecreaseSize());
         }
 
         // 상자 비활성화
@@ -186,9 +189,6 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         // 2D외벽 비활성화
         m_changeViewRect.SetOutWallEnable(false);
 
-        // 변경상자 활성화
-        m_changeViewRect.SetActive(true);
-
         // 오브젝트를 3D상태에 맞게 변경
         WorldManager.Instance.Change3D();
 
@@ -205,7 +205,7 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         yield return StartCoroutine(CameraManager.Instance.StartMovingWork());
 
         // 상자 크기 감소
-        yield return StartCoroutine(m_changeViewRect.SetDecreaseSize());
+        //yield return StartCoroutine(m_changeViewRect.SetDecreaseSize());
 
         // 땅이 아니라면 Hold 상태로 변경
         if(!PlayerManager.Instance.SubController3D.CheckGround.Check())
@@ -214,4 +214,18 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         m_isViewChange = false;
     }
 
+    /// <summary>시점변환 스킬 초기화</summary>
+    public void ResetSkill_ChangeView()
+    {
+        if (m_currentView.Equals(E_ViewType.View2D))
+        {
+            m_currentView = E_ViewType.View3D;
+            GameManager.Instance.SetCursorEnable(true);
+            m_changeViewRect.SetOutWallEnable(false);
+            WorldManager.Instance.Change3D();
+            PlayerManager.Instance.PlayerChange3D();
+            LightManager.Instance.ShadowEnable(true);
+            CameraManager.Instance.ResetCamera();
+        }
+    }
 }

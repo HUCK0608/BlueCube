@@ -35,4 +35,21 @@ public sealed class GameManager : MonoBehaviour
         else
             Cursor.lockState = CursorLockMode.Locked;
     }
+
+    private void Update()
+    {
+        RestartLevel();
+    }
+
+    /// <summary>게임 재시작</summary>
+    private void RestartLevel()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (PlayerManager.Instance.IsViewChange || PlayerManager.Instance.IsViewChangeReady)
+                return;
+
+            PlayerManager.Instance.ResetPlayer();
+        }
+    }
 }

@@ -41,7 +41,9 @@ public sealed class WorldManager : MonoBehaviour
     public void Change2D()
     {
         for (int i = 0; i < m_worldObjectCount; i++)
+        {
             m_worldObjects[i].Change2D();
+        }
     }
 
     /// <summary>월드의 오브젝트를 3D상태에 맞게 변경한다.</summary>

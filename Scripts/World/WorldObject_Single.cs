@@ -18,11 +18,14 @@ public sealed class WorldObject_Single : WorldObject
         base.Awake();
 
         m_renderer = GetComponentInChildren<MeshRenderer>();
-        m_defaultMaterial = m_renderer.material;
-        m_collider2D = GetComponentInChildren<Collider2D>();
-        m_defaultLightMapIndex = m_renderer.lightmapIndex;
+        if (m_renderer != null)
+        {
+            m_defaultMaterial = m_renderer.material;
+            m_defaultLightMapIndex = m_renderer.lightmapIndex;
+            m_isOnStartRendererEnable = m_renderer.enabled;
+        }
 
-        m_isOnStartRendererEnable = m_renderer.enabled;
+        m_collider2D = GetComponentInChildren<Collider2D>();
 
         // 스페큘러를 사용할 경우 스페큘러를 켜줌
         if (m_isUseShiningSpecular)
@@ -40,10 +43,14 @@ public sealed class WorldObject_Single : WorldObject
 
             SetMaterial(E_WorldObject_ShaderType.Default3D);
 
-            m_renderer.lightmapIndex = m_defaultLightMapIndex;
+            if(m_renderer != null)
+                m_renderer.lightmapIndex = m_defaultLightMapIndex;
 
             if (!m_isOnStartRendererEnable)
-                m_renderer.enabled = false;
+            {
+                if(m_renderer != null)
+                    m_renderer.enabled = false;
+            }
         }
         else
         {
@@ -66,10 +73,14 @@ public sealed class WorldObject_Single : WorldObject
             else
                 SetMaterial(E_WorldObject_ShaderType.Default3D);
 
-            m_renderer.lightmapIndex = -1;
+            if(m_renderer != null)
+                m_renderer.lightmapIndex = -1;
 
             if (!m_isOnStartRendererEnable)
-                m_renderer.enabled = true;
+            {
+                if(m_renderer != null)
+                    m_renderer.enabled = true;
+            }
         }
         else
         {
@@ -80,6 +91,9 @@ public sealed class WorldObject_Single : WorldObject
     /// <summary>싱글 오브젝트의 렌더러의 활성화여부를 설정</summary>
     public override void SetRendererEnable(bool value)
     {
+        if (m_renderer == null)
+            return;
+
         if(!m_renderer.enabled.Equals(value))
             m_renderer.enabled = value;
 
@@ -96,6 +110,9 @@ public sealed class WorldObject_Single : WorldObject
     /// <summary>싱글 오브젝트의 쉐이더를 설정</summary>
     public override void SetMaterial(E_WorldObject_ShaderType shaderType)
     {
+        if (m_renderer == null)
+            return;
+
         if (shaderType.Equals(E_WorldObject_ShaderType.Default3D))
             m_renderer.material.SetFloat(m_shader_ChoiceString, 0f);
         else if (shaderType.Equals(E_WorldObject_ShaderType.Default2D))

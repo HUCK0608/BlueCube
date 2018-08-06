@@ -36,11 +36,15 @@ public sealed class Interaction_PickPut : MonoBehaviour
     /// <summary>오브젝트 놓기 과정이 끝났을경우 true를 반환</summary>
     public bool IsPutEnd { get { return m_put.IsPutEnd; } }
 
+    private Vector3 m_startPosition;
+
     private void Awake()
     {
         m_put = GetComponent<Interaction_Put>();
 
         m_model = transform.Find("ModelAndCollider3D").transform;
+
+        m_startPosition = transform.position;
     }
 
     /// <summary>오브젝트를 든다</summary>
@@ -116,6 +120,23 @@ public sealed class Interaction_PickPut : MonoBehaviour
                 isUp = true;
 
             yield return null;
+        }
+    }
+    
+    /// <summary>들기 오브젝트 초기화</summary>
+    public void ResetPickPutObject()
+    {
+        StopAllCoroutines();
+        m_put.StopAllCoroutines();
+        if (GetComponent<Interaction_Bomb>() != null)
+        {
+            m_model.localPosition = Vector3.zero;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            m_model.position = m_startPosition;
+            m_isPick = false;
         }
     }
 }
