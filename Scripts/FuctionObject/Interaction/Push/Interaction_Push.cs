@@ -146,46 +146,51 @@ public class Interaction_Push : MonoBehaviour
             Vector3 playerDirection = PlayerManager.Instance.SubController3D.Forward;
             // 충돌된 마우스 위치의 피벗 구하기
             Vector3 hitPivot = hit.point.GetGamePivot();
-            float one = 1f;
 
-            // 플레이어의 방향이 x 양의 방향일 때
-            if (Mathf.Round(playerDirection.x).Equals(one))
+            // 피벗 위 1f위치에서 아래로 땅이 있는지 체크
+            if (Physics.Raycast(hitPivot + Vector3.up, Vector3.down, 2f, layerMask))
             {
-                // 피벗의 x가 현재위치의 x보다 크고 피벗의 z는 현재위치의 z랑 같을 때
-                if (hitPivot.x > transform.position.x && hitPivot.z.Equals(transform.position.z))
+                float one = 1f;
+
+                // 플레이어의 방향이 x 양의 방향일 때
+                if (Mathf.Round(playerDirection.x).Equals(one))
                 {
-                    pushPosition = hitPivot;
-                    pushPosition.y = transform.position.y;
+                    // 피벗의 x가 현재위치의 x보다 크고 피벗의 z는 현재위치의 z랑 같을 때
+                    if (hitPivot.x > transform.position.x && hitPivot.z.Equals(transform.position.z))
+                    {
+                        pushPosition = hitPivot;
+                        pushPosition.y = transform.position.y;
+                    }
                 }
-            }
-            // 플레이어의 방향이 x 음의 방향일 때
-            else if (Mathf.Round(playerDirection.x).Equals(-one))
-            {
-                // 피벗의 x가 현재위치의 x보다 작고 피벗의 z는 현재위치의 z랑 같을 때
-                if (hitPivot.x < transform.position.x && hitPivot.z.Equals(transform.position.z))
+                // 플레이어의 방향이 x 음의 방향일 때
+                else if (Mathf.Round(playerDirection.x).Equals(-one))
                 {
-                    pushPosition = hitPivot;
-                    pushPosition.y = transform.position.y;
+                    // 피벗의 x가 현재위치의 x보다 작고 피벗의 z는 현재위치의 z랑 같을 때
+                    if (hitPivot.x < transform.position.x && hitPivot.z.Equals(transform.position.z))
+                    {
+                        pushPosition = hitPivot;
+                        pushPosition.y = transform.position.y;
+                    }
                 }
-            }
-            // 플레이어의 방향이 z 양의 방향일 때
-            else if (Mathf.Round(playerDirection.z).Equals(one))
-            {
-                // 피벗의 z가 현재위치의 z보다 크고 피벗의 x는 현재위치의 x랑 같을 때
-                if (hitPivot.z > transform.position.z && hitPivot.x.Equals(transform.position.x))
+                // 플레이어의 방향이 z 양의 방향일 때
+                else if (Mathf.Round(playerDirection.z).Equals(one))
                 {
-                    pushPosition = hitPivot;
-                    pushPosition.y = transform.position.y;
+                    // 피벗의 z가 현재위치의 z보다 크고 피벗의 x는 현재위치의 x랑 같을 때
+                    if (hitPivot.z > transform.position.z && hitPivot.x.Equals(transform.position.x))
+                    {
+                        pushPosition = hitPivot;
+                        pushPosition.y = transform.position.y;
+                    }
                 }
-            }
-            // 플레이어의 방향이 z 음의 방향일 때
-            else if (Mathf.Round(playerDirection.z).Equals(-one))
-            {
-                // 피벗의 z가 현재위치의 z보다 작고 피벗의 x는 현재위치의 x랑 같을 때
-                if (hitPivot.z < transform.position.z && hitPivot.x.Equals(transform.position.x))
+                // 플레이어의 방향이 z 음의 방향일 때
+                else if (Mathf.Round(playerDirection.z).Equals(-one))
                 {
-                    pushPosition = hitPivot;
-                    pushPosition.y = transform.position.y;
+                    // 피벗의 z가 현재위치의 z보다 작고 피벗의 x는 현재위치의 x랑 같을 때
+                    if (hitPivot.z < transform.position.z && hitPivot.x.Equals(transform.position.x))
+                    {
+                        pushPosition = hitPivot;
+                        pushPosition.y = transform.position.y;
+                    }
                 }
             }
         }

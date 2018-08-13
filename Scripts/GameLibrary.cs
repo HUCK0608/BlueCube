@@ -165,7 +165,6 @@ public static class GameLibrary
         float two = 2f;
 
         // 각 좌표에 2로 나눈 나머지의 절대값이 1일 경우 1을 더해줌
-        // y는 1을 빼줌
         if (Mathf.Abs((normalizedPosition.x % two)).Equals(one))
             normalizedPosition.x += one;
         if (Mathf.Abs((normalizedPosition.y % two)).Equals(one))
