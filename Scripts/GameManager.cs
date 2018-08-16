@@ -38,18 +38,18 @@ public sealed class GameManager : MonoBehaviour
 
     private void Update()
     {
-        RestartLevel();
-    }
-
-    /// <summary>게임 재시작</summary>
-    private void RestartLevel()
-    {
         if (Input.GetKeyDown(KeyCode.R))
         {
             if (PlayerManager.Instance.IsViewChange || PlayerManager.Instance.IsViewChangeReady)
                 return;
 
-            PlayerManager.Instance.ResetPlayer();
+            RestartLevel();
         }
+    }
+
+    /// <summary>게임 재시작</summary>
+    public void RestartLevel()
+    {
+        PlayerManager.Instance.ResetPlayer();
     }
 }

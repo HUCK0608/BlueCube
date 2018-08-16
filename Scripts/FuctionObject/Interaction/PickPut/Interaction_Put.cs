@@ -129,4 +129,11 @@ public abstract class Interaction_Put : MonoBehaviour
         newColor.a = m_fadeObjectMaterial.color.a;
         m_fadeObjectMaterial.color = newColor;
     }
+
+    /// <summary>놓기 스크립트 초기화</summary>
+    public void ResetPut()
+    {
+        StopAllCoroutines();
+        m_fadeObject.SetActive(false);
+    }
 }

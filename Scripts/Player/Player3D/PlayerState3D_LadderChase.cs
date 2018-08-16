@@ -27,7 +27,7 @@ public sealed class PlayerState3D_LadderChase : PlayerState3D
     protected override void ChangeStates()
     {
         // 사다리 앞으로 이동했으면 LadderInit 상태로 변경
-        if(transform.position.Equals(m_hangPosition))
+        if(Vector3.Distance(transform.position, m_hangPosition) < 0.01f)
         {
             m_mainController.ChangeState3D(E_PlayerState3D.LadderInit);
         }

@@ -139,7 +139,6 @@ public sealed class PlayerManager : MonoBehaviour
             StartCoroutine(HitLogic3D());
         else if (CurrentView.Equals(E_ViewType.View2D) && !m_stat.Hp.Equals(0))
             StartCoroutine(HitLogic2D());
-
         Debug.Log("플레이어 데미지! 남은체력 : " + m_stat.Hp);
     }
     
@@ -151,7 +150,8 @@ public sealed class PlayerManager : MonoBehaviour
 
         m_subController3D.Animator.Play(m_hitPath);
         yield return new WaitUntil(() => m_subController3D.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
-        m_subController3D.Animator.CrossFade(currentStateHash, m_hitAniCrossFadeTime, -1, currentStateInfo.normalizedTime);
+        if(m_subController3D.Animator.GetCurrentAnimatorStateInfo(0).IsName(m_hitPath))
+            m_subController3D.Animator.CrossFade(currentStateHash, m_hitAniCrossFadeTime, -1, currentStateInfo.normalizedTime);
     }
 
     /// <summary>2D 피격 로직</summary>
@@ -162,7 +162,8 @@ public sealed class PlayerManager : MonoBehaviour
 
         m_subController2D.Animator.Play(m_hitPath);
         yield return new WaitUntil(() => m_subController2D.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
-        m_subController2D.Animator.CrossFade(currentStateHash, m_hitAniCrossFadeTime, -1, currentStateInfo.normalizedTime);
+        if(m_subController2D.Animator.GetCurrentAnimatorStateInfo(0).IsName(m_hitPath))
+            m_subController2D.Animator.CrossFade(currentStateHash, m_hitAniCrossFadeTime, -1, currentStateInfo.normalizedTime);
     }
 
     /// <summar>플레이어를 teleportPosition으로 이동시킨다</summar>

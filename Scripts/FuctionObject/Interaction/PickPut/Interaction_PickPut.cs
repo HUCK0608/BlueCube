@@ -127,7 +127,7 @@ public sealed class Interaction_PickPut : MonoBehaviour
     public void ResetPickPutObject()
     {
         StopAllCoroutines();
-        m_put.StopAllCoroutines();
+        m_put.ResetPut();
         if (GetComponent<Interaction_Bomb>() != null)
         {
             m_model.localPosition = Vector3.zero;

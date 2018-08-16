@@ -20,7 +20,7 @@ public sealed class Item_Key : MonoBehaviour
 
     /// <summary>이동속도</summary>
     [SerializeField]
-    private float m_moveSpeed = 7f;
+    private float m_moveSpeed = 10f;
 
     private void Awake()
     {
@@ -42,6 +42,7 @@ public sealed class Item_Key : MonoBehaviour
     {
         Vector3 landingPosition = m_connectDoor.GetKeyLandingPosition();
 
+        // 안착 지점으로 날라가는 로직
         while (true)
         {
             transform.position = Vector3.MoveTowards(transform.position, landingPosition, m_moveSpeed * Time.deltaTime);
