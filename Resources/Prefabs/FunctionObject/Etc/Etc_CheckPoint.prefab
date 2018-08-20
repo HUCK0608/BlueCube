@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4582708168472654}
   - component: {fileID: 114483965577578460}
+  - component: {fileID: 114968726664159680}
   m_Layer: 0
   m_Name: Etc_CheckPoint
   m_TagString: Untagged
@@ -80,8 +81,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1372351032230624}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -37.371616, y: 23.527906, z: 6.3730497}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 50.113445, y: 5, z: 7.8193893}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4689618288920280}
@@ -108,7 +109,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1437486429387242}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -172,3 +173,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe651c670013b4646b77be8198dd75d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114968726664159680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1372351032230624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306fe89d18b372e4ca3890c37cbcdce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isUse2DTexture: 0
+  m_isUseShiningSpecular: 0

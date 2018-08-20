@@ -37,6 +37,13 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     /// <summary>시점변경을 허용하지않았을 경우 true를 반환</summary>
     public bool IsNotChange { get { return m_isNotChange; } }
 
+    /// <summary>스킬이 잠겨있는지 여부</summary>
+    private bool m_isLock;
+    /// <summary>스킬이 잠겨있을 경우 true를 반환</summary>
+    public bool IsLock { get { return m_isLock; } }
+    /// <summary>스킬 잠금 설정</summary>
+    public void SetSkillLock(bool value) { m_isLock = value; }
+
     private void Awake()
     {
         m_playerManager = GetComponent<PlayerManager>();
@@ -54,6 +61,10 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
     /// <summary>시점변환 실행</summary>
     public void ChangeView()
     {
+        // 스킬이 잠겨있을경우 리턴
+        if (m_isLock)
+            return;
+
         // 현재 시점이 3D일 때 2D로 변경
         if (m_currentView.Equals(E_ViewType.View3D))
         {
