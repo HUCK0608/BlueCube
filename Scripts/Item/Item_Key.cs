@@ -4,6 +4,9 @@ using UnityEngine;
 
 public sealed class Item_Key : MonoBehaviour
 {
+    // 메쉬
+    private MeshRenderer m_meshRenderer;
+
     // 콜라이더
     private Collider m_collider;
     private Collider2D m_collider2D;
@@ -22,8 +25,13 @@ public sealed class Item_Key : MonoBehaviour
     [SerializeField]
     private float m_moveSpeed = 10f;
 
+    /// <summary>기본 이펙트</summary>
+    [SerializeField]
+    private GameObject m_defaultEffect;
+
     private void Awake()
     {
+        m_meshRenderer = GetComponentInChildren<MeshRenderer>();
         m_collider = GetComponentInChildren<Collider>();
         m_collider2D = GetComponentInChildren<Collider2D>();
     }
@@ -33,6 +41,7 @@ public sealed class Item_Key : MonoBehaviour
     {
         m_collider.enabled = false;
         m_collider2D.enabled = false;
+        m_defaultEffect.SetActive(false);
 
         StartCoroutine(FlyToLandingPositionLogic());
     }
@@ -53,7 +62,7 @@ public sealed class Item_Key : MonoBehaviour
             yield return null;
         }
 
+        m_meshRenderer.enabled = false;
         m_connectDoor.CompleteLanding();
-        gameObject.SetActive(false);
     }
 }

@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 4183510604762482}
   - component: {fileID: 50373989140766384}
   - component: {fileID: 61992253505267436}
+  - component: {fileID: 114110562634356934}
   m_Layer: 2
   m_Name: Collider2D
   m_TagString: Untagged
@@ -260,7 +261,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1011436208694048}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -34.04544, y: 12.819567, z: -30.794296}
+  m_LocalPosition: {x: -29.045656, y: 9.949248, z: -10.98469}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4911183685069636}
@@ -554,6 +555,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_hitType: 0
+--- !u!114 &114110562634356934
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1673847021886788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517989cd0423eac4fa674fc256ddc886, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114615048051692798
 MonoBehaviour:
   m_ObjectHideFlags: 1
