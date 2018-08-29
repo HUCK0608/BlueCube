@@ -16,11 +16,6 @@ public sealed class Item_Key : MonoBehaviour
     /// <summary>연결된 문 설정</summary>
     public void SetConnectDoor(Door_Key newDoor) { m_connectDoor = newDoor; }
 
-    /// <summary>착지하였는지 여부</summary>
-    private bool m_isLanding;
-    /// <summary>착지하였을 경우 true를 반환</summary>
-    public bool IsLanding { get { return m_isLanding; } }
-
     /// <summary>이동속도</summary>
     [SerializeField]
     private float m_moveSpeed = 10f;
@@ -62,6 +57,7 @@ public sealed class Item_Key : MonoBehaviour
             yield return null;
         }
 
+        EffectManager.Instance.CreateEffect(Effect_Type.Key_Landing, transform.position);
         m_meshRenderer.enabled = false;
         m_connectDoor.CompleteLanding();
     }
