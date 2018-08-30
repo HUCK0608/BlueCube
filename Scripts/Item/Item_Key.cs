@@ -29,6 +29,23 @@ public sealed class Item_Key : MonoBehaviour
         m_meshRenderer = GetComponentInChildren<MeshRenderer>();
         m_collider = GetComponentInChildren<Collider>();
         m_collider2D = GetComponentInChildren<Collider2D>();
+
+        StartCoroutine(EffectControll());
+    }
+
+    /// <summary>시점에 따른 이펙트 조절</summary>
+    private IEnumerator EffectControll()
+    {
+        WaitUntil onMeshRendererWaitUntil = new WaitUntil(() => m_meshRenderer.enabled);
+        WaitUntil offMeshRendererWaitUntil = new WaitUntil(() => !m_meshRenderer.enabled);
+
+        while (true)
+        {
+            yield return offMeshRendererWaitUntil;
+            m_defaultEffect.SetActive(false);
+            yield return onMeshRendererWaitUntil;
+            m_defaultEffect.SetActive(true);
+        }
     }
 
     /// <summary>착지지점으로 날아가기 시작</summary>
