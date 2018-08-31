@@ -38,6 +38,8 @@ public sealed class StoryUI : MonoBehaviour
     /// <summary>스토리 알림 스크립트</summary>
     [SerializeField]
     private InformStoryUI m_informStoryUI;
+    /// <summary>스토리 알림 스크립트</summary>
+    public InformStoryUI InformStoryUI { get { return m_informStoryUI; } }
 
     /// <summary>타이틀 그룹모음</summary>
     private List<TitleGroup> m_titleGroups;
