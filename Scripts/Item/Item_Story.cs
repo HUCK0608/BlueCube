@@ -23,6 +23,7 @@ public sealed class Item_Story : MonoBehaviour
     {
         UIManager.Instance.StoryUI.UnlcokStory(this);
 
+        EffectManager.Instance.CreateEffect(Effect_Type.Player_Story, transform.position);
         gameObject.SetActive(false);
     }
 }
