@@ -16,11 +16,6 @@ public sealed class Item_Key : MonoBehaviour
     /// <summary>연결된 문 설정</summary>
     public void SetConnectDoor(Door_Key newDoor) { m_connectDoor = newDoor; }
 
-    /// <summary>착지하였는지 여부</summary>
-    private bool m_isLanding;
-    /// <summary>착지하였을 경우 true를 반환</summary>
-    public bool IsLanding { get { return m_isLanding; } }
-
     /// <summary>이동속도</summary>
     [SerializeField]
     private float m_moveSpeed = 10f;
@@ -34,6 +29,23 @@ public sealed class Item_Key : MonoBehaviour
         m_meshRenderer = GetComponentInChildren<MeshRenderer>();
         m_collider = GetComponentInChildren<Collider>();
         m_collider2D = GetComponentInChildren<Collider2D>();
+
+        StartCoroutine(EffectControll());
+    }
+
+    /// <summary>시점에 따른 이펙트 조절</summary>
+    private IEnumerator EffectControll()
+    {
+        WaitUntil onMeshRendererWaitUntil = new WaitUntil(() => m_meshRenderer.enabled);
+        WaitUntil offMeshRendererWaitUntil = new WaitUntil(() => !m_meshRenderer.enabled);
+
+        while (true)
+        {
+            yield return offMeshRendererWaitUntil;
+            m_defaultEffect.SetActive(false);
+            yield return onMeshRendererWaitUntil;
+            m_defaultEffect.SetActive(true);
+        }
     }
 
     /// <summary>착지지점으로 날아가기 시작</summary>
@@ -62,6 +74,7 @@ public sealed class Item_Key : MonoBehaviour
             yield return null;
         }
 
+        EffectManager.Instance.CreateEffect(Effect_Type.Key_Landing, transform.position);
         m_meshRenderer.enabled = false;
         m_connectDoor.CompleteLanding();
     }

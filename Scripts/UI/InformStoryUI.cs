@@ -20,6 +20,11 @@ public sealed class InformStoryUI : MonoBehaviour
     /// <summary>스토리 알림 코루틴</summary>
     private Coroutine m_informStoryCor;
 
+    /// <summary>UI가 켜져있는지 여부</summary>
+    private bool m_isOnUI;
+    /// <summary>UI가 켜져있을 경우 true를 반환</summary>
+    public bool IsOnUI { get { return m_isOnUI; } }
+
     private void Awake()
     {
         gameObject.SetActive(false);
@@ -44,8 +49,9 @@ public sealed class InformStoryUI : MonoBehaviour
     /// <summary>스토리 알림 로직</summary>
     private IEnumerator InformStoryLogic()
     {
+        m_isOnUI = true;
         float addTime = 0f;
-
+        
         while(true)
         {
             addTime += Time.deltaTime;
@@ -56,6 +62,7 @@ public sealed class InformStoryUI : MonoBehaviour
             yield return null;
         }
 
+        m_isOnUI = false;
         gameObject.SetActive(false);
     }
 }

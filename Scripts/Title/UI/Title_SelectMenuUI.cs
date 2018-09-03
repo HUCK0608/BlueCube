@@ -52,9 +52,24 @@ public sealed class Title_SelectMenuUI : MonoBehaviour
     [SerializeField]
     private string m_newGameScenePath;
 
+    bool m_isOnNewGameLoad;
+
     public void OnMouseEnterNewGame() { m_newGameImage.sprite = m_newGameSelectSprite; EnableSelectImage(m_newGameImage.rectTransform); }
     public void OnMouseExitNewGame() { m_newGameImage.sprite = m_newGameDefaultSprite; DisableSelectImage(); }
-    public void OnMouseClickNewGame() { SceneManager.LoadScene(m_newGameScenePath); }
+    public void OnMouseClickNewGame()
+    {
+        if (!m_isOnNewGameLoad)
+        {
+            m_isOnNewGameLoad = true;
+            StartCoroutine(NewGameLogic());
+        }
+    }
+    private IEnumerator NewGameLogic()
+    {
+        LoadingUI.Instance.PlayFadeIn();
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadSceneAsync(m_newGameScenePath);
+    }
 
     public void OnMouseEnterLoadGame() { m_loadGameImage.sprite = m_loadGameSelectSprite; EnableSelectImage(m_loadGameImage.rectTransform); }
     public void OnMouseExitLoadGame() { m_loadGameImage.sprite = m_loadGameDefaultSprite; DisableSelectImage(); }

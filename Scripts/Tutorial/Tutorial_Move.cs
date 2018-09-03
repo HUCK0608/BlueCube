@@ -22,28 +22,26 @@ public sealed class Tutorial_Move : Tutorial
     {
         // 스킬을 사용하지 못하게 잠금
         PlayerManager.Instance.Skill.SetSkillLock(true);
-        // UI 꺼놓기
-        m_moveUIImage.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public override void StartTutorial()
     {
-        m_moveUIImage.gameObject.SetActive(true);
+        gameObject.SetActive(true);
         StartCoroutine(EndCheck());
+    }
+
+    /// <summary>튜토리얼 종료 체크</summary>
+    private IEnumerator EndCheck()
+    {
+        yield return new WaitUntil(() => PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.Move));
+
+        EndTutorial();
     }
 
     protected override void EndTutorial()
     {
         StartCoroutine(EndLogic());
-    }
-
-    /// <summary>종료 체크</summary>
-    private IEnumerator EndCheck()
-    {
-        yield return new WaitUntil(() => PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.Move));
-
-        PlayerManager.Instance.Skill.SetSkillLock(false);
-        EndTutorial();
     }
 
     /// <summary>종료 로직</summary>
