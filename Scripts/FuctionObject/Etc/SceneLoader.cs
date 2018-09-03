@@ -15,7 +15,14 @@ public sealed class SceneLoader : MonoBehaviour
         if (!m_isOnLoad)
         {
             m_isOnLoad = true;
-            SceneManager.LoadSceneAsync(m_loadScenePath);
+            StartCoroutine(LoadSceneLogic());
         }
+    }
+
+    private IEnumerator LoadSceneLogic()
+    {
+        LoadingUI.Instance.PlayFadeIn();
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadSceneAsync(m_loadScenePath);
     }
 }
