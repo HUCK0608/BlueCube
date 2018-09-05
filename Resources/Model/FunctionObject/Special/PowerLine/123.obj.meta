@@ -1,24 +1,18 @@
 fileFormatVersion: 2
-guid: 713bb90f77ec90b45a27bf3c9c63bbf3
-timeCreated: 1527519731
+guid: 0550822e85351664889f4138f2cbbbd6
+timeCreated: 1536130150
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Special_FirePillar_Frame
-    100004: Special_FirePillar_Light
+    100002: pipe_line_002
     400000: //RootNode
-    400002: Special_FirePillar_Frame
-    400004: Special_FirePillar_Light
-    2100000: Special_FirePillar_FrameMat
-    2100002: Special_FirePillar_LightMat
-    2300000: Special_FirePillar_Frame
-    2300002: Special_FirePillar_Light
-    3300000: Special_FirePillar_Frame
-    3300002: Special_FirePillar_Light
-    4300000: Special_FirePillar_Frame
-    4300002: Special_FirePillar_Light
+    400002: pipe_line_002
+    2100000: pipe_line_002Mat
+    2300000: pipe_line_002
+    3300000: pipe_line_002
+    4300000: pipe_line_002
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -74,7 +68,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

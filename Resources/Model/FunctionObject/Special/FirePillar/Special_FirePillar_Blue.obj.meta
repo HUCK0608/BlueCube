@@ -1,24 +1,24 @@
 fileFormatVersion: 2
-guid: aa4244f41a3d7b14ab60fa21d46fddf6
-timeCreated: 1527521189
+guid: cfda9563d00acb341b1c7b15ebb05fba
+timeCreated: 1536111412
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Special_FirePillar_FixFire_Frame
-    100004: Special_FirePillar_FixFire_Light
+    100002: Special_FirePillar_Blue_Frame
+    100004: Special_FirePillar_Blue_Water
     400000: //RootNode
-    400002: Special_FirePillar_FixFire_Frame
-    400004: Special_FirePillar_FixFire_Light
-    2100000: Special_FirePillar_FixFire_FrameMat
-    2100002: Special_FirePillar_FixFire_LightMat
-    2300000: Special_FirePillar_FixFire_Frame
-    2300002: Special_FirePillar_FixFire_Light
-    3300000: Special_FirePillar_FixFire_Frame
-    3300002: Special_FirePillar_FixFire_Light
-    4300000: Special_FirePillar_FixFire_Frame
-    4300002: Special_FirePillar_FixFire_Light
+    400002: Special_FirePillar_Blue_Frame
+    400004: Special_FirePillar_Blue_Water
+    2100000: Special_FirePillar_Blue_FrameMat
+    2100002: Special_FirePillar_Blue_WaterMat
+    2300000: Special_FirePillar_Blue_Frame
+    2300002: Special_FirePillar_Blue_Water
+    3300000: Special_FirePillar_Blue_Frame
+    3300002: Special_FirePillar_Blue_Water
+    4300000: Special_FirePillar_Blue_Frame
+    4300002: Special_FirePillar_Blue_Water
   externalObjects: {}
   materials:
     importMaterials: 1
