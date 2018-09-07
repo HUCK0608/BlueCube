@@ -1,10 +1,9 @@
 ﻿Shader "Custom/PowerLine_Line" {
 	Properties {
-		_OnColor ("OnColor", Color) = (1, 1, 1, 1)
+		[HDR]_OnColor ("OnColor", Color) = (1, 1, 1, 1)
 		_OffColor("OffColor", Color) = (0, 0, 0, 0)
-		_Fill("Fill", Range(0, 1)) = 0
-		[Toggle]_Reverse("Reverse", float) = 0
-		_MainTex("Albedo (RGB)", 2D) = "white" {}
+		[Toggle]_Brightness("Brightness", float) = 0
+		[HideInInspector]_MainTex("Albedo (RGB)", 2D) = "white" {}
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }
@@ -16,8 +15,7 @@
 
 		float4 _OnColor;
 		float4 _OffColor;
-		float _Fill;
-		float _Reverse;
+		float _Brightness;
 		sampler2D _MainTex;
 
 		struct Input {
@@ -29,7 +27,7 @@
 			o.Albedo = float3(0, 0, 0);
 			o.Alpha = 1;
 
-			float uvXStepFill = abs(step(IN.uv_MainTex.y, abs(_Fill - _Reverse)) - _Reverse);
+			float uvXStepFill = step(IN.uv_MainTex.y, _Brightness);
 			o.Emission = uvXStepFill * _OnColor.rgb + (1 - uvXStepFill) * _OffColor.rgb;
 		}
 		ENDCG

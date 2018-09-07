@@ -4,27 +4,18 @@ using UnityEngine;
 
 public sealed class Special_PowerLine_Line : MonoBehaviour
 {
-    private static string m_PowerLineTag = "Special_PowerLine_Line";
-    private static string m_PowerTag = "Special_PowerLine_Power";
+    private const string m_PowerLineTag = "Special_PowerLine_Line";
+    private const string m_PowerTag = "Special_PowerLine_Power";
+    private const string m_brightnessPath = "_Brightness";
+    private const float m_onBrightness = 1.0f;
+    private const float m_offBrightness = 0.0f;
 
-    private static float m_multiplyDirection2D = 1.05f;
-
-    private static float m_checkDistance3D = 1.05f;
-    private static float m_checkDistance2D = 0.05f;
+    private const float m_multiplyDirection2D = 1.05f;
+    private const float m_checkDistance = 1.05f;
 
     [Header("Don't Touch")]
     [SerializeField]
-    private Transform m_model;
-    /// <summary>모델 오브젝트</summary>
-    public Transform Model { get { return m_model; } }
-
-    /// <summary>켜졌을 때 메쉬</summary>
-    [SerializeField]
-    private Mesh m_onMesh;
-
-    /// <summary>꺼졌을 때 메쉬</summary>
-    [SerializeField]
-    private Mesh m_offMesh;
+    private MeshRenderer m_lineMeshRenderer;
 
     /// <summary>월드 오브젝트</summary>
     private WorldObject m_worldObject;
@@ -45,17 +36,12 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
     /// <summary>전원과 연결되어 있을 경우 true를 반환</summary>
     public bool IsConnectedPower { get { return m_isConnectedPower; } }
 
-    /// <summary>메쉬 랜더러</summary>
-    private MeshFilter m_meshFilter;
-
     private void Awake()
     {
         m_worldObject = GetComponent<WorldObject>();
         m_lineDirection = GetComponent<Special_PowerLine_LineDirection>();
         m_checkedLines = new Dictionary<Transform, Special_PowerLine_Line>();
         m_connectedPowerDirections = new List<Vector3>();
-
-        m_meshFilter = m_model.GetComponent<MeshFilter>();
     }
 
     /// <summary>파워 전송(연결된 방향)</summary>
@@ -73,7 +59,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
     private IEnumerator TransmitPowerLogic()
     {
         m_isConnectedPower = true;
-        m_meshFilter.mesh = m_onMesh;
+        m_lineMeshRenderer.material.SetFloat(m_brightnessPath, m_onBrightness);
 
         // 렌더러가 활성화 되어있는 경우에만 실행
         while(m_worldObject.IsOnRenderer)
@@ -108,7 +94,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
 
         ClearConnectedPowerDirection();
 
-        m_meshFilter.mesh = m_offMesh;
+        m_lineMeshRenderer.material.SetFloat(m_brightnessPath, m_offBrightness);
         m_isConnectedPower = false;
     }
 
@@ -124,7 +110,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
                 Vector3 direction = m_lineDirection.LineDirection[i];
                 RaycastHit hit;
 
-                if (GameLibrary.Raycast3D(origin, direction, out hit, m_checkDistance3D))
+                if (GameLibrary.Raycast3D(origin, direction, out hit, m_checkDistance))
                 {
                     if (hit.transform.tag.Equals(m_PowerLineTag))
                     {
@@ -155,7 +141,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
                 Vector2 direction = m_lineDirection.LineDirection[i];
                 RaycastHit2D hit;
 
-                if (GameLibrary.Raycast2D(origin, direction, out hit, m_checkDistance3D))
+                if (GameLibrary.Raycast2D(origin, direction, out hit, m_checkDistance))
                 {
                     if (hit.transform.tag.Equals(m_PowerLineTag))
                     {
@@ -185,7 +171,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
             Vector3 direction = m_connectedPowerDirections[i];
             RaycastHit hit;
 
-            if (GameLibrary.Raycast3D(origin, direction, out hit, m_checkDistance3D))
+            if (GameLibrary.Raycast3D(origin, direction, out hit, m_checkDistance))
             {
                 // 파워일 경우 무조건 연결되어있다고 설정
                 if (hit.transform.tag.Equals(m_PowerTag))
@@ -223,7 +209,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
             Vector2 direction = m_connectedPowerDirections[i];
             RaycastHit2D hit;
 
-            if (GameLibrary.Raycast2D(origin, direction, out hit, m_checkDistance3D))
+            if (GameLibrary.Raycast2D(origin, direction, out hit, m_checkDistance))
             {
                 // 파워일 경우 무조건 연결되어있다고 설정
                 if (hit.transform.tag.Equals(m_PowerTag))

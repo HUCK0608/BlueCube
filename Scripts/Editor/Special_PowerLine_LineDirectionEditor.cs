@@ -27,9 +27,9 @@ public sealed class Special_PowerLine_LineDirectionEditor : Editor
         GUILayout.Space(10f);
         if(GUILayout.Button("오브젝트 90도 회전"))
         {
-            Special_PowerLine_Line mainScript = (Selection.activeGameObject).GetComponent<Special_PowerLine_Line>();
+            Transform selectionTransform = Selection.activeTransform;
 
-            mainScript.Model.Rotate(Vector3.right, 90f);
+            selectionTransform.Rotate(Vector3.forward, 90f);
 
             bool oldUpValue = m_isUpProp.boolValue;
             bool oldRightValue = m_isRightProp.boolValue;
@@ -42,13 +42,13 @@ public sealed class Special_PowerLine_LineDirectionEditor : Editor
             bool newDownValue = false;
 
             if (m_isUpProp.boolValue)
-                newRightValue = true;
-            if (m_isRightProp.boolValue)
-                newDownValue = true;
-            if (m_isLeftProp.boolValue)
-                newUpValue = true;
-            if (m_isDownProp.boolValue)
                 newLeftValue = true;
+            if (m_isRightProp.boolValue)
+                newUpValue = true;
+            if (m_isLeftProp.boolValue)
+                newDownValue = true;
+            if (m_isDownProp.boolValue)
+                newRightValue = true;
 
             m_isUpProp.boolValue = newUpValue;
             m_isRightProp.boolValue = newRightValue;

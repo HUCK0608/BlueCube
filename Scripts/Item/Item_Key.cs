@@ -68,14 +68,14 @@ public sealed class Item_Key : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, landingPosition, m_moveSpeed * Time.deltaTime);
 
-            if (transform.position.Equals(landingPosition))
+            if (Vector3.Distance(transform.position, landingPosition) <= 0.01f)
                 break;
 
             yield return null;
         }
 
         EffectManager.Instance.CreateEffect(Effect_Type.Key_Landing, transform.position);
-        m_meshRenderer.enabled = false;
         m_connectDoor.CompleteLanding();
+        gameObject.SetActive(false);
     }
 }

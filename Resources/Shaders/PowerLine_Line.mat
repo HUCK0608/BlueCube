@@ -23,9 +23,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Brightness: 0
     - _Fill: 0
     - _Reverse: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _OffColor: {r: 0, g: 0, b: 0, a: 0}
-    - _OnColor: {r: 0.36551726, g: 1, b: 0, a: 1}
+    - _OnColor: {r: 0, g: 1.45, b: 0.85, a: 1}

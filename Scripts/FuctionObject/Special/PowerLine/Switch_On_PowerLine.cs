@@ -5,17 +5,22 @@ using UnityEngine;
 
 public sealed class Switch_On_PowerLine : Switch_On
 {
-    private static string m_powerLineTag = "Special_PowerLine_Line";
+    private const string m_powerLineTag = "Special_PowerLine_Line";
+    private const string m_brightnessPath = "_Brightness";
+    private const float m_onBrightness = 1.0f;
 
     private static Vector3[] m_checkDirection = new Vector3[4] { Vector3.up, Vector3.right, Vector3.left, Vector3.down };
-    private static int m_checkDirectionCount = 4;
+    private const int m_checkDirectionCount = 4;
 
-    private static float m_multiplyDirection2D = 1.05f;
+    private const float m_multiplyDirection2D = 1.05f;
 
-    private static float m_checkDistance3D = 1.05f;
-    private static float m_checkDistance2D = 0.05f;
+    private const float m_checkDistance3D = 1.05f;
+    private const float m_checkDistance2D = 0.05f;
 
     private Dictionary<Transform, Special_PowerLine_Line> m_checkedLine;
+
+    [SerializeField]
+    private MeshRenderer m_lineMeshRenderer;
 
     protected override void Awake()
     {
@@ -54,7 +59,7 @@ public sealed class Switch_On_PowerLine : Switch_On
         }
 
         m_isOn = true;
-        m_changeMesh.mesh = m_onMesh;
+        m_lineMeshRenderer.material.SetFloat(m_brightnessPath, m_onBrightness);
     }
 
     /// <summary>3D 상태에서 파워와 연결되어 있을경우 true를 반환</summary>
