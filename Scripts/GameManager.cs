@@ -40,7 +40,7 @@ public sealed class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (PlayerManager.Instance.IsViewChange || PlayerManager.Instance.IsViewChangeReady)
+            if (PlayerManager.Instance.IsViewChange || PlayerManager.Instance.IsViewChangeReady || PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.Dead) || PlayerManager.Instance.MainController.CurrentState2D.Equals(E_PlayerState2D.Dead))
                 return;
 
             RestartLevel();
