@@ -13,9 +13,6 @@ public sealed class DeadUI : MonoBehaviour
     /// <summary>게임오버 지속시간</summary>
     [SerializeField]
     private float m_gameOverDurationTime;
-    /// <summary>게임오버 페이드 아웃 시간</summary>
-    [SerializeField]
-    private float m_gameOverFadeOutTime;
     /// <summary>컨티뉴 페이드 인 시간</summary>
     [SerializeField]
     private float m_continueFadeInTime;
@@ -25,6 +22,10 @@ public sealed class DeadUI : MonoBehaviour
     private Image m_gameOverImage;
     [SerializeField]
     private Image m_continueImage;
+
+    [Space(10f)]
+    [SerializeField]
+    private Image m_background;
 
     [Space(10f)]
 
@@ -43,10 +44,6 @@ public sealed class DeadUI : MonoBehaviour
     private Sprite m_retryDefaultSprite;
     [SerializeField]
     private Sprite m_retrySelectSprite;
-
-    private void Awake()
-    {
-    }
 
     /// <summary>활성화 설정</summary>
     public void SetActive(bool value)
@@ -68,8 +65,7 @@ public sealed class DeadUI : MonoBehaviour
 
         float gameOverFadeInValue = one / m_gameOverFadeInTime;
         float gameOverDurationValue = one / m_gameOverDurationTime;
-        float gameOverFadeOutValue = one / m_gameOverFadeOutTime;
-        float continueFadeInTime = one / m_continueFadeInTime;
+        float continueFadeInTimeValue = one / m_continueFadeInTime;
 
         // GameOver FadeIn
         while(true)
@@ -78,6 +74,10 @@ public sealed class DeadUI : MonoBehaviour
             newColor.a += gameOverFadeInValue * Time.deltaTime;
             newColor.a = Mathf.Clamp(newColor.a, zero, one);
             m_gameOverImage.color = newColor;
+
+            Color backgroundColor = m_background.color;
+            backgroundColor.a = newColor.a;
+            m_background.color = backgroundColor;
 
             if (m_gameOverImage.color.a.Equals(one))
                 break;
@@ -98,25 +98,15 @@ public sealed class DeadUI : MonoBehaviour
             yield return null;
         }
 
-        // GameOver FadeOut
-        while(true)
-        {
-            Color newGameOverColor = m_gameOverImage.color;
-            newGameOverColor.a -= gameOverFadeOutValue * Time.deltaTime;
-            newGameOverColor.a = Mathf.Clamp(newGameOverColor.a, zero, one);
-            m_gameOverImage.color = newGameOverColor;
-
-            if (m_gameOverImage.color.a.Equals(zero))
-                break;
-
-            yield return null;
-        }
+        Color newGameOverColor = Color.white;
+        newGameOverColor.a = 0f;
+        m_gameOverImage.color = newGameOverColor;
 
         // Continue FadeIn
         while(true)
         {
             Color newContinueColor = m_continueImage.color;
-            newContinueColor.a += continueFadeInTime * Time.deltaTime;
+            newContinueColor.a += continueFadeInTimeValue * Time.deltaTime;
             newContinueColor.a = Mathf.Clamp(newContinueColor.a, zero, one);
             m_continueImage.color = newContinueColor;
             m_titleImage.color = newContinueColor;
