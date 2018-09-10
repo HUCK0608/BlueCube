@@ -54,6 +54,12 @@ public sealed class Title_SelectMenuUI : MonoBehaviour
 
     bool m_isOnNewGameLoad;
 
+    private void Awake()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void OnMouseEnterNewGame() { m_newGameImage.sprite = m_newGameSelectSprite; EnableSelectImage(m_newGameImage.rectTransform); }
     public void OnMouseExitNewGame() { m_newGameImage.sprite = m_newGameDefaultSprite; DisableSelectImage(); }
     public void OnMouseClickNewGame()
