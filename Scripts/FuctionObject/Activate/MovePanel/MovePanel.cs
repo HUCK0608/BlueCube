@@ -37,6 +37,9 @@ public sealed class MovePanel : MonoBehaviour
     [SerializeField]
     private Texture2D m_onEmissionTexture;
 
+    /// <summary>정지</summary>
+    private bool m_isStop;
+
     private void Awake()
     {
         m_activate = GetComponent<Activate>();
@@ -81,20 +84,17 @@ public sealed class MovePanel : MonoBehaviour
             // 이동이 완료되지 않고 시간이 멈춰있지 않다면 실행
             if (!isMoveCompelete && !GameLibrary.Bool_IsGameStop(m_worldObject))
             {
-
-                m_moveGroup.position = Vector3.MoveTowards(m_moveGroup.position, m_path.PathPosition(m_currentPath), m_moveSpeed * Time.deltaTime);
-
-                // 정해진 경로에 도착했다면 다음 경로로 바꿔줌
-                if (m_moveGroup.position == m_path.PathPosition(m_currentPath))
+                if (!m_isStop)
                 {
-                    // 현재 경로가 마지막 경로라면 처음 경로로 바꿈
-                    if (m_currentPath.Equals(m_path.PathCount - 1))
-                        m_currentPath = 0;
-                    // 아닐 경우 다음 경로로 바꿈
-                    else
-                        m_currentPath++;
+                    m_moveGroup.position = Vector3.MoveTowards(m_moveGroup.position, m_path.PathPosition(m_currentPath), m_moveSpeed * Time.deltaTime);
 
-                    isMoveCompelete = true;
+                    // 정해진 경로에 도착했다면 다음 경로로 바꿔줌
+                    if (m_moveGroup.position == m_path.PathPosition(m_currentPath))
+                    {
+                        ChangeNextPath();
+
+                        isMoveCompelete = true;
+                    }
                 }
             }
 
@@ -112,5 +112,24 @@ public sealed class MovePanel : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    /// <summary>다음 경로로 변경</summary>
+    private void ChangeNextPath()
+    {
+        if (m_currentPath.Equals(m_path.PathCount - 1))
+            m_currentPath = 0;
+        else
+            m_currentPath++;
+    }
+
+    public void StopMovePanel()
+    {
+        m_isStop = true;
+    }
+
+    public void PlayMovePanel()
+    {
+        m_isStop = false;
     }
 }
