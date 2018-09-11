@@ -79,8 +79,10 @@ public sealed class ChangeViewRect : MonoBehaviour
         Vector3 startScale = Vector3.zero;
         startScale.z = 0.01f;
 
+        Vector3 player3DPosition = PlayerManager.Instance.Player3D_Object.transform.position;
+
         transform.localScale = startScale;
-        transform.position = BlueCubeManager.Instance.BlueCube3D.transform.position;
+        transform.position = player3DPosition;
 
         // 상자의 충돌체크 켜기
         SetColliderEnable(true);
@@ -112,6 +114,8 @@ public sealed class ChangeViewRect : MonoBehaviour
         // lerp 수치
         float lerpT = 0.1f;
 
+        Vector3 startPosition = transform.position;
+
         while(true)
         {
             if (!UIManager.Instance.IsOnTabUI)
@@ -120,14 +124,14 @@ public sealed class ChangeViewRect : MonoBehaviour
 
                 // 충돌된 z좌표를 가져와서 새로운 크기 계산을 함
                 float hitPositionZ = hitPoint.z;
-                newRectSize.z = hitPositionZ - BlueCubeManager.Instance.BlueCube3D.transform.position.z;
+                newRectSize.z = hitPositionZ - startPosition.z;
                 newRectSize.z = Mathf.Clamp(newRectSize.z, 0f, m_increaseMaxSize.z);
 
                 transform.localScale = Vector3.Lerp(transform.localScale, newRectSize, lerpT);
 
                 // 계산된 z 좌표를 가져옴
                 Vector3 newPosition = transform.position;
-                newPosition.z = CalcPositionZ();
+                newPosition.z = player3DPosition.z + transform.localScale.z * 0.5f;
 
                 // 이동
                 transform.position = newPosition;
@@ -155,6 +159,8 @@ public sealed class ChangeViewRect : MonoBehaviour
         if (!gameObject.activeSelf)
             gameObject.SetActive(true);
 
+        Vector3 player3DPosition = PlayerManager.Instance.Player3D_Object.transform.position;
+
         // 감소수치 계산
         Vector3 decreaseValue = -(transform.localScale * m_increaseSizePerXY * 0.01f);
 
@@ -169,11 +175,10 @@ public sealed class ChangeViewRect : MonoBehaviour
 
             // 이동좌표 가져오기
             Vector3 newPosition = transform.position;
-            newPosition.x = CalcPositionX(oldPositonX, oldScaleX);
-            newPosition.z = CalcPositionZ();
+            newPosition.z = player3DPosition.z + transform.localScale.z * 0.5f;
 
             // 이동
-            transform.position = newPosition;
+            transform.localPosition = newPosition;
 
             // 최소수치만큼 작아졌을 경우 반복문 종료
             if (transform.localScale.x <= 0f)
@@ -184,25 +189,6 @@ public sealed class ChangeViewRect : MonoBehaviour
 
         // 비활성화
         gameObject.SetActive(false);
-    }
-
-    // x사이즈에 따라 새로운 위치를 계산함
-    private float CalcPositionX(float thisOldPositionX, float thisOldSizeX)
-    {
-        // (블루큐브x위치 - 변환상자x위치) / 변환상자 기존 x크기
-        float temp = (BlueCubeManager.Instance.BlueCube3D.transform.position.x - thisOldPositionX) / thisOldSizeX;
-        float newPositionX = (temp * (thisOldSizeX - transform.localScale.x)) + thisOldPositionX;
-
-        return newPositionX;
-    }
-
-    // z사이즈에 따라 새로운 위치를 계산함
-    private float CalcPositionZ()
-    {
-        float newPositionZ = transform.localScale.z * 0.5f;
-        newPositionZ += BlueCubeManager.Instance.BlueCube3D.transform.position.z;
-
-        return newPositionZ;
     }
 
     /// <summary>외벽 활성화 여부</summary>

@@ -83,7 +83,6 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         GameManager.Instance.SetCursorEnable(false);
 
         m_currentView = E_ViewType.View2D;
-        BlueCubeManager.Instance.ChangeCube();
         LightManager.Instance.ShadowEnable(false);
         m_changeViewRect.StartView2D();
         CameraManager.Instance.StartView2D();
@@ -155,9 +154,6 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
             // 오브젝트를 2D상태에 맞게 변경
             WorldManager.Instance.Change2D();
 
-            // 블루큐브 변경
-            BlueCubeManager.Instance.ChangeCube();
-
             // 그림자 끄기
             LightManager.Instance.ShadowEnable(false);
 
@@ -205,9 +201,6 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
 
         // 플레이어 3D로 변경
         PlayerManager.Instance.PlayerChange3D();
-
-        // 블루큐브 변경
-        BlueCubeManager.Instance.ChangeCube();
 
         // 그림자 켜기
         LightManager.Instance.ShadowEnable(true);
