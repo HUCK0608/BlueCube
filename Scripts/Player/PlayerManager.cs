@@ -194,8 +194,14 @@ public sealed class PlayerManager : MonoBehaviour
         Vector3 savePosition = CheckPointManager.Instance.GetCheckPoint().GetSavePosition;
 
         if (CurrentView.Equals(E_ViewType.View3D))
+        {
+            m_subController3D.Rigidbody.velocity = Vector3.zero;
             m_player3D_Object.transform.position = savePosition;
+        }
         else
+        {
+            m_subController2D.Rigidbody.velocity = Vector2.zero;
             m_player2D_Object.transform.position = savePosition;
+        }
     }
 }

@@ -101,13 +101,18 @@ public sealed class PlayerSkill_ChangeView : MonoBehaviour
         {
             if (!UIManager.Instance.IsOnTabUI)
             {
+                // 끼임 오브젝트 체크
+                m_checkBlock.Check();
+
                 // 수행 키를 누를 경우
-                if (Input.GetKeyDown(m_playerManager.Stat.AcceptKey))
+                if (!Input.GetKey(m_playerManager.Stat.AcceptKey))
                 {
                     // 끼일 오브젝트가 있다면 시각적인 이벤트 실행
                     // 끼일 오브젝트가 없다면 시점변환 실행
-                    if (!m_checkBlock.IsBlock())
+                    if (!m_checkBlock.IsBlock)
                         m_isDoChange = true;
+                    else
+                        m_isNotChange = true;
                 }
                 // 취소 키를 누를 경우
                 else if (Input.GetKeyDown(m_playerManager.Stat.CancelKey))

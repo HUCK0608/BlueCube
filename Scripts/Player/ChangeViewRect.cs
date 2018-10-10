@@ -125,7 +125,7 @@ public sealed class ChangeViewRect : MonoBehaviour
                 // 충돌된 z좌표를 가져와서 새로운 크기 계산을 함
                 float hitPositionZ = hitPoint.z;
                 newRectSize.z = hitPositionZ - startPosition.z;
-                newRectSize.z = Mathf.Clamp(newRectSize.z, 0f, m_increaseMaxSize.z);
+                newRectSize.z = Mathf.Clamp(newRectSize.z, 0.1f, m_increaseMaxSize.z);
 
                 transform.localScale = Vector3.Lerp(transform.localScale, newRectSize, lerpT);
 

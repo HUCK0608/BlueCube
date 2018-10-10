@@ -8,14 +8,18 @@ public sealed class CheckBlock : MonoBehaviour
     private List<Transform> m_checkPoints;
     private int m_checkPointCount;
 
+    private bool m_isBlock;
+    public bool IsBlock { get { return m_isBlock; } }
+
     private void Awake()
     {
         m_checkPointCount = m_checkPoints.Count;
     }
 
-    /// <summary>끼는 곳이 있으면 True를 반환</summary>
-    public bool IsBlock()
+    public void Check()
     {
+        m_isBlock = false;
+
         int layerMask = (-1) - (GameLibrary.LayerMask_Bullet |
                                      GameLibrary.LayerMask_BackgroundTrigger |
                                      GameLibrary.LayerMask_BackgroundCollision |
@@ -28,18 +32,19 @@ public sealed class CheckBlock : MonoBehaviour
 
         RaycastHit hit;
 
-        for(int i = 0; i < m_checkPointCount; i++)
+        for (int i = 0; i < m_checkPointCount; i++)
         {
             if (GameLibrary.Raycast3D(m_checkPoints[i].position, Vector3.forward, out hit, distance, layerMask))
             {
                 WorldObject blockWorldObject = hit.transform.GetComponentInParent<WorldObject>();
 
-                blockWorldObject.ShowBlock();
+                if (!blockWorldObject.IsIncludeChangeViewRect)
+                    break;
 
-                return true;
+                blockWorldObject.SetMaterial(E_WorldObject_ShaderType.Block);
+                m_isBlock = true;
+                break;
             }
         }
-
-        return false;
     }
 }
