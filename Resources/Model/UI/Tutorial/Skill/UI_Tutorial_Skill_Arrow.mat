@@ -20,4 +20,4 @@ Material:
     m_TexEnvs: []
     m_Floats: []
     m_Colors:
-    - _Color: {r: 0.9893509, g: 1, b: 0.22794116, a: 1}
+    - _Color: {r: 1, g: 0.75686276, b: 0.101960786, a: 1}

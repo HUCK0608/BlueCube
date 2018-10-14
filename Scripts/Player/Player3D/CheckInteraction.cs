@@ -5,6 +5,7 @@ using UnityEngine;
 public sealed class CheckInteraction : MonoBehaviour
 {
     private GameObject m_interactionUI;
+    private GameObject m_interactionCancelUI;
 
     private Transform[] m_checkPoints;
     private int m_checkPointCount;
@@ -13,6 +14,7 @@ public sealed class CheckInteraction : MonoBehaviour
     private void Start()
     {
         m_interactionUI = UIManager.Instance.gameObject.transform.Find("InteractionUI").gameObject;
+        m_interactionCancelUI = UIManager.Instance.gameObject.transform.Find("InteractionCancelUI").gameObject;
         m_interactionUI.SetActive(false);
 
         m_checkPoints = PlayerManager.Instance.SubController3D.ItemCheckPoints.ToArray();
@@ -22,7 +24,12 @@ public sealed class CheckInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.Idle) || PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.Move))
+        if (PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.PushIdle))
+            m_interactionCancelUI.SetActive(true);
+        else
+            m_interactionCancelUI.SetActive(false);
+
+        if ((PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.Idle) || PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.Move)) && PlayerManager.Instance.CurrentView.Equals(E_ViewType.View3D))
         {
             for (int i = 0; i < m_checkPointCount; i++)
             {
