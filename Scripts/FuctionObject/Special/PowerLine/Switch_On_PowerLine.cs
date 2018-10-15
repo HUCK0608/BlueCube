@@ -81,7 +81,10 @@ public sealed class Switch_On_PowerLine : Switch_On
                     Special_PowerLine_Line line = m_checkedLine[hit.transform];
 
                     if (line.LineDirection.IsHaveLine(-direction) && line.IsConnectedPower)
+                    {
+                        line.ConnectedSwitch();
                         return true;
+                    }
                 }
             }
         }
@@ -108,7 +111,10 @@ public sealed class Switch_On_PowerLine : Switch_On
                     Special_PowerLine_Line line = m_checkedLine[hit.transform];
 
                     if (line.LineDirection.IsHaveLine(-direction) && line.IsConnectedPower)
+                    {
+                        line.ConnectedSwitch();
                         return true;
+                    }
                 }
             }
         }

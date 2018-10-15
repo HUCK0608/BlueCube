@@ -27,10 +27,11 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
     /// <summary>체크했었던 라인 모음</summary>
     private Dictionary<Transform, Special_PowerLine_Line> m_checkedLines;
 
-    /// <summary>파워가 연결된 방향 모음</summary>
-    private List<Vector3> m_connectedPowerDirections;
-    /// <summary>파워가 연결된 방향들 개수</summary>
-    private int m_connectedPowerDirectionsCount;
+    /// <summary>연결된 파워 라인</summary>
+    private Special_PowerLine_Line m_connectedPowerLine;
+
+    /// <summary>파워가 연결된 방향</summary>
+    private Vector3 m_connectedPowerDirections;
 
     private bool m_isConnectedPower;
     /// <summary>전원과 연결되어 있을 경우 true를 반환</summary>
@@ -41,17 +42,25 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
         m_worldObject = GetComponent<WorldObject>();
         m_lineDirection = GetComponent<Special_PowerLine_LineDirection>();
         m_checkedLines = new Dictionary<Transform, Special_PowerLine_Line>();
-        m_connectedPowerDirections = new List<Vector3>();
     }
 
     /// <summary>파워 전송(연결된 방향)</summary>
     public void TransmitPower(Vector3 connectedDirection)
     {
-        // 연결방향 정보 저장
-        AddConnectedPowerDirection(connectedDirection);
+        m_connectedPowerDirections = connectedDirection;
 
         // 로직 시작
         if(!m_isConnectedPower)
+            StartCoroutine(TransmitPowerLogic());
+    }
+
+    public void TransmitPower(Special_PowerLine_Line connectedPowerLine, Vector3 connectedDirection)
+    {
+        m_connectedPowerLine = connectedPowerLine;
+        m_connectedPowerDirections = connectedDirection;
+
+        // 로직 시작
+        if (!m_isConnectedPower)
             StartCoroutine(TransmitPowerLogic());
     }
 
@@ -92,8 +101,6 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
             yield return null;
         }
 
-        ClearConnectedPowerDirection();
-
         m_lineMeshRenderer.material.SetFloat(m_brightnessPath, m_offBrightness);
         m_isConnectedPower = false;
     }
@@ -104,7 +111,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
         for(int i = 0; i < m_lineDirection.LineDirectionCount; i++)
         {
             // 파워가 들어온 방향 이외의 방향만 파워를 보냄
-            if (!m_connectedPowerDirections.Contains(m_lineDirection.LineDirection[i]))
+            if (!m_connectedPowerDirections.Equals(m_lineDirection.LineDirection[i]))
             {
                 Vector3 origin = transform.position;
                 Vector3 direction = m_lineDirection.LineDirection[i];
@@ -122,7 +129,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
 
                         // 이 라인과 연결된 라인이 있을 경우 파워 전송
                         if (line.LineDirection.IsHaveLine(-direction))
-                            line.TransmitPower(-direction);
+                            line.TransmitPower(this, -direction);
                     }
                 }
             }
@@ -135,7 +142,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
         for (int i = 0; i < m_lineDirection.LineDirectionCount; i++)
         {
             // 파워가 들어온 방향 이외의 방향만 파워를 보냄
-            if (!m_connectedPowerDirections.Contains(m_lineDirection.LineDirection[i]))
+            if (!m_connectedPowerDirections.Equals(m_lineDirection.LineDirection[i]))
             {
                 Vector2 origin = transform.position + m_lineDirection.LineDirection[i] * m_multiplyDirection2D;
                 Vector2 direction = m_lineDirection.LineDirection[i];
@@ -153,7 +160,7 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
 
                         // 이 라인과 연결된 라인이 있을 경우 파워 전송
                         if (line.LineDirection.IsHaveLine(-direction))
-                            line.TransmitPower(-direction);
+                            line.TransmitPower(this, -direction);
                     }
                 }
             }
@@ -165,33 +172,25 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
     {
         bool isKeepConnected = false;
 
-        for (int i = 0; i < m_connectedPowerDirectionsCount; i++)
+        Vector3 origin = transform.position;
+        Vector3 direction = m_connectedPowerDirections;
+        RaycastHit hit;
+
+        if (GameLibrary.Raycast3D(origin, direction, out hit, m_checkDistance))
         {
-            Vector3 origin = transform.position;
-            Vector3 direction = m_connectedPowerDirections[i];
-            RaycastHit hit;
-
-            if (GameLibrary.Raycast3D(origin, direction, out hit, m_checkDistance))
+            // 파워일 경우 무조건 연결되어있다고 설정
+            if (hit.transform.tag.Equals(m_PowerTag))
+                isKeepConnected = true;
+            // 라인일 경우 라인에 파워가 유지되어있는지 확인 후 설정
+            else if (hit.transform.tag.Equals(m_PowerLineTag))
             {
-                // 파워일 경우 무조건 연결되어있다고 설정
-                if (hit.transform.tag.Equals(m_PowerTag))
+                if (!m_checkedLines.ContainsKey(hit.transform))
+                    m_checkedLines.Add(hit.transform, hit.transform.GetComponentInParent<Special_PowerLine_Line>());
+
+                Special_PowerLine_Line line = m_checkedLines[hit.transform];
+
+                if (line.IsConnectedPower)
                     isKeepConnected = true;
-                // 라인일 경우 라인에 파워가 유지되어있는지 확인 후 설정
-                else if (hit.transform.tag.Equals(m_PowerLineTag))
-                {
-                    if (!m_checkedLines.ContainsKey(hit.transform))
-                        m_checkedLines.Add(hit.transform, hit.transform.GetComponentInParent<Special_PowerLine_Line>());
-
-                    Special_PowerLine_Line line = m_checkedLines[hit.transform];
-
-                    if (line.IsConnectedPower)
-                        isKeepConnected = true;
-                    else
-                    {
-                        RemoveConnectedPowerDirection(direction);
-                        i--;
-                    }
-                }
             }
         }
 
@@ -203,63 +202,37 @@ public sealed class Special_PowerLine_Line : MonoBehaviour
     {
         bool isKeepConnected = false;
 
-        for (int i = 0; i < m_connectedPowerDirectionsCount; i++)
+        Vector2 origin = transform.position + m_connectedPowerDirections * m_multiplyDirection2D;
+        Vector2 direction = m_connectedPowerDirections;
+        RaycastHit2D hit;
+
+        if (GameLibrary.Raycast2D(origin, direction, out hit, m_checkDistance))
         {
-            Vector2 origin = transform.position + m_connectedPowerDirections[i] * m_multiplyDirection2D;
-            Vector2 direction = m_connectedPowerDirections[i];
-            RaycastHit2D hit;
-
-            if (GameLibrary.Raycast2D(origin, direction, out hit, m_checkDistance))
+            // 파워일 경우 무조건 연결되어있다고 설정
+            if (hit.transform.tag.Equals(m_PowerTag))
+                isKeepConnected = true;
+            // 라인일 경우 라인에 파워가 유지되어있는지 확인 후 설정
+            else if (hit.transform.tag.Equals(m_PowerLineTag))
             {
-                // 파워일 경우 무조건 연결되어있다고 설정
-                if (hit.transform.tag.Equals(m_PowerTag))
+                if (!m_checkedLines.ContainsKey(hit.transform))
+                    m_checkedLines.Add(hit.transform, hit.transform.GetComponentInParent<Special_PowerLine_Line>());
+
+                Special_PowerLine_Line line = m_checkedLines[hit.transform];
+
+                if (line.IsConnectedPower)
                     isKeepConnected = true;
-                // 라인일 경우 라인에 파워가 유지되어있는지 확인 후 설정
-                else if (hit.transform.tag.Equals(m_PowerLineTag))
-                {
-                    if (!m_checkedLines.ContainsKey(hit.transform))
-                        m_checkedLines.Add(hit.transform, hit.transform.GetComponentInParent<Special_PowerLine_Line>());
-
-                    Special_PowerLine_Line line = m_checkedLines[hit.transform];
-
-                    if (line.IsConnectedPower)
-                        isKeepConnected = true;
-                    else
-                    {
-                        RemoveConnectedPowerDirection(direction);
-                        i--;
-                    }
-                }
             }
         }
 
         return isKeepConnected;
     }
 
-    /// <summary>파워가 연결된 방향정보 저장</summary>
-    private void AddConnectedPowerDirection(Vector3 direction)
+    /// <summary>스위치랑 연결되었을 경우 실행</summary>
+    public void ConnectedSwitch()
     {
-        if (!m_connectedPowerDirections.Contains(direction))
-        {
-            m_connectedPowerDirections.Add(direction);
-            m_connectedPowerDirectionsCount++;
-        }
-    }
+        StopAllCoroutines();
 
-    /// <summary>파워가 연결된 방향정보 제외</summary>
-    private void RemoveConnectedPowerDirection(Vector3 direction)
-    {
-        if(m_connectedPowerDirections.Contains(direction))
-        {
-            m_connectedPowerDirections.Remove(direction);
-            m_connectedPowerDirectionsCount--;
-        }
-    }
-
-    /// <summary>파워가 연결된 방향정보 모두 제외</summary>
-    private void ClearConnectedPowerDirection()
-    {
-        m_connectedPowerDirections.Clear();
-        m_connectedPowerDirectionsCount = 0;
+        if(m_connectedPowerLine != null)
+            m_connectedPowerLine.ConnectedSwitch();
     }
 }

@@ -38,6 +38,9 @@ public sealed class CheckBlock : MonoBehaviour
             {
                 WorldObject blockWorldObject = hit.transform.GetComponentInParent<WorldObject>();
 
+                if (blockWorldObject == null)
+                    break;
+
                 if (!blockWorldObject.IsIncludeChangeViewRect)
                     break;
 
