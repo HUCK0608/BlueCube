@@ -20,6 +20,9 @@ public sealed class UIManager : MonoBehaviour
     private GameObject m_tabUI;
 
     [SerializeField]
+    private GameObject m_pauseUI;
+
+    [SerializeField]
     private PlayerHpUI m_playerHpUI;
     /// <summary>플레이어 체력 UI 스크립트</summary>
     public PlayerHpUI PlayerHpUI { get { return m_playerHpUI; } }
@@ -38,6 +41,9 @@ public sealed class UIManager : MonoBehaviour
 
     /// <summary>Tab UI가 켜졌을 경우 true를 반환</summary>
     public bool IsOnTabUI { get { return m_tabUI.activeSelf; } }
+
+    /// <summary>Pause UI가 켜졌을 경우 true를 반환</summary>
+    public bool IsOnPauseUI { get { return m_pauseUI.activeSelf; } }
 
     /// <summary>Dead UI가 켜졌을 경우 true를 반환</summary>
     public bool IsOnDeadUI { get { return m_deadUI.ActiveSelf; } }
@@ -58,19 +64,35 @@ public sealed class UIManager : MonoBehaviour
         m_playerHpUI.SetPlayerHpText(PlayerManager.Instance.Stat.Hp);
 
         m_tabUI.SetActive(false);
+        m_pauseUI.SetActive(false);
         m_deadUI.SetActive(false);
     }
 
     private void Update()
     {
+        SetPauseUIEnable();
         SetTabUIEnable();
     }
 
     /// <summary>TabUI 활성화 설정</summary>
     private void SetTabUIEnable()
     {
-        if (Input.GetKeyDown(m_TabUIEnableKey) && !m_deadUI.ActiveSelf)
+        if (Input.GetKeyDown(m_TabUIEnableKey) && !m_deadUI.ActiveSelf && !m_pauseUI.activeSelf)
+        {
             m_tabUI.SetActive(!m_tabUI.activeSelf);
+
+            if (m_tabUI.activeSelf)
+                GameManager.Instance.SetCursorEnable(true);
+            else if (!m_tabUI.activeSelf && PlayerManager.Instance.CurrentView.Equals(E_ViewType.View2D))
+                GameManager.Instance.SetCursorEnable(false);
+        }
+    }
+
+    /// <summary>PauseUI 활성화 설정</summary>
+    private void SetPauseUIEnable()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && !m_deadUI.ActiveSelf && !m_tabUI.activeSelf)
+            m_pauseUI.SetActive(!m_pauseUI.activeSelf);
     }
 
     /// <summary>타이틀 화면으로 돌아감</summary>

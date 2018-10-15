@@ -118,27 +118,26 @@ public sealed class ChangeViewRect : MonoBehaviour
 
         while(true)
         {
-            if (!UIManager.Instance.IsOnTabUI)
-            {
-                Vector3 hitPoint = CameraManager.Instance.GetMouseHitPointToPivot(player3DPosition);
 
-                // 충돌된 z좌표를 가져와서 새로운 크기 계산을 함
-                float hitPositionZ = hitPoint.z;
-                newRectSize.z = hitPositionZ - startPosition.z;
-                newRectSize.z = Mathf.Clamp(newRectSize.z, 0.1f, m_increaseMaxSize.z);
+            Vector3 hitPoint = CameraManager.Instance.GetMouseHitPointToPivot(player3DPosition);
 
-                transform.localScale = Vector3.Lerp(transform.localScale, newRectSize, lerpT);
+            // 충돌된 z좌표를 가져와서 새로운 크기 계산을 함
+            float hitPositionZ = hitPoint.z;
+            newRectSize.z = hitPositionZ - startPosition.z;
+            newRectSize.z = Mathf.Clamp(newRectSize.z, 0.1f, m_increaseMaxSize.z);
 
-                // 계산된 z 좌표를 가져옴
-                Vector3 newPosition = transform.position;
-                newPosition.z = player3DPosition.z + transform.localScale.z * 0.5f;
+            transform.localScale = Vector3.Lerp(transform.localScale, newRectSize, lerpT);
 
-                // 이동
-                transform.position = newPosition;
+            // 계산된 z 좌표를 가져옴
+            Vector3 newPosition = transform.position;
+            newPosition.z = player3DPosition.z + transform.localScale.z * 0.5f;
 
-                if (m_skill.IsDoChange || m_skill.IsNotChange)
-                    break;
-            }
+            // 이동
+            transform.position = newPosition;
+
+            if (m_skill.IsDoChange || m_skill.IsNotChange)
+                break;
+
             yield return null;
         }
 

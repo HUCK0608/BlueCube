@@ -103,7 +103,8 @@ public static class GameLibrary
     {
         return PlayerManager.Instance.IsViewChange ||
                  !worldObject.IsOnRenderer ||
-                 UIManager.Instance.IsOnTabUI
+                 UIManager.Instance.IsOnTabUI ||
+                 UIManager.Instance.IsOnPauseUI
                  ? true : false;
     }
 
@@ -114,7 +115,8 @@ public static class GameLibrary
         {
             return PlayerManager.Instance.IsViewChange ||
                      PlayerManager.Instance.IsViewChangeReady ||
-                     UIManager.Instance.IsOnTabUI
+                     UIManager.Instance.IsOnTabUI ||
+                     UIManager.Instance.IsOnPauseUI
                      ? true : false;
         }
     }

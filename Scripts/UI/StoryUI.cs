@@ -94,7 +94,6 @@ public sealed class StoryUI : MonoBehaviour
     private void Update()
     {
         SetStoryListScroll();
-        ReturnToTitle();
     }
 
     /// <summary>스토리 리스트 스크롤</summary>
@@ -104,13 +103,6 @@ public sealed class StoryUI : MonoBehaviour
             m_storyListScrollBar.value = Mathf.Clamp(m_storyListScrollBar.value + m_storyListScrollSensitivity * Time.deltaTime, 0, 1);
         else if (Input.GetAxis(m_mouseWheelString) < 0)
             m_storyListScrollBar.value = Mathf.Clamp(m_storyListScrollBar.value - m_storyListScrollSensitivity * Time.deltaTime, 0, 1);
-    }
-
-    /// <summary>타이틀 화면으로 돌아감</summary>
-    private void ReturnToTitle()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            UIManager.Instance.ReturnToTitle();
     }
 
     /// <summary>스토리 언락</summary>
