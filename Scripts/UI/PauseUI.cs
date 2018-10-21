@@ -17,6 +17,8 @@ public class PauseUI : MonoBehaviour
     private void OnEnable()
     {
         InitSprite();
+
+        GameManager.Instance.SetCursorEnable(true);
     }
 
     private void OnDisable()

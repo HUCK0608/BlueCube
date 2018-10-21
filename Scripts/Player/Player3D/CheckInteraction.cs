@@ -24,6 +24,13 @@ public sealed class CheckInteraction : MonoBehaviour
 
     private void Update()
     {
+        if(UIManager.Instance.IsOnTabUI || UIManager.Instance.IsOnPauseUI)
+        {
+            m_interactionUI.SetActive(false);
+            m_interactionCancelUI.SetActive(false);
+            return;
+        }
+
         if (PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.PushIdle))
             m_interactionCancelUI.SetActive(true);
         else
@@ -41,7 +48,6 @@ public sealed class CheckInteraction : MonoBehaviour
             }
         }
 
-        if(m_interactionUI.activeSelf)
-            m_interactionUI.SetActive(false);
+        m_interactionUI.SetActive(false);
     }
 }
