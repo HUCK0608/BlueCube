@@ -32,9 +32,6 @@ public sealed class StoryUI : MonoBehaviour
     /// <summary>컨텐츠 텍스트</summary>
     [SerializeField]
     private Text m_contentsText;
-    /// <summary>스토리 리스트 스크롤 바</summary>
-    [SerializeField]
-    private Scrollbar m_storyListScrollBar;
     /// <summary>스토리 알림 스크립트</summary>
     [SerializeField]
     private InformStoryUI m_informStoryUI;
@@ -91,19 +88,19 @@ public sealed class StoryUI : MonoBehaviour
             DrawContentsText();
     }
 
-    private void Update()
-    {
-        SetStoryListScroll();
-    }
+    //private void Update()
+    //{
+    //    SetStoryListScroll();
+    //}
 
-    /// <summary>스토리 리스트 스크롤</summary>
-    private void SetStoryListScroll()
-    {
-        if (Input.GetAxis(m_mouseWheelString) > 0)
-            m_storyListScrollBar.value = Mathf.Clamp(m_storyListScrollBar.value + m_storyListScrollSensitivity * Time.deltaTime, 0, 1);
-        else if (Input.GetAxis(m_mouseWheelString) < 0)
-            m_storyListScrollBar.value = Mathf.Clamp(m_storyListScrollBar.value - m_storyListScrollSensitivity * Time.deltaTime, 0, 1);
-    }
+    ///// <summary>스토리 리스트 스크롤</summary>
+    //private void SetStoryListScroll()
+    //{
+    //    if (Input.GetAxis(m_mouseWheelString) > 0)
+    //        m_storyListScrollBar.value = Mathf.Clamp(m_storyListScrollBar.value + m_storyListScrollSensitivity * Time.deltaTime, 0, 1);
+    //    else if (Input.GetAxis(m_mouseWheelString) < 0)
+    //        m_storyListScrollBar.value = Mathf.Clamp(m_storyListScrollBar.value - m_storyListScrollSensitivity * Time.deltaTime, 0, 1);
+    //}
 
     /// <summary>스토리 언락</summary>
     public void UnlcokStory(Item_Story story)
