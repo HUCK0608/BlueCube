@@ -22,9 +22,8 @@ public sealed class CheckPoint : MonoBehaviour
     {
         float playerPositionZ = PlayerManager.Instance.Player3D_Object.transform.position.z;
 
-        if (playerPositionZ >= transform.position.z - m_colliderSizeZ && playerPositionZ <= transform.position.z + m_colliderSizeZ)
+        if (playerPositionZ >= transform.position.z - m_colliderSizeZ * transform.localScale.z && playerPositionZ <= transform.position.z + m_colliderSizeZ * transform.localScale.z)
         {
-            Debug.Log("체크포인트 등록");
             CheckPointManager.Instance.SetCheckPoint(this);
             gameObject.SetActive(false);
         }

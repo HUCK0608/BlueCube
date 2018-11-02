@@ -12,6 +12,7 @@ public sealed class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Screen.SetResolution(1920, 1080, true);
         Physics.IgnoreLayerCollision(8, 23);
         Physics2D.IgnoreLayerCollision(8, 23);
         m_instance = this;
@@ -40,7 +41,7 @@ public sealed class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (PlayerManager.Instance.IsViewChange || PlayerManager.Instance.IsViewChangeReady || PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.Dead) || PlayerManager.Instance.MainController.CurrentState2D.Equals(E_PlayerState2D.Dead))
+            if (PlayerManager.Instance.SubController3D.IsOnAutoMove || PlayerManager.Instance.IsViewChange || PlayerManager.Instance.IsViewChangeReady || PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.Dead) || PlayerManager.Instance.MainController.CurrentState2D.Equals(E_PlayerState2D.Dead))
                 return;
 
             RestartLevel();

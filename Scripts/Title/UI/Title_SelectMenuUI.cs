@@ -56,6 +56,7 @@ public sealed class Title_SelectMenuUI : MonoBehaviour
 
     private void Awake()
     {
+        Screen.SetResolution(1920, 1080, true);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
