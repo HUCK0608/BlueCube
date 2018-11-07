@@ -18,6 +18,8 @@ public class PlayerState3D_PushChase : PlayerState3D
 
     private void Update()
     {
+        m_hangPosition.y = transform.position.y;
+
         // 고정 지점으로 이동 및 회전을 함
         m_subController.MoveAndRotateTowards(m_hangPosition);
 
