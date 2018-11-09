@@ -46,13 +46,7 @@ public sealed class Title_SelectMenuUI : MonoBehaviour
     [SerializeField]
     private RectTransform m_selectImage;
 
-    [Space(10f)]
-
-    /// <summary>뉴 게임 씬</summary>
-    [SerializeField]
-    private string m_newGameScenePath;
-
-    bool m_isOnNewGameLoad;
+    bool m_isOnGameLoad;
 
     private void Awake()
     {
@@ -63,23 +57,25 @@ public sealed class Title_SelectMenuUI : MonoBehaviour
 
     public void OnMouseEnterNewGame() { m_newGameImage.sprite = m_newGameSelectSprite; EnableSelectImage(m_newGameImage.rectTransform); }
     public void OnMouseExitNewGame() { m_newGameImage.sprite = m_newGameDefaultSprite; DisableSelectImage(); }
-    public void OnMouseClickNewGame()
-    {
-        if (!m_isOnNewGameLoad)
-        {
-            m_isOnNewGameLoad = true;
-            StartCoroutine(NewGameLogic());
-        }
-    }
-    private IEnumerator NewGameLogic()
-    {
-        LoadingUI.Instance.PlayFadeIn();
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadSceneAsync(m_newGameScenePath);
-    }
 
     public void OnMouseEnterLoadGame() { m_loadGameImage.sprite = m_loadGameSelectSprite; EnableSelectImage(m_loadGameImage.rectTransform); }
     public void OnMouseExitLoadGame() { m_loadGameImage.sprite = m_loadGameDefaultSprite; DisableSelectImage(); }
+
+    public void OnMouseClickGame(string gameScenePath)
+    {
+        if(!m_isOnGameLoad)
+        {
+            m_isOnGameLoad = true;
+            StartCoroutine(GameLoadLogic(gameScenePath));
+        }
+    }
+
+    private IEnumerator GameLoadLogic(string gameScenePath)
+    {
+        LoadingUI.Instance.PlayFadeIn();
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadSceneAsync(gameScenePath);
+    }
 
     public void OnMouseEnterOptions() { m_optionsImage.sprite = m_optionsSelectSprite; EnableSelectImage(m_optionsImage.rectTransform); }
     public void OnMouseExitOptions() { m_optionsImage.sprite = m_optionsDefaultSprite; DisableSelectImage(); }

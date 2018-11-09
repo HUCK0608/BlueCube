@@ -30,7 +30,7 @@ public sealed class CheckInteraction : MonoBehaviour
             m_interactionCancelUI.SetActive(false);
             return;
         }
-
+        
         if (PlayerManager.Instance.MainController.CurrentState3D.Equals(E_PlayerState3D.PushIdle))
             m_interactionCancelUI.SetActive(true);
         else

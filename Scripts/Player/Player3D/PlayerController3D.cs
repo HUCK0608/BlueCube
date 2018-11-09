@@ -55,14 +55,6 @@ public sealed class PlayerController3D : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Update()
-    {
-        for(int i = 0; i < 3; i ++)
-        {
-            Debug.DrawRay(m_itemCheckPoints[i].position, m_itemCheckPoints[i].forward * m_playerManager.Stat.ItemCheckDistance, Color.red);
-        }
-    }
-
     private void LateUpdate()
     {
         ApplyGravity();

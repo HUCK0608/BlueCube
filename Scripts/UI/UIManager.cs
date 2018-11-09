@@ -77,7 +77,7 @@ public sealed class UIManager : MonoBehaviour
     /// <summary>TabUI 활성화 설정</summary>
     private void SetTabUIEnable()
     {
-        if (Input.GetKeyDown(m_TabUIEnableKey) && !m_deadUI.ActiveSelf && !m_pauseUI.activeSelf)
+        if (Input.GetKeyDown(m_TabUIEnableKey) && !m_deadUI.ActiveSelf && !m_pauseUI.activeSelf && m_storyUI.UnLockStoryCount > 0)
         {
             m_tabUI.SetActive(!m_tabUI.activeSelf);
 

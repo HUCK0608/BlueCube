@@ -139,7 +139,7 @@ public sealed class PlayerManager : MonoBehaviour
             StartCoroutine(HitLogic3D());
         else if (CurrentView.Equals(E_ViewType.View2D) && !m_stat.Hp.Equals(0))
             StartCoroutine(HitLogic2D());
-        Debug.Log("플레이어 데미지! 남은체력 : " + m_stat.Hp);
+        //Debug.Log("플레이어 데미지! 남은체력 : " + m_stat.Hp);
     }
     
     /// <summary>3D 피격 로직</summary>

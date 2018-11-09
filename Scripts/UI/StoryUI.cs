@@ -44,6 +44,7 @@ public sealed class StoryUI : MonoBehaviour
     private Dictionary<int, Item_Story> m_unLockStories;
     /// <summary>언락한 스토리 개수</summary>
     private int m_unLockStoryCount;
+    public int UnLockStoryCount { get { return m_unLockStoryCount; } }
     /// <summary>현재 선택한 스토리 인덱스</summary>
     private int m_selectStoryIndex = -1;
 
